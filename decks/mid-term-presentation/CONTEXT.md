@@ -11,7 +11,7 @@
 | # | File | Slide | Owner | State |
 |---|------|-------|-------|-------|
 | 01 | `01-cover` | Project Cassandra for <Catch22> · course code, supervisor, team (`title-cover`) | — | done |
-| 02 | `02-team` | Meet Our Team: leads (PO Isaiah, SM Yan Ting) + devs (Arin, Jamesz, Joyce) | — | done |
+| 02 | `02-team` | Meet Our Team: leads (PO Isaiah, SM Yan Ting) + devs (Arin, Jamesz, Jerrick, Joyce) | — | done |
 | 03 | `03-agenda` | Agenda, owners, minutes (sums to 30) | — | done |
 | 04 | `04-section-problem` | ◆ 01 The Problem | Joyce | — |
 | 05 | `05-c22-today` | What Catch22 is doing today (flow) | Joyce | done |
@@ -46,5 +46,4 @@
 - Confirm who presents Constraints & What's Next (agenda says TBD).
 - Confirm Phase 0 / Phase 1 gates passed → mark them on slide 27 (`project-timeline` gates).
 - "BA" owner of section 05: confirm name.
-- Team slide (02) lists Isaiah, Yan Ting, Arin, Jamesz, Joyce only. Jerrick is named on the cover but not here: confirm his role.
 - Find all TODOs: `grep -rn "@placeholder\|TODO" decks/mid-term-presentation/slides`

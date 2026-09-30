@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-width: 0;
-  padding: 40px;
+  padding: 36px;
   border-radius: var(--radius);
   background: var(--card);
   color: var(--on-card);
@@ -29,7 +29,6 @@
 .c-team-member__role {
   display: block;
   margin-bottom: 16px;
-  white-space: nowrap;
   font-size: 22px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -38,7 +37,7 @@
 }
 
 .c-team-member h3 {
-  font-size: var(--fs-h2);
+  font-size: 60px;
   color: inherit;
 }
 

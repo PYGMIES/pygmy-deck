@@ -1,7 +1,7 @@
 /* === COMPONENT: team-roster === row of team-group clusters */
 .c-team-roster {
   display: flex;
-  gap: var(--gap-l);
+  gap: var(--gap-m);
   height: 600px;
   margin-top: auto;
   margin-bottom: auto;

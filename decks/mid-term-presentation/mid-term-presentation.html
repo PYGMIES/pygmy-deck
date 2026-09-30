@@ -480,7 +480,7 @@ body.editing [contenteditable="true"] {
 /* === COMPONENT: team-roster === row of team-group clusters */
 .c-team-roster {
   display: flex;
-  gap: var(--gap-l);
+  gap: var(--gap-m);
   height: 600px;
   margin-top: auto;
   margin-bottom: auto;
@@ -520,7 +520,7 @@ body.editing [contenteditable="true"] {
   flex-direction: column;
   justify-content: space-between;
   min-width: 0;
-  padding: 40px;
+  padding: 36px;
   border-radius: var(--radius);
   background: var(--card);
   color: var(--on-card);
@@ -543,7 +543,6 @@ body.editing [contenteditable="true"] {
 .c-team-member__role {
   display: block;
   margin-bottom: 16px;
-  white-space: nowrap;
   font-size: 22px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -552,7 +551,7 @@ body.editing [contenteditable="true"] {
 }
 
 .c-team-member h3 {
-  font-size: var(--fs-h2);
+  font-size: 60px;
   color: inherit;
 }
 
@@ -2010,13 +2009,13 @@ body.editing [contenteditable="true"] {
   <span class="c-team-member__initial" aria-hidden="true">Y</span>
   <div class="c-team-member__text">
     <span class="c-team-member__role">Scrum Master</span>
-    <h3>Yan&nbsp;Ting</h3>
+    <h3>Yan Ting</h3>
   </div>
 </article>
   
   </div>
 </section>
-  <section class="c-team-group " style="--members: 3;">
+  <section class="c-team-group " style="--members: 4;">
   <h2 class="c-team-group__label reveal">Developers</h2>
   <div class="c-team-group__cards">
     
@@ -2032,6 +2031,13 @@ body.editing [contenteditable="true"] {
   <div class="c-team-member__text">
     <span class="c-team-member__role">Developer</span>
     <h3>Jamesz</h3>
+  </div>
+</article>
+    <article class="c-team-member reveal is-light">
+  <span class="c-team-member__initial" aria-hidden="true">J</span>
+  <div class="c-team-member__text">
+    <span class="c-team-member__role">Developer</span>
+    <h3>Jerrick</h3>
   </div>
 </article>
     <article class="c-team-member reveal is-light">
