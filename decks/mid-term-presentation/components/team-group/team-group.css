@@ -1,0 +1,23 @@
+/* === COMPONENT: team-group === labelled cluster of team-member cards.
+   size = number of members, so groups in a roster share width evenly per card. */
+.c-team-group {
+  flex: var(--members) 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-s);
+  min-width: 0;
+}
+
+.c-team-group__label {
+  padding-bottom: 18px;
+  border-bottom: var(--rule-w) solid var(--rule);
+  font-size: var(--fs-h3);
+  color: var(--ink-accent);
+}
+
+.c-team-group__cards {
+  flex: 1;
+  display: flex;
+  gap: var(--gap-s);
+  min-height: 0;
+}
