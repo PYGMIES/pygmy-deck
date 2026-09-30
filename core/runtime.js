@@ -47,7 +47,12 @@
     return Number.isFinite(n) ? n - 1 : 0;
   }
 
+  /* Keys typed into form fields or overlays (e.g. the --annotate build) aren't navigation */
+  const isForeign = (el) =>
+    el instanceof Element && !!el.closest("input, textarea, select, [contenteditable]:not(.slide *), agentation-toolbar");
+
   document.addEventListener("keydown", (e) => {
+    if (isForeign(e.target)) return;
     if (document.body.classList.contains("editing")) {
       if (e.key === "Escape") toggleEdit(false);
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "s") {

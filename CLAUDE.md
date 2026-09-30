@@ -1,15 +1,15 @@
 # pygmy-deck — Claude instructions
 
 HTML slide decks built from folders of numbered slide files and reusable components.
-`build.py` (Python stdlib only) compiles each deck into **one self-contained HTML file** in `dist/`.
+`build.py` (Python stdlib only) compiles each deck into **one self-contained HTML file** in its own folder: `decks/<deck>/<deck>.html` (committed).
 
 ## Commands
 ```bash
 python3 build.py                  # build every deck
-python3 build.py <deck>           # build decks/<deck> → dist/<deck>.html
+python3 build.py <deck>           # build decks/<deck> → decks/<deck>/<deck>.html
 python3 build.py <deck> --watch   # rebuild on save
 python3 build.py new <deck>       # scaffold from decks/_template
-open dist/<deck>.html
+open decks/<deck>/<deck>.html
 ```
 Always rebuild and look at the result after changing slides, components or themes.
 
@@ -20,7 +20,7 @@ Always rebuild and look at the result after changing slides, components or theme
 | `themes/` | tokens (fonts, type scale, spacing) + light/dark colours | yes |
 | `components/` | shared reusable components (`name/name.html` + `name.css`) | yes |
 | `decks/<deck>/` | one deck: `deck.json`, `slides/`, `assets/`, `components/` | yes |
-| `dist/` | build output — never edit by hand, gitignored | — |
+| `decks/<deck>/<deck>.html` | build output — never edit by hand; committed so the deck ships with its source | — |
 
 ## Non-negotiable rules
 1. **Fixed 16:9 stage.** Every slide is authored at 1920×1080 and scaled as a whole. No responsive breakpoints, no reflow for phones, no `vw/vh` inside slides. Use px at design size.
