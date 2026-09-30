@@ -1,0 +1,51 @@
+/* === COMPONENT: section-divider === full-bleed chapter break in card colours */
+.c-section-divider {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--pad-y) var(--pad-x);
+  background: var(--card);
+  color: var(--on-card);
+  overflow: hidden;
+}
+
+.c-section-divider__num {
+  position: absolute;
+  top: -60px;
+  right: 40px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 620px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 3px var(--on-card-muted);
+  opacity: 0.35;
+}
+
+.c-section-divider h2 {
+  font-size: 150px;
+  line-height: 0.86;
+  color: var(--on-card);
+  max-width: 11ch;
+}
+
+.c-section-divider p {
+  margin-top: var(--gap-m);
+  font-size: var(--fs-lead);
+  color: var(--on-card-muted);
+}
+
+.c-section-divider__presenter {
+  display: inline-block;
+  margin-top: var(--gap-l);
+  padding: 12px 22px;
+  border: 2px solid var(--on-card-muted);
+  border-radius: 999px;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-card);
+}

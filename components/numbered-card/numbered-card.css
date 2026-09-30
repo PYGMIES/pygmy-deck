@@ -1,0 +1,61 @@
+/* === COMPONENT: numbered-card === circled number, title, body.
+   Add class="is-light" for a pale card on the slide background. */
+.c-numbered-card {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 26px;
+  align-items: start;
+  padding: 34px 40px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-numbered-card__num {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--on-card);
+  color: var(--card);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1;
+  padding-top: 4px;
+}
+
+.c-numbered-card h3 {
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--on-card);
+  padding-top: 8px;
+}
+
+.c-numbered-card p {
+  margin-top: 14px;
+  font-size: 28px;
+  line-height: 1.3;
+  max-width: none;
+  color: var(--on-card-muted);
+}
+
+.c-numbered-card.is-light {
+  background: var(--bg-deep);
+  color: var(--ink);
+}
+
+.c-numbered-card.is-light .c-numbered-card__num {
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-numbered-card.is-light h3 {
+  color: var(--ink);
+}
+
+.c-numbered-card.is-light p {
+  color: var(--ink-muted);
+}

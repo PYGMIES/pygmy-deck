@@ -1,0 +1,163 @@
+/* === COMPONENT (deck): arch-diagram ===
+   Project Cassandra system architecture on a 1728×800 canvas.
+   Lanes → nodes → one SVG wire overlay (accent = data flow, ink = actors). */
+.c-arch {
+  --node: color-mix(in srgb, var(--card) 80%, var(--bg));
+  position: relative;
+  width: 1728px;
+  height: 800px;
+  flex: none;
+}
+
+.c-arch > * {
+  position: absolute;
+}
+
+.c-arch__lane {
+  top: 0;
+  bottom: 0;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.c-arch__lane span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 26px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.c-arch__wires {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  pointer-events: none;
+}
+
+.c-arch__flow {
+  color: var(--accent);
+}
+
+.c-arch__io {
+  color: var(--ink);
+}
+
+.c-arch__group {
+  z-index: 1;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.c-arch__group-title {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+}
+
+.c-arch__node {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background: var(--node);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.c-arch__node small {
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-card-muted);
+}
+
+.c-arch__node--pill {
+  font-size: 26px;
+  border-radius: 999px;
+}
+
+.c-arch__node--dark {
+  background: var(--card);
+}
+
+.c-arch__node--judge {
+  box-shadow: 0 0 0 4px var(--accent);
+}
+
+.c-arch__dots {
+  width: 220px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.c-arch__actor {
+  left: 0;
+  width: 236px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.c-arch__actor svg {
+  width: 96px;
+  height: 72px;
+  fill: var(--ink);
+}
+
+.c-arch__actor strong {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 32px;
+  letter-spacing: -0.01em;
+}
+
+.c-arch__actor span {
+  font-size: 20px;
+  color: var(--ink-muted);
+}
+
+.c-arch__wire-label {
+  white-space: nowrap;
+  text-align: center;
+  font-style: italic;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.c-arch .c-arch__foot {
+  z-index: 2;
+  font-size: 19px;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--ink-muted);
+  max-width: none;
+}

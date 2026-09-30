@@ -1,0 +1,32 @@
+/* === COMPONENT: chevron-callout === arrow-shaped lead feeding into a quoted question */
+.c-chevron-callout {
+  display: grid;
+  grid-template-columns: 560px 1fr;
+  align-items: stretch;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  overflow: hidden;
+}
+
+.c-chevron-callout__lead {
+  display: flex;
+  align-items: center;
+  padding: 36px 90px 36px 40px;
+  background: var(--rule);
+  clip-path: polygon(0 0, calc(100% - 70px) 0, 100% 50%, calc(100% - 70px) 100%, 0 100%);
+  font-size: 32px;
+  line-height: 1.3;
+  max-width: none;
+}
+
+.c-chevron-callout blockquote {
+  display: flex;
+  align-items: center;
+  padding: 36px 48px 36px 40px;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 50px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}

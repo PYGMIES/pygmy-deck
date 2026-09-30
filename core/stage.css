@@ -1,0 +1,198 @@
+/* =====================================================================
+   === CORE STAGE ===
+   Fixed 1920×1080 canvas, scaled uniformly to the viewport by runtime.js.
+   Slides never reflow — the whole stage letterboxes / pillarboxes.
+   ===================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--letterbox, #0d0d0d);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* === VIEWPORT WRAPPER === fills the window and centres the stage */
+.deck-viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* === STAGE === authored at 1920×1080; --stage-scale set by runtime.js */
+.deck-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center center;
+  overflow: hidden;
+}
+
+/* === SLIDES === visibility-based switching (never display:none) */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.35;
+  padding: var(--pad-y) var(--pad-x);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-out), visibility 0s linear 0.5s;
+}
+
+.slide.active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.5s var(--ease-out), visibility 0s;
+}
+
+/* === REVEAL ANIMATIONS ===
+   Any direct child of a slide, plus anything with .reveal, fades up in
+   sequence when the slide becomes active. --i is assigned by runtime.js. */
+.slide .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms + 120ms);
+}
+
+.slide.active .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* === DECK CHROME === progress bar + counter, inside the stage */
+.deck-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 6px;
+  width: calc(var(--progress, 0) * 100%);
+  background: var(--chrome, #888);
+  z-index: 50;
+  transition: width 0.4s var(--ease-out);
+}
+
+.deck-counter {
+  position: absolute;
+  right: 48px;
+  bottom: 28px;
+  z-index: 50;
+  font: 500 20px/1 var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--chrome, #888);
+  font-variant-numeric: tabular-nums;
+}
+
+/* === EDIT MODE === press E (or hover top-left corner + click) */
+.edit-toggle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 56px;
+  height: 56px;
+  z-index: 100;
+  opacity: 0;
+  border: 0;
+  cursor: pointer;
+  font: 600 12px/1 system-ui, sans-serif;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border-bottom-right-radius: 12px;
+  transition: opacity 0.2s;
+}
+
+.edit-toggle:hover,
+body.editing .edit-toggle {
+  opacity: 1;
+}
+
+body.editing [contenteditable="true"] {
+  outline: 2px dashed rgba(255, 160, 0, 0.7);
+  outline-offset: 4px;
+  cursor: text;
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .slide.active,
+  .slide .reveal,
+  .deck-progress {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .slide .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* === PRINT === one slide per page, all visible */
+@media print {
+  @page {
+    size: 1920px 1080px;
+    margin: 0;
+  }
+
+  html,
+  body {
+    overflow: visible;
+    height: auto;
+  }
+
+  .deck-viewport {
+    position: static;
+    display: block;
+  }
+
+  .deck-stage {
+    position: static;
+    transform: none;
+    height: auto;
+    overflow: visible;
+  }
+
+  .slide {
+    position: relative;
+    visibility: visible;
+    opacity: 1;
+    break-after: page;
+  }
+
+  .slide .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .deck-progress,
+  .deck-counter,
+  .edit-toggle {
+    display: none;
+  }
+}

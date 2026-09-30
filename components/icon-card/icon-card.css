@@ -1,0 +1,41 @@
+/* === COMPONENT: icon-card === title across the top, mask-tinted icon + body.
+   icon is an assets/ path to a single-colour SVG (it is used as a mask). */
+.c-icon-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  min-height: 176px;
+  padding: 26px 36px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-icon-card h3 {
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--on-card);
+}
+
+.c-icon-card__row {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.c-icon-card__icon {
+  width: 76px;
+  height: 76px;
+  background: var(--on-card);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.c-icon-card p {
+  font-size: 27px;
+  line-height: 1.12;
+  max-width: none;
+}

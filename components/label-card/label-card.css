@@ -1,0 +1,28 @@
+/* === COMPONENT: label-card === charcoal card: big heading left, note right */
+.c-label-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-m);
+  min-height: 176px;
+  padding: 28px 40px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-label-card h3 {
+  font-size: var(--fs-card);
+  color: var(--on-card);
+  flex: none;
+  white-space: nowrap; /* line breaks come from <br> in the title param */
+}
+
+.c-label-card p {
+  font-size: 29px;
+  line-height: 1.08;
+  text-align: right;
+  max-width: 11em;
+  flex: 0 1 auto;
+  min-width: 0;
+}

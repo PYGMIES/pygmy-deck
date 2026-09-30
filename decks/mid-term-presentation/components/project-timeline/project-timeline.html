@@ -1,0 +1,42 @@
+<!-- Positions use --d = days since 1 Jun (track spans 1 Jun → 30 Nov, 183 days). -->
+<div class="c-timeline {{class|}}">
+
+  <section class="c-timeline__panel c-timeline__panel--deliv reveal">
+    <span class="c-timeline__kicker">Deliverables</span>
+    <div class="c-timeline__track">
+      <div class="c-timeline__line"></div>
+      <div class="c-timeline__done" style="--d: 126;"></div>
+      <div class="c-timeline__ms is-up"   style="--d: 13;"><b>Onboarding</b>14 Jun</div>
+      <div class="c-timeline__ms is-down" style="--d: 20;"><b>Proposal</b>21 Jun</div>
+      <div class="c-timeline__ms is-up"   style="--d: 35;"><b>BOSS bidding R1</b>6 Jul</div>
+      <div class="c-timeline__ms is-down" style="--d: 45;"><b>Pitch &amp; revision</b>16 Jul</div>
+      <div class="c-timeline__ms is-up"   style="--d: 77;"><b>Bid for IS483</b>17 Aug</div>
+      <div class="c-timeline__ms is-down is-now" style="--d: 126;"><b>Midterm · now</b>5 Oct</div>
+      <div class="c-timeline__ms is-up"   style="--d: 165;"><b>Finals</b>13 Nov</div>
+    </div>
+  </section>
+
+  <section class="c-timeline__panel reveal">
+    <span class="c-timeline__kicker">Phases</span>
+    <div class="c-timeline__months">
+      <span style="--d: 14;">Jun</span><span style="--d: 45;">Jul</span><span style="--d: 76;">Aug</span>
+      <span style="--d: 106;">Sep</span><span style="--d: 137;">Oct</span><span style="--d: 167;">Nov</span>
+    </div>
+    <div class="c-timeline__phases">
+      <div class="c-timeline__phase is-done" style="--from: 1;   --to: 15;"><i>0</i><span>Scoping</span><small>Jun 2–15<br>Technical scoping</small></div>
+      <div class="c-timeline__phase is-done" style="--from: 15;  --to: 57;"><i>1</i><span>Baseline</span><small>Jun 16 – Jul 27<br>EDA, scorer + 3 frozen baselines</small></div>
+      <div class="c-timeline__phase is-done" style="--from: 57;  --to: 126;"><i>2</i><span>Judge + solution infra</span><small>Jul 28 – Oct 5<br>Model · calibration · blocked CV</small></div>
+      <div class="c-timeline__phase is-next" style="--from: 126; --to: 169;"><i>3</i><span>Forward paper-trading</span><small>Oct 6 – Nov 16<br>Daily run + track record (+P4 sim)</small></div>
+      <div class="c-timeline__phase" style="--from: 169; --to: 183;"><i>✓</i><span>Handover</span><small>Nov 17–30<br>Sponsor handover</small></div>
+    </div>
+  </section>
+
+  <section class="c-timeline__gates reveal">
+    <div class="c-timeline__gate"><span>Phase 0 gate</span>Logging live · ID join confirmed</div>
+    <div class="c-timeline__gate"><span>Phase 1 gate</span>3 baselines frozen pre-training</div>
+    <div class="c-timeline__gate is-now"><span>Midpoint gate · today</span>Judge beats the rules-based system</div>
+    <div class="c-timeline__gate"><span>Final gate</span>Credible forward track record</div>
+  </section>
+
+  <p class="c-timeline__foot">Phase 4 (simulation): hardening + data-augmentation overlay during Phase 3.</p>
+</div>

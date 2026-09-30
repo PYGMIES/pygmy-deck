@@ -1,0 +1,23 @@
+/* =====================================================================
+   === THEME: DARK ===
+   Inverted: charcoal canvas, light cards. Applies to any element with
+   data-theme="dark" (a whole deck via deck.json, a slide, or a block).
+   ===================================================================== */
+
+[data-theme="dark"] {
+  --bg: #1d1e20;
+  --bg-deep: #26272a;
+  --ink: #f2f2f2;
+  --ink-accent: #e9ddd2;       /* warm off-white for sub-headings */
+  --ink-muted: #a3a3a3;
+  --rule: #3d3e42;
+  --card: #ececea;
+  --on-card: #1b1b1b;
+  --on-card-muted: #4a4a4a;
+  --chrome: #6a6a6a;
+  --letterbox: #0e0e0f;
+  --accent: #e8a948;
+  --accent-soft: #4a3a22;
+  --danger: #e2675f;
+  --danger-bg: #3c2322;
+}

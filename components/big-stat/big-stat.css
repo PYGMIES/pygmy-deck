@@ -1,0 +1,29 @@
+/* === COMPONENT: big-stat === oversized number, label, caption */
+.c-big-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.c-big-stat__value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-mega);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.c-big-stat h3 {
+  font-size: var(--fs-h3);
+  color: var(--ink-accent);
+  padding-top: 20px;
+  border-top: var(--rule-w) solid var(--rule);
+}
+
+.c-big-stat p {
+  font-size: var(--fs-body);
+  color: var(--ink-muted);
+  min-height: 2.7em; /* keeps labels aligned when captions wrap differently */
+}

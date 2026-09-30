@@ -1,0 +1,9 @@
+/* === COMPONENT: split === multi-column layout; each child is a column */
+.c-split {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: var(--split-cols);
+  align-items: var(--split-align);
+  gap: var(--gap-xl);
+}

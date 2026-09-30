@@ -1,0 +1,35 @@
+/* === COMPONENT: quadrant-cell === one cell of a quadrant.
+   class="is-focus" highlights it in the accent colour. */
+.c-quadrant-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 28px 32px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.c-quadrant-cell h3 {
+  font-size: 36px;
+}
+
+.c-quadrant-cell p {
+  font-size: 24px;
+  line-height: 1.25;
+  color: var(--ink-muted);
+  max-width: none;
+}
+
+.c-quadrant-cell.is-focus {
+  background: var(--card);
+  box-shadow: inset 0 0 0 4px var(--accent);
+}
+
+.c-quadrant-cell.is-focus h3 {
+  color: var(--on-card);
+}
+
+.c-quadrant-cell.is-focus p {
+  color: var(--on-card-muted);
+}

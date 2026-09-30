@@ -1,0 +1,36 @@
+/* === COMPONENT: quote === pull quote with a heavy opening mark */
+.c-quote {
+  position: relative;
+  max-width: 1400px;
+  padding-left: 200px;
+}
+
+.c-quote::before {
+  content: "\201C";
+  position: absolute;
+  left: 0;
+  top: -40px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 300px;
+  line-height: 1;
+  color: var(--card);
+}
+
+.c-quote blockquote {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 84px;
+  line-height: 0.98;
+  letter-spacing: var(--display-tracking);
+  color: var(--ink);
+}
+
+.c-quote figcaption {
+  margin-top: var(--gap-m);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}

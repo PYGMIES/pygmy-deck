@@ -1,0 +1,7 @@
+/* === COMPONENT: card-grid === equal-width grid of cards */
+.c-card-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+  gap: var(--gap-m);
+  align-items: stretch;
+}

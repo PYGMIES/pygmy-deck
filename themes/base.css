@@ -1,0 +1,56 @@
+/* =====================================================================
+   === THEME BASE ===
+   Element defaults shared by every theme. Slides are a flex column so
+   components stack top-to-bottom and layout blocks can flex to fill.
+   ===================================================================== */
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-l);
+  font-weight: var(--body-weight);
+  letter-spacing: var(--body-tracking);
+}
+
+.slide h1,
+.slide h2,
+.slide h3,
+.slide h4 {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: var(--display-leading);
+  color: var(--ink);
+}
+
+.slide p {
+  max-width: 34ch;
+}
+
+.slide strong {
+  font-weight: 700;
+}
+
+.slide em {
+  font-style: normal;
+  color: var(--ink-accent);
+  background: linear-gradient(transparent 62%, var(--rule) 62%);
+}
+
+.slide p:empty,
+.slide h2:empty,
+.slide h3:empty,
+.slide span:empty,
+.slide figcaption:empty {
+  display: none;
+}
+
+/* Utility: indent content under the slide title (screenshot rhythm) */
+.inset {
+  margin-left: var(--inset);
+}
+
+/* Utility: push to bottom of the slide column */
+.push-end {
+  margin-top: auto;
+}

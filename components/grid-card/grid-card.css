@@ -1,0 +1,32 @@
+/* === COMPONENT: grid-card === compact card for grids: kicker, title, body */
+.c-grid-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 440px;
+  padding: 44px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-grid-card__kicker {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-card-muted);
+}
+
+.c-grid-card h3 {
+  font-size: var(--fs-h2);
+  color: var(--on-card);
+}
+
+.c-grid-card p {
+  margin-top: auto;
+  font-size: 28px;
+  line-height: 1.25;
+  max-width: none;
+  color: var(--on-card-muted);
+}

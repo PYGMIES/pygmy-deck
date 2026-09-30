@@ -1,0 +1,48 @@
+/* =====================================================================
+   === THEME TOKENS ===
+   Theme-independent design tokens: fonts, type scale, spacing, radii,
+   motion. All sizes are at the 1920×1080 design size (px on purpose).
+   Colours live in light.css / dark.css.
+   ===================================================================== */
+
+:root {
+  /* --- Fonts --- League Spartan for display, Montserrat stands in for Garet */
+  --font-display: "League Spartan", "Montserrat", sans-serif;
+  --font-body: "Montserrat", "Garet", sans-serif;
+
+  /* --- Display treatment (the tight, stacked look) --- */
+  --display-weight: 700;
+  --display-tracking: -0.035em;
+  --display-leading: 0.88;
+
+  /* --- Type scale --- */
+  --fs-hero: 180px;     /* cover / closing */
+  --fs-mega: 260px;     /* big-stat numbers */
+  --fs-title: 104px;    /* slide-title */
+  --fs-h2: 64px;        /* section-heading */
+  --fs-card: 76px;      /* label-card heading */
+  --fs-h3: 44px;        /* grid-card heading, quote */
+  --fs-lead: 38px;      /* lead / subtitle */
+  --fs-body: 32px;      /* default body */
+  --fs-small: 24px;     /* captions, meta */
+  --body-weight: 500;
+  --body-tracking: 0.02em;
+
+  /* --- Spacing --- */
+  --pad-x: 96px;        /* slide horizontal padding */
+  --pad-y: 72px;        /* slide vertical padding */
+  --inset: 72px;        /* content indent under slide-title (screenshot) */
+  --gap-xs: 12px;
+  --gap-s: 24px;
+  --gap-m: 36px;
+  --gap-l: 56px;
+  --gap-xl: 88px;
+
+  /* --- Shape --- */
+  --radius: 22px;
+  --radius-s: 12px;
+  --rule-w: 3px;
+
+  /* --- Motion --- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}

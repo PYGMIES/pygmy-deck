@@ -1,0 +1,34 @@
+/* === COMPONENT: agenda-item === number · title · owner · minutes */
+.c-agenda-item {
+  display: grid;
+  grid-template-columns: 110px 1fr 420px 130px;
+  align-items: baseline;
+  gap: var(--gap-m);
+  padding: 20px 0;
+  border-bottom: 2px solid var(--rule);
+}
+
+.c-agenda-item__num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 44px;
+  color: var(--chrome);
+}
+
+.c-agenda-item h3 {
+  font-size: 52px;
+  line-height: 1;
+}
+
+.c-agenda-item__owner {
+  font-size: 26px;
+  color: var(--ink-accent);
+}
+
+.c-agenda-item__mins {
+  font-size: 26px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,39 @@
+/* === COMPONENT: closing === thank-you / call-to-action */
+.c-closing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--gap-l);
+}
+
+.c-closing h1 {
+  font-size: var(--fs-hero);
+  line-height: 0.84;
+}
+
+.c-closing__card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--gap-l);
+  padding: 44px 48px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-closing__card p {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 56px;
+  line-height: 0.95;
+  max-width: 20ch;
+}
+
+.c-closing__card span {
+  font-size: var(--fs-body);
+  color: var(--on-card-muted);
+  text-align: right;
+}

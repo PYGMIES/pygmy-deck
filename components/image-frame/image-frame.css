@@ -1,0 +1,22 @@
+/* === COMPONENT: image-frame === rounded image with caption; fills its column */
+.c-image-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 0;
+  height: 100%;
+}
+
+.c-image-frame img {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  object-fit: var(--img-fit);
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.c-image-frame figcaption {
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}

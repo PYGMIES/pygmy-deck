@@ -1,0 +1,9 @@
+/* === COMPONENT: column === vertical group with an optional fixed width */
+.c-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--col-gap);
+  width: var(--col-width);
+  min-width: 0;
+  min-height: 0;
+}

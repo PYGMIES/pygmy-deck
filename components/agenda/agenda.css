@@ -1,0 +1,7 @@
+/* === COMPONENT: agenda === ruled list of agenda-item rows */
+.c-agenda {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  border-top: var(--rule-w) solid var(--ink);
+}

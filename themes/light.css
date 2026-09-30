@@ -1,0 +1,24 @@
+/* =====================================================================
+   === THEME: LIGHT === (default)
+   Soft grey canvas, near-black headings, charcoal cards.
+   Applies at :root and to any element with data-theme="light".
+   ===================================================================== */
+
+:root,
+[data-theme="light"] {
+  --bg: #f2f2f2;
+  --bg-deep: #e7e7e5;          /* subtle panels, table stripes */
+  --ink: #1b1b1b;              /* headings + body */
+  --ink-accent: #2b1d14;       /* warm near-black for sub-headings */
+  --ink-muted: #5c5c5c;        /* captions, meta */
+  --rule: #cfcfcf;             /* hairlines */
+  --card: #2a2b2d;             /* charcoal card */
+  --on-card: #f4f4f4;          /* text on card */
+  --on-card-muted: #c9c9c9;
+  --chrome: #9a9a9a;           /* progress + counter */
+  --letterbox: #dcdcdc;
+  --accent: #d9922e;           /* "now" markers, highlighted flows */
+  --accent-soft: #f1dfc4;      /* accent-tinted panels */
+  --danger: #b3302b;           /* limits, losses */
+  --danger-bg: #f8e1df;
+}
