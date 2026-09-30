@@ -3,7 +3,7 @@
 
 Usage:
     python3 build.py                 build every deck in decks/ (except _template)
-    python3 build.py <deck>          build decks/<deck> -> dist/<deck>.html
+    python3 build.py <deck>          build decks/<deck> -> decks/<deck>/<deck>.html
     python3 build.py <deck> --watch  rebuild on any change
     python3 build.py new <deck>      scaffold decks/<deck> from decks/_template
 
@@ -37,7 +37,6 @@ CORE = ROOT / "core"
 THEMES = ROOT / "themes"
 COMPONENTS = ROOT / "components"
 DECKS = ROOT / "decks"
-DIST = ROOT / "dist"
 TEMPLATE_DECK = "_template"
 
 DEFAULT_FONTS_URL = (
@@ -268,8 +267,7 @@ def build(deck: str) -> Path:
 </html>
 """
     doc, missing = inline_assets(doc, deck_dir)
-    DIST.mkdir(exist_ok=True)
-    out = DIST / f"{deck}.html"
+    out = deck_output(deck)
     out.write_text(doc, encoding="utf-8")
 
     print(f"✓ {deck}: {len(slides)} slides → {out.relative_to(ROOT)} ({out.stat().st_size / 1024:.0f} KB)")
@@ -280,6 +278,11 @@ def build(deck: str) -> Path:
 
 
 # === COMMANDS =============================================================
+
+def deck_output(deck: str) -> Path:
+    """The built deck lives in its own folder, committed next to its source."""
+    return DECKS / deck / f"{deck}.html"
+
 
 def all_decks() -> list[str]:
     return sorted(p.name for p in DECKS.iterdir() if p.is_dir() and not p.name.startswith(("_", ".")))
@@ -301,7 +304,8 @@ def new_deck(name: str) -> None:
 
 def snapshot(deck: str) -> dict[Path, float]:
     watched = [CORE, THEMES, COMPONENTS, DECKS / deck]
-    return {f: f.stat().st_mtime for d in watched for f in d.rglob("*") if f.is_file()}
+    out = deck_output(deck)  # our own output must not retrigger a build
+    return {f: f.stat().st_mtime for d in watched for f in d.rglob("*") if f.is_file() and f != out}
 
 
 def watch(deck: str) -> None:

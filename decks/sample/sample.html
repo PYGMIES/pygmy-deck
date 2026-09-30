@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<!-- Built by build.py from decks/sample/ — edit the source slides, not this file. -->
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C22 Model Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700;800;900&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap">
+<style>
+/* ===== CORE STAGE ===== */
+/* =====================================================================
+   === CORE STAGE ===
+   Fixed 1920×1080 canvas, scaled uniformly to the viewport by runtime.js.
+   Slides never reflow — the whole stage letterboxes / pillarboxes.
+   ===================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--letterbox, #0d0d0d);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* === VIEWPORT WRAPPER === fills the window and centres the stage */
+.deck-viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* === STAGE === authored at 1920×1080; --stage-scale set by runtime.js */
+.deck-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center center;
+  overflow: hidden;
+}
+
+/* === SLIDES === visibility-based switching (never display:none) */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.35;
+  padding: var(--pad-y) var(--pad-x);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-out), visibility 0s linear 0.5s;
+}
+
+.slide.active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.5s var(--ease-out), visibility 0s;
+}
+
+/* === REVEAL ANIMATIONS ===
+   Any direct child of a slide, plus anything with .reveal, fades up in
+   sequence when the slide becomes active. --i is assigned by runtime.js. */
+.slide .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms + 120ms);
+}
+
+.slide.active .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* === DECK CHROME === progress bar + counter, inside the stage */
+.deck-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 6px;
+  width: calc(var(--progress, 0) * 100%);
+  background: var(--chrome, #888);
+  z-index: 50;
+  transition: width 0.4s var(--ease-out);
+}
+
+.deck-counter {
+  position: absolute;
+  right: 48px;
+  bottom: 28px;
+  z-index: 50;
+  font: 500 20px/1 var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--chrome, #888);
+  font-variant-numeric: tabular-nums;
+}
+
+/* === EDIT MODE === press E (or hover top-left corner + click) */
+.edit-toggle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 56px;
+  height: 56px;
+  z-index: 100;
+  opacity: 0;
+  border: 0;
+  cursor: pointer;
+  font: 600 12px/1 system-ui, sans-serif;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border-bottom-right-radius: 12px;
+  transition: opacity 0.2s;
+}
+
+.edit-toggle:hover,
+body.editing .edit-toggle {
+  opacity: 1;
+}
+
+body.editing [contenteditable="true"] {
+  outline: 2px dashed rgba(255, 160, 0, 0.7);
+  outline-offset: 4px;
+  cursor: text;
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .slide.active,
+  .slide .reveal,
+  .deck-progress {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .slide .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* === PRINT === one slide per page, all visible */
+@media print {
+  @page {
+    size: 1920px 1080px;
+    margin: 0;
+  }
+
+  html,
+  body {
+    overflow: visible;
+    height: auto;
+  }
+
+  .deck-viewport {
+    position: static;
+    display: block;
+  }
+
+  .deck-stage {
+    position: static;
+    transform: none;
+    height: auto;
+    overflow: visible;
+  }
+
+  .slide {
+    position: relative;
+    visibility: visible;
+    opacity: 1;
+    break-after: page;
+  }
+
+  .slide .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .deck-progress,
+  .deck-counter,
+  .edit-toggle {
+    display: none;
+  }
+}
+
+/* ===== THEME TOKENS ===== */
+/* =====================================================================
+   === THEME TOKENS ===
+   Theme-independent design tokens: fonts, type scale, spacing, radii,
+   motion. All sizes are at the 1920×1080 design size (px on purpose).
+   Colours live in light.css / dark.css.
+   ===================================================================== */
+
+:root {
+  /* --- Fonts --- League Spartan for display, Montserrat stands in for Garet */
+  --font-display: "League Spartan", "Montserrat", sans-serif;
+  --font-body: "Montserrat", "Garet", sans-serif;
+
+  /* --- Display treatment (the tight, stacked look) --- */
+  --display-weight: 700;
+  --display-tracking: -0.035em;
+  --display-leading: 0.88;
+
+  /* --- Type scale --- */
+  --fs-hero: 180px;     /* cover / closing */
+  --fs-mega: 260px;     /* big-stat numbers */
+  --fs-title: 104px;    /* slide-title */
+  --fs-h2: 64px;        /* section-heading */
+  --fs-card: 76px;      /* label-card heading */
+  --fs-h3: 44px;        /* grid-card heading, quote */
+  --fs-lead: 38px;      /* lead / subtitle */
+  --fs-body: 32px;      /* default body */
+  --fs-small: 24px;     /* captions, meta */
+  --body-weight: 500;
+  --body-tracking: 0.02em;
+
+  /* --- Spacing --- */
+  --pad-x: 96px;        /* slide horizontal padding */
+  --pad-y: 72px;        /* slide vertical padding */
+  --inset: 72px;        /* content indent under slide-title (screenshot) */
+  --gap-xs: 12px;
+  --gap-s: 24px;
+  --gap-m: 36px;
+  --gap-l: 56px;
+  --gap-xl: 88px;
+
+  /* --- Shape --- */
+  --radius: 22px;
+  --radius-s: 12px;
+  --rule-w: 3px;
+
+  /* --- Motion --- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===== THEME LIGHT ===== */
+/* =====================================================================
+   === THEME: LIGHT === (default)
+   Soft grey canvas, near-black headings, charcoal cards.
+   Applies at :root and to any element with data-theme="light".
+   ===================================================================== */
+
+:root,
+[data-theme="light"] {
+  --bg: #f2f2f2;
+  --bg-deep: #e7e7e5;          /* subtle panels, table stripes */
+  --ink: #1b1b1b;              /* headings + body */
+  --ink-accent: #2b1d14;       /* warm near-black for sub-headings */
+  --ink-muted: #5c5c5c;        /* captions, meta */
+  --rule: #cfcfcf;             /* hairlines */
+  --card: #2a2b2d;             /* charcoal card */
+  --on-card: #f4f4f4;          /* text on card */
+  --on-card-muted: #c9c9c9;
+  --chrome: #9a9a9a;           /* progress + counter */
+  --letterbox: #dcdcdc;
+  --accent: #d9922e;           /* "now" markers, highlighted flows */
+  --accent-soft: #f1dfc4;      /* accent-tinted panels */
+  --danger: #b3302b;           /* limits, losses */
+  --danger-bg: #f8e1df;
+}
+
+/* ===== THEME DARK ===== */
+/* =====================================================================
+   === THEME: DARK ===
+   Inverted: charcoal canvas, light cards. Applies to any element with
+   data-theme="dark" (a whole deck via deck.json, a slide, or a block).
+   ===================================================================== */
+
+[data-theme="dark"] {
+  --bg: #1d1e20;
+  --bg-deep: #26272a;
+  --ink: #f2f2f2;
+  --ink-accent: #e9ddd2;       /* warm off-white for sub-headings */
+  --ink-muted: #a3a3a3;
+  --rule: #3d3e42;
+  --card: #ececea;
+  --on-card: #1b1b1b;
+  --on-card-muted: #4a4a4a;
+  --chrome: #6a6a6a;
+  --letterbox: #0e0e0f;
+  --accent: #e8a948;
+  --accent-soft: #4a3a22;
+  --danger: #e2675f;
+  --danger-bg: #3c2322;
+}
+
+/* ===== THEME BASE ===== */
+/* =====================================================================
+   === THEME BASE ===
+   Element defaults shared by every theme. Slides are a flex column so
+   components stack top-to-bottom and layout blocks can flex to fill.
+   ===================================================================== */
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-l);
+  font-weight: var(--body-weight);
+  letter-spacing: var(--body-tracking);
+}
+
+.slide h1,
+.slide h2,
+.slide h3,
+.slide h4 {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: var(--display-leading);
+  color: var(--ink);
+}
+
+.slide p {
+  max-width: 34ch;
+}
+
+.slide strong {
+  font-weight: 700;
+}
+
+.slide em {
+  font-style: normal;
+  color: var(--ink-accent);
+  background: linear-gradient(transparent 62%, var(--rule) 62%);
+}
+
+.slide p:empty,
+.slide h2:empty,
+.slide h3:empty,
+.slide span:empty,
+.slide figcaption:empty {
+  display: none;
+}
+
+/* Utility: indent content under the slide title (screenshot rhythm) */
+.inset {
+  margin-left: var(--inset);
+}
+
+/* Utility: push to bottom of the slide column */
+.push-end {
+  margin-top: auto;
+}
+
+/* ===== COMPONENT cover ===== */
+/* === COMPONENT: cover === title slide: kicker/meta bar, huge stacked title,
+   subtitle beside a charcoal block that echoes the card language */
+.c-cover {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.c-cover__top {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: var(--rule-w) solid var(--rule);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.c-cover__title {
+  margin-top: auto;
+  font-size: var(--fs-hero);
+  line-height: 0.84;
+  max-width: 13ch;
+}
+
+.c-cover__foot {
+  display: flex;
+  align-items: stretch;
+  gap: var(--gap-l);
+  margin-top: var(--gap-l);
+}
+
+.c-cover__foot p {
+  flex: none;
+  max-width: 26ch;
+  font-size: var(--fs-lead);
+  line-height: 1.2;
+  color: var(--ink-accent);
+}
+
+.c-cover__block {
+  flex: 1;
+  min-height: 120px;
+  border-radius: var(--radius);
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 18px,
+      rgba(255, 255, 255, 0.04) 18px 20px
+    ),
+    var(--card);
+}
+
+/* ===== COMPONENT slide-title ===== */
+/* === COMPONENT: slide-title === big top-left page title, optional kicker */
+.c-slide-title {
+  flex: none;
+}
+
+.c-slide-title h1 {
+  font-size: var(--fs-title);
+  line-height: 1;
+}
+
+.c-slide-title__kicker {
+  display: block;
+  margin-bottom: 14px;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* ===== COMPONENT column ===== */
+/* === COMPONENT: column === vertical group with an optional fixed width */
+.c-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--col-gap);
+  width: var(--col-width);
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ===== COMPONENT section-heading ===== */
+/* === COMPONENT: section-heading === heading, hairline rule, subtitle */
+.c-section-heading {
+  flex: none;
+}
+
+.c-section-heading h2 {
+  font-size: var(--fs-h2);
+  color: var(--ink-accent);
+  padding-bottom: 14px;
+  border-bottom: var(--rule-w) solid var(--rule);
+}
+
+.c-section-heading p {
+  margin-top: 14px;
+  font-size: var(--fs-body);
+  max-width: none;
+}
+
+/* ===== COMPONENT card-stack ===== */
+/* === COMPONENT: card-stack === vertical stack of cards */
+.c-card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap);
+}
+
+/* ===== COMPONENT label-card ===== */
+/* === COMPONENT: label-card === charcoal card: big heading left, note right */
+.c-label-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-m);
+  min-height: 176px;
+  padding: 28px 40px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-label-card h3 {
+  font-size: var(--fs-card);
+  color: var(--on-card);
+  flex: none;
+  white-space: nowrap; /* line breaks come from <br> in the title param */
+}
+
+.c-label-card p {
+  font-size: 29px;
+  line-height: 1.08;
+  text-align: right;
+  max-width: 11em;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+/* ===== COMPONENT section-divider ===== */
+/* === COMPONENT: section-divider === full-bleed chapter break in card colours */
+.c-section-divider {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--pad-y) var(--pad-x);
+  background: var(--card);
+  color: var(--on-card);
+  overflow: hidden;
+}
+
+.c-section-divider__num {
+  position: absolute;
+  top: -60px;
+  right: 40px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 620px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 3px var(--on-card-muted);
+  opacity: 0.35;
+}
+
+.c-section-divider h2 {
+  font-size: 150px;
+  line-height: 0.86;
+  color: var(--on-card);
+  max-width: 11ch;
+}
+
+.c-section-divider p {
+  margin-top: var(--gap-m);
+  font-size: var(--fs-lead);
+  color: var(--on-card-muted);
+}
+
+.c-section-divider__presenter {
+  display: inline-block;
+  margin-top: var(--gap-l);
+  padding: 12px 22px;
+  border: 2px solid var(--on-card-muted);
+  border-radius: 999px;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-card);
+}
+
+/* ===== COMPONENT split ===== */
+/* === COMPONENT: split === multi-column layout; each child is a column */
+.c-split {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: var(--split-cols);
+  align-items: var(--split-align);
+  gap: var(--gap-xl);
+}
+
+/* ===== COMPONENT big-stat ===== */
+/* === COMPONENT: big-stat === oversized number, label, caption */
+.c-big-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.c-big-stat__value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-mega);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.c-big-stat h3 {
+  font-size: var(--fs-h3);
+  color: var(--ink-accent);
+  padding-top: 20px;
+  border-top: var(--rule-w) solid var(--rule);
+}
+
+.c-big-stat p {
+  font-size: var(--fs-body);
+  color: var(--ink-muted);
+  min-height: 2.7em; /* keeps labels aligned when captions wrap differently */
+}
+
+/* ===== COMPONENT card-grid ===== */
+/* === COMPONENT: card-grid === equal-width grid of cards */
+.c-card-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+  gap: var(--gap-m);
+  align-items: stretch;
+}
+
+/* ===== COMPONENT grid-card ===== */
+/* === COMPONENT: grid-card === compact card for grids: kicker, title, body */
+.c-grid-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 440px;
+  padding: 44px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-grid-card__kicker {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-card-muted);
+}
+
+.c-grid-card h3 {
+  font-size: var(--fs-h2);
+  color: var(--on-card);
+}
+
+.c-grid-card p {
+  margin-top: auto;
+  font-size: 28px;
+  line-height: 1.25;
+  max-width: none;
+  color: var(--on-card-muted);
+}
+
+/* ===== COMPONENT bullet-list ===== */
+/* === COMPONENT: bullet-list === ruled list; children are <li> (add class="reveal" to stagger) */
+.c-bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.c-bullet-list li {
+  position: relative;
+  padding: 26px 0 26px 56px;
+  font-size: var(--fs-body);
+  line-height: 1.25;
+  border-bottom: 2px solid var(--rule);
+}
+
+.c-bullet-list li:first-child {
+  border-top: 2px solid var(--rule);
+}
+
+.c-bullet-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+  border-radius: 6px;
+  background: var(--card);
+}
+
+.c-bullet-list li strong {
+  font-family: var(--font-display);
+  font-size: 1.15em;
+  letter-spacing: -0.01em;
+  margin-right: 0.3em;
+}
+
+/* ===== COMPONENT image-frame ===== */
+/* === COMPONENT: image-frame === rounded image with caption; fills its column */
+.c-image-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 0;
+  height: 100%;
+}
+
+.c-image-frame img {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  object-fit: var(--img-fit);
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.c-image-frame figcaption {
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+
+/* ===== COMPONENT compare-table ===== */
+/* === COMPONENT: compare-table ===
+   Children are <thead>/<tbody> rows. Mark a highlighted column cell with
+   class="is-focus", good/bad values with class="is-good" / "is-bad". */
+.c-compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 30px;
+  font-variant-numeric: tabular-nums;
+}
+
+.c-compare-table th,
+.c-compare-table td {
+  padding: 24px 28px;
+  text-align: right;
+  border-bottom: 2px solid var(--rule);
+}
+
+.c-compare-table th:first-child,
+.c-compare-table td:first-child {
+  text-align: left;
+}
+
+.c-compare-table thead th {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 36px;
+  letter-spacing: -0.01em;
+  color: var(--ink-accent);
+  border-bottom: var(--rule-w) solid var(--ink);
+}
+
+.c-compare-table .is-focus {
+  background: var(--card);
+  color: var(--on-card);
+  font-weight: 700;
+}
+
+.c-compare-table thead .is-focus {
+  color: var(--on-card);
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+}
+
+.c-compare-table tbody tr:last-child .is-focus {
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+}
+
+.c-compare-table .is-good::after {
+  content: " \2191";
+}
+
+.c-compare-table .is-bad {
+  color: var(--ink-muted);
+}
+
+/* ===== COMPONENT quote ===== */
+/* === COMPONENT: quote === pull quote with a heavy opening mark */
+.c-quote {
+  position: relative;
+  max-width: 1400px;
+  padding-left: 200px;
+}
+
+.c-quote::before {
+  content: "\201C";
+  position: absolute;
+  left: 0;
+  top: -40px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 300px;
+  line-height: 1;
+  color: var(--card);
+}
+
+.c-quote blockquote {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 84px;
+  line-height: 0.98;
+  letter-spacing: var(--display-tracking);
+  color: var(--ink);
+}
+
+.c-quote figcaption {
+  margin-top: var(--gap-m);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* ===== COMPONENT closing ===== */
+/* === COMPONENT: closing === thank-you / call-to-action */
+.c-closing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--gap-l);
+}
+
+.c-closing h1 {
+  font-size: var(--fs-hero);
+  line-height: 0.84;
+}
+
+.c-closing__card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--gap-l);
+  padding: 44px 48px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-closing__card p {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 56px;
+  line-height: 0.95;
+  max-width: 20ch;
+}
+
+.c-closing__card span {
+  font-size: var(--fs-body);
+  color: var(--on-card-muted);
+  text-align: right;
+}
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" aria-label="C22 Model Review">
+
+
+<section class="slide" data-slide="01" data-name="cover">
+<div class="c-cover ">
+  <div class="c-cover__top reveal">
+    <span>Model Review</span>
+    <span>Q4 · 2026</span>
+  </div>
+  <h1 class="c-cover__title reveal">Beating<br>the Baseline</h1>
+  <div class="c-cover__foot reveal">
+    <p>Can a learned model outperform C22's static threshold rule?</p>
+    <div class="c-cover__block" aria-hidden="true"></div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-slide="02" data-name="success-metrics">
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Our Success Metrics</h1>
+</header>
+<div class="c-column inset" style="--col-width: 792px; --col-gap: var(--gap-m);">
+  
+  <header class="c-section-heading reveal ">
+  <h2>Model Benchmarks</h2>
+  <p>To prove value, our model must beat all 3</p>
+</header>
+  <div class="c-card-stack " style="--stack-gap: 28px;">
+  
+    <div class="c-label-card reveal ">
+  <h3>Reverse<br>Everything</h3>
+  <p>Fading every single trade – the absolute floor</p>
+</div>
+    <div class="c-label-card reveal ">
+  <h3>Coin<br>Flip</h3>
+  <p>A fully randomised baseline</p>
+</div>
+    <div class="c-label-card reveal ">
+  <h3>C22's<br>Current Rule</h3>
+  <p>The existing static threshold system</p>
+</div>
+  
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="03" data-name="section-model">
+<div class="c-section-divider ">
+  <span class="c-section-divider__num reveal">01</span>
+  <div class="c-section-divider__text">
+    <h2 class="reveal">Building the Model</h2>
+    <p class="reveal">Data, features and training setup</p>
+    <span class="c-section-divider__presenter reveal"></span>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-slide="04" data-name="headline-numbers">
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Headline Numbers</h1>
+</header>
+<div class="c-split inset" style="--split-cols: 1fr 1fr 1fr; --split-align: end;">
+  
+  <div class="c-big-stat reveal ">
+  <span class="c-big-stat__value">3/3</span>
+  <h3>Benchmarks beaten</h3>
+  <p>Placeholder — replace with results</p>
+</div>
+  <div class="c-big-stat reveal ">
+  <span class="c-big-stat__value">+18%</span>
+  <h3>Over current rule</h3>
+  <p>Placeholder uplift figure</p>
+</div>
+  <div class="c-big-stat reveal ">
+  <span class="c-big-stat__value">42k</span>
+  <h3>Trades evaluated</h3>
+  <p>Placeholder sample size</p>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="05" data-name="approach">
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Our Approach</h1>
+</header>
+<div class="c-card-grid inset" style="--grid-cols: 3;">
+  
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">Step 01</span>
+  <h3>Collect</h3>
+  <p>Pull historical trades and the signals C22 already uses.</p>
+</article>
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">Step 02</span>
+  <h3>Engineer</h3>
+  <p>Build features that a static threshold can't see.</p>
+</article>
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">Step 03</span>
+  <h3>Evaluate</h3>
+  <p>Walk-forward test against every benchmark.</p>
+</article>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="06" data-name="results-curve">
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Where It Pulls Ahead</h1>
+</header>
+<div class="c-split inset" style="--split-cols: 1fr 1.15fr; --split-align: start;">
+  
+  <ul class="c-bullet-list ">
+  
+    <li class="reveal"><strong>Early</strong> Tracks the rule closely</li>
+    <li class="reveal"><strong>Mid</strong> Gap opens as regimes shift</li>
+    <li class="reveal"><strong>Late</strong> Compounding edge holds</li>
+  
+</ul>
+  <figure class="c-image-frame reveal " style="--img-fit: cover;">
+  <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj4KICA8cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI2U3ZTdlNSIvPgogIDxnIHN0cm9rZT0iI2NmY2ZjZiIgc3Ryb2tlLXdpZHRoPSIyIj4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMTAwIiB4Mj0iODAwIiB5Mj0iMTAwIi8+PGxpbmUgeDE9IjAiIHkxPSIyMDAiIHgyPSI4MDAiIHkyPSIyMDAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMzAwIiB4Mj0iODAwIiB5Mj0iMzAwIi8+PGxpbmUgeDE9IjAiIHkxPSI0MDAiIHgyPSI4MDAiIHkyPSI0MDAiLz4KICA8L2c+CiAgPHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzlhOWE5YSIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtZGFzaGFycmF5PSIxNCAxMCIKICAgIHBvaW50cz0iMCwzODAgMTAwLDM3MiAyMDAsMzkwIDMwMCwzNjUgNDAwLDM3OCA1MDAsMzYwIDYwMCwzNzIgNzAwLDM1NSA4MDAsMzYyIi8+CiAgPHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJhMmIyZCIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIKICAgIHBvaW50cz0iMCwzOTAgMTAwLDM1MCAyMDAsMzMwIDMwMCwyODAgNDAwLDI1MCA1MDAsMjEwIDYwMCwxNzAgNzAwLDE1MCA4MDAsOTAiLz4KPC9zdmc+Cg==" alt="Model equity curve versus current rule">
+  <figcaption>Solid: model · Dashed: current rule (illustrative)</figcaption>
+</figure>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="07" data-name="scorecard">
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Scorecard</h1>
+</header>
+<div class="c-column inset" style="--col-width: auto; --col-gap: var(--gap-m);">
+  
+  <table class="c-compare-table reveal ">
+  
+    <thead><tr><th>Metric</th><th>Reverse</th><th>Coin Flip</th><th>C22 Rule</th><th class="is-focus">Our Model</th></tr></thead>
+    <tbody>
+      <tr><td>Hit rate</td><td class="is-bad">41%</td><td>50%</td><td>54%</td><td class="is-focus is-good">59%</td></tr>
+      <tr><td>Sharpe</td><td class="is-bad">-0.6</td><td>0.0</td><td>0.9</td><td class="is-focus is-good">1.4</td></tr>
+      <tr><td>Max drawdown</td><td class="is-bad">-38%</td><td>-22%</td><td>-15%</td><td class="is-focus is-good">-9%</td></tr>
+    </tbody>
+  
+</table>
+
+</div>
+</section>
+
+
+<section data-slide="08" data-name="quote" class="slide" data-theme="dark" style="justify-content: center;">
+<figure class="c-quote reveal ">
+  <blockquote>A static rule can't adapt. The market already has.</blockquote>
+  <figcaption>Placeholder attribution</figcaption>
+</figure>
+</section>
+
+
+<section class="slide" data-slide="09" data-name="closing">
+<div class="c-closing ">
+  <h1 class="reveal">Next<br>Steps</h1>
+  <div class="c-closing__card reveal">
+    <p>Pilot the model alongside the current rule for one quarter.</p>
+    <span>team@example.com</span>
+  </div>
+</div>
+</section>
+
+<div class="deck-progress" aria-hidden="true"></div>
+<div class="deck-counter" aria-hidden="true"></div>
+</main>
+</div>
+<script>
+/* =====================================================================
+   === CORE RUNTIME ===
+   Scale-to-fit, navigation (keys / click / swipe / hash), progress,
+   reveal staggering and inline edit mode. No dependencies.
+   ===================================================================== */
+(function () {
+  "use strict";
+
+  const STAGE_W = 1920;
+  const STAGE_H = 1080;
+
+  const stage = document.querySelector(".deck-stage");
+  const slides = Array.from(stage.querySelectorAll(".slide"));
+  const progress = stage.querySelector(".deck-progress");
+  const counter = stage.querySelector(".deck-counter");
+  let current = 0;
+
+  /* === SCALE === uniform fit, never re-layout */
+  function fit() {
+    const scale = Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H);
+    stage.style.setProperty("--stage-scale", scale);
+  }
+  window.addEventListener("resize", fit);
+  fit();
+
+  /* === REVEAL ORDER === stagger index per slide */
+  slides.forEach((slide) => {
+    slide.querySelectorAll(".reveal").forEach((el, i) => el.style.setProperty("--i", i));
+  });
+
+  /* === NAVIGATION === */
+  function go(index) {
+    const next = Math.max(0, Math.min(slides.length - 1, index));
+    slides[current].classList.remove("active");
+    current = next;
+    slides[current].classList.add("active");
+    if (progress) {
+      const denom = Math.max(1, slides.length - 1);
+      progress.style.setProperty("--progress", current / denom);
+    }
+    if (counter) counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
+    history.replaceState(null, "", `#${current + 1}`);
+  }
+
+  function fromHash() {
+    const n = parseInt(location.hash.slice(1), 10);
+    return Number.isFinite(n) ? n - 1 : 0;
+  }
+
+  /* Keys typed into form fields or overlays (e.g. the --annotate build) aren't navigation */
+  const isForeign = (el) =>
+    el instanceof Element && !!el.closest("input, textarea, select, [contenteditable]:not(.slide *), agentation-toolbar");
+
+  document.addEventListener("keydown", (e) => {
+    if (isForeign(e.target)) return;
+    if (document.body.classList.contains("editing")) {
+      if (e.key === "Escape") toggleEdit(false);
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+        save();
+      }
+      return;
+    }
+    switch (e.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+      case "PageDown":
+      case " ":
+        e.preventDefault();
+        go(current + 1);
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+      case "PageUp":
+        e.preventDefault();
+        go(current - 1);
+        break;
+      case "Home":
+        go(0);
+        break;
+      case "End":
+        go(slides.length - 1);
+        break;
+      case "e":
+      case "E":
+        toggleEdit(true);
+        break;
+      case "f":
+      case "F":
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+        else document.exitFullscreen?.();
+        break;
+    }
+  });
+
+  /* Click: right 2/3 advances, left 1/3 goes back */
+  stage.addEventListener("click", (e) => {
+    if (document.body.classList.contains("editing")) return;
+    if (e.target.closest("a, button")) return;
+    const rect = stage.getBoundingClientRect();
+    go(e.clientX - rect.left < rect.width / 3 ? current - 1 : current + 1);
+  });
+
+  /* Swipe */
+  let touchX = null;
+  stage.addEventListener("touchstart", (e) => (touchX = e.touches[0].clientX), { passive: true });
+  stage.addEventListener("touchend", (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) go(dx < 0 ? current + 1 : current - 1);
+    touchX = null;
+  });
+
+  window.addEventListener("hashchange", () => go(fromHash()));
+
+  /* === EDIT MODE === E toggles, Ctrl/Cmd+S downloads the edited file */
+  const EDITABLE = "h1, h2, h3, h4, p, li, td, th, blockquote, figcaption, span.editable";
+  const toggleBtn = document.createElement("button");
+  toggleBtn.className = "edit-toggle";
+  toggleBtn.textContent = "EDIT";
+  toggleBtn.title = "Toggle edit mode (E)";
+  toggleBtn.addEventListener("click", () => toggleEdit(!document.body.classList.contains("editing")));
+  document.body.appendChild(toggleBtn);
+
+  function toggleEdit(on) {
+    document.body.classList.toggle("editing", on);
+    stage.querySelectorAll(EDITABLE).forEach((el) => {
+      if (on) el.setAttribute("contenteditable", "true");
+      else el.removeAttribute("contenteditable");
+    });
+    toggleBtn.textContent = on ? "DONE" : "EDIT";
+  }
+
+  function save() {
+    toggleEdit(false);
+    slides.forEach((s) => s.classList.remove("active"));
+    toggleBtn.remove();
+    const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    document.body.appendChild(toggleBtn);
+    go(current);
+    const blob = new Blob([html], { type: "text/html" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = (location.pathname.split("/").pop() || "deck.html").replace(/\.html?$/, "") + ".html";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  /* === START === */
+  current = 0;
+  slides[0].classList.add("active");
+  go(fromHash());
+})();
+</script>
+</body>
+</html>
