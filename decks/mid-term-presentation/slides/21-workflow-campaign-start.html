@@ -1,0 +1,25 @@
+<!-- notes: James Z. Walk the six steps top to bottom. Pause on step 1 (reference price) and step 5 (six history features; a new trader gets zeros/nulls, not an error). Land the callout: one transaction, so a failed Redis write rolls everything back. -->
+<!-- @slide-title kicker="System Architecture" text="Workflow 1: Campaign Start" -->
+<!-- @split cols="1fr 680px" class="inset" -->
+  <!-- @step-list -->
+    <li class="reveal">Snapshot the market at start time<i class="c-step-list__arrow"></i></li>
+    <li class="reveal">Close any previous campaign still running</li>
+    <li class="reveal">Create campaign and coinflip seed</li>
+    <li class="reveal">Register the traders for current campaign</li>
+    <li class="reveal">Compute each trader's history<i class="c-step-list__arrow"></i></li>
+    <li class="reveal">Cache snapshot and histories in Redis</li>
+  <!-- @/step-list -->
+  <!-- @column gap="20px" -->
+    <!-- @note-card title="Fetch reference price" body="Used in price movement since start of campaign, calculated for each trade" -->
+    <!-- @/note-card -->
+    <!-- @note-card title="Six features per trader" foot="No history: zeros and nulls" class="is-offset" -->
+      <li>Prior campaigns</li>
+      <li>Trades</li>
+      <li>Win rate</li>
+      <li>Profit</li>
+      <li>Days since last campaign</li>
+      <li>Stop-loss use</li>
+    <!-- @/note-card -->
+  <!-- @/column -->
+<!-- @/split -->
+<!-- @label-card title="" body="Steps 1–6 run in one database transaction. If any step fails, nothing is saved and a 500 response is sent with failed step" class="inset is-wide" -->
