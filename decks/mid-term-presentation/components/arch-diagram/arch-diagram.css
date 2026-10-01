@@ -40,7 +40,8 @@
   z-index: 3;
   fill: none;
   stroke: currentColor;
-  stroke-width: 3.5;
+  stroke-width: 3;
+  stroke-linecap: round;
   pointer-events: none;
 }
 
