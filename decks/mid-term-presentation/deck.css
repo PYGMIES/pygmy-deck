@@ -1,0 +1,8 @@
+/* === DECK OVERRIDES === */
+
+/* Short card row: centre it in the space under the slide title (slide 37) */
+.c-card-grid.is-centered {
+  flex: 1;
+  min-height: 0;
+  align-content: center;
+}

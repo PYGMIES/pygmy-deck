@@ -1,0 +1,8 @@
+<!-- notes: Yanting. Step 4 of 4: 26 → 18. Every feature is tagged ticket / behaviour / outcome / counter. The 18 are everything except the 8 outcome-based features. This is the roster the later experiments run on and the only one that has made money in our tests (PYG-185). Source: NB12 "Behaviour or just luck?". OUTCOME = the market handed it to them (win rate, running P&L, streak, drawdown, stop/target hit rates); BEHAVIOUR = the trader chose it. Be upfront: no_outcome is -0.035 held-out AUC vs full, but it is the only arm that made money (+$1,205 at top 5%, +$4,070 at top 10%) and outcome columns took 58.6% of the full model attention. This is a deliberate trade-off. The next slide (Behaviour vs luck) goes deeper. Frozen in one file on 23 Sep. -->
+<!-- @slide-title kicker="Feature Engineering · Step 4 of 4" text="18 In The Judge" -->
+<!-- @section-heading title="26 → 18" subtitle="We dropped the 8 outcome-based features, the ones luck can move" class="inset" -->
+<!-- @card-grid cols="3" class="inset" -->
+  <!-- @grid-card kicker="6" title="Order ticket" body="Side, size, price vs campaign open, time of day" -->
+  <!-- @grid-card kicker="8" title="Behaviour" body="How big they size, how fast they re-enter, how long they hold, how they use stops" -->
+  <!-- @grid-card kicker="4" title="Counters" body="How many trades and campaigns they have behind them" -->
+<!-- @/card-grid -->

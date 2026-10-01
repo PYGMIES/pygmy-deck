@@ -1,14 +1,20 @@
-<!-- notes: Yanting. Deep dive: show the metrics behind how each feature is derived. -->
+<!-- notes: Yanting. The funnel: we started with every column in the trade export and narrowed to 18 features. Walk top to bottom, one row per step; the next four slides open each step. Counts: 28 raw columns (PYG-90) → 26 point-in-time features (PYG-94, v3 shortlist) → still 26 after testing 48 candidates (PYG-145, v5 = v3) → 18 in the frozen Judge (PYG-185). Row widths are illustrative. -->
 <!-- @slide-title kicker="How We Got Here" text="Feature Engineering" -->
-<!-- @split cols="1fr 1fr" class="inset" -->
-  <!-- @column -->
-    <!-- @section-heading title="Feature families" subtitle="How we derive them" -->
-    <!-- @bullet-list -->
-      <li class="reveal"><strong>TODO</strong> Trader behaviour</li>
-      <li class="reveal"><strong>TODO</strong> Position &amp; exposure</li>
-      <li class="reveal"><strong>TODO</strong> Campaign context</li>
-      <li class="reveal"><strong>TODO</strong> Market data</li>
-    <!-- @/bullet-list -->
-  <!-- @/column -->
-  <!-- @placeholder label="Metrics on how features are derived (importance / lift per family)" owner="Yanting" height="100%" -->
-<!-- @/split -->
+<!-- @funnel class="inset" -->
+  <div class="c-funnel__row reveal">
+    <div class="c-funnel__bar" style="--w: 100%"><b>28</b><span>columns in the<br>raw trade export</span></div>
+    <p><strong>Audit</strong>Which of these are known when a trade opens?</p>
+  </div>
+  <div class="c-funnel__row reveal">
+    <div class="c-funnel__bar" style="--w: 84%"><b>26</b><span>features we<br>built from them</span></div>
+    <p><strong>Build &amp; rank</strong>Trader history, rebuilt so nothing leaks from the future</p>
+  </div>
+  <div class="c-funnel__row reveal">
+    <div class="c-funnel__bar" style="--w: 68%"><b>26</b><span>kept, out of<br>48 tested</span></div>
+    <p><strong>Stress-test</strong>22 more ideas and market data. None earned a place</p>
+  </div>
+  <div class="c-funnel__row reveal is-final">
+    <div class="c-funnel__bar" style="--w: 52%"><b>18</b><span>in the<br>final Judge</span></div>
+    <p><strong>Freeze</strong>Keep behaviour, drop what depends on luck</p>
+  </div>
+<!-- @/funnel -->

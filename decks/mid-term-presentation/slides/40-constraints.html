@@ -1,0 +1,11 @@
+<!-- notes: SCRIPT (~40s, presenter TBD): Three things limit how far you can trust the results. First, a small test. Our final test is nine held-out campaigns, so a difference smaller than about 0.003 AUC is inside what we can detect. When that happens we say not measurable, never no effect. The sample also isn't random, so results may not generalise. Second, leakage. Stop-loss and take-profit fields are written when a trade closes, so they give away the outcome. Removing them dropped AUC from 0.667 to 0.620. The Judge sits at about 0.61, so the signal is real but modest. Third, cold start. New traders have no history, and for them AUC is about 0.55 against 0.61 for returning traders. -->
+<!-- notes: Sources: PYG-144 and PYG-185 (9 held-out campaigns 69 to 77, MDE, cold start 17% no same-day and 36% no career history), PYG-92 (SL/TP leakage, AUC 0.667 to 0.620). TODO before presenting: Linear shows 45 campaigns in the dataset (33 to 77, PYG-103) while an earlier draft of this slide said 38. Confirm the dataset size and add it back if wanted. -->
+<!-- @slide-title kicker="Constraints · Data &amp; Model" text="What Limits the Results" -->
+<!-- @split cols="1fr 1fr" align="end" class="inset" -->
+  <!-- @big-stat value="9" label="Held-out campaigns" caption="Our final test. Gaps under ~0.003 AUC can’t be told apart" -->
+  <!-- @column -->
+    <!-- @numbered-card num="1" title="Not a random sample" body="Campaigns and traders weren’t randomly chosen, so results may not generalise." -->
+    <!-- @numbered-card num="2" title="Leakage removed, signal modest" body="Dropping post-trade fields cut AUC from 0.667 to 0.620. Judge sits at ~0.61." -->
+    <!-- @numbered-card num="3" title="Cold start" body="New traders have no history: AUC ~0.55 vs ~0.61 for returning ones." -->
+  <!-- @/column -->
+<!-- @/split -->
