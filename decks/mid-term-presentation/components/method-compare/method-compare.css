@@ -77,11 +77,6 @@
   color: var(--ink-muted);
 }
 
-.c-method__cascade li:last-child {
-  background: var(--card);
-  color: var(--on-card);
-}
-
 /* --- scrum sprints --- */
 .c-method__sprints-wrap {
   display: flex;

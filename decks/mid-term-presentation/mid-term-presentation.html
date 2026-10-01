@@ -186,8 +186,9 @@ body.notes-open .notes-toggle {
   bottom: 0;
   height: var(--notes-h);
   z-index: 90;
-  overflow-y: auto;
-  padding: 18px 32px 18px 140px;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 32px 16px 140px;
   background: #161616;
   color: #e8e8e8;
   font: 500 17px/1.55 var(--font-body, system-ui), sans-serif;
@@ -209,6 +210,7 @@ body.notes-open .deck-viewport {
 
 .deck-notes__head {
   display: block;
+  flex: none;
   margin-bottom: 8px;
   font: 600 12px/1 system-ui, sans-serif;
   letter-spacing: 0.12em;
@@ -216,15 +218,22 @@ body.notes-open .deck-viewport {
   color: #9a9a9a;
 }
 
-.deck-notes p {
+.deck-notes__text {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
   max-width: 120ch;
+  resize: none;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  caret-color: #e8a948;
 }
 
-.deck-notes p + p {
-  margin-top: 10px;
-}
-
-.deck-notes p.is-empty {
+.deck-notes__text::placeholder {
   color: #8a8a8a;
   font-style: italic;
 }
@@ -2183,11 +2192,6 @@ body.overview .deck-viewport {
   color: var(--ink-muted);
 }
 
-.c-method__cascade li:last-child {
-  background: var(--card);
-  color: var(--on-card);
-}
-
 /* --- scrum sprints --- */
 .c-method__sprints-wrap {
   display: flex;
@@ -2254,8 +2258,11 @@ body.overview .deck-viewport {
    Five sprint steps in a row with chevron joins, an SVG return arrow
    (Retro → Plan) drawn on a 1656px-wide viewBox, and a team/tools row. */
 .c-cycle {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 40px;
 }
 
@@ -4135,7 +4142,7 @@ body.overview .deck-viewport {
     <div class="c-timeline__gate"><span>Phase 1 gate</span>3 baselines frozen pre-training</div>
     <div class="c-timeline__gate is-now"><span>Midpoint gate · today</span>Judge beats the rules-based system</div>
     <div class="c-timeline__gate"><span>Final gate</span>Credible forward track record</div>
-  </section>
+g  </section>
 
   <p class="c-timeline__foot">Phase 4 (simulation): hardening + data-augmentation overlay during Phase 3.</p>
 </div>
@@ -4531,16 +4538,49 @@ body.overview .deck-viewport {
   }
 
   /* === SPEAKER NOTES === N or bottom-left corner button. Reads each slide's
-     <!-- notes: … --> comments and shows them in a panel below the stage. */
-  const slideNotes = slides.map((slide) => {
+     <!-- notes: … --> comments into an editable panel below the stage. Edits
+     autosave to localStorage and are written back into the slide's comment
+     node, so Ctrl/Cmd+S in edit mode downloads them too. */
+  const NOTES_KEY = "pygmy-deck-notes:" + location.pathname;
+  const noteNodes = slides.map((slide) => {
     const walker = document.createTreeWalker(slide, NodeFilter.SHOW_COMMENT);
     const found = [];
-    while (walker.nextNode()) {
-      const m = walker.currentNode.nodeValue.match(/^\s*notes:\s*([\s\S]*?)\s*$/);
-      if (m) found.push(m[1]);
-    }
+    while (walker.nextNode()) if (/^\s*notes:/.test(walker.currentNode.nodeValue)) found.push(walker.currentNode);
     return found;
   });
+  const noteText = (node) => node.nodeValue.replace(/^\s*notes:\s*/, "").trim();
+  const slideNotes = noteNodes.map((nodes) => nodes.map(noteText).join("\n\n"));
+
+  /* keep the comment node in sync with the text (one node per slide) */
+  function writeNote(i, text) {
+    slideNotes[i] = text;
+    const safe = ` notes: ${text.replace(/--/g, "\u2013")} `;
+    if (noteNodes[i].length) {
+      noteNodes[i][0].nodeValue = safe;
+      noteNodes[i].slice(1).forEach((n) => n.remove());
+      noteNodes[i] = [noteNodes[i][0]];
+    } else if (text.trim()) {
+      const c = document.createComment(safe);
+      slides[i].appendChild(c);
+      noteNodes[i] = [c];
+    }
+  }
+
+  const readSaved = () => {
+    try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch (_) { return {}; }
+  };
+  const saved = readSaved();
+  Object.keys(saved).forEach((k) => {
+    const i = parseInt(k, 10);
+    if (i >= 0 && i < slides.length && typeof saved[k] === "string") writeNote(i, saved[k]);
+  });
+  function persist(i, text) {
+    try {
+      const all = readSaved();
+      all[i] = text;
+      localStorage.setItem(NOTES_KEY, JSON.stringify(all));
+    } catch (_) { /* storage blocked: edits still live in the page until reload */ }
+  }
 
   const notesBtn = document.createElement("button");
   notesBtn.className = "notes-toggle";
@@ -4552,23 +4592,27 @@ body.overview .deck-viewport {
   const notesPanel = document.createElement("aside");
   notesPanel.className = "deck-notes";
   notesPanel.setAttribute("aria-label", "Speaker notes");
+  const notesHead = document.createElement("span");
+  notesHead.className = "deck-notes__head";
+  const notesArea = document.createElement("textarea");
+  notesArea.className = "deck-notes__text";
+  notesArea.placeholder = "No notes for this slide. Type here to add some.";
+  notesArea.spellcheck = true;
+  notesArea.addEventListener("input", () => {
+    writeNote(current, notesArea.value);
+    persist(current, notesArea.value);
+  });
+  notesArea.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") notesArea.blur();
+  });
+  notesPanel.append(notesHead, notesArea);
   document.body.appendChild(notesPanel);
 
   function syncNotes() {
     if (!document.body.classList.contains("notes-open")) return;
-    const notes = slideNotes[current];
-    notesPanel.replaceChildren();
-    const head = document.createElement("span");
-    head.className = "deck-notes__head";
-    head.textContent = `Notes · ${String(current + 1).padStart(2, "0")}`;
-    notesPanel.appendChild(head);
-    (notes.length ? notes : ["No notes for this slide."]).forEach((text) => {
-      const p = document.createElement("p");
-      p.textContent = text;
-      if (!notes.length) p.className = "is-empty";
-      notesPanel.appendChild(p);
-    });
-    notesPanel.scrollTop = 0;
+    notesHead.textContent = `Notes · ${String(current + 1).padStart(2, "0")} · editable, saved in this browser`;
+    notesArea.value = slideNotes[current];
+    notesArea.scrollTop = 0;
   }
 
   function toggleNotes(on = !document.body.classList.contains("notes-open")) {

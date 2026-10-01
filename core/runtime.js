@@ -270,16 +270,49 @@
   }
 
   /* === SPEAKER NOTES === N or bottom-left corner button. Reads each slide's
-     <!-- notes: … --> comments and shows them in a panel below the stage. */
-  const slideNotes = slides.map((slide) => {
+     <!-- notes: … --> comments into an editable panel below the stage. Edits
+     autosave to localStorage and are written back into the slide's comment
+     node, so Ctrl/Cmd+S in edit mode downloads them too. */
+  const NOTES_KEY = "pygmy-deck-notes:" + location.pathname;
+  const noteNodes = slides.map((slide) => {
     const walker = document.createTreeWalker(slide, NodeFilter.SHOW_COMMENT);
     const found = [];
-    while (walker.nextNode()) {
-      const m = walker.currentNode.nodeValue.match(/^\s*notes:\s*([\s\S]*?)\s*$/);
-      if (m) found.push(m[1]);
-    }
+    while (walker.nextNode()) if (/^\s*notes:/.test(walker.currentNode.nodeValue)) found.push(walker.currentNode);
     return found;
   });
+  const noteText = (node) => node.nodeValue.replace(/^\s*notes:\s*/, "").trim();
+  const slideNotes = noteNodes.map((nodes) => nodes.map(noteText).join("\n\n"));
+
+  /* keep the comment node in sync with the text (one node per slide) */
+  function writeNote(i, text) {
+    slideNotes[i] = text;
+    const safe = ` notes: ${text.replace(/--/g, "\u2013")} `;
+    if (noteNodes[i].length) {
+      noteNodes[i][0].nodeValue = safe;
+      noteNodes[i].slice(1).forEach((n) => n.remove());
+      noteNodes[i] = [noteNodes[i][0]];
+    } else if (text.trim()) {
+      const c = document.createComment(safe);
+      slides[i].appendChild(c);
+      noteNodes[i] = [c];
+    }
+  }
+
+  const readSaved = () => {
+    try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch (_) { return {}; }
+  };
+  const saved = readSaved();
+  Object.keys(saved).forEach((k) => {
+    const i = parseInt(k, 10);
+    if (i >= 0 && i < slides.length && typeof saved[k] === "string") writeNote(i, saved[k]);
+  });
+  function persist(i, text) {
+    try {
+      const all = readSaved();
+      all[i] = text;
+      localStorage.setItem(NOTES_KEY, JSON.stringify(all));
+    } catch (_) { /* storage blocked: edits still live in the page until reload */ }
+  }
 
   const notesBtn = document.createElement("button");
   notesBtn.className = "notes-toggle";
@@ -291,23 +324,27 @@
   const notesPanel = document.createElement("aside");
   notesPanel.className = "deck-notes";
   notesPanel.setAttribute("aria-label", "Speaker notes");
+  const notesHead = document.createElement("span");
+  notesHead.className = "deck-notes__head";
+  const notesArea = document.createElement("textarea");
+  notesArea.className = "deck-notes__text";
+  notesArea.placeholder = "No notes for this slide. Type here to add some.";
+  notesArea.spellcheck = true;
+  notesArea.addEventListener("input", () => {
+    writeNote(current, notesArea.value);
+    persist(current, notesArea.value);
+  });
+  notesArea.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") notesArea.blur();
+  });
+  notesPanel.append(notesHead, notesArea);
   document.body.appendChild(notesPanel);
 
   function syncNotes() {
     if (!document.body.classList.contains("notes-open")) return;
-    const notes = slideNotes[current];
-    notesPanel.replaceChildren();
-    const head = document.createElement("span");
-    head.className = "deck-notes__head";
-    head.textContent = `Notes · ${String(current + 1).padStart(2, "0")}`;
-    notesPanel.appendChild(head);
-    (notes.length ? notes : ["No notes for this slide."]).forEach((text) => {
-      const p = document.createElement("p");
-      p.textContent = text;
-      if (!notes.length) p.className = "is-empty";
-      notesPanel.appendChild(p);
-    });
-    notesPanel.scrollTop = 0;
+    notesHead.textContent = `Notes · ${String(current + 1).padStart(2, "0")} · editable, saved in this browser`;
+    notesArea.value = slideNotes[current];
+    notesArea.scrollTop = 0;
   }
 
   function toggleNotes(on = !document.body.classList.contains("notes-open")) {

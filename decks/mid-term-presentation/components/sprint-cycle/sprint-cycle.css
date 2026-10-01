@@ -2,8 +2,11 @@
    Five sprint steps in a row with chevron joins, an SVG return arrow
    (Retro → Plan) drawn on a 1656px-wide viewBox, and a team/tools row. */
 .c-cycle {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 40px;
 }
 
