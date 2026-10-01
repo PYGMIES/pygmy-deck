@@ -1774,25 +1774,38 @@ body.overview .deck-viewport {
 }
 
 /* ===== COMPONENT req-card ===== */
-/* === COMPONENT: req-card === charcoal row card: flat icon, number chip + title, 2 short bullets.
-   Same padding on all four sides; icon and text are centred vertically as one block.
+/* === COMPONENT: req-card === charcoal card: left-aligned title on top, then a flat icon beside one sentence.
+   Same padding on all four sides; the title + row block is centred vertically.
    Cards grow to share the height of a flex column equally (flex: 1). */
 .c-req-card {
   flex: 1;
   min-height: 0;
   display: flex;
-  align-items: center;
-  gap: 28px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
   padding: 26px 32px;
   border-radius: var(--radius);
   background: var(--card);
   color: var(--on-card);
 }
 
+.c-req-card h3 {
+  font-size: 44px;
+  line-height: 1.05;
+  color: var(--on-card);
+}
+
+.c-req-card__row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 .c-req-card__icon {
   flex: none;
-  width: 60px;
-  height: 60px;
+  width: 84px;
+  height: 84px;
   color: var(--on-card);
 }
 
@@ -1802,65 +1815,18 @@ body.overview .deck-viewport {
   height: 100%;
   fill: none;
   stroke: currentColor;
-  stroke-width: 3;
+  stroke-width: 2.6;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.c-req-card__text {
+.c-req-card p {
   flex: 1;
   min-width: 0;
-}
-
-.c-req-card__head {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.c-req-card__num {
-  flex: none;
-  padding: 3px 11px 2px;
-  border: 2px solid var(--on-card-muted);
-  border-radius: 999px;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
+  max-width: none;
+  font-size: 26px;
+  line-height: 1.3;
   color: var(--on-card-muted);
-}
-
-.c-req-card h3 {
-  font-size: 34px;
-  line-height: 1.05;
-  color: var(--on-card);
-}
-
-.c-req-card ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-top: 10px;
-}
-
-.c-req-card li {
-  position: relative;
-  padding-left: 20px;
-  font-size: 22px;
-  line-height: 1.25;
-  color: var(--on-card-muted);
-}
-
-.c-req-card li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: currentColor;
 }
 
 /* ===== COMPONENT arch-diagram ===== */
@@ -4131,10 +4097,17 @@ body.overview .deck-viewport {
   --line-end: 33px;
 }
 
-/* slide 19: compact group heading above each column of requirement cards */
+/* slide 19: tighter layout for the requirement cards: closer to the title, narrow gap between the two columns,
+   group headings centred and larger than the card titles */
+.c-split.is-tight {
+  gap: 40px;
+  margin-top: -26px;
+}
+
 .c-section-heading.is-compact h2 {
-  font-size: 44px;
+  font-size: 56px;
   padding-bottom: 10px;
+  text-align: center;
 }
 </style>
 </head>
@@ -4899,56 +4872,38 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="19" data-name="nfrs">
-<!-- notes: James Z. Six requirements in two groups. 1A Data reliability: trade records are kept under all operating conditions, and every trade ends in an explicit success or failure, so nothing disappears silently. 1B Consistency under concurrency: several workers write to the same Redis state at once; rolling metrics must not be corrupted or hit race conditions when trades update at the same time. 1C Idempotency: duplicate, overlapping or retried requests must not corrupt state or double-count; replayed payloads are recognised and handled without secondary side effects. 2A Processing latency: the ingestion API never blocks the caller, and downstream event processing is fast enough for timely trade decisions. 2B Concurrency and throughput: sustained bursts of 150+ concurrent trades per minute, without unacceptable latency or queuing delay, across all active accounts. 2C Auditability: every decision outcome and failure traces back to its root cause; execution context, model decision lineage and failure points are preserved. -->
+<!-- notes: James Z. Six requirements in two groups. Data reliability: trade records are stored regardless of operating conditions, with outcomes and exceptions recorded; every trade ends in an explicit success or failure. Consistency under concurrency: several workers write to the same Redis state at once; rolling metrics stay aligned and uncorrupted when trades update at the same time. Idempotency: duplicate, overlapping or retried requests are processed safely, with no state mutation and no double-counting; replayed payloads are recognised. Processing latency: the ingestion API never blocks the caller, and downstream processing is fast enough to handle trades on time. Concurrency and throughput: the system scales to sustain up to hundreds of concurrent trades per minute. Auditability: all execution context, judge decisions and errors are recorded and can be traced to a root cause. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
   <h1 class="reveal">Non-Functional Requirements</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 1fr; --split-align: stretch;">
+<div class="c-split is-tight" style="--split-cols: 1fr 1fr; --split-align: stretch;">
   
   <div class="c-column " style="--col-width: auto; --col-gap: 20px;">
   
     <header class="c-section-heading reveal is-compact">
-  <h2>1 &nbsp;Data integrity &amp; safety</h2>
+  <h2>Data integrity &amp; safety</h2>
   <p></p>
 </header>
     <article class="c-req-card reveal ">
-  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><ellipse cx='24' cy='11' rx='14' ry='5'/><path d='M10 11v26c0 3 6 6 14 6s14-3 14-6V11'/><path d='M10 24c0 3 6 6 14 6s14-3 14-6'/></svg></span>
-  <div class="c-req-card__text">
-    <div class="c-req-card__head">
-      <span class="c-req-card__num">1A</span>
-      <h3>Data reliability</h3>
-    </div>
-    <ul>
-      <li>Trade records are kept under all operating conditions.</li>
-      <li>Every trade ends as a recorded success or a recorded failure.</li>
-    </ul>
+  <h3>Data reliability</h3>
+  <div class="c-req-card__row">
+    <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><ellipse cx='24' cy='11' rx='14' ry='5'/><path d='M10 11v26c0 3 6 6 14 6s14-3 14-6V11'/><path d='M10 24c0 3 6 6 14 6s14-3 14-6'/></svg></span>
+    <p>Trade records are stored regardless of operating conditions, with outcomes and exceptions recorded.</p>
   </div>
 </article>
     <article class="c-req-card reveal ">
-  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><path d='M5 10L22 24L5 38'/><path d='M22 24H43'/><path d='M37 18L43 24L37 30'/></svg></span>
-  <div class="c-req-card__text">
-    <div class="c-req-card__head">
-      <span class="c-req-card__num">1B</span>
-      <h3>Consistency under concurrency</h3>
-    </div>
-    <ul>
-      <li>Several workers write to the same Redis state at once.</li>
-      <li>Rolling metrics stay correct under simultaneous trade updates.</li>
-    </ul>
+  <h3>Consistency under concurrency</h3>
+  <div class="c-req-card__row">
+    <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><path d='M5 10L22 24L5 38'/><path d='M22 24H43'/><path d='M37 18L43 24L37 30'/></svg></span>
+    <p>Rolling metrics remain aligned among workers despite concurrent writes to the Redis state.</p>
   </div>
 </article>
     <article class="c-req-card reveal ">
-  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><path d='M39 24a15 15 0 1 1-4.5-10.7'/><path d='M36 6v8h-8'/><path d='M19 21h10'/><path d='M19 28h10'/></svg></span>
-  <div class="c-req-card__text">
-    <div class="c-req-card__head">
-      <span class="c-req-card__num">1C</span>
-      <h3>Idempotency</h3>
-    </div>
-    <ul>
-      <li>Duplicated, overlapping or retried requests change state only once.</li>
-      <li>Replayed payloads are recognised and handled without side effects.</li>
-    </ul>
+  <h3>Idempotency</h3>
+  <div class="c-req-card__row">
+    <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><path d='M39 24a15 15 0 1 1-4.5-10.7'/><path d='M36 6v8h-8'/><path d='M19 21h10'/><path d='M19 28h10'/></svg></span>
+    <p>Duplicate requests are processed safely without mutating state or double-counting outcomes.</p>
   </div>
 </article>
   
@@ -4956,46 +4911,28 @@ body.overview .deck-viewport {
   <div class="c-column " style="--col-width: auto; --col-gap: 20px;">
   
     <header class="c-section-heading reveal is-compact">
-  <h2>2 &nbsp;Execution &amp; performance</h2>
+  <h2>Execution &amp; performance</h2>
   <p></p>
 </header>
     <article class="c-req-card reveal ">
-  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><circle cx='24' cy='28' r='15'/><path d='M20 6h8'/><path d='M24 6v7'/><path d='M24 28v-9'/><path d='M24 28l7 5'/></svg></span>
-  <div class="c-req-card__text">
-    <div class="c-req-card__head">
-      <span class="c-req-card__num">2A</span>
-      <h3>Processing latency</h3>
-    </div>
-    <ul>
-      <li>The ingestion API does not block the caller.</li>
-      <li>Downstream processing is fast enough to handle trade decisions on time.</li>
-    </ul>
+  <h3>Processing latency</h3>
+  <div class="c-req-card__row">
+    <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><circle cx='24' cy='28' r='15'/><path d='M20 6h8'/><path d='M24 6v7'/><path d='M24 28v-9'/><path d='M24 28l7 5'/></svg></span>
+    <p>Downstream processing is fast enough to handle trades on time without any blockers.</p>
   </div>
 </article>
     <article class="c-req-card reveal ">
-  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><path d='M5 12h36'/><path d='M36 7l5 5-5 5'/><path d='M5 24h36'/><path d='M36 19l5 5-5 5'/><path d='M5 36h36'/><path d='M36 31l5 5-5 5'/></svg></span>
-  <div class="c-req-card__text">
-    <div class="c-req-card__head">
-      <span class="c-req-card__num">2B</span>
-      <h3>Concurrency &amp; throughput</h3>
-    </div>
-    <ul>
-      <li>The system sustains bursts of 150+ concurrent trades per minute.</li>
-      <li>Latency and queuing delay stay acceptable, including during traffic spikes.</li>
-    </ul>
+  <h3>Concurrency &amp; throughput</h3>
+  <div class="c-req-card__row">
+    <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><path d='M5 12h36'/><path d='M36 7l5 5-5 5'/><path d='M5 24h36'/><path d='M36 19l5 5-5 5'/><path d='M5 36h36'/><path d='M36 31l5 5-5 5'/></svg></span>
+    <p>System can scalably sustain up to hundreds of concurrent trades per minute.</p>
   </div>
 </article>
     <article class="c-req-card reveal ">
-  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><rect x='7' y='5' width='24' height='34' rx='3'/><path d='M13 15h12'/><path d='M13 22h8'/><circle cx='32' cy='31' r='8'/><path d='M38 37l6 6'/></svg></span>
-  <div class="c-req-card__text">
-    <div class="c-req-card__head">
-      <span class="c-req-card__num">2C</span>
-      <h3>Auditability</h3>
-    </div>
-    <ul>
-      <li>Every decision outcome and failure traces back to its root cause.</li>
-      <li>Execution context, model decision lineage and failure points are preserved.</li>
-    </ul>
+  <h3>Auditability</h3>
+  <div class="c-req-card__row">
+    <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><rect x='7' y='5' width='24' height='34' rx='3'/><path d='M13 15h12'/><path d='M13 22h8'/><circle cx='32' cy='31' r='8'/><path d='M38 37l6 6'/></svg></span>
+    <p>All execution context, judge decisions and errors are recorded and can be traced.</p>
   </div>
 </article>
   

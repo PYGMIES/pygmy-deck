@@ -54,8 +54,15 @@
   --line-end: 33px;
 }
 
-/* slide 19: compact group heading above each column of requirement cards */
+/* slide 19: tighter layout for the requirement cards: closer to the title, narrow gap between the two columns,
+   group headings centred and larger than the card titles */
+.c-split.is-tight {
+  gap: 40px;
+  margin-top: -26px;
+}
+
 .c-section-heading.is-compact h2 {
-  font-size: 44px;
+  font-size: 56px;
   padding-bottom: 10px;
+  text-align: center;
 }
