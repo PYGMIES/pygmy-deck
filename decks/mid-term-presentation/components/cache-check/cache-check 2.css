@@ -1,0 +1,7 @@
+/* === COMPONENT (deck): cache-check ===
+   Slide 42: an open compares the trade count in the Redis hash with Postgres; on a mismatch
+   it rebuilds the hash from Postgres before asking the Judge.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-cache-check {
+  z-index: 0;
+}

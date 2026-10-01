@@ -1,0 +1,15 @@
+<!-- notes: Joyce + JS. Two lenses for picking replay data: how busy the slot is (trades per slot, p50 vs p95) and how volatile the market is (beta vs Gold Futures). We replay two slots: Typical + Calm and Busy + Volatile. -->
+<!-- @slide-title kicker="Live Demo" text="How We Picked the Demo Data" -->
+<!-- @section-heading title="Two lenses" subtitle="How busy the slot is, and how volatile the market is" class="inset" -->
+<!-- @split cols="1.4fr 1fr" class="inset" -->
+  <!-- @quadrant col-a="Calm" col-b="Volatile" row-a="Typical" row-b="Busy" x-axis="Price volatility · β" y-axis="Trading activity" -->
+    <!-- @quadrant-cell class="is-focus" tag="Demo slot" title="Typical · Calm" body="p50 trades · low β" -->
+    <!-- @quadrant-cell title="Typical · Volatile" body="p50 trades · high β" -->
+    <!-- @quadrant-cell title="Busy · Calm" body="p95 trades · low β" -->
+    <!-- @quadrant-cell class="is-focus" tag="Demo slot" title="Busy · Volatile" body="p95 trades · high β" -->
+  <!-- @/quadrant -->
+  <!-- @card-stack -->
+    <!-- @label-card title="Activity" body="Trades per slot, p50 vs p95" -->
+    <!-- @label-card title="Volatility" body="Beta (β) vs Gold Futures" -->
+  <!-- @/card-stack -->
+<!-- @/split -->
