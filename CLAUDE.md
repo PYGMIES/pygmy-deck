@@ -31,6 +31,21 @@ Always rebuild and look at the result after changing slides, components or theme
 6. **Include `prefers-reduced-motion`** behaviour for any new animation.
 7. Keep `CONTEXT.md` files current when you add/rename slides or components.
 
+## Skills (in `.claude/skills/`)
+Always tell the human **which skill you're invoking and on which slide(s)** (e.g. "Running `/frontend-slides` on `decks/foo/slides/03-roadmap.html`") so they can verify the result.
+
+### `/frontend-slides` — visual design work
+Invoke for front-end/visual slide work:
+- redesigning an existing slide's layout or look
+- generating new slides or a new deck
+- converting a PPT/PPTX into a deck
+- exploring aesthetic directions when the user hasn't picked one
+
+This repo's rules win over the skill where they conflict: slides stay in `decks/<deck>/slides/NN-name.html`, use components and theme variables (rules 4–5), are compiled via `build.py`, and stay on the fixed 1920×1080 stage. Don't emit a standalone single-file presentation or hard-code colours/fonts. Rebuild and look at the result afterwards.
+
+### `/unslop` — de-AI-ify prose
+**Prompt the user to run it; don't run it silently.** Suggest it after you generate or substantially rewrite a lot of slide text (new slides, redesigns with new copy, speaker notes, long bullets/paragraphs). Say which slide(s) the copy is on and offer a scoped run, e.g. "I wrote new copy on slides 02, 04 and 05. Want me to run `/unslop` on them?" Run it only once the user agrees (or invokes it themselves), on the named slides only, and report which text changed. Keep slide text short and human in the first place; it's a safety net, not a substitute.
+
 ## Design language
 - Display: **League Spartan** 700, tight tracking (-0.035em), leading ~0.88, stacked multi-line titles via `<br>`.
 - Body: **Montserrat** 500 standing in for Garet (`--font-body` in `themes/tokens.css`).
