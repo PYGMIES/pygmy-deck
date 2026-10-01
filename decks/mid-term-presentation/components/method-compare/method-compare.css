@@ -1,6 +1,6 @@
 /* === COMPONENT (deck): method-compare ===
    Waterfall vs Scrum lanes: label | track | verdict. Waterfall track is a
-   five-step cascade (--i = step index); Scrum track is 13 sprint chips. */
+   five-step cascade (--i = step index); Scrum track is 8 sprint chips, centred. */
 .c-method {
   display: flex;
   flex-direction: column;
@@ -81,20 +81,23 @@
 .c-method__sprints-wrap {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 34px;
 }
 
 .c-method__sprints {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(13, 1fr);
-  gap: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 }
 
 .c-method__sprints li {
   position: relative;
   display: grid;
   place-items: center;
+  flex: none;
+  width: 88px;
   height: 64px;
   padding-top: 4px;
   border-radius: var(--radius-s);
@@ -134,6 +137,7 @@
 
 .c-method .c-method__loop {
   max-width: none;
+  text-align: center;
   font-size: 22px;
   color: var(--ink-muted);
 }

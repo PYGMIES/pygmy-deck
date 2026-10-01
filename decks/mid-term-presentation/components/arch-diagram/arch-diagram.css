@@ -49,6 +49,18 @@
   color: var(--accent);
 }
 
+.c-arch__wires .is-orange {
+  color: var(--accent);
+}
+
+.c-arch__wires .is-black {
+  color: var(--ink);
+}
+
+.c-arch__wires .is-red {
+  color: var(--danger);
+}
+
 .c-arch__io {
   color: var(--ink);
 }

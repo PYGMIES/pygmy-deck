@@ -1,24 +1,78 @@
 /* === DECK OVERRIDES === */
 
-/* Short card row: centre it in the space under the slide title (slide 50) */
+/* Short card row: centre it in the space under the slide title (slide 55) */
 .c-card-grid.is-centered {
   flex: 1;
   min-height: 0;
   align-content: center;
 }
 
-/* compare-table: keep each cell on one line (slide 33, Why Redis) */
+/* compare-table: keep each cell on one line (slide 38, Why Redis) */
 .c-compare-table.is-nowrap th,
 .c-compare-table.is-nowrap td {
   white-space: nowrap;
 }
 
-/* Two-row card grid: shorter cards so 3 + 2 fits the stage (slide 57, What's Next) */
+/* === WORKFLOW SLIDES 21-24 === */
+
+/* wide label-card: body runs left-aligned across the card (slide 21 callout) */
+.c-label-card.is-wide p {
+  max-width: none;
+  text-align: left;
+  font-size: 30px;
+  line-height: 1.25;
+}
+
+.c-label-card.is-wide {
+  min-height: 120px;
+}
+
+/* slide 21: drop the second note so the step-5 arrow meets the middle of its left edge */
+.c-note-card.is-offset {
+  margin-top: 125px;
+}
+
+/* slide 22: the first of the two tall notes is pushed down so both sit at the bottom of the column */
+.c-note-card.is-start {
+  margin-top: auto;
+}
+
+/* slide 22: connector line stops at the centre of the last circle */
+.c-step-list.is-compact {
+  --line-end: 109px;
+}
+
+/* slide 23: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
+.c-step-list.is-compact.is-close {
+  --step-gap: 27.2px;
+  --line-end: 82px;
+}
+
+/* slide 24: five steps spread over the full height; connector stops at the last circle's centre */
+.c-step-list.is-compact.is-end {
+  --step-gap: 90px;
+  --line-end: 33px;
+}
+
+/* slide 19: tighter layout for the requirement cards: closer to the title, narrow gap between the two columns,
+   group headings centred and larger than the card titles */
+.c-split.is-tight {
+  gap: 40px;
+  margin-top: -36px;
+}
+
+.c-section-heading.is-compact h2 {
+  font-size: 50px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+/* Two-row card grid: shorter cards so 3 + 2 fits the stage (What's Next) */
 .c-card-grid.is-two-row .c-grid-card {
   min-height: 340px;
   padding: 36px 44px;
 }
 
-/* slide 42: four short bullets must fit under the headings */
+/* Hurdle Model: four short bullets must fit under the headings */
 .why-fits li { padding-top: 16px; padding-bottom: 16px; }
 .why-fits li:first-child { border-top: 0; }

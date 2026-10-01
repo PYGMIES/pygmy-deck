@@ -1,0 +1,24 @@
+<!-- notes: Yanting. Note the strongest four are all OUTCOME features (the market handed them to the trader); step 4 removes them, so flag it here. Step 2 of 4: build and rank. 26 features built point-in-time in three families (order ticket, rolling trader state inside a campaign, history from earlier campaigns). Ranked on four measures; Spearman is the one to trust. Order-ticket features together score at chance; all the signal is the trader's rolling state. Values below ~0.015 are noise at n=46,520. Near-duplicates (|rho|>0.8) were dropped so importance is not split (PYG-94, PYG-96, PYG-99). -->
+<!-- @slide-title kicker="Feature Engineering · Step 2 of 4" text="26 Features Built" -->
+<!-- @split cols="1fr 1fr" class="inset" -->
+  <!-- @column -->
+    <!-- @section-heading title="Where the signal lives" subtitle="Three families, 26 features, ranked against the outcome" -->
+    <!-- @bullet-list -->
+      <li class="reveal"><strong>Order ticket (6)</strong>: side, size, time of day. Together no better than chance</li>
+      <li class="reveal"><strong>Same-campaign state (14)</strong>: what the trader has done so far. All the signal lives here</li>
+      <li class="reveal"><strong>Earlier campaigns (6)</strong>: a small extra</li>
+    <!-- @/bullet-list -->
+  <!-- @/column -->
+  <!-- @column -->
+    <!-- @section-heading title="Strongest four" subtitle="All four reflect results, not choices" -->
+    <!-- @compare-table -->
+      <thead><tr><th>Feature</th><th>Correlation</th></tr></thead>
+      <tbody>
+        <tr><td>Win rate so far</td><td class="is-focus">−0.120</td></tr>
+        <tr><td>Current streak</td><td class="is-focus">−0.109</td></tr>
+        <tr><td>Profit so far</td><td class="is-focus">−0.105</td></tr>
+        <tr><td>Running drawdown</td><td class="is-focus">+0.101</td></tr>
+      </tbody>
+    <!-- @/compare-table -->
+  <!-- @/column -->
+<!-- @/split -->
