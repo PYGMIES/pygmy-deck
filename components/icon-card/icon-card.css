@@ -39,3 +39,7 @@
   line-height: 1.12;
   max-width: none;
 }
+
+.c-icon-card.is-dim {
+  filter: opacity(0.45); /* not `opacity`: .reveal animates that */
+}

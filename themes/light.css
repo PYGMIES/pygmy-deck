@@ -19,6 +19,7 @@
   --letterbox: #dcdcdc;
   --accent: #d9922e;           /* "now" markers, highlighted flows */
   --accent-soft: #f1dfc4;      /* accent-tinted panels */
+  --chart-bg: #ffffff;         /* backing for exported chart PNGs (white in both themes) */
   --danger: #b3302b;           /* limits, losses */
   --danger-bg: #f8e1df;
 }

@@ -24,10 +24,11 @@ Every component accepts an optional `class` param (added to its root). ◻ = blo
 | `image-frame` | `src`, `alt?`, `caption?`, `fit?` (cover) | Rounded image filling its column; `src="assets/…"` is inlined. |
 
 | `numbered-card` | `num`, `title`, `body?` | Circled number + title + body. `class="is-light"` for a pale card. |
-| `icon-card` | `icon`, `title`, `body` | Title row, then mask-tinted icon (`assets/…svg`, drawn black) + body. |
+| `icon-card` | `icon`, `title`, `body` | `class="is-dim"` fades it. Title row, then mask-tinted icon (`assets/…svg`, drawn black) + body. |
 | `chevron-callout` | `lead`, `quote` | Arrow-shaped lead feeding a big quoted question. |
 | ◻ `quadrant` | `col-a`, `col-b`, `row-a`, `row-b`, `x-axis?`, `y-axis?` | 2×2 matrix; children are 4 `quadrant-cell`. |
-| `quadrant-cell` | `title`, `body?` | Cell; `class="is-focus"` highlights in accent. |
+| `quadrant-cell` | `title`, `body?`, `tag?` | Cell; `class="is-focus"` highlights in accent, `is-dim` fades it, `tag` adds a pill (e.g. DEMO SLOT). |
+| `chart-card` | `title`, `src`, `takeaway`, `kicker?`, `alt?` | Kicker + title, chart PNG on `--chart-bg`, takeaway under an accent bar. Fixed 720px tall. |
 | ◻ `screen-frame` | `label` | Browser-window chrome around children (img / placeholder). |
 | ◻ `agenda` | — | Children are `agenda-item`. |
 | `agenda-item` | `num`, `title`, `owner?`, `mins?` | Agenda row. |

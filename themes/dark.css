@@ -18,6 +18,7 @@
   --letterbox: #0e0e0f;
   --accent: #e8a948;
   --accent-soft: #4a3a22;
+  --chart-bg: #ffffff;         /* backing for exported chart PNGs (white in both themes) */
   --danger: #e2675f;
   --danger-bg: #3c2322;
 }

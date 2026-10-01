@@ -1,5 +1,6 @@
 /* === COMPONENT: quadrant-cell === one cell of a quadrant.
-   class="is-focus" highlights it in the accent colour. */
+   class="is-focus" highlights it in the accent colour; class="is-dim" fades it out.
+   tag="…" adds a small pill above the title. */
 .c-quadrant-cell {
   display: flex;
   flex-direction: column;
@@ -32,4 +33,21 @@
 
 .c-quadrant-cell.is-focus p {
   color: var(--on-card-muted);
+}
+
+.c-quadrant-cell__tag {
+  align-self: flex-start;
+  margin-bottom: auto;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: var(--on-card);
+  color: var(--card);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.c-quadrant-cell.is-dim {
+  filter: opacity(0.45); /* not `opacity`: .reveal animates that */
 }
