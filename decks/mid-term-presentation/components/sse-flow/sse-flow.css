@@ -1,0 +1,6 @@
+/* === COMPONENT (deck): sse-flow ===
+   Slide 42: one-way live-event path, then WebSocket (two-way, dimmed) vs SSE (one-way, highlighted).
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-sse-flow {
+  z-index: 0;
+}

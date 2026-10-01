@@ -1,0 +1,6 @@
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: Running workers in parallel created a race condition. Opens and closes sit in separate queues, so different workers pick them up. Here, worker 1 is still processing the open for trade 42, waiting on the Judge and OANDA. Meanwhile, worker 2 picks up its close. The close needs the open price, but it has not been saved yet. Before our fix, the close simply marked the trade as failed. -->
+<!-- @slide-title kicker="Design Decision 02 · The Problem" text="Race Condition: Close Before Open" -->
+<!-- @flow-kit -->
+  <!-- @race-timeline -->
+<!-- @/flow-kit -->

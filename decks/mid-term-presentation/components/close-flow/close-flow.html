@@ -1,0 +1,39 @@
+<div class="c-close-flow fk-canvas {{class|}}">
+  <div class="fk-node fk-node--dark" style="left: 0; top: 40px; width: 330px; height: 124px;">Close #42<small>picked up by a worker</small></div>
+  <div class="fk-node fk-node--outline" style="left: 470px; top: 40px; width: 380px; height: 124px;">Open processed?</div>
+  <div class="fk-node fk-node--dark fk-node--accent reveal" style="left: 1110px; top: 40px; width: 618px; height: 124px;">Calculate P&amp;L<small>mark completed</small></div>
+
+  <div class="fk-node fk-node--accent reveal" style="left: 0; top: 300px; width: 330px; height: 124px;">Requeue<small>to back of close queue</small></div>
+  <div class="fk-node fk-node--outline" style="left: 470px; top: 300px; width: 380px; height: 124px;">Waited &gt; 5 min?</div>
+  <div class="fk-node fk-node--bad reveal" style="left: 1110px; top: 300px; width: 618px; height: 124px;">Mark FAILED<small>no endless retries</small></div>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-close-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-flow">
+      <path d="M334 102 H464" marker-end="url(#fk-close-arrow)"/>
+      <path d="M854 102 H1104" marker-end="url(#fk-close-arrow)"/>
+      <path d="M660 168 V294" marker-end="url(#fk-close-arrow)"/>
+      <path d="M466 362 H336" marker-end="url(#fk-close-arrow)"/>
+      <path d="M165 296 V170" marker-end="url(#fk-close-arrow)"/>
+      <path d="M854 362 H1104" marker-end="url(#fk-close-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 950px; top: 64px;">Yes</span>
+  <span class="fk-label" style="left: 680px; top: 218px;">No</span>
+  <span class="fk-label" style="left: 370px; top: 324px;">No</span>
+  <span class="fk-label" style="left: 186px; top: 218px;">retry later</span>
+  <span class="fk-label" style="left: 950px; top: 324px;">Yes</span>
+
+  <div class="fk-card reveal" style="left: 0; top: 520px; width: 840px; height: 170px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M44 22a17 17 0 0 0-31-6"/><path d="M12 8v9h9"/><path d="M12 34a17 17 0 0 0 31 6"/><path d="M44 48v-9h-9"/></svg>
+    <div><strong>Atomic requeue</strong><span>One Redis transaction: never lost, never doubled</span></div>
+  </div>
+  <div class="fk-card reveal" style="left: 888px; top: 520px; width: 840px; height: 170px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M28 5l19 7v14c0 12-8 21-19 25C17 47 9 38 9 26V12z"/><path d="M19 28l7 7 12-13"/></svg>
+    <div><strong>Open checks first</strong><span>An open skips a trade that is no longer in progress</span></div>
+  </div>
+</div>

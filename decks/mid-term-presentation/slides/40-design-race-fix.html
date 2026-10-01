@@ -1,0 +1,6 @@
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: Our fix: a close first checks whether its open has been processed. If it has, we calculate the P and L as normal. If not, the close goes to the back of the close queue to try again later. That move is a single Redis transaction, so the close is never lost or duplicated. So it cannot loop forever, a close that has waited more than five minutes fails the trade. And on the other side, an open checks the trade is still in progress before doing anything. -->
+<!-- @slide-title kicker="Design Decision 02 · Our Fix" text="Wait for the Open, Safely" -->
+<!-- @flow-kit -->
+  <!-- @close-flow -->
+<!-- @/flow-kit -->

@@ -2315,6 +2315,367 @@ body.overview .deck-viewport {
   color: var(--on-card-muted);
   text-align: right;
 }
+
+/* ===== COMPONENT flow-kit ===== */
+/* === COMPONENT (deck): flow-kit ===
+   Fixed-size canvas + diagram primitives shared by the Key Design Decisions
+   diagrams (async-compare, race-timeline, close-flow, redis-roles, sse-flow,
+   judge-service, local-stack). Same look as arch-diagram: grey lanes,
+   charcoal nodes, accent data-flow wires, italic wire labels.
+   Children are absolutely positioned at design-size px. */
+.c-flow-kit {
+  --node: color-mix(in srgb, var(--card) 80%, var(--bg));
+  position: relative;
+  flex: none;
+}
+
+.fk-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.fk-canvas > * {
+  position: absolute;
+}
+
+/* --- Lanes (grey panels) --- */
+.fk-lane {
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.fk-lane__label {
+  z-index: 2;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+/* --- Outlined groups --- */
+.fk-group {
+  z-index: 1;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.fk-group--dashed {
+  border-style: dashed;
+}
+
+.fk-group__title {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  letter-spacing: -0.01em;
+}
+
+/* --- Nodes --- */
+.fk-node {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: var(--radius);
+  background: var(--node);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 32px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.fk-node small {
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-card-muted);
+}
+
+.fk-node--dark {
+  background: var(--card);
+}
+
+.fk-node--pill {
+  border-radius: 999px;
+  font-size: 28px;
+}
+
+/* decision / neutral: outlined, ink on canvas */
+.fk-node--outline {
+  background: var(--bg);
+  border: 3px solid var(--ink);
+  color: var(--ink);
+}
+
+.fk-node--outline small {
+  color: var(--ink-muted);
+}
+
+.fk-node--accent {
+  box-shadow: 0 0 0 4px var(--accent);
+}
+
+.fk-node--bad {
+  background: var(--danger-bg);
+  border: 3px solid var(--danger);
+  color: var(--danger);
+}
+
+.fk-node--bad small {
+  color: var(--danger);
+}
+
+.fk-node--dim {
+  background: transparent;
+  border: 3px dashed var(--rule);
+  color: var(--ink-muted);
+}
+
+/* --- Bars (timelines) --- */
+.fk-bar {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  border-radius: var(--radius-s);
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 22px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.fk-bar--soft {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.fk-bar--empty {
+  background: transparent;
+  border: 3px dashed var(--danger);
+  color: var(--danger);
+}
+
+.fk-bar--ok {
+  background: var(--bg);
+  border: 3px solid var(--ink);
+  color: var(--ink);
+}
+
+/* --- Wires (one SVG overlay per diagram) --- */
+.fk-wires {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.fk-flow {
+  color: var(--accent);
+}
+
+.fk-ink {
+  color: var(--ink);
+}
+
+.fk-muted {
+  color: var(--ink-muted);
+}
+
+.fk-danger {
+  color: var(--danger);
+}
+
+.fk-dashed {
+  stroke-dasharray: 10 10;
+}
+
+/* --- Text --- */
+.fk-label {
+  z-index: 4;
+  white-space: nowrap;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.fk-callout {
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.fk-callout--bad {
+  color: var(--danger);
+}
+
+.c-flow-kit .fk-note {
+  z-index: 2;
+  max-width: none;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--ink-muted);
+}
+
+/* --- Small card: icon/title/body, used for takeaways --- */
+.fk-card {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 0 32px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.fk-card svg {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fk-card strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.fk-card span {
+  display: block;
+  margin-top: 8px;
+  font-size: 21px;
+  line-height: 1.25;
+  color: var(--ink-muted);
+}
+
+.fk-label--plain {
+  font-style: normal;
+}
+
+.fk-dots {
+  z-index: 2;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* --- Highlight band (e.g. a race window on a timeline) --- */
+.fk-band {
+  z-index: 1;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+}
+
+/* struck-through: something a component deliberately does without */
+.fk-node--struck {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+}
+
+/* ===== COMPONENT async-compare ===== */
+/* === COMPONENT (deck): async-compare ===
+   Slide 38: serial processing (staircase) vs queue + parallel workers.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-async-compare {
+  z-index: 0;
+}
+
+/* ===== COMPONENT race-timeline ===== */
+/* === COMPONENT (deck): race-timeline ===
+   Slide 39: a close processed while its open is still in progress (old behaviour: FAILED).
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-race-timeline {
+  z-index: 0;
+}
+
+/* ===== COMPONENT close-flow ===== */
+/* === COMPONENT (deck): close-flow ===
+   Slide 40: what a worker does with a close whose open may not be processed yet.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-close-flow {
+  z-index: 0;
+}
+
+/* ===== COMPONENT redis-roles ===== */
+/* === COMPONENT (deck): redis-roles ===
+   Slide 41: the one Redis instance doing three jobs (queues highlighted). 520x720 canvas.
+   Primitives come from flow-kit; place inside <!-- @flow-kit width="520px" -->. */
+.c-redis-roles {
+  z-index: 0;
+}
+
+/* ===== COMPONENT sse-flow ===== */
+/* === COMPONENT (deck): sse-flow ===
+   Slide 42: one-way live-event path, then WebSocket (two-way, dimmed) vs SSE (one-way, highlighted).
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-sse-flow {
+  z-index: 0;
+}
+
+/* ===== COMPONENT judge-service ===== */
+/* === COMPONENT (deck): judge-service ===
+   Slide 43: worker <-> Judge container (model baked in, stateless), and what it does without.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-judge-service {
+  z-index: 0;
+}
+
+/* ===== COMPONENT local-stack ===== */
+/* === COMPONENT (deck): local-stack ===
+   Slide 44: every service as a Docker container on the sponsor's machine, plus three reasons.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-local-stack {
+  z-index: 0;
+}
+
+/* ===== DECK OVERRIDES ===== */
+/* === Deck-level overrides (mid-term-presentation) === */
+
+/* compare-table: keep each cell on one line (slide 41) */
+.c-compare-table.is-nowrap th,
+.c-compare-table.is-nowrap td {
+  white-space: nowrap;
+}
 </style>
 </head>
 <body>
@@ -3275,39 +3636,14 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="24" data-name="design-decisions">
-<!-- notes: Jerrick. The key architectural considerations and why we made each call. -->
+<!-- notes: Jerrick. Superseded: the Key Design Decisions slides sit TEMPORARILY at 38–44 (end of deck). When the team renumbers, move them here (after 23) and delete this slide. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Key Design Decisions</h1>
 </header>
-<div class="c-card-grid inset" style="--grid-cols: 3;">
-  
-  <article class="c-numbered-card reveal ">
-  <span class="c-numbered-card__num">1</span>
-  <div>
-    <h3>Queue-based ingestion</h3>
-    <p>TODO: why Redis queues between FastAPI and workers</p>
-  </div>
-</article>
-  <article class="c-numbered-card reveal ">
-  <span class="c-numbered-card__num">2</span>
-  <div>
-    <h3>Stateless workers</h3>
-    <p>TODO: horizontal scaling, campaign state in cache</p>
-  </div>
-</article>
-  <article class="c-numbered-card reveal ">
-  <span class="c-numbered-card__num">3</span>
-  <div>
-    <h3>Judge as a service</h3>
-    <p>TODO: inference isolated from the pipeline</p>
-  </div>
-</article>
-
-</div>
 <div class="c-placeholder reveal inset" style="--ph-height: auto;">
   <span class="c-placeholder__tag">To do</span>
-  <p>Architectural considerations: latency budget, throughput, failure modes</p>
+  <p>Temporarily moved to slides 38–44 at the end of the deck. Move them here (after slide 23) when the deck is renumbered, then delete this slide.</p>
   <span class="c-placeholder__owner">Jerrick</span>
 </div>
 </section>
@@ -3683,6 +4019,372 @@ body.overview .deck-viewport {
     <p>Thank you. Over to you for Q&amp;A.</p>
     <span>Project Cassandra · 5 Oct</span>
   </div>
+</div>
+</section>
+
+
+<section class="slide" data-slide="38" data-name="design-async">
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: Our first decision was to process trades asynchronously. Every trade needs a Judge score and a market price from OANDA, about 350 milliseconds each. If the API did that work before replying, trades would pile up behind each other: with 500 traders, the last one would wait around three minutes. So the API only saves the trade, puts it on a Redis queue, and replies in about a millisecond. A pool of workers then takes trades off the queue and processes them in parallel. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Design Decision 01</span>
+  <h1 class="reveal">Process Trades Asynchronously</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-async-compare fk-canvas ">
+  <!-- Before: one at a time -->
+  <div class="fk-lane" style="left: 0; top: 0; width: 820px; height: 720px;"></div>
+  <span class="fk-lane__label" style="left: 40px; top: 34px;">Before · one at a time</span>
+  <span class="fk-label" style="left: 40px; top: 92px;">each trade ≈ 350 ms (Judge + OANDA)</span>
+
+  <span class="fk-label fk-label--plain" style="left: 40px; top: 165px;">Trade 1</span>
+  <span class="fk-label fk-label--plain" style="left: 40px; top: 245px;">Trade 2</span>
+  <span class="fk-label fk-label--plain" style="left: 40px; top: 325px;">Trade 3</span>
+  <span class="fk-dots" style="left: 40px; top: 378px; width: 110px;">⋮</span>
+  <span class="fk-label fk-label--plain" style="left: 40px; top: 455px;">Trade 500</span>
+
+  <div class="fk-bar reveal" style="left: 200px; top: 150px; width: 140px; height: 56px;">350 ms</div>
+  <div class="fk-bar reveal" style="left: 340px; top: 230px; width: 140px; height: 56px;">350 ms</div>
+  <div class="fk-bar reveal" style="left: 480px; top: 310px; width: 140px; height: 56px;">350 ms</div>
+  <div class="fk-bar reveal" style="left: 640px; top: 440px; width: 140px; height: 56px;">350 ms</div>
+
+  <!-- After: queue + workers -->
+  <div class="fk-lane" style="left: 900px; top: 0; width: 828px; height: 720px;"></div>
+  <span class="fk-lane__label" style="left: 940px; top: 34px;">After · queue + workers</span>
+
+  <div class="fk-node fk-node--outline fk-node--pill" style="left: 940px; top: 84px; width: 180px; height: 82px;">Trade</div>
+  <div class="fk-node fk-node--dark" style="left: 1180px; top: 80px; width: 240px; height: 90px;">FastAPI<small>save + queue</small></div>
+  <div class="fk-node fk-node--outline fk-node--accent" style="left: 1480px; top: 80px; width: 210px; height: 90px;">Reply 202<small>≈ 1 ms</small></div>
+
+  <div class="fk-node fk-node--pill" style="left: 1120px; top: 222px; width: 360px; height: 76px;">Redis queue</div>
+
+  <div class="fk-node fk-node--dark" style="left: 1000px; top: 330px; width: 190px; height: 64px; font-size: 28px;">Worker 1</div>
+  <div class="fk-node fk-node--dark" style="left: 1000px; top: 420px; width: 190px; height: 64px; font-size: 28px;">Worker 2</div>
+  <span class="fk-dots" style="left: 1000px; top: 492px; width: 190px;">⋮</span>
+  <div class="fk-node fk-node--dark" style="left: 1000px; top: 540px; width: 190px; height: 64px; font-size: 28px;">Worker N</div>
+
+  <div class="fk-bar fk-bar--soft" style="left: 1220px; top: 330px; width: 300px; height: 64px;">Judge + OANDA</div>
+  <div class="fk-bar fk-bar--soft" style="left: 1220px; top: 420px; width: 300px; height: 64px;">Judge + OANDA</div>
+  <div class="fk-bar fk-bar--soft" style="left: 1220px; top: 540px; width: 300px; height: 64px;">Judge + OANDA</div>
+  <span class="fk-label" style="left: 1550px; top: 440px;">at the<br>same time</span>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-async-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-ink">
+      <path d="M200 548 H790" marker-end="url(#fk-async-arrow)"/>
+    </g>
+    <g class="fk-flow">
+      <path d="M1124 125 H1174" marker-end="url(#fk-async-arrow)"/>
+      <path d="M1424 125 H1474" marker-end="url(#fk-async-arrow)"/>
+      <path d="M1300 174 V216" marker-end="url(#fk-async-arrow)"/>
+      <path d="M1120 260 H960 V572"/>
+      <path d="M960 362 H994" marker-end="url(#fk-async-arrow)"/>
+      <path d="M960 452 H994" marker-end="url(#fk-async-arrow)"/>
+      <path d="M960 572 H994" marker-end="url(#fk-async-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 712px; top: 566px;">time</span>
+
+  <span class="fk-callout fk-callout--bad reveal" style="left: 40px; top: 628px;">Trade 500 waits ~3 min</span>
+  <span class="fk-callout reveal" style="left: 940px; top: 628px;">No trade waits for another</span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="39" data-name="design-race-problem">
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: Running workers in parallel created a race condition. Opens and closes sit in separate queues, so different workers pick them up. Here, worker 1 is still processing the open for trade 42, waiting on the Judge and OANDA. Meanwhile, worker 2 picks up its close. The close needs the open price, but it has not been saved yet. Before our fix, the close simply marked the trade as failed. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Design Decision 02 · The Problem</span>
+  <h1 class="reveal">Race Condition: Close Before Open</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-race-timeline fk-canvas ">
+  <div class="fk-band" style="left: 620px; top: 20px; width: 640px; height: 500px;"></div>
+  <span class="fk-lane__label" style="left: 620px; top: 36px; width: 640px; text-align: center;">Race window</span>
+
+  <!-- Lanes -->
+  <div class="fk-node fk-node--dark" style="left: 0; top: 90px; width: 270px; height: 84px;">Worker 1<small>open queue</small></div>
+  <div class="fk-node fk-node--dark" style="left: 0; top: 250px; width: 270px; height: 84px;">Worker 2<small>close queue</small></div>
+  <div class="fk-node fk-node--outline" style="left: 0; top: 410px; width: 270px; height: 84px;">Postgres<small>trade #42</small></div>
+
+  <!-- Worker 1: the open, still in progress -->
+  <div class="fk-bar" style="left: 330px; top: 100px; width: 910px; height: 64px;">Open #42 · waiting on Judge + OANDA…</div>
+  <div class="fk-bar fk-bar--ok" style="left: 1280px; top: 100px; width: 300px; height: 64px;">saves open price</div>
+
+  <!-- Worker 2: the close arrives first -->
+  <div class="fk-bar" style="left: 660px; top: 260px; width: 240px; height: 64px;">Close #42</div>
+  <span class="fk-label reveal" style="left: 980px; top: 222px;">before our fix</span>
+  <div class="fk-node fk-node--bad reveal" style="left: 980px; top: 252px; width: 240px; height: 80px;">FAILED<small>no open price</small></div>
+
+  <!-- Postgres: the row the close reads -->
+  <div class="fk-bar fk-bar--empty" style="left: 330px; top: 420px; width: 910px; height: 64px;">open price: missing</div>
+  <div class="fk-bar fk-bar--ok" style="left: 1280px; top: 420px; width: 300px; height: 64px;">open price ✓</div>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-race-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-ink">
+      <path d="M330 552 H1700" marker-end="url(#fk-race-arrow)"/>
+    </g>
+    <g class="fk-danger">
+      <path class="fk-dashed" d="M780 330 V414" marker-end="url(#fk-race-arrow)"/>
+      <path d="M904 292 H974" marker-end="url(#fk-race-arrow)"/>
+    </g>
+    <g class="fk-muted">
+      <path class="fk-dashed" d="M1430 168 V414" marker-end="url(#fk-race-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 800px; top: 356px;">reads</span>
+  <span class="fk-label" style="left: 1630px; top: 566px;">time</span>
+
+  <span class="fk-callout reveal" style="left: 0; top: 636px;">Separate queues + parallel workers = no guaranteed order</span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="40" data-name="design-race-fix">
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: Our fix: a close first checks whether its open has been processed. If it has, we calculate the P and L as normal. If not, the close goes to the back of the close queue to try again later. That move is a single Redis transaction, so the close is never lost or duplicated. So it cannot loop forever, a close that has waited more than five minutes fails the trade. And on the other side, an open checks the trade is still in progress before doing anything. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Design Decision 02 · Our Fix</span>
+  <h1 class="reveal">Wait for the Open, Safely</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-close-flow fk-canvas ">
+  <div class="fk-node fk-node--dark" style="left: 0; top: 40px; width: 330px; height: 124px;">Close #42<small>picked up by a worker</small></div>
+  <div class="fk-node fk-node--outline" style="left: 470px; top: 40px; width: 380px; height: 124px;">Open processed?</div>
+  <div class="fk-node fk-node--dark fk-node--accent reveal" style="left: 1110px; top: 40px; width: 618px; height: 124px;">Calculate P&amp;L<small>mark completed</small></div>
+
+  <div class="fk-node fk-node--accent reveal" style="left: 0; top: 300px; width: 330px; height: 124px;">Requeue<small>to back of close queue</small></div>
+  <div class="fk-node fk-node--outline" style="left: 470px; top: 300px; width: 380px; height: 124px;">Waited &gt; 5 min?</div>
+  <div class="fk-node fk-node--bad reveal" style="left: 1110px; top: 300px; width: 618px; height: 124px;">Mark FAILED<small>no endless retries</small></div>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-close-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-flow">
+      <path d="M334 102 H464" marker-end="url(#fk-close-arrow)"/>
+      <path d="M854 102 H1104" marker-end="url(#fk-close-arrow)"/>
+      <path d="M660 168 V294" marker-end="url(#fk-close-arrow)"/>
+      <path d="M466 362 H336" marker-end="url(#fk-close-arrow)"/>
+      <path d="M165 296 V170" marker-end="url(#fk-close-arrow)"/>
+      <path d="M854 362 H1104" marker-end="url(#fk-close-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 950px; top: 64px;">Yes</span>
+  <span class="fk-label" style="left: 680px; top: 218px;">No</span>
+  <span class="fk-label" style="left: 370px; top: 324px;">No</span>
+  <span class="fk-label" style="left: 186px; top: 218px;">retry later</span>
+  <span class="fk-label" style="left: 950px; top: 324px;">Yes</span>
+
+  <div class="fk-card reveal" style="left: 0; top: 520px; width: 840px; height: 170px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M44 22a17 17 0 0 0-31-6"/><path d="M12 8v9h9"/><path d="M12 34a17 17 0 0 0 31 6"/><path d="M44 48v-9h-9"/></svg>
+    <div><strong>Atomic requeue</strong><span>One Redis transaction: never lost, never doubled</span></div>
+  </div>
+  <div class="fk-card reveal" style="left: 888px; top: 520px; width: 840px; height: 170px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M28 5l19 7v14c0 12-8 21-19 25C17 47 9 38 9 26V12z"/><path d="M19 28l7 7 12-13"/></svg>
+    <div><strong>Open checks first</strong><span>An open skips a trade that is no longer in progress</span></div>
+  </div>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="41" data-name="design-why-redis">
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: Why Redis for the queues? Redis already handles our feature cache and our live events, so the queues live there too: no extra infrastructure to run. Kafka and RabbitMQ would each be a new broker. Kafka is also built for far more traffic than our thousand or so messages per burst, and it cannot requeue a single message, which our fix relies on. Kafka does keep each trader's events in order, but as you just saw, we handle that in our code. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Design Decision 03</span>
+  <h1 class="reveal">Why Redis?</h1>
+</header>
+<div class="c-split " style="--split-cols: 520px 1fr; --split-align: center;">
+  
+  <div class="c-flow-kit " style="width: 520px; height: 720px;">
+  
+    <div class="c-redis-roles fk-canvas ">
+  <div class="fk-group" style="left: 0; top: 0; width: 520px; height: 560px;">
+    <span class="fk-group__title">One Redis</span>
+  </div>
+  <div class="fk-node fk-node--dark fk-node--pill fk-node--accent" style="left: 40px; top: 100px; width: 440px; height: 116px;">Trade queues<small>streams</small></div>
+  <div class="fk-node fk-node--pill" style="left: 40px; top: 246px; width: 440px; height: 116px;">Feature cache<small>hashes</small></div>
+  <div class="fk-node fk-node--pill" style="left: 40px; top: 392px; width: 440px; height: 116px;">Live events<small>pub/sub</small></div>
+  <span class="fk-callout reveal" style="left: 0; top: 616px; width: 520px; text-align: center; font-size: 44px;">No extra infrastructure</span>
+</div>
+  
+</div>
+  <table class="c-compare-table reveal is-nowrap">
+  
+    <thead><tr><th></th><th class="is-focus">Redis</th><th>Kafka</th><th>RabbitMQ</th></tr></thead>
+    <tbody>
+      <tr><td>Already in our stack</td><td class="is-focus">Yes</td><td class="is-bad">No</td><td class="is-bad">No</td></tr>
+      <tr><td>Sized for our load</td><td class="is-focus">Yes</td><td class="is-bad">Overkill</td><td>Yes</td></tr>
+      <tr><td>Requeue 1 message</td><td class="is-focus">Yes</td><td class="is-bad">No</td><td>Yes</td></tr>
+      <tr><td>Extra service to run</td><td class="is-focus">None</td><td class="is-bad">New broker</td><td class="is-bad">New broker</td></tr>
+      <tr><td>Per-trader order</td><td class="is-focus">In our code</td><td>Yes</td><td class="is-bad">No</td></tr>
+    </tbody>
+  
+</table>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="42" data-name="design-sse">
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: For the live dashboard we push updates with Server-Sent Events. Workers publish trade events to Redis, the API subscribes, and streams them to the browser. We first considered WebSockets, but they are two-way, and our dashboard never sends anything back. SSE is one-way, runs over plain HTTP, and the browser reconnects by itself. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Design Decision 04</span>
+  <h1 class="reveal">Live Dashboard over SSE</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-sse-flow fk-canvas ">
+  <!-- The live path: every hop is one-way -->
+  <div class="fk-node fk-node--dark" style="left: 0; top: 50px; width: 300px; height: 120px;">Workers</div>
+  <div class="fk-node fk-node--pill" style="left: 440px; top: 50px; width: 340px; height: 120px;">Redis<small>pub/sub</small></div>
+  <div class="fk-node fk-node--dark" style="left: 920px; top: 50px; width: 340px; height: 120px;">FastAPI<small>/live-trades/stream</small></div>
+  <div class="fk-node fk-node--outline fk-node--accent" style="left: 1400px; top: 50px; width: 328px; height: 120px;">Dashboard<small>browser</small></div>
+
+  <!-- WebSocket: two-way, more than we need -->
+  <div class="fk-lane" style="left: 0; top: 280px; width: 1728px; height: 160px;"></div>
+  <span class="fk-callout" style="left: 48px; top: 336px; color: var(--ink-muted);">WebSocket</span>
+  <div class="fk-node fk-node--dim" style="left: 520px; top: 318px; width: 220px; height: 84px; font-size: 28px;">Server</div>
+  <div class="fk-node fk-node--dim" style="left: 920px; top: 318px; width: 220px; height: 84px; font-size: 28px;">Browser</div>
+  <span class="fk-label fk-label--plain" style="left: 1210px; top: 340px; font-size: 28px; color: var(--ink-muted);">two-way: we never send back</span>
+
+  <!-- SSE: exactly the one-way push we need -->
+  <div class="fk-lane fk-node--accent reveal" style="left: 0; top: 490px; width: 1728px; height: 160px;"></div>
+  <span class="fk-callout" style="left: 48px; top: 546px;">SSE ✓</span>
+  <div class="fk-node fk-node--dark" style="left: 520px; top: 528px; width: 220px; height: 84px; font-size: 28px;">Server</div>
+  <div class="fk-node fk-node--outline" style="left: 920px; top: 528px; width: 220px; height: 84px; font-size: 28px;">Browser</div>
+  <span class="fk-label fk-label--plain" style="left: 1210px; top: 534px; font-size: 28px;">one-way · plain HTTP<br>reconnects by itself</span>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-sse-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-flow">
+      <path d="M304 110 H434" marker-end="url(#fk-sse-arrow)"/>
+      <path d="M784 110 H914" marker-end="url(#fk-sse-arrow)"/>
+      <path d="M1264 110 H1394" marker-end="url(#fk-sse-arrow)"/>
+      <path d="M744 570 H914" marker-end="url(#fk-sse-arrow)"/>
+    </g>
+    <g class="fk-muted">
+      <path d="M750 360 H910" marker-start="url(#fk-sse-arrow)" marker-end="url(#fk-sse-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 318px; top: 66px;">publish</span>
+  <span class="fk-label" style="left: 796px; top: 66px;">subscribe</span>
+  <span class="fk-label" style="left: 1288px; top: 66px;">stream</span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="43" data-name="design-judge-service">
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: We host the Judge as its own service, for two reasons. It is self-contained: the model is baked into the Docker image, so it needs no network and no secrets, and its port is only reachable from the host machine. And it has a narrow contract: a worker sends 18 numbers, and the Judge sends back FADE or SKIP. No database, no Redis, no feature computation. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Design Decision 05</span>
+  <h1 class="reveal">Judge as a Separate Service</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-judge-service fk-canvas ">
+  <span class="fk-lane__label" style="left: 0; top: 40px;">Narrow contract</span>
+  <span class="fk-lane__label" style="left: 1260px; top: 40px;">Self-contained · needs no</span>
+
+  <div class="fk-node fk-node--dark" style="left: 0; top: 260px; width: 260px; height: 140px;">Worker</div>
+
+  <div class="fk-group" style="left: 640px; top: 90px; width: 520px; height: 540px;">
+    <span class="fk-group__title">Judge container</span>
+  </div>
+  <div class="fk-node fk-node--dark fk-node--accent" style="left: 690px; top: 180px; width: 420px; height: 120px;">Model v5<small>baked into the image</small></div>
+  <div class="fk-node" style="left: 690px; top: 330px; width: 420px; height: 120px;">Score one trade<small>keeps no state</small></div>
+  <div class="fk-node fk-node--outline fk-node--pill" style="left: 730px; top: 500px; width: 340px; height: 76px; font-size: 24px;">port 8001 · host only</div>
+
+  <div class="fk-node fk-node--dim fk-node--struck reveal" style="left: 1260px; top: 110px; width: 468px; height: 96px;">Network</div>
+  <div class="fk-node fk-node--dim fk-node--struck reveal" style="left: 1260px; top: 236px; width: 468px; height: 96px;">Secrets</div>
+  <div class="fk-node fk-node--dim fk-node--struck reveal" style="left: 1260px; top: 362px; width: 468px; height: 96px;">Database</div>
+  <div class="fk-node fk-node--dim fk-node--struck reveal" style="left: 1260px; top: 488px; width: 468px; height: 96px;">Redis</div>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-judge-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-flow">
+      <path d="M264 300 H634" marker-end="url(#fk-judge-arrow)"/>
+      <path d="M636 362 H268" marker-end="url(#fk-judge-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 300px; top: 254px;">18 numbers in</span>
+  <span class="fk-label" style="left: 300px; top: 376px;">FADE / SKIP out</span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="44" data-name="design-docker-local">
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: Finally, everything runs in Docker containers on Catch22's own machine. Three reasons. Our sponsor already has the infrastructure, and the know-how to run it. Trading data is sensitive, so keeping it in their own database is simpler to manage. And there is no extra cost: no monthly cloud bill. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Design Decision 06</span>
+  <h1 class="reveal">Dockerised, Deployed On-Site</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-local-stack fk-canvas ">
+  <div class="fk-group" style="left: 0; top: 20px; width: 1080px; height: 620px;">
+    <span class="fk-group__title">Catch22’s own machine</span>
+  </div>
+  <div class="fk-node" style="left: 40px; top: 110px; width: 310px; height: 130px;">Dashboard<small>container</small></div>
+  <div class="fk-node fk-node--dark" style="left: 385px; top: 110px; width: 310px; height: 130px;">FastAPI<small>container</small></div>
+  <div class="fk-node fk-node--dark" style="left: 730px; top: 110px; width: 310px; height: 130px;">Workers × N<small>containers</small></div>
+  <div class="fk-node" style="left: 40px; top: 280px; width: 310px; height: 130px;">Redis<small>container</small></div>
+  <div class="fk-node fk-node--dark" style="left: 385px; top: 280px; width: 310px; height: 130px;">Judge<small>container</small></div>
+  <div class="fk-node fk-node--dark fk-node--accent" style="left: 730px; top: 280px; width: 310px; height: 130px;">Postgres<small>trading data</small></div>
+  <div class="fk-node fk-node--outline fk-node--pill" style="left: 240px; top: 480px; width: 600px; height: 84px; font-size: 28px;">Docker · started with one command</div>
+  <span class="fk-note" style="left: 0; top: 664px;">Only outside call: OANDA market prices</span>
+
+  <div class="fk-card reveal" style="left: 1160px; top: 20px; width: 568px; height: 190px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="8" y="8" width="40" height="16" rx="4"/><rect x="8" y="32" width="40" height="16" rx="4"/><path d="M16 16h2M16 40h2M30 16h10M30 40h10"/></svg>
+    <div><strong>Sponsor’s hardware</strong><span>They have the machines and the know-how</span></div>
+  </div>
+  <div class="fk-card reveal" style="left: 1160px; top: 235px; width: 568px; height: 190px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="10" y="24" width="36" height="26" rx="5"/><path d="M18 24v-7a10 10 0 0 1 20 0v7"/><path d="M28 34v6"/></svg>
+    <div><strong>Data stays on-site</strong><span>Sensitive trading data in their own database</span></div>
+  </div>
+  <div class="fk-card reveal" style="left: 1160px; top: 450px; width: 568px; height: 190px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="20"/><path d="M34 21c-2-2-4-3-6-3-4 0-6 2-6 5 0 7 13 3 13 10 0 3-3 5-7 5-3 0-5-1-7-3M28 14v4M28 38v4"/></svg>
+    <div><strong>No extra cost</strong><span>No monthly cloud bill</span></div>
+  </div>
+</div>
+
 </div>
 </section>
 

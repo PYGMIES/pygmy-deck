@@ -1,0 +1,7 @@
+/* === Deck-level overrides (mid-term-presentation) === */
+
+/* compare-table: keep each cell on one line (slide 41) */
+.c-compare-table.is-nowrap th,
+.c-compare-table.is-nowrap td {
+  white-space: nowrap;
+}

@@ -1,0 +1,44 @@
+<div class="c-race-timeline fk-canvas {{class|}}">
+  <div class="fk-band" style="left: 620px; top: 20px; width: 640px; height: 500px;"></div>
+  <span class="fk-lane__label" style="left: 620px; top: 36px; width: 640px; text-align: center;">Race window</span>
+
+  <!-- Lanes -->
+  <div class="fk-node fk-node--dark" style="left: 0; top: 90px; width: 270px; height: 84px;">Worker 1<small>open queue</small></div>
+  <div class="fk-node fk-node--dark" style="left: 0; top: 250px; width: 270px; height: 84px;">Worker 2<small>close queue</small></div>
+  <div class="fk-node fk-node--outline" style="left: 0; top: 410px; width: 270px; height: 84px;">Postgres<small>trade #42</small></div>
+
+  <!-- Worker 1: the open, still in progress -->
+  <div class="fk-bar" style="left: 330px; top: 100px; width: 910px; height: 64px;">Open #42 · waiting on Judge + OANDA…</div>
+  <div class="fk-bar fk-bar--ok" style="left: 1280px; top: 100px; width: 300px; height: 64px;">saves open price</div>
+
+  <!-- Worker 2: the close arrives first -->
+  <div class="fk-bar" style="left: 660px; top: 260px; width: 240px; height: 64px;">Close #42</div>
+  <span class="fk-label reveal" style="left: 980px; top: 222px;">before our fix</span>
+  <div class="fk-node fk-node--bad reveal" style="left: 980px; top: 252px; width: 240px; height: 80px;">FAILED<small>no open price</small></div>
+
+  <!-- Postgres: the row the close reads -->
+  <div class="fk-bar fk-bar--empty" style="left: 330px; top: 420px; width: 910px; height: 64px;">open price: missing</div>
+  <div class="fk-bar fk-bar--ok" style="left: 1280px; top: 420px; width: 300px; height: 64px;">open price ✓</div>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-race-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-ink">
+      <path d="M330 552 H1700" marker-end="url(#fk-race-arrow)"/>
+    </g>
+    <g class="fk-danger">
+      <path class="fk-dashed" d="M780 330 V414" marker-end="url(#fk-race-arrow)"/>
+      <path d="M904 292 H974" marker-end="url(#fk-race-arrow)"/>
+    </g>
+    <g class="fk-muted">
+      <path class="fk-dashed" d="M1430 168 V414" marker-end="url(#fk-race-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 800px; top: 356px;">reads</span>
+  <span class="fk-label" style="left: 1630px; top: 566px;">time</span>
+
+  <span class="fk-callout reveal" style="left: 0; top: 636px;">Separate queues + parallel workers = no guaranteed order</span>
+</div>

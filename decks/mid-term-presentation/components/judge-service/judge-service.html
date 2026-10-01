@@ -1,0 +1,32 @@
+<div class="c-judge-service fk-canvas {{class|}}">
+  <span class="fk-lane__label" style="left: 0; top: 40px;">Narrow contract</span>
+  <span class="fk-lane__label" style="left: 1260px; top: 40px;">Self-contained · needs no</span>
+
+  <div class="fk-node fk-node--dark" style="left: 0; top: 260px; width: 260px; height: 140px;">Worker</div>
+
+  <div class="fk-group" style="left: 640px; top: 90px; width: 520px; height: 540px;">
+    <span class="fk-group__title">Judge container</span>
+  </div>
+  <div class="fk-node fk-node--dark fk-node--accent" style="left: 690px; top: 180px; width: 420px; height: 120px;">Model v5<small>baked into the image</small></div>
+  <div class="fk-node" style="left: 690px; top: 330px; width: 420px; height: 120px;">Score one trade<small>keeps no state</small></div>
+  <div class="fk-node fk-node--outline fk-node--pill" style="left: 730px; top: 500px; width: 340px; height: 76px; font-size: 24px;">port 8001 · host only</div>
+
+  <div class="fk-node fk-node--dim fk-node--struck reveal" style="left: 1260px; top: 110px; width: 468px; height: 96px;">Network</div>
+  <div class="fk-node fk-node--dim fk-node--struck reveal" style="left: 1260px; top: 236px; width: 468px; height: 96px;">Secrets</div>
+  <div class="fk-node fk-node--dim fk-node--struck reveal" style="left: 1260px; top: 362px; width: 468px; height: 96px;">Database</div>
+  <div class="fk-node fk-node--dim fk-node--struck reveal" style="left: 1260px; top: 488px; width: 468px; height: 96px;">Redis</div>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-judge-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-flow">
+      <path d="M264 300 H634" marker-end="url(#fk-judge-arrow)"/>
+      <path d="M636 362 H268" marker-end="url(#fk-judge-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 300px; top: 254px;">18 numbers in</span>
+  <span class="fk-label" style="left: 300px; top: 376px;">FADE / SKIP out</span>
+</div>

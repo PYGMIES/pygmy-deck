@@ -1,0 +1,6 @@
+/* === COMPONENT (deck): redis-roles ===
+   Slide 41: the one Redis instance doing three jobs (queues highlighted). 520x720 canvas.
+   Primitives come from flow-kit; place inside <!-- @flow-kit width="520px" -->. */
+.c-redis-roles {
+  z-index: 0;
+}

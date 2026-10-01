@@ -33,7 +33,7 @@
 | 21 | `21-hurdle-model` | What is the hurdle model? + workflow | Jerrick | TODO |
 | 22 | `22-limitations` | Limitations: scaling, decoupling | James Z | TODO |
 | 23 | `23-section-design-decisions` | ◆ 05 Key Design Decisions | Jerrick | — |
-| 24 | `24-design-decisions` | Key design decisions | Jerrick | TODO |
+| 24 | `24-design-decisions` | Placeholder: content moved to 38–44 (temporary) | Jerrick | delete once 38–44 move here |
 | 25 | `25-section-journey` | ◆ 06 How We Got Here | BA | — |
 | 26 | `26-training-approach` | Approach to training | BA | TODO |
 | 27 | `27-feature-engineering` | Feature engineering deep dive | Yanting | TODO |
@@ -47,8 +47,19 @@
 | 35 | `35-constraints` | Not random sample · 38 campaigns | TBD | done |
 | 36 | `36-whats-next` | Trade magnitude · real pipeline · auto-scaling | TBD | done |
 | 37 | `37-qna` | Questions | — | done |
+| 38 | `38-design-async` | ⚠ TEMPORARY · Decision 01: process trades asynchronously (serial staircase vs queue + workers) | Jerrick | done |
+| 39 | `39-design-race-problem` | ⚠ TEMPORARY · Decision 02: race condition, close before open (timeline) | Jerrick | done |
+| 40 | `40-design-race-fix` | ⚠ TEMPORARY · Decision 02: our fix (requeue / 5-min deadline flowchart) | Jerrick | done |
+| 41 | `41-design-why-redis` | ⚠ TEMPORARY · Decision 03: why Redis (one Redis, three jobs + Redis/Kafka/RabbitMQ table) | Jerrick | done |
+| 42 | `42-design-sse` | ⚠ TEMPORARY · Decision 04: live dashboard over SSE (vs WebSocket) | Jerrick | done |
+| 43 | `43-design-judge-service` | ⚠ TEMPORARY · Decision 05: Judge as a separate service | Jerrick | done |
+| 44 | `44-design-docker-local` | ⚠ TEMPORARY · Decision 06: Dockerised, deployed on-site | Jerrick | done |
+
+## Deck CSS
+- `deck.css`: `.c-compare-table.is-nowrap` keeps table cells on one line (slide 41).
 
 ## Open items
+- **Slides 38–44 are in a TEMPORARY position** at the end of the deck (to avoid renaming teammates' 25–37 mid-edit). They belong right after `23-section-design-decisions`, replacing `24-design-decisions`. When renumbering: `git mv` 25–37 → 31–43, 38–44 → 24–30, delete 24, update this outline. Script for 38–44 (≈490 words, 3.5 min) is in each slide's notes comment.
 - Confirm who presents Constraints & What's Next (agenda says TBD).
 - Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 16 charts use rolling windows (p95 130 / p50 57); slide 17 uses fixed 30-min slots (p95 121.4 / p50 59.5).
 - Replace the slide 09 target ladder with measured results + CIs when available.

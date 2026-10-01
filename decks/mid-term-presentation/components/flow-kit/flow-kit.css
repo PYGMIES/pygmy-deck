@@ -1,0 +1,294 @@
+/* === COMPONENT (deck): flow-kit ===
+   Fixed-size canvas + diagram primitives shared by the Key Design Decisions
+   diagrams (async-compare, race-timeline, close-flow, redis-roles, sse-flow,
+   judge-service, local-stack). Same look as arch-diagram: grey lanes,
+   charcoal nodes, accent data-flow wires, italic wire labels.
+   Children are absolutely positioned at design-size px. */
+.c-flow-kit {
+  --node: color-mix(in srgb, var(--card) 80%, var(--bg));
+  position: relative;
+  flex: none;
+}
+
+.fk-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.fk-canvas > * {
+  position: absolute;
+}
+
+/* --- Lanes (grey panels) --- */
+.fk-lane {
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.fk-lane__label {
+  z-index: 2;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+/* --- Outlined groups --- */
+.fk-group {
+  z-index: 1;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.fk-group--dashed {
+  border-style: dashed;
+}
+
+.fk-group__title {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  letter-spacing: -0.01em;
+}
+
+/* --- Nodes --- */
+.fk-node {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: var(--radius);
+  background: var(--node);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 32px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.fk-node small {
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-card-muted);
+}
+
+.fk-node--dark {
+  background: var(--card);
+}
+
+.fk-node--pill {
+  border-radius: 999px;
+  font-size: 28px;
+}
+
+/* decision / neutral: outlined, ink on canvas */
+.fk-node--outline {
+  background: var(--bg);
+  border: 3px solid var(--ink);
+  color: var(--ink);
+}
+
+.fk-node--outline small {
+  color: var(--ink-muted);
+}
+
+.fk-node--accent {
+  box-shadow: 0 0 0 4px var(--accent);
+}
+
+.fk-node--bad {
+  background: var(--danger-bg);
+  border: 3px solid var(--danger);
+  color: var(--danger);
+}
+
+.fk-node--bad small {
+  color: var(--danger);
+}
+
+.fk-node--dim {
+  background: transparent;
+  border: 3px dashed var(--rule);
+  color: var(--ink-muted);
+}
+
+/* --- Bars (timelines) --- */
+.fk-bar {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  border-radius: var(--radius-s);
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 22px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.fk-bar--soft {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.fk-bar--empty {
+  background: transparent;
+  border: 3px dashed var(--danger);
+  color: var(--danger);
+}
+
+.fk-bar--ok {
+  background: var(--bg);
+  border: 3px solid var(--ink);
+  color: var(--ink);
+}
+
+/* --- Wires (one SVG overlay per diagram) --- */
+.fk-wires {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.fk-flow {
+  color: var(--accent);
+}
+
+.fk-ink {
+  color: var(--ink);
+}
+
+.fk-muted {
+  color: var(--ink-muted);
+}
+
+.fk-danger {
+  color: var(--danger);
+}
+
+.fk-dashed {
+  stroke-dasharray: 10 10;
+}
+
+/* --- Text --- */
+.fk-label {
+  z-index: 4;
+  white-space: nowrap;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.fk-callout {
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.fk-callout--bad {
+  color: var(--danger);
+}
+
+.c-flow-kit .fk-note {
+  z-index: 2;
+  max-width: none;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--ink-muted);
+}
+
+/* --- Small card: icon/title/body, used for takeaways --- */
+.fk-card {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 0 32px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.fk-card svg {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fk-card strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.fk-card span {
+  display: block;
+  margin-top: 8px;
+  font-size: 21px;
+  line-height: 1.25;
+  color: var(--ink-muted);
+}
+
+.fk-label--plain {
+  font-style: normal;
+}
+
+.fk-dots {
+  z-index: 2;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* --- Highlight band (e.g. a race window on a timeline) --- */
+.fk-band {
+  z-index: 1;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+}
+
+/* struck-through: something a component deliberately does without */
+.fk-node--struck {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+}

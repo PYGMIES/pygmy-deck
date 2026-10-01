@@ -1,0 +1,6 @@
+/* === COMPONENT (deck): close-flow ===
+   Slide 40: what a worker does with a close whose open may not be processed yet.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-close-flow {
+  z-index: 0;
+}

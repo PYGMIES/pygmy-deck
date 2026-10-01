@@ -1,0 +1,6 @@
+/* === COMPONENT (deck): async-compare ===
+   Slide 38: serial processing (staircase) vs queue + parallel workers.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-async-compare {
+  z-index: 0;
+}
