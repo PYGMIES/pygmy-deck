@@ -1,4 +1,4 @@
-/* === COMPONENT: req-card === charcoal card: left-aligned title on top, then one sentence on the left with a flat icon at the right edge.
+/* === COMPONENT: req-card === charcoal card: left-aligned title on top, then a flat icon beside one sentence. Every icon is the same fixed size, about the height of a three-line sentence.
    Same padding on all four sides; the title + row block is centred vertically.
    Cards grow to share the height of a flex column equally (flex: 1). */
 .c-req-card {
@@ -23,13 +23,13 @@
 .c-req-card__row {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 22px;
 }
 
 .c-req-card__icon {
   flex: none;
-  width: 84px;
-  height: 84px;
+  width: 104px;
+  height: 104px;
   color: var(--on-card);
 }
 
@@ -39,7 +39,7 @@
   height: 100%;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2.6;
+  stroke-width: 1.9;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
