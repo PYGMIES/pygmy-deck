@@ -1,21 +1,21 @@
 /* === DECK OVERRIDES === */
 
-/* Short card row: centre it in the space under the slide title (slide 54) */
+/* Short card row: centre it in the space under the slide title (slide 55) */
 .c-card-grid.is-centered {
   flex: 1;
   min-height: 0;
   align-content: center;
 }
 
-/* compare-table: keep each cell on one line (slide 37, Why Redis) */
+/* compare-table: keep each cell on one line (slide 38, Why Redis) */
 .c-compare-table.is-nowrap th,
 .c-compare-table.is-nowrap td {
   white-space: nowrap;
 }
 
-/* === WORKFLOW SLIDES 20-23 === */
+/* === WORKFLOW SLIDES 21-24 === */
 
-/* wide label-card: body runs left-aligned across the card (slide 20 callout) */
+/* wide label-card: body runs left-aligned across the card (slide 21 callout) */
 .c-label-card.is-wide p {
   max-width: none;
   text-align: left;
@@ -27,29 +27,35 @@
   min-height: 120px;
 }
 
-/* slide 20: drop the second note so the step-5 arrow meets the middle of its left edge */
+/* slide 21: drop the second note so the step-5 arrow meets the middle of its left edge */
 .c-note-card.is-offset {
   margin-top: 125px;
 }
 
-/* slide 21: the first of the two tall notes is pushed down so both sit at the bottom of the column */
+/* slide 22: the first of the two tall notes is pushed down so both sit at the bottom of the column */
 .c-note-card.is-start {
   margin-top: auto;
 }
 
-/* slide 21: connector line stops at the centre of the last circle */
+/* slide 22: connector line stops at the centre of the last circle */
 .c-step-list.is-compact {
   --line-end: 109px;
 }
 
-/* slide 22: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
+/* slide 23: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
 .c-step-list.is-compact.is-close {
   --step-gap: 27.2px;
   --line-end: 82px;
 }
 
-/* slide 23: five steps spread over the full height; connector stops at the last circle's centre */
+/* slide 24: five steps spread over the full height; connector stops at the last circle's centre */
 .c-step-list.is-compact.is-end {
   --step-gap: 90px;
   --line-end: 33px;
+}
+
+/* slide 19: compact group heading above each column of requirement cards */
+.c-section-heading.is-compact h2 {
+  font-size: 44px;
+  padding-bottom: 10px;
 }

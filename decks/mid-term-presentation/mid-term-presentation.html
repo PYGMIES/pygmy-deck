@@ -1773,6 +1773,96 @@ body.overview .deck-viewport {
   margin-right: 0.3em;
 }
 
+/* ===== COMPONENT req-card ===== */
+/* === COMPONENT: req-card === charcoal row card: flat icon, number chip + title, 2 short bullets.
+   Same padding on all four sides; icon and text are centred vertically as one block.
+   Cards grow to share the height of a flex column equally (flex: 1). */
+.c-req-card {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 26px 32px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-req-card__icon {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  color: var(--on-card);
+}
+
+.c-req-card__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.c-req-card__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.c-req-card__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.c-req-card__num {
+  flex: none;
+  padding: 3px 11px 2px;
+  border: 2px solid var(--on-card-muted);
+  border-radius: 999px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  color: var(--on-card-muted);
+}
+
+.c-req-card h3 {
+  font-size: 34px;
+  line-height: 1.05;
+  color: var(--on-card);
+}
+
+.c-req-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.c-req-card li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 22px;
+  line-height: 1.25;
+  color: var(--on-card-muted);
+}
+
+.c-req-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
 /* ===== COMPONENT arch-diagram ===== */
 /* === COMPONENT (deck): arch-diagram ===
    Project Cassandra system architecture on a 1728×800 canvas.
@@ -3987,22 +4077,22 @@ body.overview .deck-viewport {
 /* ===== DECK OVERRIDES ===== */
 /* === DECK OVERRIDES === */
 
-/* Short card row: centre it in the space under the slide title (slide 54) */
+/* Short card row: centre it in the space under the slide title (slide 55) */
 .c-card-grid.is-centered {
   flex: 1;
   min-height: 0;
   align-content: center;
 }
 
-/* compare-table: keep each cell on one line (slide 37, Why Redis) */
+/* compare-table: keep each cell on one line (slide 38, Why Redis) */
 .c-compare-table.is-nowrap th,
 .c-compare-table.is-nowrap td {
   white-space: nowrap;
 }
 
-/* === WORKFLOW SLIDES 20-23 === */
+/* === WORKFLOW SLIDES 21-24 === */
 
-/* wide label-card: body runs left-aligned across the card (slide 20 callout) */
+/* wide label-card: body runs left-aligned across the card (slide 21 callout) */
 .c-label-card.is-wide p {
   max-width: none;
   text-align: left;
@@ -4014,31 +4104,37 @@ body.overview .deck-viewport {
   min-height: 120px;
 }
 
-/* slide 20: drop the second note so the step-5 arrow meets the middle of its left edge */
+/* slide 21: drop the second note so the step-5 arrow meets the middle of its left edge */
 .c-note-card.is-offset {
   margin-top: 125px;
 }
 
-/* slide 21: the first of the two tall notes is pushed down so both sit at the bottom of the column */
+/* slide 22: the first of the two tall notes is pushed down so both sit at the bottom of the column */
 .c-note-card.is-start {
   margin-top: auto;
 }
 
-/* slide 21: connector line stops at the centre of the last circle */
+/* slide 22: connector line stops at the centre of the last circle */
 .c-step-list.is-compact {
   --line-end: 109px;
 }
 
-/* slide 22: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
+/* slide 23: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
 .c-step-list.is-compact.is-close {
   --step-gap: 27.2px;
   --line-end: 82px;
 }
 
-/* slide 23: five steps spread over the full height; connector stops at the last circle's centre */
+/* slide 24: five steps spread over the full height; connector stops at the last circle's centre */
 .c-step-list.is-compact.is-end {
   --step-gap: 90px;
   --line-end: 33px;
+}
+
+/* slide 19: compact group heading above each column of requirement cards */
+.c-section-heading.is-compact h2 {
+  font-size: 44px;
+  padding-bottom: 10px;
 }
 </style>
 </head>
@@ -4796,13 +4892,120 @@ body.overview .deck-viewport {
   <div class="c-section-divider__text">
     <h2 class="reveal">System Architecture</h2>
     <p class="reveal">How a trade becomes a decision in real time</p>
-    <span class="c-section-divider__presenter reveal">Jerrick · James Z</span>
+    <span class="c-section-divider__presenter reveal">Jamesz</span>
   </div>
 </div>
 </section>
 
 
-<section class="slide" data-slide="19" data-name="architecture">
+<section class="slide" data-slide="19" data-name="nfrs">
+<!-- notes: James Z. Six requirements in two groups. 1A Data reliability: trade records are kept under all operating conditions, and every trade ends in an explicit success or failure, so nothing disappears silently. 1B Consistency under concurrency: several workers write to the same Redis state at once; rolling metrics must not be corrupted or hit race conditions when trades update at the same time. 1C Idempotency: duplicate, overlapping or retried requests must not corrupt state or double-count; replayed payloads are recognised and handled without secondary side effects. 2A Processing latency: the ingestion API never blocks the caller, and downstream event processing is fast enough for timely trade decisions. 2B Concurrency and throughput: sustained bursts of 150+ concurrent trades per minute, without unacceptable latency or queuing delay, across all active accounts. 2C Auditability: every decision outcome and failure traces back to its root cause; execution context, model decision lineage and failure points are preserved. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">System Architecture</span>
+  <h1 class="reveal">Non-Functional Requirements</h1>
+</header>
+<div class="c-split inset" style="--split-cols: 1fr 1fr; --split-align: stretch;">
+  
+  <div class="c-column " style="--col-width: auto; --col-gap: 20px;">
+  
+    <header class="c-section-heading reveal is-compact">
+  <h2>1 &nbsp;Data integrity &amp; safety</h2>
+  <p></p>
+</header>
+    <article class="c-req-card reveal ">
+  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><ellipse cx='24' cy='11' rx='14' ry='5'/><path d='M10 11v26c0 3 6 6 14 6s14-3 14-6V11'/><path d='M10 24c0 3 6 6 14 6s14-3 14-6'/></svg></span>
+  <div class="c-req-card__text">
+    <div class="c-req-card__head">
+      <span class="c-req-card__num">1A</span>
+      <h3>Data reliability</h3>
+    </div>
+    <ul>
+      <li>Trade records are kept under all operating conditions.</li>
+      <li>Every trade ends as a recorded success or a recorded failure.</li>
+    </ul>
+  </div>
+</article>
+    <article class="c-req-card reveal ">
+  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><path d='M5 10L22 24L5 38'/><path d='M22 24H43'/><path d='M37 18L43 24L37 30'/></svg></span>
+  <div class="c-req-card__text">
+    <div class="c-req-card__head">
+      <span class="c-req-card__num">1B</span>
+      <h3>Consistency under concurrency</h3>
+    </div>
+    <ul>
+      <li>Several workers write to the same Redis state at once.</li>
+      <li>Rolling metrics stay correct under simultaneous trade updates.</li>
+    </ul>
+  </div>
+</article>
+    <article class="c-req-card reveal ">
+  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><path d='M39 24a15 15 0 1 1-4.5-10.7'/><path d='M36 6v8h-8'/><path d='M19 21h10'/><path d='M19 28h10'/></svg></span>
+  <div class="c-req-card__text">
+    <div class="c-req-card__head">
+      <span class="c-req-card__num">1C</span>
+      <h3>Idempotency</h3>
+    </div>
+    <ul>
+      <li>Duplicated, overlapping or retried requests change state only once.</li>
+      <li>Replayed payloads are recognised and handled without side effects.</li>
+    </ul>
+  </div>
+</article>
+  
+</div>
+  <div class="c-column " style="--col-width: auto; --col-gap: 20px;">
+  
+    <header class="c-section-heading reveal is-compact">
+  <h2>2 &nbsp;Execution &amp; performance</h2>
+  <p></p>
+</header>
+    <article class="c-req-card reveal ">
+  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><circle cx='24' cy='28' r='15'/><path d='M20 6h8'/><path d='M24 6v7'/><path d='M24 28v-9'/><path d='M24 28l7 5'/></svg></span>
+  <div class="c-req-card__text">
+    <div class="c-req-card__head">
+      <span class="c-req-card__num">2A</span>
+      <h3>Processing latency</h3>
+    </div>
+    <ul>
+      <li>The ingestion API does not block the caller.</li>
+      <li>Downstream processing is fast enough to handle trade decisions on time.</li>
+    </ul>
+  </div>
+</article>
+    <article class="c-req-card reveal ">
+  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><path d='M5 12h36'/><path d='M36 7l5 5-5 5'/><path d='M5 24h36'/><path d='M36 19l5 5-5 5'/><path d='M5 36h36'/><path d='M36 31l5 5-5 5'/></svg></span>
+  <div class="c-req-card__text">
+    <div class="c-req-card__head">
+      <span class="c-req-card__num">2B</span>
+      <h3>Concurrency &amp; throughput</h3>
+    </div>
+    <ul>
+      <li>The system sustains bursts of 150+ concurrent trades per minute.</li>
+      <li>Latency and queuing delay stay acceptable, including during traffic spikes.</li>
+    </ul>
+  </div>
+</article>
+    <article class="c-req-card reveal ">
+  <span class="c-req-card__icon"><svg viewBox='0 0 48 48'><rect x='7' y='5' width='24' height='34' rx='3'/><path d='M13 15h12'/><path d='M13 22h8'/><circle cx='32' cy='31' r='8'/><path d='M38 37l6 6'/></svg></span>
+  <div class="c-req-card__text">
+    <div class="c-req-card__head">
+      <span class="c-req-card__num">2C</span>
+      <h3>Auditability</h3>
+    </div>
+    <ul>
+      <li>Every decision outcome and failure traces back to its root cause.</li>
+      <li>Execution context, model decision lineage and failure points are preserved.</li>
+    </ul>
+  </div>
+</article>
+  
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="20" data-name="architecture">
 <!-- notes: James Z. Left to right by layer: ingestion → Redis queues → workers → Judge inference. Dashboard reads from pub/sub. Oanda is temporary. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -4888,7 +5091,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="20" data-name="workflow-campaign-start">
+<section class="slide" data-slide="21" data-name="workflow-campaign-start">
 <!-- notes: James Z. Walk the six steps top to bottom. Pause on step 1 (reference price) and step 5 (six history features; a new trader gets zeros/nulls, not an error). Land the callout: one transaction, so a failed Redis write rolls everything back. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -4941,7 +5144,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="21" data-name="workflow-open-trade">
+<section class="slide" data-slide="22" data-name="workflow-open-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the trade is queued, a worker runs steps 3-6. Step 4: 18 features built live from the trade plus the cached history, then the Judge decides. Step 5: Oanda is a stand-in for C22's market data; slippage is the gap between the trader's entry price and ours. Key notes: in production, market data is polled or read from C22 directly and no response is sent. C22's slippage threshold is 0.10; we adjusted it for the demo because of the historical data. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -4999,7 +5202,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="22" data-name="workflow-close-trade">
+<section class="slide" data-slide="23" data-name="workflow-close-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the close is queued, a worker runs steps 3-6. Key notes: the Redis rolling metrics update even if the simulated close fails (e.g. the market price fetch). They are updated with a read-check-write retry pattern instead of locks. Reverse-trading PnL streams to the dashboard the moment each trade closes. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -5042,7 +5245,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="23" data-name="workflow-campaign-end">
+<section class="slide" data-slide="24" data-name="workflow-campaign-end">
 <!-- notes: James Z. Five steps, top to bottom. The /end call is idempotent: a second request for an already ended campaign does nothing and does not rerun the flow. Open trades are force-failed so the evaluation only uses completed trades. The same completed trades are scored three ways: Judge-led reverse, reverse all trades, coin-flip-led reverse. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -5084,7 +5287,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="24" data-name="hurdle-model">
+<section class="slide" data-slide="25" data-name="hurdle-model">
 <!-- notes: Jerrick. Judge v5 is a hurdle model with three arms. Each fills in one term of EV = p × E[gain] − (1 − p) × E[loss]. The classifier gives p (calibrated); the two Huber regressors give the dollar gain and loss. This is gross EV: the models train on gross = −profit. Direction only, fade or skip. amount only sets the cost: score = ev − 7.00 × amount, and we take the trade if it lands in the top 5% of the frozen pool distribution. Trade magnitude: TODO, to be covered later. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -5139,7 +5342,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="25" data-name="limitations">
+<section class="slide" data-slide="26" data-name="limitations">
 <!-- notes: James Z. Be candid: limitations and the path to scale. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -5173,7 +5376,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="26" data-name="section-design-decisions">
+<section class="slide" data-slide="27" data-name="section-design-decisions">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">05</span>
   <div class="c-section-divider__text">
@@ -5185,7 +5388,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="27" data-name="design-decisions">
+<section class="slide" data-slide="28" data-name="design-decisions">
 <!-- notes: Jerrick. The key architectural considerations and why we made each call. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -5224,7 +5427,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="28" data-name="async-1-request">
+<section class="slide" data-slide="29" data-name="async-1-request">
 <!-- notes: Jerrick. A trade request arrives at FastAPI. -->
 <header class="c-flow-heading ">
   <h1>Processing trades asynchronously</h1>
@@ -5260,7 +5463,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="29" data-name="async-2-queues">
+<section class="slide" data-slide="30" data-name="async-2-queues">
 <!-- notes: Jerrick. FastAPI does not process the trade. It drops it onto an open-trade queue or a close-trade queue. -->
 <header class="c-flow-heading ">
   <h1>Processing trades asynchronously</h1>
@@ -5318,7 +5521,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="30" data-name="async-3-response">
+<section class="slide" data-slide="31" data-name="async-3-response">
 <!-- notes: Jerrick. The client gets a response straight after enqueuing, so nobody waits on the model. -->
 <header class="c-flow-heading ">
   <h1>Processing trades asynchronously</h1>
@@ -5384,7 +5587,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="31" data-name="async-4-workers">
+<section class="slide" data-slide="32" data-name="async-4-workers">
 <!-- notes: Jerrick. Workers pull from each queue. Opening a trade asks the Judge for inference, fetches the Oanda price and writes to the database. Closing a trade only needs the database. -->
 <header class="c-flow-heading ">
   <h1>Processing trades asynchronously</h1>
@@ -5508,7 +5711,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="32" data-name="race-1-queues">
+<section class="slide" data-slide="33" data-name="race-1-queues">
 <!-- notes: Jerrick. Open and close trades sit on separate queues and run in parallel, so a close can be picked up before its open has been processed. -->
 <header class="c-flow-heading ">
   <h1>Race Conditions</h1>
@@ -5563,7 +5766,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="33" data-name="race-2-check-db">
+<section class="slide" data-slide="34" data-name="race-2-check-db">
 <!-- notes: Jerrick. The close worker takes trade 11 and checks the database for the matching open trade. -->
 <header class="c-flow-heading ">
   <h1>Race Conditions</h1>
@@ -5629,7 +5832,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="34" data-name="race-3-no-match">
+<section class="slide" data-slide="35" data-name="race-3-no-match">
 <!-- notes: Jerrick. The open trade for 11 is still waiting in its queue, so the database has nothing. The close cannot be processed. -->
 <header class="c-flow-heading ">
   <h1>Race Conditions</h1>
@@ -5702,7 +5905,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="35" data-name="race-4-solution">
+<section class="slide" data-slide="36" data-name="race-4-solution">
 <!-- notes: Jerrick. The fix. Do not drop the close and do not block on it. -->
 <header class="c-flow-heading ">
   <h1>Race Conditions</h1>
@@ -5772,7 +5975,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="36" data-name="race-5-requeue">
+<section class="slide" data-slide="37" data-name="race-5-requeue">
 <!-- notes: Jerrick. Move the close trade to the back of the close queue and try again later. By then the open trade has usually been processed. -->
 <header class="c-flow-heading ">
   <h1>Race Conditions</h1>
@@ -5842,7 +6045,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="37" data-name="why-redis">
+<section class="slide" data-slide="38" data-name="why-redis">
 <!-- notes: Jerrick. Script: Why Redis for the queues? Redis already handles our feature cache and our live events, so the queues live there too: no extra infrastructure to run. Kafka and RabbitMQ would each be a new broker. Kafka is also built for far more traffic than our thousand or so messages per burst, and it cannot requeue a single message, which our fix relies on. Kafka does keep each trader's events in order, but as you just saw, we handle that in our code. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -5880,7 +6083,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="38" data-name="cache-check">
+<section class="slide" data-slide="39" data-name="cache-check">
 <!-- notes: Jerrick. Script: The Redis hash holds each trader's running stats, which become the Judge's features. Because workers process opens and closes separately, the hash can fall behind the database. So before scoring a trade, the open compares the trade count in the hash with the count in Postgres. If they match, we use the hash. If they don't, we rebuild the hash from Postgres first, so the Judge never scores on stale features. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -5926,7 +6129,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="39" data-name="sse">
+<section class="slide" data-slide="40" data-name="sse">
 <!-- notes: Jerrick. Script: For the live dashboard we push updates with Server-Sent Events. Workers publish trade events to Redis, the API subscribes, and streams them to the browser. We first considered WebSockets, but they are two-way, and our dashboard never sends anything back. SSE is one-way, runs over plain HTTP, and the browser reconnects by itself. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -5980,7 +6183,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="40" data-name="docker-local">
+<section class="slide" data-slide="41" data-name="docker-local">
 <!-- notes: Jerrick. Script: Finally, everything runs in Docker containers on Catch22's own machine. Three reasons. Our sponsor already has the infrastructure, and the know-how to run it. Trading data is sensitive, so keeping it in their own database is simpler to manage. And there is no extra cost: no monthly cloud bill. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -6019,7 +6222,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="41" data-name="section-journey">
+<section class="slide" data-slide="42" data-name="section-journey">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">06</span>
   <div class="c-section-divider__text">
@@ -6031,7 +6234,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="42" data-name="training-approach">
+<section class="slide" data-slide="43" data-name="training-approach">
 <!-- notes: BA. Our approach to training end to end. One model family, built to be audited: a LightGBM hurdle that scores P(fading wins) and the size of the gain and loss, then combines them as EV = p·E[gain] − (1−p)·E[loss]. Data: 45 one-day campaigns, 68,377 trades, 24 Feb to 12 Aug 2026, one instrument (XAUUSD), about 64 recurring traders. Locked test is campaigns 69–77. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -6064,7 +6267,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="43" data-name="validation">
+<section class="slide" data-slide="44" data-name="validation">
 <!-- notes: Joyce. How we keep ourselves honest: three methodological guardrails. Splits are by campaign in time order: 6 expanding folds on campaigns 33–68, then a locked test block (69–77). Every feature passes a provenance test (blank the current row's exit fields, rebuild the features, assert they are identical) and a leakage gate (forbidden names, |r| with target below 0.95, |ρ| with campaign order below 0.50). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -6098,7 +6301,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="44" data-name="feature-engineering">
+<section class="slide" data-slide="45" data-name="feature-engineering">
 <!-- notes: Yanting. The funnel: we started with every column in the trade export and narrowed to 18 features. Walk top to bottom, one row per step; the next four slides open each step. Counts: 28 raw columns (PYG-90) → 26 point-in-time features (PYG-94, v3 shortlist) → still 26 after testing 48 candidates (PYG-145, v5 = v3) → 18 in the frozen Judge (PYG-185). Row widths are illustrative. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -6127,7 +6330,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="45" data-name="fe-audit">
+<section class="slide" data-slide="46" data-name="fe-audit">
 <!-- notes: Yanting. Step 1 of 4: 28 → usable columns. Every column in master_dataset got exactly one class (target, post-trade, pre-trade, id, constant, duplicate...). The big catch: slPrice/tpPrice are written when the position CLOSES. 37.7% of trades closed exactly at those prices. Five features built on them looked strong and leaked the outcome. Retiring them cost held-out AUC 0.667 → 0.620 (PYG-90, PYG-92). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 1 of 4</span>
@@ -6164,7 +6367,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="46" data-name="fe-signal">
+<section class="slide" data-slide="47" data-name="fe-signal">
 <!-- notes: Yanting. Note the strongest four are all OUTCOME features (the market handed them to the trader); step 4 removes them, so flag it here. Step 2 of 4: build and rank. 26 features built point-in-time in three families (order ticket, rolling trader state inside a campaign, history from earlier campaigns). Ranked on four measures; Spearman is the one to trust. Order-ticket features together score at chance; all the signal is the trader's rolling state. Values below ~0.015 are noise at n=46,520. Near-duplicates (|rho|>0.8) were dropped so importance is not split (PYG-94, PYG-96, PYG-99). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 2 of 4</span>
@@ -6211,7 +6414,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="47" data-name="fe-stress-test">
+<section class="slide" data-slide="48" data-name="fe-stress-test">
 <!-- notes: Yanting. Step 3 of 4: did more help? 22 net-new candidate features from a second feature pass, plus two market blocks: 18 features (ATR, volatility, session, VWAP; -0.0036 AUC, commit 46fd30e) and 4 direction-signed features (chase, trend alignment, provocation, vol rank; +0.0005 AUC, CI [-0.0018, +0.0025], NB11). NB14 re-tests market on the 18-feature roster but its results are not written up yet, so do not quote it. We held the 26 as the frozen, pre-registered shortlist: the burden of proof is on the change. 0 of 22 promoted (PYG-145). Both market blocks had intervals spanning zero (PYG-104). More columns add variance, not signal. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 3 of 4</span>
@@ -6248,7 +6451,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="48" data-name="fe-final-18">
+<section class="slide" data-slide="49" data-name="fe-final-18">
 <!-- notes: Yanting. Step 4 of 4: 26 → 18. Every feature is tagged ticket / behaviour / outcome / counter. The 18 are everything except the 8 outcome-based features. This is the roster the later experiments run on and the only one that has made money in our tests (PYG-185). Source: NB12 "Behaviour or just luck?". OUTCOME = the market handed it to them (win rate, running P&L, streak, drawdown, stop/target hit rates); BEHAVIOUR = the trader chose it. Be upfront: no_outcome is -0.035 held-out AUC vs full, but it is the only arm that made money (+$1,205 at top 5%, +$4,070 at top 10%) and outcome columns took 58.6% of the full model attention. This is a deliberate trade-off. The next slide (Behaviour vs luck) goes deeper. Frozen in one file on 23 Sep. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 4 of 4</span>
@@ -6280,7 +6483,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="49" data-name="behaviour-vs-luck">
+<section class="slide" data-slide="50" data-name="behaviour-vs-luck">
 <!-- notes: Yanting. SHAP shows how much each feature pushed the model's decision. We average that over many trades to get each feature's share of the model's attention (mean |SHAP|, TreeSHAP, same out-of-fold rows for every arm; Notebook 12 section 4). Full 26-feature model: outcome 58.6%, behaviour 25.2%, ticket 12.4%, counters 3.8%. Outcome = what the market handed the trader (win rate, streak, running P&L, drawdown, stop and target hit rates). Final 18 (no_outcome arm): behaviour 76.3%, ticket 18.1%, counters 5.6%. Top single features: prior_win_rate 0.163 in full; prior_sl_use_rate 0.157 in the final 18. Be upfront that the final 18 is -0.035 held-out AUC vs full but the only arm that made money (+$1,205 at top 5%). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -6335,7 +6538,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="51" data-name="magnitude">
+<section class="slide" data-slide="52" data-name="magnitude">
 <!-- notes: Owner TBC. Deep dive 4: where the signal lives. Giving the model a perfect classifier adds +$351 per campaign; perfect gain and loss regressors add +$12,417, 35 times more. So the money is in how big the win or loss is, not only in calling the direction. Right: what we tried and dropped. Market context was rejected four times (18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005; 14 macro features B+C −$23.5k to −$47.6k; NB14 negative on all three learners). Tuned GBDT beats logistic by +0.002 AUC. Learning curves are flat. A same-day trade-context block added +0.0016 AUC but lost $7,571 at top 5%, so money vetoed it. The full decomposition chart is in the appendix. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -6371,7 +6574,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="52" data-name="section-pm">
+<section class="slide" data-slide="53" data-name="section-pm">
 <!-- notes: SCRIPT (~15s, Arin): Last section: how we ran the work as a team. In short: two-week sprints, a retro at the end of every one, and a plan that changes when the results tell us to. I'll cover why we chose Scrum, how a sprint runs, where we are on the timeline, what our retros changed, and what limits the project. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">07</span>
@@ -6384,7 +6587,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="53" data-name="scrum">
+<section class="slide" data-slide="54" data-name="scrum">
 <!-- notes: SCRIPT (~45s, Arin): We ran this project as Scrum, not Waterfall. Waterfall means locking the requirements first, building, and showing the sponsor the result at the end. That couldn't work for us, for three reasons. One: the scope wasn't fixed. Our own Statement of Work left the latency target, the confidence cut-off and the dashboard scope as to be determined. Two: this is research. We can't schedule a model result, so each sprint's scores decided what we tried next. After Sprint 7, for example, the models were only slightly better than random, so we moved on to CatBoost. Three: sponsor inputs arrived mid-project, like the crowding data and TradeLocker access, so we built against stand-ins first. So we ran two-week sprints with a review and a retro each time. Today is the end of Sprint 9. -->
 <!-- notes: Sources: SOW section 3 (TBD items) and the change-request clause; Sprint 7 retro minutes (CatBoost, only slightly better than random); Linear cycle 9 ends 5 Oct. Check: sprint numbering matches what you say aloud. -->
 <header class="c-slide-title ">
@@ -6457,7 +6660,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="54" data-name="sprint-cycle">
+<section class="slide" data-slide="55" data-name="sprint-cycle">
 <!-- notes: SCRIPT (~45s, Arin): Every two weeks we run the same loop. One, plan: we review the stories beforehand, then split into two breakouts, BA for the model and PD for the system, so each squad estimates its own work. Two, build: stand-ups are async in Slack, and nobody has more than one or two tasks in progress. Three, sync: we send Clement short updates two to three times a week. Four, review: we show the sponsor what's done and reshape the backlog. Five, retro: start, stop, continue, and every action gets an owner. Those actions feed straight into the next sprint's plan, which is the arrow along the bottom. Isaiah is our Product Owner, Yan Ting is our Scrum Master, and the work lives in Linear, Slack and Zoom. -->
 <!-- notes: Sources: Linear meeting minutes 27 Aug; Sprint 7 retro minutes. Check: squad membership (BA: Isaiah, Joyce, Yan Ting; PD: Arin, Jamesz, Jerrick) and the 2-3x a week update rhythm with the team. -->
 <header class="c-slide-title ">
@@ -6488,7 +6691,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="55" data-name="timeline">
+<section class="slide" data-slide="56" data-name="timeline">
 <!-- notes: SCRIPT (~40s, Arin): Here's where that puts us on the timeline. The project runs in phases. Phase 0 was scoping in early June. Phase 1 built the baselines: EDA, a scorer and three frozen baselines. Phase 2, which wraps up today, is the Judge and the solution infrastructure. Each phase ends at a gate. Phase 0: logging live and the ID join confirmed. Phase 1: the three baselines frozen before any training. Today is the midpoint gate: does the Judge beat the rules-based system? [Say the gate result here.] From tomorrow, Phase 3 starts: forward paper trading, run daily to build a track record, up to the final gate on 13 November. Handover to Catch22 follows in the last two weeks of November. -->
 <!-- notes: Check before presenting: confirm Phase 0 and Phase 1 gates actually passed, and state the midpoint-gate result in the bracketed line. Dates come from the timeline component (Phase 3: 6 Oct to 16 Nov, handover 17 to 30 Nov). -->
 <header class="c-slide-title ">
@@ -6538,7 +6741,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="56" data-name="retros">
+<section class="slide" data-slide="57" data-name="retros">
 <!-- notes: SCRIPT (~50s, Arin): At the end of every sprint we run a retro, start, stop, continue. This is the one from Sprint 7, and three things stood out. Each got an owner. One: user stories were vague, so people built different things. Now we review stories before planning, and BA and PD plan in separate breakouts. Two: too much was in progress and work got left to the last minute. Now it's at most one or two tasks in progress, and one change per branch. Three: updates were patchy. We added a 7 pm Slack stand-up reminder, and Clement now gets updates two to three times a week. We also kept what worked: async stand-ups and user-centric stories. In the sprint after the retro we closed 39 of 40 issues, up from 17 of 22. That's a raw count, so I wouldn't claim the retro alone caused it, but it's the direction we wanted. -->
 <!-- notes: Source: Linear Sprint 7 retro doc (board + minutes) and cycle stats (39 of 40 in the following sprint, 17 of 22 in Sprint 7). The board also had: start using tech specs, break tasks down further, stop stacking features without merging. -->
 <header class="c-slide-title ">
@@ -6576,7 +6779,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="57" data-name="constraints">
+<section class="slide" data-slide="58" data-name="constraints">
 <!-- notes: SCRIPT (~40s, Arin): Three things limit how far you can trust the results. First, a small test. Our final test is nine held-out campaigns, so a difference smaller than about 0.003 AUC is inside what we can detect. When that happens we say not measurable, never no effect. The sample also isn't random, so results may not generalise. Second, leakage. Stop-loss and take-profit fields are written when a trade closes, so they give away the outcome. Removing them dropped AUC from 0.667 to 0.620. The Judge sits at about 0.61, so the signal is real but modest. Third, cold start. New traders have no history, and for them AUC is about 0.55 against 0.61 for returning traders. -->
 <!-- notes: Sources: PYG-144 and PYG-185 (9 held-out campaigns 69 to 77, MDE, cold start 17% no same-day and 36% no career history), PYG-92 (SL/TP leakage, AUC 0.667 to 0.620). TODO before presenting: Linear shows 45 campaigns in the dataset (33 to 77, PYG-103) while an earlier draft of this slide said 38. Confirm the dataset size and add it back if wanted. -->
 <header class="c-slide-title ">
@@ -6620,7 +6823,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="58" data-name="constraints-system">
+<section class="slide" data-slide="59" data-name="constraints-system">
 <!-- notes: SCRIPT (~35s, Arin): Now the limits from the sponsor side and from our scope. First, paper trading only. There is no live execution. We hand the app over, dockerised, for Catch22 to host locally, and their internal systems are out of scope. Second, no live data feed yet. Today data comes in as manual exports, plus a test endpoint for demos. Automated TradeLocker retrieval needs API access and credentials from Catch22 under the NDA, and how we detect the end of a campaign is still open, because they run campaigns with their own scripts. Third, an open question for Clement: the desk's true trading cost per unit. We assume $7.00. Fading every trade breaks even at $1.28, so which number is right changes the decision. -->
 <!-- notes: Sources: SOW sections 4 and 6; PYG-53; Technical Alignment Spec open decisions; PYG-185 (cost question for Clement). -->
 <header class="c-slide-title ">
@@ -6649,7 +6852,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="59" data-name="edge-setting">
+<section class="slide" data-slide="60" data-name="edge-setting">
 <!-- notes: Owner TBD. The edge is a number we choose before the test, not a model setting: the smallest average profit per faded trade (after the $7-per-lot cost) that would make running the Judge worthwhile. We size the test so an edge that big, if real, would very likely show up. Work back from money: about 95 faded trades per campaign x about 9.4 campaigns a month = roughly 900 faded trades a month, so $3 an edge is about $2,700 a month. Trade-off: test length grows with 1 / edge squared, so halving the edge needs about 4x the campaigns. Campaigns-to-confirm column assumes per-trade sigma of $133-168. The 18 test campaigns already rule out edges above about $6 a trade, about $5,400 a month. Baseline here is zero (does fading make money?); a stricter test compares against random picks of the same size. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Constraints</span>
@@ -6686,7 +6889,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="60" data-name="whats-next">
+<section class="slide" data-slide="61" data-name="whats-next">
 <!-- notes: SCRIPT (~30s, Arin): Where we go next, in three steps. One, trade magnitude: today the Judge says fade or skip, and next we want to size each fade. Two, the real pipeline: wire the Judge into Catch22's live platform API. Three, auto-scaling, so the workers scale with campaign load. Forward paper trading starts tomorrow, and that is the first thing these build on. Then we'll open it up for questions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -6714,9 +6917,9 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="61" data-name="qna">
+<section class="slide" data-slide="62" data-name="qna">
 <!-- notes: SCRIPT (~10s): That's everything from us. Thank you. We're happy to take questions, and we can jump back to the architecture or the timeline if that helps. -->
-<!-- notes: 30 min Q&A. Jump with #19 (architecture) and #55 (timeline) in the URL. -->
+<!-- notes: 30 min Q&A. Jump with #20 (architecture) and #56 (timeline) in the URL. -->
 <div class="c-closing ">
   <h1 class="reveal">Thank you</h1>
   <div class="c-closing__card reveal">
@@ -6727,7 +6930,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="62" data-name="section-appendix">
+<section class="slide" data-slide="63" data-name="section-appendix">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">A</span>
   <div class="c-section-divider__text">
@@ -6739,7 +6942,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="63" data-name="app-correlation">
+<section class="slide" data-slide="64" data-name="app-correlation">
 <!-- notes: Appendix. Pearson correlation of the point-in-time features with each other and with the two targets (last two rows and columns). Leaked stop and target fields are already removed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6768,7 +6971,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="64" data-name="app-learning-calibration">
+<section class="slide" data-slide="65" data-name="app-learning-calibration">
 <!-- notes: Appendix. Left: validation AUC against training campaigns on the gross target is flat (correlation −0.383), so more campaigns do not help yet. Right: calibration fitted on out-of-fold predictions only; isotonic moves Brier 0.2384 to 0.2380. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6787,7 +6990,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="65" data-name="app-shap-features">
+<section class="slide" data-slide="66" data-name="app-shap-features">
 <!-- notes: Appendix. Per-feature mean |SHAP|. Solid bars: full 26-feature model. Faded bars: no_outcome model. Colours are feature groups. Take outcome history away and prior_sl_use_rate and sec_since_last_close take over. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6816,7 +7019,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="66" data-name="app-arms">
+<section class="slide" data-slide="67" data-name="app-arms">
 <!-- notes: Appendix. Held-out AUC for each nested feature set on each of the nine locked campaigns (69–77). Full 26 features 0.606, no_outcome (18) 0.571, behaviour_only (14) 0.570, ticket_only (6) 0.510. Paired drop from removing outcome history: −0.035, CI −0.046 to −0.023, 9 of 9 campaigns. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6835,7 +7038,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="67" data-name="app-cost-curve">
+<section class="slide" data-slide="68" data-name="app-cost-curve">
 <!-- notes: Appendix. The reversing cost is a constant $7 per lot, which is what flips the sign of fade-everything. Sweeping the assumed cost from $0 to $7, the model's rule sits between the 13.5th and 22.9th percentile of random selection at the same exposure at every level. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6854,7 +7057,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="68" data-name="app-market-data">
+<section class="slide" data-slide="69" data-name="app-market-data">
 <!-- notes: Appendix. Market-data features on the no_outcome arm, across three learners. Share of mean |SHAP| divided by a uniform share, so 1.0 means indifferent. AUC says neutral-to-better, dollars say worse in all eight arms. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6873,7 +7076,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="69" data-name="app-dropped">
+<section class="slide" data-slide="70" data-name="app-dropped">
 <!-- notes: Appendix. Levers we tried and dropped, with the measured result. Market context: 18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005 (CI −0.0018 to +0.0025); 14 Yahoo macro features B+C −$23.5k to −$47.6k; NB14 flips negative on all three learners. SL/TP channel: even the leaked flag buys only +0.006. Hyperparameters: 50 Optuna trials +0.0028 CV AUC. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6899,7 +7102,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="70" data-name="app-decomposition">
+<section class="slide" data-slide="71" data-name="app-decomposition">
 <!-- notes: Appendix. Value of perfecting each part of the hurdle model, in dollars per campaign at the top-5% readout. As fitted: classifier +687, gain arm +216, loss arm +229. Perfected ceilings: classifier +13,146, gain arm +24,663, loss arm +10,050. Marginal question: perfect classifier given perfect regressors adds +351; perfect gain and loss regressors given a perfect classifier add +12,417, 35 times more. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6918,7 +7121,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="71" data-name="app-cv-layout">
+<section class="slide" data-slide="72" data-name="app-cv-layout">
 <!-- notes: Appendix. Blocked cross-validation layout used in Notebook 12 and the final judge. Pool campaigns 33–68 train six expanding folds (12 campaigns to start, 4-campaign validation blocks). The final model is refit on the whole pool. The locked test block is 69–77, with 78–86 since added to the held-out set. Nothing trains on its own future. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6937,7 +7140,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="72" data-name="app-feature-arms">
+<section class="slide" data-slide="73" data-name="app-feature-arms">
 <!-- notes: Appendix. The 26 features in four buckets (ticket, behaviour, outcome, counter) and which feature set (arm) keeps which. Sets are nested, so the filled region only shrinks left to right and the outcome block disappears first: full 26, no_outcome 18, behaviour_only 14, ticket_only 6. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6966,7 +7169,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="73" data-name="app-topk">
+<section class="slide" data-slide="74" data-name="app-topk">
 <!-- notes: Appendix. Top-k ranking quality: each arm fades the same fraction of every campaign, so exposure is identical and only the picks differ. Realised reverseProfit in $000 against random at matched exposure. The full model, which sees outcome history, sits below random at every fraction (e.g. −$23.1k vs −$14.2k at 50%). The other arms hover around random. All lines are negative at most fractions: this is a ranking check, not a profit claim. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6985,7 +7188,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="74" data-name="app-hyperparams">
+<section class="slide" data-slide="75" data-name="app-hyperparams">
 <!-- notes: Appendix. Final hyperparameters of the v5 judge (judge_v5_gross_18, 18 no_outcome features). Source: scripts/target_ablation.py BASE, CLF_PARAMS, REG_PARAMS. One LightGBM parameter set shared by all three models; the classifier uses binary loss, the gain and loss regressors use huber. Early stopping 100 rounds; final refit at the median best iteration across the six folds: classifier 44 trees, gain 6,392, loss 6,412. Isotonic calibration on leave-one-fold-out predictions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
