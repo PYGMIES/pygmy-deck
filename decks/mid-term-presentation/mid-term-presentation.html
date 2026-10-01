@@ -282,6 +282,15 @@ body.editing [contenteditable="true"] {
   --accent: #d9922e;           /* "now" markers, highlighted flows */
   --accent-soft: #f1dfc4;      /* accent-tinted panels */
   --chart-bg: #ffffff;         /* backing for exported chart PNGs (white in both themes) */
+  --chart-ink: #1b1b1b;        /* chart labels (chart backing is white in both themes) */
+  --chart-ink-muted: #5c5c5c;  /* chart ticks */
+  --chart-grid: #e6e6e4;
+  --chart-new: #eef3fb;        /* shaded "new data" zone */
+  --chart-band: #e1e1df;       /* random 5–95% band */
+  --chart-model: #2a78d6;      /* top-5% report card */
+  --chart-live: #d9622b;       /* pool threshold (live rule) */
+  --chart-fade: #1a9a6c;       /* fade everything */
+  --chart-rand: #6f7772;       /* random average */
   --danger: #b3302b;           /* limits, losses */
   --danger-bg: #f8e1df;
 }
@@ -308,6 +317,15 @@ body.editing [contenteditable="true"] {
   --accent: #e8a948;
   --accent-soft: #4a3a22;
   --chart-bg: #ffffff;         /* backing for exported chart PNGs (white in both themes) */
+  --chart-ink: #1b1b1b;        /* chart labels (chart backing is white in both themes) */
+  --chart-ink-muted: #5c5c5c;  /* chart ticks */
+  --chart-grid: #e6e6e4;
+  --chart-new: #eef3fb;        /* shaded "new data" zone */
+  --chart-band: #e1e1df;       /* random 5–95% band */
+  --chart-model: #2a78d6;      /* top-5% report card */
+  --chart-live: #d9622b;       /* pool threshold (live rule) */
+  --chart-fade: #1a9a6c;       /* fade everything */
+  --chart-rand: #6f7772;       /* random average */
   --danger: #e2675f;
   --danger-bg: #3c2322;
 }
@@ -1202,6 +1220,97 @@ body.editing [contenteditable="true"] {
   font-size: var(--fs-small);
   color: var(--ink-muted);
 }
+
+/* ===== COMPONENT equity-chart ===== */
+/* === COMPONENT (deck): equity-chart ===
+   Cumulative P&L by campaign for each strategy, drawn as inline SVG on the
+   white chart backing. Geometry lives in the SVG viewBox (1728×640); series
+   colours come from --chart-* tokens. Slide 10. */
+.c-equity-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-height: 0;
+}
+
+.c-equity-chart__plot {
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--chart-bg);
+  padding: 8px 0 0;
+}
+
+.c-equity-chart__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.c-equity-chart__svg text { font-family: var(--font-body); }
+.c-equity-chart__svg .ec-tick { font-size: 22px; fill: var(--chart-ink-muted); }
+.c-equity-chart__svg .ec-newtxt { font-weight: 600; }
+.c-equity-chart__svg .ec-leg { font-size: 22px; font-weight: 600; fill: var(--chart-ink); }
+.c-equity-chart__svg .ec-end { font-size: 30px; font-weight: 700; }
+.c-equity-chart__svg .ec-grid { stroke: var(--chart-grid); stroke-width: 1.5; }
+.c-equity-chart__svg .ec-zero { stroke: var(--chart-ink-muted); stroke-width: 2; }
+.c-equity-chart__svg .ec-new { fill: var(--chart-new); }
+.c-equity-chart__svg .ec-band { fill: var(--chart-band); }
+.c-equity-chart__svg .ec-line { fill: none; stroke-width: 5; stroke-linejoin: round; }
+.c-equity-chart__svg .ec-dot { stroke: var(--chart-bg); stroke-width: 3; }
+
+.c-equity-chart__svg .ec-fade { stroke: var(--chart-fade); }
+.c-equity-chart__svg .ec-live { stroke: var(--chart-live); }
+.c-equity-chart__svg .ec-top  { stroke: var(--chart-model); }
+.c-equity-chart__svg .ec-rand { stroke: var(--chart-rand); }
+.c-equity-chart__svg .ec-dot.ec-fade, .c-equity-chart__svg text.ec-fade { fill: var(--chart-fade); }
+.c-equity-chart__svg .ec-dot.ec-live, .c-equity-chart__svg text.ec-live { fill: var(--chart-live); }
+.c-equity-chart__svg .ec-dot.ec-top,  .c-equity-chart__svg text.ec-top  { fill: var(--chart-model); }
+.c-equity-chart__svg .ec-dot.ec-rand, .c-equity-chart__svg text.ec-rand { fill: var(--chart-rand); }
+.c-equity-chart__svg text.ec-fade, .c-equity-chart__svg text.ec-live,
+.c-equity-chart__svg text.ec-top, .c-equity-chart__svg text.ec-rand { stroke: none; }
+
+.c-equity-chart__take {
+  padding-left: 24px;
+  border-left: 6px solid var(--accent);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  letter-spacing: var(--display-tracking);
+}
+
+/* Hover (wired by core/runtime.js [data-hover-chart]) */
+.c-equity-chart__svg .ec-hline { stroke: var(--chart-ink-muted); stroke-width: 2; pointer-events: none; }
+.c-equity-chart__svg .ec-hdot { stroke: var(--chart-bg); stroke-width: 3; pointer-events: none; }
+.c-equity-chart__svg .ec-hdot.ec-fade { fill: var(--chart-fade); }
+.c-equity-chart__svg .ec-hdot.ec-live { fill: var(--chart-live); }
+.c-equity-chart__svg .ec-hdot.ec-top  { fill: var(--chart-model); }
+.c-equity-chart__svg .ec-hdot.ec-rand { fill: var(--chart-rand); }
+
+.ec-tip {
+  position: absolute;
+  top: 70px;
+  min-width: 600px;
+  padding: 18px 22px;
+  border-radius: var(--radius-s);
+  background: var(--chart-bg);
+  border: 2px solid var(--chart-grid);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  color: var(--chart-ink);
+  font-size: 24px;
+  line-height: 1.35;
+  pointer-events: none;
+  z-index: 2;
+}
+.ec-tip[hidden] { display: none; }
+.ec-tip b { display: block; margin-bottom: 8px; font-size: 26px; font-weight: 700; }
+.ec-tip__row { display: flex; justify-content: space-between; gap: 32px; font-variant-numeric: tabular-nums; }
+.ec-tip__row.is-muted { color: var(--chart-ink-muted); }
+.ec-tip i { display: inline-block; width: 22px; height: 5px; margin-right: 12px; vertical-align: middle; border-radius: 3px; }
+.ec-tip i.ec-fade { background: var(--chart-fade); }
+.ec-tip i.ec-live { background: var(--chart-live); }
+.ec-tip i.ec-top  { background: var(--chart-model); }
+.ec-tip i.ec-rand { background: var(--chart-rand); }
 
 /* ===== COMPONENT icon-card ===== */
 /* === COMPONENT: icon-card === title across the top, mask-tinted icon + body.
@@ -2475,7 +2584,80 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="10" data-name="business-value">
+<section class="slide" data-slide="10" data-name="strategy-comparison">
+<!-- notes: Joyce. All four strategies on one scale, campaigns 69–86. Campaigns 78–86 are new data the model never saw. Fade everything trades about 20x more than the model rules, so it sets the scale. The grey band is where 90% of random 5%-per-campaign picks land. Top 5% is a hindsight report card; the pool threshold is the rule that can run live. Hover the chart for exact numbers. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Goals &amp; Impact</span>
+  <h1 class="reveal">The Real Comparison</h1>
+</header>
+<figure class="c-equity-chart reveal inset">
+  <div class="c-equity-chart__plot" data-hover-chart='{"w":1728,"t":92,"b":576,"p":[{"x":130.0,"t":"Campaign 69 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"−$1,169","y":182.1},{"k":"live","l":"Pool threshold (live rule)","v":"+$18","y":172.5},{"k":"fade","l":"Fade everything","v":"−$9,258","y":247.3},{"k":"rand","l":"Random, same count (avg)","v":"−$477","y":176.5}],"b":"−$2,920 to +$1,926"},{"x":209.3,"t":"Campaign 70 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"−$223","y":174.5},{"k":"live","l":"Pool threshold (live rule)","v":"+$578","y":168.0},{"k":"fade","l":"Fade everything","v":"−$13,875","y":284.6},{"k":"rand","l":"Random, same count (avg)","v":"−$720","y":178.5}],"b":"−$3,609 to +$2,155"},{"x":288.6,"t":"Campaign 71 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$1,053","y":164.2},{"k":"live","l":"Pool threshold (live rule)","v":"+$1,267","y":162.4},{"k":"fade","l":"Fade everything","v":"−$13,993","y":285.5},{"k":"rand","l":"Random, same count (avg)","v":"−$729","y":178.5}],"b":"−$3,987 to +$2,623"},{"x":367.9,"t":"Campaign 72 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$1,860","y":157.7},{"k":"live","l":"Pool threshold (live rule)","v":"+$2,052","y":156.1},{"k":"fade","l":"Fade everything","v":"−$15,774","y":299.9},{"k":"rand","l":"Random, same count (avg)","v":"−$805","y":179.2}],"b":"−$4,442 to +$2,898"},{"x":447.2,"t":"Campaign 73 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$3,779","y":142.2},{"k":"live","l":"Pool threshold (live rule)","v":"+$3,251","y":146.4},{"k":"fade","l":"Fade everything","v":"−$20,434","y":337.5},{"k":"rand","l":"Random, same count (avg)","v":"−$1,011","y":180.8}],"b":"−$5,041 to +$3,107"},{"x":526.5,"t":"Campaign 74 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$6,588","y":119.5},{"k":"live","l":"Pool threshold (live rule)","v":"+$4,233","y":138.5},{"k":"fade","l":"Fade everything","v":"−$20,811","y":340.5},{"k":"rand","l":"Random, same count (avg)","v":"−$1,018","y":180.9}],"b":"−$5,310 to +$3,400"},{"x":605.8,"t":"Campaign 75 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$5,923","y":124.9},{"k":"live","l":"Pool threshold (live rule)","v":"+$2,940","y":149.0},{"k":"fade","l":"Fade everything","v":"−$28,038","y":398.8},{"k":"rand","l":"Random, same count (avg)","v":"−$1,374","y":183.8}],"b":"−$5,997 to +$3,336"},{"x":685.1,"t":"Campaign 76 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$2,597","y":151.7},{"k":"live","l":"Pool threshold (live rule)","v":"−$572","y":177.3},{"k":"fade","l":"Fade everything","v":"−$22,161","y":351.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,078","y":181.4}],"b":"−$6,073 to +$4,143"},{"x":764.4,"t":"Campaign 77 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$1,205","y":162.9},{"k":"live","l":"Pool threshold (live rule)","v":"−$1,579","y":185.4},{"k":"fade","l":"Fade everything","v":"−$28,232","y":400.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,383","y":183.8}],"b":"−$6,494 to +$3,986"},{"x":843.6,"t":"Campaign 78 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$345","y":169.9},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,283","y":191.1},{"k":"fade","l":"Fade everything","v":"−$33,188","y":440.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,628","y":185.8}],"b":"−$6,836 to +$3,758"},{"x":922.9,"t":"Campaign 79 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$775","y":166.4},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,423","y":192.2},{"k":"fade","l":"Fade everything","v":"−$30,338","y":417.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,481","y":184.6}],"b":"−$6,764 to +$4,036"},{"x":1002.2,"t":"Campaign 80 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$287","y":170.4},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,628","y":193.9},{"k":"fade","l":"Fade everything","v":"−$39,358","y":490.2},{"k":"rand","l":"Random, same count (avg)","v":"−$1,929","y":188.2}],"b":"−$7,334 to +$3,616"},{"x":1081.5,"t":"Campaign 81 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$227","y":170.8},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,399","y":192.0},{"k":"fade","l":"Fade everything","v":"−$42,910","y":518.8},{"k":"rand","l":"Random, same count (avg)","v":"−$2,108","y":189.7}],"b":"−$7,485 to +$3,448"},{"x":1160.8,"t":"Campaign 82 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"−$59","y":173.1},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,481","y":192.7},{"k":"fade","l":"Fade everything","v":"−$40,818","y":501.9},{"k":"rand","l":"Random, same count (avg)","v":"−$2,008","y":188.9}],"b":"−$7,551 to +$3,610"},{"x":1240.1,"t":"Campaign 83 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$111","y":171.8},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,400","y":192.0},{"k":"fade","l":"Fade everything","v":"−$43,700","y":525.2},{"k":"rand","l":"Random, same count (avg)","v":"−$2,147","y":190.0}],"b":"−$7,771 to +$3,629"},{"x":1319.4,"t":"Campaign 84 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$759","y":166.5},{"k":"live","l":"Pool threshold (live rule)","v":"−$911","y":180.0},{"k":"fade","l":"Fade everything","v":"−$25,153","y":375.6},{"k":"rand","l":"Random, same count (avg)","v":"−$1,244","y":182.7}],"b":"−$7,361 to +$4,959"},{"x":1398.7,"t":"Campaign 85 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$498","y":168.6},{"k":"live","l":"Pool threshold (live rule)","v":"−$1,158","y":182.0},{"k":"fade","l":"Fade everything","v":"−$19,510","y":330.1},{"k":"rand","l":"Random, same count (avg)","v":"−$979","y":180.6}],"b":"−$7,223 to +$5,355"},{"x":1478.0,"t":"Campaign 86 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$12","y":172.6},{"k":"live","l":"Pool threshold (live rule)","v":"−$970","y":180.5},{"k":"fade","l":"Fade everything","v":"−$11,905","y":268.7},{"k":"rand","l":"Random, same count (avg)","v":"−$613","y":177.6}],"b":"−$6,918 to +$5,785"}]}'>
+    <svg class="c-equity-chart__svg" viewBox="0 0 1728 640" role="img" aria-label="Cumulative profit by campaign for each strategy">
+    <rect class="ec-new" x="804.0" y="92" width="682.0" height="484"/>
+    <text class="ec-tick ec-newtxt" x="814.0" y="118">new data (78–86) →</text>
+    <line class="ec-grid" x1="130" x2="1478" y1="576.0" y2="576.0"/>
+    <text class="ec-tick" x="116" y="584.0" text-anchor="end">−$50,000</text>
+    <line class="ec-grid" x1="130" x2="1478" y1="495.3" y2="495.3"/>
+    <text class="ec-tick" x="116" y="503.3" text-anchor="end">−$40,000</text>
+    <line class="ec-grid" x1="130" x2="1478" y1="414.7" y2="414.7"/>
+    <text class="ec-tick" x="116" y="422.7" text-anchor="end">−$30,000</text>
+    <line class="ec-grid" x1="130" x2="1478" y1="334.0" y2="334.0"/>
+    <text class="ec-tick" x="116" y="342.0" text-anchor="end">−$20,000</text>
+    <line class="ec-grid" x1="130" x2="1478" y1="253.3" y2="253.3"/>
+    <text class="ec-tick" x="116" y="261.3" text-anchor="end">−$10,000</text>
+    <line class="ec-zero" x1="130" x2="1478" y1="172.7" y2="172.7"/>
+    <text class="ec-tick" x="116" y="180.7" text-anchor="end">$0</text>
+    <line class="ec-grid" x1="130" x2="1478" y1="92.0" y2="92.0"/>
+    <text class="ec-tick" x="116" y="100.0" text-anchor="end">+$10,000</text>
+    <text class="ec-tick" x="130.0" y="620" text-anchor="middle">69</text>
+    <text class="ec-tick" x="209.3" y="620" text-anchor="middle">70</text>
+    <text class="ec-tick" x="288.6" y="620" text-anchor="middle">71</text>
+    <text class="ec-tick" x="367.9" y="620" text-anchor="middle">72</text>
+    <text class="ec-tick" x="447.2" y="620" text-anchor="middle">73</text>
+    <text class="ec-tick" x="526.5" y="620" text-anchor="middle">74</text>
+    <text class="ec-tick" x="605.8" y="620" text-anchor="middle">75</text>
+    <text class="ec-tick" x="685.1" y="620" text-anchor="middle">76</text>
+    <text class="ec-tick" x="764.4" y="620" text-anchor="middle">77</text>
+    <text class="ec-tick" x="843.6" y="620" text-anchor="middle">78</text>
+    <text class="ec-tick" x="922.9" y="620" text-anchor="middle">79</text>
+    <text class="ec-tick" x="1002.2" y="620" text-anchor="middle">80</text>
+    <text class="ec-tick" x="1081.5" y="620" text-anchor="middle">81</text>
+    <text class="ec-tick" x="1160.8" y="620" text-anchor="middle">82</text>
+    <text class="ec-tick" x="1240.1" y="620" text-anchor="middle">83</text>
+    <text class="ec-tick" x="1319.4" y="620" text-anchor="middle">84</text>
+    <text class="ec-tick" x="1398.7" y="620" text-anchor="middle">85</text>
+    <text class="ec-tick" x="1478.0" y="620" text-anchor="middle">86</text>
+    <text class="ec-axis" x="804.0" y="640" text-anchor="middle" style="display:none">campaign</text>
+    <path class="ec-band" d="M130.0 157.1L209.3 155.3L288.6 151.5L367.9 149.3L447.2 147.6L526.5 145.2L605.8 145.8L685.1 139.2L764.4 140.5L843.6 142.4L922.9 140.1L1002.2 143.5L1081.5 144.9L1160.8 143.5L1240.1 143.4L1319.4 132.7L1398.7 129.5L1478.0 126.0L1478.0 228.5L1398.7 230.9L1319.4 232.0L1240.1 235.4L1160.8 233.6L1081.5 233.0L1002.2 231.8L922.9 227.2L843.6 227.8L764.4 225.0L685.1 221.7L605.8 221.0L526.5 215.5L447.2 213.3L367.9 208.5L288.6 204.8L209.3 201.8L130.0 196.2Z"/>
+    <path class="ec-line ec-fade"  d="M130.0 247.3L209.3 284.6L288.6 285.5L367.9 299.9L447.2 337.5L526.5 340.5L605.8 398.8L685.1 351.4L764.4 400.4L843.6 440.4L922.9 417.4L1002.2 490.2L1081.5 518.8L1160.8 501.9L1240.1 525.2L1319.4 375.6L1398.7 330.1L1478.0 268.7"/>
+    <path class="ec-line ec-live"  d="M130.0 172.5L209.3 168.0L288.6 162.4L367.9 156.1L447.2 146.4L526.5 138.5L605.8 149.0L685.1 177.3L764.4 185.4L843.6 191.1L922.9 192.2L1002.2 193.9L1081.5 192.0L1160.8 192.7L1240.1 192.0L1319.4 180.0L1398.7 182.0L1478.0 180.5"/>
+    <path class="ec-line ec-top"  d="M130.0 182.1L209.3 174.5L288.6 164.2L367.9 157.7L447.2 142.2L526.5 119.5L605.8 124.9L685.1 151.7L764.4 162.9L843.6 169.9L922.9 166.4L1002.2 170.4L1081.5 170.8L1160.8 173.1L1240.1 171.8L1319.4 166.5L1398.7 168.6L1478.0 172.6"/>
+    <path class="ec-line ec-rand" stroke-dasharray="4 0" d="M130.0 176.5L209.3 178.5L288.6 178.5L367.9 179.2L447.2 180.8L526.5 180.9L605.8 183.8L685.1 181.4L764.4 183.8L843.6 185.8L922.9 184.6L1002.2 188.2L1081.5 189.7L1160.8 188.9L1240.1 190.0L1319.4 182.7L1398.7 180.6L1478.0 177.6"/>
+    <circle class="ec-dot ec-top" cx="1478.0" cy="172.6" r="8"/>
+    <text class="ec-end ec-top" x="1500" y="181.6">+$12</text>
+    <circle class="ec-dot ec-rand" cx="1478.0" cy="177.6" r="8"/>
+    <text class="ec-end ec-rand" x="1500" y="215.6">−$613</text>
+    <circle class="ec-dot ec-live" cx="1478.0" cy="180.5" r="8"/>
+    <text class="ec-end ec-live" x="1500" y="249.6">−$970</text>
+    <circle class="ec-dot ec-fade" cx="1478.0" cy="268.7" r="8"/>
+    <text class="ec-end ec-fade" x="1500" y="283.6">−$11,905</text>
+    <line class="ec-line ec-fade"  x1="30" x2="74" y1="34" y2="34"/>
+    <text class="ec-leg" x="88" y="43">Fade everything</text>
+    <line class="ec-line ec-live"  x1="299.0" x2="343.0" y1="34" y2="34"/>
+    <text class="ec-leg" x="357.0" y="43">Pool threshold (live)</text>
+    <line class="ec-line ec-top"  x1="643.5999999999999" x2="687.5999999999999" y1="34" y2="34"/>
+    <text class="ec-leg" x="701.5999999999999" y="43">Top 5% (report card)</text>
+    <line class="ec-line ec-rand" stroke-dasharray="4 0" x1="975.5999999999999" x2="1019.5999999999999" y1="34" y2="34"/>
+    <text class="ec-leg" x="1033.6" y="43">Random, same count (avg)</text>
+    <rect class="ec-band" x="1358" y="25" width="44" height="18"/><text class="ec-leg" x="1416" y="43">Random 5–95%</text>
+    </svg>
+  </div>
+  <figcaption class="c-equity-chart__take">Fade everything ends at −$11,905.<br>Our top 5% ends at +$12, close to zero.</figcaption>
+</figure>
+</section>
+
+
+<section class="slide" data-slide="11" data-name="business-value">
 <!-- notes: Joyce. Value beyond the model itself: closer to a research partnership. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Goals &amp; Impact</span>
@@ -2507,7 +2689,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="11" data-name="milestones">
+<section class="slide" data-slide="12" data-name="milestones">
 <!-- notes: Joyce. Where we are against the plan: the Judge and its infrastructure plus the analytics dashboard land at midterm; paper trading and auto-retraining are the final-presentation scope. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -2572,7 +2754,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="12" data-name="validation">
+<section class="slide" data-slide="13" data-name="validation">
 <!-- notes: Joyce. How we keep ourselves honest: three methodological guardrails. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -2610,7 +2792,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="13" data-name="section-demo">
+<section class="slide" data-slide="14" data-name="section-demo">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">03</span>
   <div class="c-section-divider__text">
@@ -2622,7 +2804,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="14" data-name="market-regimes">
+<section class="slide" data-slide="15" data-name="market-regimes">
 <!-- notes: Joyce + JS. Two lenses for picking replay data: how busy the slot is (trades per slot, p50 vs p95) and how volatile the market is (beta vs Gold Futures). We replay two slots: Typical + Calm and Busy + Volatile. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Live Demo</span>
@@ -2683,7 +2865,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="15" data-name="demo-data">
+<section class="slide" data-slide="16" data-name="demo-data">
 <!-- notes: Joyce + JS. The evidence behind the two lenses. Left: activity is trades in a rolling 30-minute window (p50 = typical, p95 = busy). Right: volatility is beta against Gold Futures per 30-minute slot. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Live Demo</span>
@@ -2708,7 +2890,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="16" data-name="chosen-timeslots">
+<section class="slide" data-slide="17" data-name="chosen-timeslots">
 <!-- notes: Joyce + JS. The two slots we replay: Typical + Calm at 3:30-4:00 and Busy + Volatile at 5:30-6:00 (US time, 14 Aug). Thresholds here are fixed 30-minute slots (p95 121.4, p50 59.5). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Live Demo</span>
@@ -2759,7 +2941,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="17" data-name="live-trades">
+<section class="slide" data-slide="18" data-name="live-trades">
 <!-- notes: Jerrick. Two screens side by side at 10× speed. Narrate the workflow while trades flow in. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Live Demo</span>
@@ -2805,7 +2987,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="18" data-name="section-architecture">
+<section class="slide" data-slide="19" data-name="section-architecture">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">04</span>
   <div class="c-section-divider__text">
@@ -2817,7 +2999,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="19" data-name="architecture">
+<section class="slide" data-slide="20" data-name="architecture">
 <!-- notes: James Z. Left to right by layer: ingestion → Redis queues → workers → Judge inference. Dashboard reads from pub/sub. Oanda is temporary. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -2903,7 +3085,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="20" data-name="design-decisions">
+<section class="slide" data-slide="21" data-name="design-decisions">
 <!-- notes: Jerrick. The key architectural considerations and why we made each call. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -2942,7 +3124,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="21" data-name="hurdle-model">
+<section class="slide" data-slide="22" data-name="hurdle-model">
 <!-- notes: Jerrick. Define the hurdle model simply, then show its workflow. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -2982,7 +3164,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="22" data-name="limitations">
+<section class="slide" data-slide="23" data-name="limitations">
 <!-- notes: James Z. Be candid: limitations and the path to scale. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -3016,7 +3198,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="23" data-name="section-journey">
+<section class="slide" data-slide="24" data-name="section-journey">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">05</span>
   <div class="c-section-divider__text">
@@ -3028,7 +3210,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="24" data-name="training-approach">
+<section class="slide" data-slide="25" data-name="training-approach">
 <!-- notes: BA. Our approach to training end to end. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3061,7 +3243,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="25" data-name="feature-engineering">
+<section class="slide" data-slide="26" data-name="feature-engineering">
 <!-- notes: Yanting. Deep dive: show the metrics behind how each feature is derived. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3095,7 +3277,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="26" data-name="behaviour-vs-luck">
+<section class="slide" data-slide="27" data-name="behaviour-vs-luck">
 <!-- notes: Yanting. Separating behaviour (skill) from outcome (luck), shown with SHAP. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3126,7 +3308,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="27" data-name="model-selection">
+<section class="slide" data-slide="28" data-name="model-selection">
 <!-- notes: Joyce / Isaiah. Models we tried, and the clear metrics we used to pick the final one. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3155,7 +3337,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="28" data-name="market-data">
+<section class="slide" data-slide="29" data-name="market-data">
 <!-- notes: Joyce / Isaiah. Did adding market data (Oanda prices) actually help? -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3178,7 +3360,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="29" data-name="section-pm">
+<section class="slide" data-slide="30" data-name="section-pm">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">06</span>
   <div class="c-section-divider__text">
@@ -3190,7 +3372,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="30" data-name="scrum">
+<section class="slide" data-slide="31" data-name="scrum">
 <!-- notes: Yanting. Why Scrum over Waterfall for an R&D-style project. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
@@ -3229,7 +3411,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="31" data-name="timeline">
+<section class="slide" data-slide="32" data-name="timeline">
 <!-- notes: Yanting. We are at the midpoint gate: Phase 2 wraps today, forward paper-trading starts tomorrow. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
@@ -3280,7 +3462,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="32" data-name="retros">
+<section class="slide" data-slide="33" data-name="retros">
 <!-- notes: Yanting. What our retros surfaced and what we changed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
@@ -3314,7 +3496,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="33" data-name="constraints">
+<section class="slide" data-slide="34" data-name="constraints">
 <!-- notes: Be upfront about what limits the conclusions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -3350,7 +3532,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="34" data-name="whats-next">
+<section class="slide" data-slide="35" data-name="whats-next">
 <!-- notes: Close on the roadmap, then hand over to Q&A. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -3378,7 +3560,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="35" data-name="qna">
+<section class="slide" data-slide="36" data-name="qna">
 <!-- notes: 30 min Q&A. Keep architecture (15) and timeline (27) handy: jump with #15 / #27 in the URL. -->
 <div class="c-closing ">
   <h1 class="reveal">Questions?</h1>
@@ -3492,7 +3674,7 @@ body.editing [contenteditable="true"] {
   /* Click: right 2/3 advances, left 1/3 goes back */
   stage.addEventListener("click", (e) => {
     if (document.body.classList.contains("editing")) return;
-    if (e.target.closest("a, button")) return;
+    if (e.target.closest("a, button, [data-hover-chart]")) return;
     const rect = stage.getBoundingClientRect();
     go(e.clientX - rect.left < rect.width / 3 ? current - 1 : current + 1);
   });
@@ -3505,6 +3687,60 @@ body.editing [contenteditable="true"] {
     const dx = e.changedTouches[0].clientX - touchX;
     if (Math.abs(dx) > 40) go(dx < 0 ? current + 1 : current - 1);
     touchX = null;
+  });
+
+
+  /* === CHART HOVER === any [data-hover-chart] holds JSON {w, t, b, p:[{x, t, r:[{k, l, v, y}], b?}]}
+     in SVG viewBox units. Pointer snaps to the nearest x and shows a guide line, dots and a tooltip. */
+  document.querySelectorAll("[data-hover-chart]").forEach((host) => {
+    const cfg = JSON.parse(host.dataset.hoverChart);
+    const svg = host.querySelector("svg");
+    const NS = "http://www.w3.org/2000/svg";
+    const mk = (tag, cls, attrs) => {
+      const n = document.createElementNS(NS, tag);
+      n.setAttribute("class", cls);
+      Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+      svg.appendChild(n);
+      return n;
+    };
+    const guide = mk("line", "ec-hline", { y1: cfg.t, y2: cfg.b, visibility: "hidden" });
+    const dots = cfg.p[0].r.map((row) => mk("circle", "ec-hdot ec-" + row.k, { r: 9, visibility: "hidden" }));
+    const tip = document.createElement("div");
+    tip.className = "ec-tip";
+    tip.hidden = true;
+    host.appendChild(tip);
+
+    const hide = () => {
+      tip.hidden = true;
+      guide.setAttribute("visibility", "hidden");
+      dots.forEach((d) => d.setAttribute("visibility", "hidden"));
+    };
+    const show = (ev) => {
+      const rect = svg.getBoundingClientRect();
+      const ux = ((ev.clientX - rect.left) / rect.width) * cfg.w;
+      let best = 0;
+      cfg.p.forEach((pt, i) => { if (Math.abs(pt.x - ux) < Math.abs(cfg.p[best].x - ux)) best = i; });
+      const pt = cfg.p[best];
+      guide.setAttribute("x1", pt.x);
+      guide.setAttribute("x2", pt.x);
+      guide.setAttribute("visibility", "visible");
+      pt.r.forEach((row, i) => {
+        dots[i].setAttribute("cx", pt.x);
+        dots[i].setAttribute("cy", row.y);
+        dots[i].setAttribute("visibility", "visible");
+      });
+      tip.innerHTML = `<b>${pt.t}</b>` +
+        pt.r.map((row) => `<div class="ec-tip__row"><span><i class="ec-${row.k}"></i>${row.l}</span><span>${row.v}</span></div>`).join("") +
+        (pt.b ? `<div class="ec-tip__row is-muted"><span>Random 5–95%</span><span>${pt.b}</span></div>` : "");
+      tip.hidden = false;
+      /* layout px (unscaled): offsetWidth ignores the stage transform */
+      const px = (pt.x / cfg.w) * svg.clientWidth;
+      const left = px + 24 + tip.offsetWidth > svg.clientWidth ? px - tip.offsetWidth - 24 : px + 24;
+      tip.style.left = Math.max(0, left) + "px";
+    };
+    host.addEventListener("pointermove", show);
+    host.addEventListener("pointerdown", show);
+    host.addEventListener("pointerleave", hide);
   });
 
   window.addEventListener("hashchange", () => go(fromHash()));

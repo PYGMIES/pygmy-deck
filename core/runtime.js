@@ -96,7 +96,7 @@
   /* Click: right 2/3 advances, left 1/3 goes back */
   stage.addEventListener("click", (e) => {
     if (document.body.classList.contains("editing")) return;
-    if (e.target.closest("a, button")) return;
+    if (e.target.closest("a, button, [data-hover-chart]")) return;
     const rect = stage.getBoundingClientRect();
     go(e.clientX - rect.left < rect.width / 3 ? current - 1 : current + 1);
   });
@@ -109,6 +109,60 @@
     const dx = e.changedTouches[0].clientX - touchX;
     if (Math.abs(dx) > 40) go(dx < 0 ? current + 1 : current - 1);
     touchX = null;
+  });
+
+
+  /* === CHART HOVER === any [data-hover-chart] holds JSON {w, t, b, p:[{x, t, r:[{k, l, v, y}], b?}]}
+     in SVG viewBox units. Pointer snaps to the nearest x and shows a guide line, dots and a tooltip. */
+  document.querySelectorAll("[data-hover-chart]").forEach((host) => {
+    const cfg = JSON.parse(host.dataset.hoverChart);
+    const svg = host.querySelector("svg");
+    const NS = "http://www.w3.org/2000/svg";
+    const mk = (tag, cls, attrs) => {
+      const n = document.createElementNS(NS, tag);
+      n.setAttribute("class", cls);
+      Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+      svg.appendChild(n);
+      return n;
+    };
+    const guide = mk("line", "ec-hline", { y1: cfg.t, y2: cfg.b, visibility: "hidden" });
+    const dots = cfg.p[0].r.map((row) => mk("circle", "ec-hdot ec-" + row.k, { r: 9, visibility: "hidden" }));
+    const tip = document.createElement("div");
+    tip.className = "ec-tip";
+    tip.hidden = true;
+    host.appendChild(tip);
+
+    const hide = () => {
+      tip.hidden = true;
+      guide.setAttribute("visibility", "hidden");
+      dots.forEach((d) => d.setAttribute("visibility", "hidden"));
+    };
+    const show = (ev) => {
+      const rect = svg.getBoundingClientRect();
+      const ux = ((ev.clientX - rect.left) / rect.width) * cfg.w;
+      let best = 0;
+      cfg.p.forEach((pt, i) => { if (Math.abs(pt.x - ux) < Math.abs(cfg.p[best].x - ux)) best = i; });
+      const pt = cfg.p[best];
+      guide.setAttribute("x1", pt.x);
+      guide.setAttribute("x2", pt.x);
+      guide.setAttribute("visibility", "visible");
+      pt.r.forEach((row, i) => {
+        dots[i].setAttribute("cx", pt.x);
+        dots[i].setAttribute("cy", row.y);
+        dots[i].setAttribute("visibility", "visible");
+      });
+      tip.innerHTML = `<b>${pt.t}</b>` +
+        pt.r.map((row) => `<div class="ec-tip__row"><span><i class="ec-${row.k}"></i>${row.l}</span><span>${row.v}</span></div>`).join("") +
+        (pt.b ? `<div class="ec-tip__row is-muted"><span>Random 5–95%</span><span>${pt.b}</span></div>` : "");
+      tip.hidden = false;
+      /* layout px (unscaled): offsetWidth ignores the stage transform */
+      const px = (pt.x / cfg.w) * svg.clientWidth;
+      const left = px + 24 + tip.offsetWidth > svg.clientWidth ? px - tip.offsetWidth - 24 : px + 24;
+      tip.style.left = Math.max(0, left) + "px";
+    };
+    host.addEventListener("pointermove", show);
+    host.addEventListener("pointerdown", show);
+    host.addEventListener("pointerleave", hide);
   });
 
   window.addEventListener("hashchange", () => go(fromHash()));

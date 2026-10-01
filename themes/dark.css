@@ -19,6 +19,15 @@
   --accent: #e8a948;
   --accent-soft: #4a3a22;
   --chart-bg: #ffffff;         /* backing for exported chart PNGs (white in both themes) */
+  --chart-ink: #1b1b1b;        /* chart labels (chart backing is white in both themes) */
+  --chart-ink-muted: #5c5c5c;  /* chart ticks */
+  --chart-grid: #e6e6e4;
+  --chart-new: #eef3fb;        /* shaded "new data" zone */
+  --chart-band: #e1e1df;       /* random 5–95% band */
+  --chart-model: #2a78d6;      /* top-5% report card */
+  --chart-live: #d9622b;       /* pool threshold (live rule) */
+  --chart-fade: #1a9a6c;       /* fade everything */
+  --chart-rand: #6f7772;       /* random average */
   --danger: #e2675f;
   --danger-bg: #3c2322;
 }
