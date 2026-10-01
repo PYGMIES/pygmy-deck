@@ -1,0 +1,5 @@
+<!-- notes: Appendix. Blocked cross-validation layout used in Notebook 12 and the final judge. Pool campaigns 33–68 train six expanding folds (12 campaigns to start, 4-campaign validation blocks). The final model is refit on the whole pool. The locked test block is 69–77, with 78–86 since added to the held-out set. Nothing trains on its own future. -->
+<!-- @slide-title kicker="Appendix" text="How We Cross-Validate" -->
+<!-- @column class="inset" -->
+  <!-- @chart-card kicker="Blocked CV · campaigns 33–86" title="Six expanding folds, then a locked test block" src="assets/nb12_cv_layout.png" alt="Blocked cross-validation layout: six expanding train and validate folds over campaigns 33 to 68, then a locked test block of campaigns 69 to 86" takeaway="Time runs left to right<br>Nothing trains on its own future" -->
+<!-- @/column -->

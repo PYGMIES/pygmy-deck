@@ -1,0 +1,16 @@
+<!-- notes: Owner TBC. Deep dive 4: where the signal lives. Giving the model a perfect classifier adds +$351 per campaign; perfect gain and loss regressors add +$12,417, 35 times more. So the money is in how big the win or loss is, not only in calling the direction. Right: what we tried and dropped. Market context was rejected four times (18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005; 14 macro features B+C −$23.5k to −$47.6k; NB14 negative on all three learners). Tuned GBDT beats logistic by +0.002 AUC. Learning curves are flat. A same-day trade-context block added +0.0016 AUC but lost $7,571 at top 5%, so money vetoed it. The full decomposition chart is in the appendix. -->
+<!-- @slide-title kicker="How We Got Here" text="Where the Signal Lives" -->
+<!-- @split cols="1fr 1fr" class="inset" -->
+  <!-- @big-stat value="35×" label="Perfect regressors vs a perfect classifier" caption="+$12,417 vs +$351 per campaign at the top-5% readout" -->
+  <!-- @column -->
+    <!-- @section-heading title="Tried and dropped" subtitle="What did not pay" -->
+    <!-- @compare-table -->
+      <thead><tr><th>Lever</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>Market data</td><td class="is-bad">Rejected 4×</td></tr>
+        <tr><td>Tuned GBDT vs logistic</td><td class="is-bad">+0.002 AUC</td></tr>
+        <tr><td>More campaigns</td><td class="is-bad">Flat curve</td></tr>
+      </tbody>
+    <!-- @/compare-table -->
+  <!-- @/column -->
+<!-- @/split -->

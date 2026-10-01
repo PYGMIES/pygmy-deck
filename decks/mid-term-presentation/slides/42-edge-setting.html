@@ -1,0 +1,17 @@
+<!-- notes: Owner TBD. The edge is a number we choose before the test, not a model setting: the smallest average profit per faded trade (after the $7-per-lot cost) that would make running the Judge worthwhile. We size the test so an edge that big, if real, would very likely show up. Work back from money: about 95 faded trades per campaign x about 9.4 campaigns a month = roughly 900 faded trades a month, so $3 an edge is about $2,700 a month. Trade-off: test length grows with 1 / edge squared, so halving the edge needs about 4x the campaigns. Campaigns-to-confirm column assumes per-trade sigma of $133-168. The 18 test campaigns already rule out edges above about $6 a trade, about $5,400 a month. Baseline here is zero (does fading make money?); a stricter test compares against random picks of the same size. -->
+<!-- @slide-title kicker="Constraints" text="Setting the Edge" -->
+<!-- @split cols="1fr 1.4fr" align="end" class="inset" -->
+  <!-- @big-stat value="4×" label="More campaigns each time the edge halves" caption="The smaller the edge we care about, the longer it takes to confirm" -->
+  <!-- @column -->
+    <!-- @section-heading title="The smallest edge worth running" subtitle="Edge = average profit per faded trade, after costs. Campaigns = how many we need to confirm it. Our 18 test campaigns already rule out anything above ~$6 a trade." -->
+    <!-- @compare-table -->
+      <thead><tr><th>Edge / trade</th><th>Per month</th><th>Campaigns</th></tr></thead>
+      <tbody>
+        <tr><td>$1.32</td><td>$1,200</td><td class="is-bad">840–1,330</td></tr>
+        <tr><td>$3</td><td>$2,700</td><td>160–260</td></tr>
+        <tr><td>$5</td><td>$4,500</td><td>60–90</td></tr>
+        <tr><td>$10</td><td>$9,000</td><td>15–23</td></tr>
+      </tbody>
+    <!-- @/compare-table -->
+  <!-- @/column -->
+<!-- @/split -->
