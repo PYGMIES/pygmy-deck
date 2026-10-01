@@ -1,187 +1,83 @@
 /* === COMPONENT (deck): c22-flow ===
-   Catch22's current decision flow. Absolute layout on a 1728×760 canvas;
-   arrows are one SVG overlay using currentColor. */
+   Catch22's current workflow: five steps left to right with arrows.
+   The step tagged --focus is the part this project owns. */
 .c-c22-flow {
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 28px;
   width: 1728px;
-  height: 760px;
   flex: none;
-  margin-top: auto;
+  margin: auto 0;
 }
 
-.c-c22-flow__wires {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: var(--ink);
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 4;
-}
-
-.c-c22-flow__note {
-  position: absolute;
-  right: 0;
-  top: -30px;
-  width: 560px;
-  text-align: center;
-}
-
-.c-c22-flow__note h4 {
-  font-family: var(--font-body);
-  font-style: italic;
-  font-weight: 800;
-  font-size: 28px;
-  letter-spacing: 0;
-  line-height: 1.2;
-  margin-bottom: 8px;
-}
-
-.c-c22-flow__note p {
-  font-size: 22px;
-  line-height: 1.3;
-  max-width: none;
-}
-
-/* --- clients --- */
-.c-c22-flow__clients {
-  position: absolute;
-  left: 0;
-  top: 20px;
-  width: 440px;
-  height: 740px;
+.c-c22-flow__step {
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 44px 36px;
-  border: 4px solid var(--ink);
-  border-radius: var(--radius);
-  text-align: center;
-}
-
-.c-c22-flow__clients h3 {
-  font-size: 96px;
-  line-height: 0.86;
-}
-
-.c-c22-flow__italic {
-  font-style: italic;
-  font-size: 28px;
-  line-height: 1.3;
-}
-
-.c-c22-flow__clients hr {
-  width: 100%;
-  border: 0;
-  border-top: 3px solid var(--ink);
-}
-
-.c-c22-flow__limit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 22px 36px;
-  border: 4px solid color-mix(in srgb, var(--danger) 35%, transparent);
-  border-radius: var(--radius);
-  background: var(--danger-bg);
-  color: var(--danger);
-  font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 0.95;
-}
-
-.c-c22-flow__limit strong {
-  font-size: 64px;
-}
-
-.c-c22-flow__limit span {
-  font-size: 56px;
-  letter-spacing: -0.02em;
-}
-
-/* --- labels on wires --- */
-.c-c22-flow__label {
-  position: absolute;
-  text-align: center;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.15;
-}
-
-.c-c22-flow__label--fork {
-  padding: 6px 0;
-  background: var(--bg);
-}
-
-/* --- platform --- */
-.c-c22-flow__platform {
-  position: absolute;
-  left: 620px;
-  top: 100px;
-  width: 560px;
-  height: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 18px;
-  padding: 44px 40px;
-  border-radius: var(--radius);
-  background: var(--card);
-  color: var(--on-card);
+}
+
+.c-c22-flow__tag {
   text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink-muted);
 }
 
-.c-c22-flow__platform h3 {
-  font-size: 54px;
-  color: var(--on-card);
-  letter-spacing: -0.02em;
-}
-
-.c-c22-flow__platform > p {
-  font-size: 26px;
-  color: var(--on-card-muted);
-  margin-bottom: 18px;
-}
-
-.c-c22-flow__inner {
-  width: 100%;
-  flex: 1;
-  display: grid;
-  place-items: center;
-  padding: 16px 20px;
-  border: 3px solid var(--on-card-muted);
-  border-radius: var(--radius-s);
-  font-family: var(--font-display);
-  font-weight: var(--display-weight);
-  font-size: 44px;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-}
-
-/* --- outcomes --- */
-.c-c22-flow__outcome {
-  position: absolute;
-  left: 1380px;
-  width: 348px;
-  height: 230px;
+.c-c22-flow__box {
+  height: 440px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 14px;
+  justify-content: center;
+  gap: 24px;
   padding: 28px;
   border-radius: var(--radius);
   background: var(--bg-deep);
+  color: var(--ink);
   text-align: center;
 }
 
-.c-c22-flow__outcome h3 {
-  font-size: 72px;
+.c-c22-flow__box h3 {
+  font-size: 68px;
+  color: inherit;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
 }
 
-.c-c22-flow__outcome p {
-  font-size: 25px;
+.c-c22-flow__sub {
+  font-size: 32px;
+  font-weight: 600;
   line-height: 1.2;
+  max-width: none;
+}
+
+.c-c22-flow__icon {
+  width: 120px;
+  height: 120px;
+  background: var(--ink);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.c-c22-flow__arrow {
+  flex: none;
+  width: 48px;
+  height: 40px;
+  margin-top: 48px;
+  fill: var(--ink-muted);
+  opacity: 0.5;
+}
+
+.c-c22-flow__step--focus .c-c22-flow__tag { color: var(--danger); }
+.c-c22-flow__step--focus .c-c22-flow__box {
+  background: var(--danger);
+  color: var(--bg);
+}
+
+.c-c22-flow__step--market .c-c22-flow__box {
+  background: var(--card);
+  color: var(--on-card);
 }

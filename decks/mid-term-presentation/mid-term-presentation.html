@@ -967,191 +967,87 @@ body.overview .deck-viewport {
 
 /* ===== COMPONENT c22-flow ===== */
 /* === COMPONENT (deck): c22-flow ===
-   Catch22's current decision flow. Absolute layout on a 1728×760 canvas;
-   arrows are one SVG overlay using currentColor. */
+   Catch22's current workflow: five steps left to right with arrows.
+   The step tagged --focus is the part this project owns. */
 .c-c22-flow {
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 28px;
   width: 1728px;
-  height: 760px;
   flex: none;
-  margin-top: auto;
+  margin: auto 0;
 }
 
-.c-c22-flow__wires {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: var(--ink);
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 4;
-}
-
-.c-c22-flow__note {
-  position: absolute;
-  right: 0;
-  top: -30px;
-  width: 560px;
-  text-align: center;
-}
-
-.c-c22-flow__note h4 {
-  font-family: var(--font-body);
-  font-style: italic;
-  font-weight: 800;
-  font-size: 28px;
-  letter-spacing: 0;
-  line-height: 1.2;
-  margin-bottom: 8px;
-}
-
-.c-c22-flow__note p {
-  font-size: 22px;
-  line-height: 1.3;
-  max-width: none;
-}
-
-/* --- clients --- */
-.c-c22-flow__clients {
-  position: absolute;
-  left: 0;
-  top: 20px;
-  width: 440px;
-  height: 740px;
+.c-c22-flow__step {
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 44px 36px;
-  border: 4px solid var(--ink);
-  border-radius: var(--radius);
-  text-align: center;
-}
-
-.c-c22-flow__clients h3 {
-  font-size: 96px;
-  line-height: 0.86;
-}
-
-.c-c22-flow__italic {
-  font-style: italic;
-  font-size: 28px;
-  line-height: 1.3;
-}
-
-.c-c22-flow__clients hr {
-  width: 100%;
-  border: 0;
-  border-top: 3px solid var(--ink);
-}
-
-.c-c22-flow__limit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 22px 36px;
-  border: 4px solid color-mix(in srgb, var(--danger) 35%, transparent);
-  border-radius: var(--radius);
-  background: var(--danger-bg);
-  color: var(--danger);
-  font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 0.95;
-}
-
-.c-c22-flow__limit strong {
-  font-size: 64px;
-}
-
-.c-c22-flow__limit span {
-  font-size: 56px;
-  letter-spacing: -0.02em;
-}
-
-/* --- labels on wires --- */
-.c-c22-flow__label {
-  position: absolute;
-  text-align: center;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.15;
-}
-
-.c-c22-flow__label--fork {
-  padding: 6px 0;
-  background: var(--bg);
-}
-
-/* --- platform --- */
-.c-c22-flow__platform {
-  position: absolute;
-  left: 620px;
-  top: 100px;
-  width: 560px;
-  height: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 18px;
-  padding: 44px 40px;
-  border-radius: var(--radius);
-  background: var(--card);
-  color: var(--on-card);
+}
+
+.c-c22-flow__tag {
   text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink-muted);
 }
 
-.c-c22-flow__platform h3 {
-  font-size: 54px;
-  color: var(--on-card);
-  letter-spacing: -0.02em;
-}
-
-.c-c22-flow__platform > p {
-  font-size: 26px;
-  color: var(--on-card-muted);
-  margin-bottom: 18px;
-}
-
-.c-c22-flow__inner {
-  width: 100%;
-  flex: 1;
-  display: grid;
-  place-items: center;
-  padding: 16px 20px;
-  border: 3px solid var(--on-card-muted);
-  border-radius: var(--radius-s);
-  font-family: var(--font-display);
-  font-weight: var(--display-weight);
-  font-size: 44px;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-}
-
-/* --- outcomes --- */
-.c-c22-flow__outcome {
-  position: absolute;
-  left: 1380px;
-  width: 348px;
-  height: 230px;
+.c-c22-flow__box {
+  height: 440px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 14px;
+  justify-content: center;
+  gap: 24px;
   padding: 28px;
   border-radius: var(--radius);
   background: var(--bg-deep);
+  color: var(--ink);
   text-align: center;
 }
 
-.c-c22-flow__outcome h3 {
-  font-size: 72px;
+.c-c22-flow__box h3 {
+  font-size: 68px;
+  color: inherit;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
 }
 
-.c-c22-flow__outcome p {
-  font-size: 25px;
+.c-c22-flow__sub {
+  font-size: 32px;
+  font-weight: 600;
   line-height: 1.2;
+  max-width: none;
+}
+
+.c-c22-flow__icon {
+  width: 120px;
+  height: 120px;
+  background: var(--ink);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.c-c22-flow__arrow {
+  flex: none;
+  width: 48px;
+  height: 40px;
+  margin-top: 48px;
+  fill: var(--ink-muted);
+  opacity: 0.5;
+}
+
+.c-c22-flow__step--focus .c-c22-flow__tag { color: var(--danger); }
+.c-c22-flow__step--focus .c-c22-flow__box {
+  background: var(--danger);
+  color: var(--bg);
+}
+
+.c-c22-flow__step--market .c-c22-flow__box {
+  background: var(--card);
+  color: var(--on-card);
 }
 
 /* ===== COMPONENT column ===== */
@@ -3963,54 +3859,54 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="06" data-name="c22-today">
-<!-- notes: Joyce. Walk left to right: clients trade in day-long campaigns with a -4% loss limit → C22 platform judges each trade → fade or pass. Land "why fading pays off". -->
+<!-- notes: Joyce. Walk left to right: a trading challenge is announced on Discord 2–3× a week → ~500 traders join each time → they trade in a simulated environment → The Judge decides fade or not (our focus) → C22 places the real trade for profit. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">What Catch22 is doing today</h1>
 </header>
 <div class="c-c22-flow ">
-  <aside class="c-c22-flow__note reveal">
-    <h4>Why does fading pay off?</h4>
-    <p>C22 uses its participants as market signals: when a trader buys gold at $1,900 as a losing position, C22 fades it.</p>
-  </aside>
-
-  <svg class="c-c22-flow__wires" viewBox="0 0 1728 760" aria-hidden="true">
-    <defs>
-      <marker id="c22-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
-        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </marker>
-    </defs>
-    <path d="M440 400 H612" marker-end="url(#c22-arrow)"/>
-    <path d="M1180 400 L1372 270" marker-end="url(#c22-arrow)"/>
-    <path d="M1180 400 L1372 585" marker-end="url(#c22-arrow)"/>
-  </svg>
-
-  <div class="c-c22-flow__clients reveal">
-    <h3>500<br>Clients</h3>
-    <p class="c-c22-flow__italic">Day-long “campaign”<br>trading FICC (e.g. Gold)</p>
-    <hr>
-    <div class="c-c22-flow__limit"><strong>-4%</strong><span>Loss Limit</span></div>
-    <p class="c-c22-flow__italic">Hard drawdown ceiling</p>
+  <div class="c-c22-flow__step reveal">
+    <span class="c-c22-flow__tag">&nbsp;</span>
+    <div class="c-c22-flow__box">
+      <div class="c-c22-flow__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDE4YzYtMyAxMS00IDE4LTRzMTIgMSAxOCA0YzQgOCA2IDE2IDYgMjYtNSA0LTEwIDYtMTUgN2wtMy01Yy00IDEtOCAxLTEyIDBsLTMgNWMtNS0xLTEwLTMtMTUtNyAwLTEwIDItMTggNi0yNnoiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjMzIiByPSIyLjUiIGZpbGw9IiMwMDAiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjMzIiByPSIyLjUiIGZpbGw9IiMwMDAiLz48L3N2Zz4K)"></div>
+      <p class="c-c22-flow__sub">Trading challenge announced<br>2–3× a week</p>
+    </div>
   </div>
+  <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
 
-  <span class="c-c22-flow__label" style="left: 440px; width: 172px; top: 330px;">trades via</span>
-
-  <div class="c-c22-flow__platform reveal">
-    <h3>C22 Trading Platform</h3>
-    <p>(the platform C22 controls)</p>
-    <div class="c-c22-flow__inner">Markov Chain Judge</div>
-    <div class="c-c22-flow__inner">Hard-coded rules +<br>Founder’s judgement</div>
+  <div class="c-c22-flow__step reveal">
+    <span class="c-c22-flow__tag">Campaign</span>
+    <div class="c-c22-flow__box">
+      <h3>~500 traders</h3>
+      <p class="c-c22-flow__sub">Join each time</p>
+    </div>
   </div>
+  <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
 
-  <span class="c-c22-flow__label c-c22-flow__label--fork" style="left: 1188px; width: 150px; top: 372px;">Decides to either</span>
-
-  <div class="c-c22-flow__outcome reveal" style="top: 150px;">
-    <h3>FADE</h3>
-    <p>House holds the loser internally, captures the client’s loss, pays no spread</p>
+  <div class="c-c22-flow__step reveal">
+    <span class="c-c22-flow__tag">Trader</span>
+    <div class="c-c22-flow__box">
+      <h3>Sim trades</h3>
+      <p class="c-c22-flow__sub">Trade in a simulated env</p>
+    </div>
   </div>
-  <div class="c-c22-flow__outcome reveal" style="top: 470px;">
-    <h3>PASS</h3>
-    <p>Trade expected to win, or unclear</p>
+  <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
+
+  <div class="c-c22-flow__step c-c22-flow__step--focus reveal">
+    <span class="c-c22-flow__tag">Our focus</span>
+    <div class="c-c22-flow__box">
+      <h3>The Judge</h3>
+      <p class="c-c22-flow__sub">Fade the trade or not?</p>
+    </div>
+  </div>
+  <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
+
+  <div class="c-c22-flow__step c-c22-flow__step--market reveal">
+    <span class="c-c22-flow__tag">C22</span>
+    <div class="c-c22-flow__box">
+      <h3>Real market</h3>
+      <p class="c-c22-flow__sub">Live trade placed for profit</p>
+    </div>
   </div>
 </div>
 </section>
@@ -4213,7 +4109,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="11" data-name="business-value">
-<!-- notes: Joyce. Value beyond the model itself: closer to a research partnership. -->
+<!-- notes: Joyce. Value beyond the model itself: closer to a research partnership. The end-to-end suite is ETL and cleaning, the Judge, a monitoring dashboard and paper-trade simulation, much bigger than the judge C22 has today. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Goals &amp; Impact</span>
   <h1 class="reveal">Beyond the Model</h1>
@@ -4237,7 +4133,7 @@ body.overview .deck-viewport {
   <article class="c-grid-card reveal ">
   <span class="c-grid-card__kicker">03</span>
   <h3>End-to-end suite</h3>
-  <p>A full features pipeline C22 can reuse</p>
+  <p>ETL, the Judge, monitoring and paper trading: a full platform, not just a judge</p>
 </article>
 
 </div>

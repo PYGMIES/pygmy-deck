@@ -4,7 +4,7 @@ Bespoke diagrams, absolutely positioned on fixed canvases. Edit coordinates in t
 
 | Component | Canvas | What |
 |-----------|--------|------|
-| `c22-flow` | 1728×760 | Clients (-4% limit) → C22 platform (Markov judge / rules) → FADE / PASS, plus "why fading pays off" note. Slide 06. |
+| `c22-flow` | 1728×~500 | Five-step workflow: Discord challenge → ~500 traders → sim trades → The Judge (our focus) → real market. Slide 06. |
 | `bar-ladder` | 588px tall | Four ascending bars (fade everything < coin flip < C22 current < our Judge). Heights illustrative; optional `caption`. Slide 09. |
 | `equity-chart` | `takeaway`, `class?` | Inline-SVG cumulative P&L lines (fade everything, live rule, top 5%, random + 5–95% band) on white backing, plus takeaway. Data baked in by script; edit the SVG paths. Slide 10. |
 | `arch-diagram` | 1728×800 | 4 layer lanes, nodes, accent-coloured data-flow wires. Slide 19. |
