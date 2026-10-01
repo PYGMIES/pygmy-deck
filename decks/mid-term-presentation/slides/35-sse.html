@@ -1,0 +1,5 @@
+<!-- notes: Jerrick. Script: For the live dashboard we push updates with Server-Sent Events. Workers publish trade events to Redis, the API subscribes, and streams them to the browser. We first considered WebSockets, but they are two-way, and our dashboard never sends anything back. SSE is one-way, runs over plain HTTP, and the browser reconnects by itself. -->
+<!-- @slide-title text="Live dashboard using Server-Sent Events (SSE)" -->
+<!-- @flow-kit -->
+  <!-- @sse-flow -->
+<!-- @/flow-kit -->

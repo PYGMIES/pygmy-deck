@@ -487,6 +487,10 @@ body.overview .deck-viewport {
   --chart-rand: #6f7772;       /* random average */
   --danger: #b3302b;           /* limits, losses */
   --danger-bg: #f8e1df;
+  --success: #1f7a68;          /* good outcomes, solutions */
+  --token-blue: #7fa8de;      /* queue tokens (trade ids), same in both themes */
+  --token-amber: #f5a623;
+  --token-grey: #c9d0da;
 }
 
 /* ===== THEME DARK ===== */
@@ -522,6 +526,10 @@ body.overview .deck-viewport {
   --chart-rand: #6f7772;       /* random average */
   --danger: #e2675f;
   --danger-bg: #3c2322;
+  --success: #4fb89a;          /* good outcomes, solutions */
+  --token-blue: #7fa8de;      /* queue tokens (trade ids), same in both themes */
+  --token-amber: #f5a623;
+  --token-grey: #c9d0da;
 }
 
 /* ===== THEME BASE ===== */
@@ -2031,6 +2039,644 @@ body.overview .deck-viewport {
   transform-origin: center;
 }
 
+/* ===== COMPONENT flow-heading ===== */
+/* === COMPONENT (deck): flow-heading ===
+   Title + optional sub-line + coloured tag (Problem / Solution / Asynchronous).
+   Deliberately NOT .reveal: it stays still between build steps so only the new
+   piece of the diagram animates. */
+.c-flow-heading {
+  flex: none;
+}
+
+.c-flow-heading h1 {
+  font-size: var(--fs-title);
+  line-height: 1;
+}
+
+.c-flow-heading p {
+  max-width: none;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: 1;
+}
+
+.c-flow-heading__sub {
+  margin-top: 22px;
+  font-size: var(--fs-h3);
+}
+
+.c-flow-heading__tag {
+  margin-top: 18px;
+  font-size: var(--fs-h3);
+}
+
+.c-flow-heading__tag--good {
+  color: var(--success);
+}
+
+.c-flow-heading__tag--bad {
+  color: var(--danger);
+}
+
+/* ===== COMPONENT flow-stage ===== */
+/* === COMPONENT (deck): flow-stage ===
+   Block holding absolutely-positioned flow pieces on the full 1920×1080 stage.
+   Coordinates in child components are stage px (origin = slide top-left).
+   Used by the step-by-step build slides (async processing, race conditions). */
+.c-flow-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.c-flow-stage__defs {
+  position: absolute;
+}
+
+/* ===== COMPONENT flow-node ===== */
+/* === COMPONENT (deck): flow-node ===
+   Rounded labelled box at stage coordinates. tone: dark | mid | good. */
+.c-flow-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.c-flow-node strong {
+  font-weight: 700;
+}
+
+.c-flow-node span {
+  font-size: var(--fs-small);
+}
+
+.c-flow-node--dark {
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-flow-node--mid {
+  background: color-mix(in srgb, var(--card) 78%, var(--bg));
+  color: var(--on-card);
+}
+
+.c-flow-node--good {
+  background: var(--success);
+  color: var(--bg);
+}
+
+/* ===== COMPONENT flow-arrow ===== */
+/* === COMPONENT (deck): flow-arrow ===
+   Straight arrow from (x1,y1) to (x2,y2) in stage px. tone: ink | danger.
+   Arrowhead markers are defined once in flow-stage. */
+.c-flow-arrow {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.c-flow-arrow--ink path {
+  stroke: var(--ink);
+  marker-end: url(#flow-head-ink);
+}
+
+.c-flow-arrow--danger path {
+  stroke: var(--danger);
+  marker-end: url(#flow-head-danger);
+}
+
+/* ===== COMPONENT flow-queue ===== */
+/* === COMPONENT (deck): flow-queue ===
+   Three-cell queue, top-left of the cells at (x, y). Label sits above or
+   below (label-pos). Tokens a/b/c are trade ids; colour follows the id
+   (12 blue, 11 amber, 10 grey) so the same trade keeps its colour. */
+.c-flow-queue {
+  position: absolute;
+  width: 291px;
+  height: 82px;
+}
+
+.c-flow-queue__label {
+  position: absolute;
+  left: -40px;
+  right: -40px;
+  max-width: none;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 32px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.c-flow-queue--above .c-flow-queue__label {
+  bottom: 100%;
+  margin-bottom: 18px;
+}
+
+.c-flow-queue--below .c-flow-queue__label {
+  top: 100%;
+  margin-top: 18px;
+}
+
+.c-flow-queue__cells {
+  display: flex;
+}
+
+.c-flow-queue__cell {
+  display: grid;
+  place-items: center;
+  width: 97px;
+  height: 82px;
+  margin-right: -3px;
+  border: 4px solid var(--ink);
+}
+
+.c-flow-queue__tok,
+.c-flow-token {
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 0;
+  color: var(--chart-ink);
+  background: var(--token-grey);
+}
+
+.c-flow-queue__tok:empty {
+  display: none;
+}
+
+.c-flow-queue__tok[data-n="12"],
+.c-flow-token[data-n="12"] {
+  background: var(--token-blue);
+}
+
+.c-flow-queue__tok[data-n="11"],
+.c-flow-token[data-n="11"] {
+  background: var(--token-amber);
+}
+
+/* ===== COMPONENT flow-note ===== */
+/* === COMPONENT (deck): flow-note ===
+   Centred caption at stage coordinates (x, y = top-left, w = width).
+   tone: ink | danger | good. */
+.c-flow-note {
+  position: absolute;
+  max-width: none;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.c-flow-note--danger {
+  color: var(--danger);
+}
+
+.c-flow-note--good {
+  color: var(--success);
+}
+
+/* ===== COMPONENT flow-db ===== */
+/* === COMPONENT (deck): flow-db === database cylinder, top-left at (x, y), 93×118. */
+.c-flow-db {
+  position: absolute;
+  width: 93px;
+  height: 118px;
+  fill: var(--bg);
+  stroke: var(--ink);
+  stroke-width: 5;
+  stroke-linejoin: round;
+}
+
+/* ===== COMPONENT flow-token ===== */
+/* === COMPONENT (deck): flow-token ===
+   A loose trade token, centred on (x, y). Look is shared with the queue tokens
+   (rules live in flow-queue.css). */
+.c-flow-token {
+  position: absolute;
+  margin: -33px 0 0 -33px;
+}
+
+/* ===== COMPONENT flow-x ===== */
+/* === COMPONENT (deck): flow-x === danger-coloured cross centred on (x, y), 80×80. */
+.c-flow-x {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 -40px;
+  fill: none;
+  stroke: var(--danger);
+  stroke-width: 11;
+  stroke-linecap: round;
+}
+
+/* ===== COMPONENT flow-kit ===== */
+/* === COMPONENT (deck): flow-kit ===
+   Fixed-size canvas + diagram primitives shared by the Key Design Decisions
+   diagrams (async-compare, race-timeline, close-flow, redis-roles, cache-check,
+   sse-flow, judge-service, local-stack). Same look as arch-diagram: grey lanes,
+   charcoal nodes, accent data-flow wires, italic wire labels.
+   Children are absolutely positioned at design-size px. */
+.c-flow-kit {
+  --node: color-mix(in srgb, var(--card) 80%, var(--bg));
+  position: relative;
+  flex: none;
+}
+
+.fk-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.fk-canvas > * {
+  position: absolute;
+}
+
+/* --- Lanes (grey panels) --- */
+.fk-lane {
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.fk-lane__label {
+  z-index: 2;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+/* --- Outlined groups --- */
+.fk-group {
+  z-index: 1;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.fk-group--dashed {
+  border-style: dashed;
+}
+
+.fk-group__title {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  letter-spacing: -0.01em;
+}
+
+/* --- Nodes --- */
+.fk-node {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: var(--radius);
+  background: var(--node);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 32px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.fk-node small {
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-card-muted);
+}
+
+.fk-node--dark {
+  background: var(--card);
+}
+
+.fk-node--pill {
+  border-radius: 999px;
+  font-size: 28px;
+}
+
+/* decision / neutral: outlined, ink on canvas */
+.fk-node--outline {
+  background: var(--bg);
+  border: 3px solid var(--ink);
+  color: var(--ink);
+}
+
+.fk-node--outline small {
+  color: var(--ink-muted);
+}
+
+.fk-node--accent {
+  box-shadow: 0 0 0 4px var(--accent);
+}
+
+.fk-node--bad {
+  background: var(--danger-bg);
+  border: 3px solid var(--danger);
+  color: var(--danger);
+}
+
+.fk-node--bad small {
+  color: var(--danger);
+}
+
+.fk-node--dim {
+  background: transparent;
+  border: 3px dashed var(--rule);
+  color: var(--ink-muted);
+}
+
+/* --- Bars (timelines) --- */
+.fk-bar {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  border-radius: var(--radius-s);
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 22px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.fk-bar--soft {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.fk-bar--empty {
+  background: transparent;
+  border: 3px dashed var(--danger);
+  color: var(--danger);
+}
+
+.fk-bar--ok {
+  background: var(--bg);
+  border: 3px solid var(--ink);
+  color: var(--ink);
+}
+
+/* --- Wires (one SVG overlay per diagram) --- */
+.fk-wires {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.fk-flow {
+  color: var(--accent);
+}
+
+.fk-ink {
+  color: var(--ink);
+}
+
+.fk-muted {
+  color: var(--ink-muted);
+}
+
+.fk-danger {
+  color: var(--danger);
+}
+
+.fk-dashed {
+  stroke-dasharray: 10 10;
+}
+
+/* --- Text --- */
+.fk-label {
+  z-index: 4;
+  white-space: nowrap;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.fk-callout {
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.fk-callout--bad {
+  color: var(--danger);
+}
+
+.c-flow-kit .fk-note {
+  z-index: 2;
+  max-width: none;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--ink-muted);
+}
+
+/* --- Small card: icon/title/body, used for takeaways --- */
+.fk-card {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 0 32px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.fk-card svg {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fk-card strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.fk-card span {
+  display: block;
+  margin-top: 8px;
+  font-size: 21px;
+  line-height: 1.25;
+  color: var(--ink-muted);
+}
+
+.fk-label--plain {
+  font-style: normal;
+}
+
+.fk-dots {
+  z-index: 2;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* --- Highlight band (e.g. a race window on a timeline) --- */
+.fk-band {
+  z-index: 1;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+}
+
+/* struck-through: something a component deliberately does without */
+.fk-node--struck {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+}
+
+/* ===== COMPONENT redis-roles ===== */
+/* === COMPONENT (deck): redis-roles ===
+   Slide 41: the one Redis instance doing three jobs (queues highlighted). 520x720 canvas.
+   Primitives come from flow-kit; place inside <!-- @flow-kit width="520px" -->. */
+.c-redis-roles {
+  z-index: 0;
+}
+
+/* ===== COMPONENT compare-table ===== */
+/* === COMPONENT: compare-table ===
+   Children are <thead>/<tbody> rows. Mark a highlighted column cell with
+   class="is-focus", good/bad values with class="is-good" / "is-bad". */
+.c-compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 30px;
+  font-variant-numeric: tabular-nums;
+}
+
+.c-compare-table th,
+.c-compare-table td {
+  padding: 24px 28px;
+  text-align: right;
+  border-bottom: 2px solid var(--rule);
+}
+
+.c-compare-table th:first-child,
+.c-compare-table td:first-child {
+  text-align: left;
+}
+
+.c-compare-table thead th {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 36px;
+  letter-spacing: -0.01em;
+  color: var(--ink-accent);
+  border-bottom: var(--rule-w) solid var(--ink);
+}
+
+.c-compare-table .is-focus {
+  background: var(--card);
+  color: var(--on-card);
+  font-weight: 700;
+}
+
+.c-compare-table thead .is-focus {
+  color: var(--on-card);
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+}
+
+.c-compare-table tbody tr:last-child .is-focus {
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+}
+
+.c-compare-table .is-good::after {
+  content: " \2191";
+}
+
+.c-compare-table .is-bad {
+  color: var(--ink-muted);
+}
+
+/* ===== COMPONENT cache-check ===== */
+/* === COMPONENT (deck): cache-check ===
+   Slide 42: an open compares the trade count in the Redis hash with Postgres; on a mismatch
+   it rebuilds the hash from Postgres before asking the Judge.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-cache-check {
+  z-index: 0;
+}
+
+/* ===== COMPONENT sse-flow ===== */
+/* === COMPONENT (deck): sse-flow ===
+   Slide 43: one-way live-event path, then WebSocket (two-way, dimmed) vs SSE (one-way, highlighted).
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-sse-flow {
+  z-index: 0;
+}
+
+/* ===== COMPONENT local-stack ===== */
+/* === COMPONENT (deck): local-stack ===
+   Slide 45: every service as a Docker container on the sponsor's machine, plus three reasons.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-local-stack {
+  z-index: 0;
+}
+
 /* ===== COMPONENT funnel ===== */
 /* === COMPONENT (deck): funnel ===
    Stacked bars that narrow top to bottom, each with a one-line "what we did".
@@ -2131,62 +2777,6 @@ body.overview .deck-viewport {
   font-size: var(--fs-body);
   color: var(--ink-muted);
   min-height: 2.7em; /* keeps labels aligned when captions wrap differently */
-}
-
-/* ===== COMPONENT compare-table ===== */
-/* === COMPONENT: compare-table ===
-   Children are <thead>/<tbody> rows. Mark a highlighted column cell with
-   class="is-focus", good/bad values with class="is-good" / "is-bad". */
-.c-compare-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 30px;
-  font-variant-numeric: tabular-nums;
-}
-
-.c-compare-table th,
-.c-compare-table td {
-  padding: 24px 28px;
-  text-align: right;
-  border-bottom: 2px solid var(--rule);
-}
-
-.c-compare-table th:first-child,
-.c-compare-table td:first-child {
-  text-align: left;
-}
-
-.c-compare-table thead th {
-  font-family: var(--font-display);
-  font-weight: var(--display-weight);
-  font-size: 36px;
-  letter-spacing: -0.01em;
-  color: var(--ink-accent);
-  border-bottom: var(--rule-w) solid var(--ink);
-}
-
-.c-compare-table .is-focus {
-  background: var(--card);
-  color: var(--on-card);
-  font-weight: 700;
-}
-
-.c-compare-table thead .is-focus {
-  color: var(--on-card);
-  border-radius: var(--radius-s) var(--radius-s) 0 0;
-}
-
-.c-compare-table tbody tr:last-child .is-focus {
-  border-radius: 0 0 var(--radius-s) var(--radius-s);
-}
-
-.c-compare-table .is-good::after {
-  content: " \2191";
-}
-
-.c-compare-table .is-bad {
-  color: var(--ink-muted);
 }
 
 /* ===== COMPONENT shap-bars ===== */
@@ -3048,11 +3638,17 @@ body.overview .deck-viewport {
 /* ===== DECK OVERRIDES ===== */
 /* === DECK OVERRIDES === */
 
-/* Short card row: centre it in the space under the slide title (slide 37) */
+/* Short card row: centre it in the space under the slide title (slide 50) */
 .c-card-grid.is-centered {
   flex: 1;
   min-height: 0;
   align-content: center;
+}
+
+/* compare-table: keep each cell on one line (slide 33, Why Redis) */
+.c-compare-table.is-nowrap th,
+.c-compare-table.is-nowrap td {
+  white-space: nowrap;
 }
 </style>
 </head>
@@ -3537,7 +4133,7 @@ body.overview .deck-viewport {
   <article class="c-grid-card reveal ">
   <span class="c-grid-card__kicker">03</span>
   <h3>End-to-end suite</h3>
-  <p>A full platform of ETL pipeline, the Judge, monitoring and paper trading</p>
+  <p>ETL, the Judge, monitoring and paper trading: a full platform, not just a judge</p>
 </article>
 
 </div>
@@ -3555,7 +4151,7 @@ body.overview .deck-viewport {
   <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
   
     <header class="c-section-heading reveal ">
-  <h2>Midterms</h2>
+  <h2>Midterm</h2>
   <p>Delivered today</p>
 </header>
     <div class="c-card-stack " style="--stack-gap: 28px;">
@@ -3615,7 +4211,7 @@ body.overview .deck-viewport {
   <div class="c-section-divider__text">
     <h2 class="reveal">Live Demo</h2>
     <p class="reveal">Watch the Judge decide in real time, replayed at 10× speed</p>
-    <span class="c-section-divider__presenter reveal">Joyce · Jerrick</span>
+    <span class="c-section-divider__presenter reveal">Jerrick · Joyce · JS</span>
   </div>
 </div>
 </section>
@@ -3810,7 +4406,7 @@ body.overview .deck-viewport {
   <div class="c-section-divider__text">
     <h2 class="reveal">System Architecture</h2>
     <p class="reveal">How a trade becomes a decision in real time</p>
-    <span class="c-section-divider__presenter reveal">Jerrick · Jamesz</span>
+    <span class="c-section-divider__presenter reveal">Jerrick · James Z</span>
   </div>
 </div>
 </section>
@@ -4034,7 +4630,802 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="24" data-name="section-journey">
+<section class="slide" data-slide="24" data-name="async-1-request">
+<!-- notes: Jerrick. A trade request arrives at FastAPI. -->
+<header class="c-flow-heading ">
+  <h1>Processing trades asynchronously</h1>
+  <p class="c-flow-heading__sub"></p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Asynchronous</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-node c-flow-node--dark reveal" style="left: 137px; top: 496px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Request</strong>
+  <span></span>
+</div>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 479px; top: 246px; width: 147px; height: 742px;">
+  <strong style="font-size: 28px;">FastAPI</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M350 553 L479 553"/>
+</svg>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="25" data-name="async-2-queues">
+<!-- notes: Jerrick. FastAPI does not process the trade. It drops it onto an open-trade queue or a close-trade queue. -->
+<header class="c-flow-heading ">
+  <h1>Processing trades asynchronously</h1>
+  <p class="c-flow-heading__sub"></p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Asynchronous</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-node c-flow-node--dark " style="left: 137px; top: 496px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Request</strong>
+  <span></span>
+</div>
+  <div class="c-flow-node c-flow-node--mid " style="left: 479px; top: 246px; width: 147px; height: 742px;">
+  <strong style="font-size: 28px;">FastAPI</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M350 553 L479 553"/>
+</svg>
+  <div class="c-flow-queue c-flow-queue--above reveal" style="left: 748px; top: 490px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <div class="c-flow-queue c-flow-queue--below reveal" style="left: 748px; top: 690px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 530 L748 530"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 731 L748 731"/>
+</svg>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="26" data-name="async-3-response">
+<!-- notes: Jerrick. The client gets a response straight after enqueuing, so nobody waits on the model. -->
+<header class="c-flow-heading ">
+  <h1>Processing trades asynchronously</h1>
+  <p class="c-flow-heading__sub"></p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Asynchronous</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-node c-flow-node--dark " style="left: 137px; top: 496px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Request</strong>
+  <span></span>
+</div>
+  <div class="c-flow-node c-flow-node--mid " style="left: 479px; top: 246px; width: 147px; height: 742px;">
+  <strong style="font-size: 28px;">FastAPI</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M350 553 L479 553"/>
+</svg>
+  <div class="c-flow-queue c-flow-queue--above " style="left: 748px; top: 490px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 748px; top: 690px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 530 L748 530"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 731 L748 731"/>
+</svg>
+  <div class="c-flow-node c-flow-node--good reveal" style="left: 137px; top: 673px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Response</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M479 730 L350 730"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink reveal" style="left: 53px; top: 818px; width: 380px; font-size: 32px;">Immediate provide a<br>response after enqueuing</p>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="27" data-name="async-4-workers">
+<!-- notes: Jerrick. Workers pull from each queue. Opening a trade asks the Judge for inference, fetches the Oanda price and writes to the database. Closing a trade only needs the database. -->
+<header class="c-flow-heading ">
+  <h1>Processing trades asynchronously</h1>
+  <p class="c-flow-heading__sub"></p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Asynchronous</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-node c-flow-node--dark " style="left: 137px; top: 496px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Request</strong>
+  <span></span>
+</div>
+  <div class="c-flow-node c-flow-node--mid " style="left: 479px; top: 246px; width: 147px; height: 742px;">
+  <strong style="font-size: 28px;">FastAPI</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M350 553 L479 553"/>
+</svg>
+  <div class="c-flow-queue c-flow-queue--above " style="left: 748px; top: 490px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 748px; top: 690px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 530 L748 530"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 731 L748 731"/>
+</svg>
+  <div class="c-flow-node c-flow-node--good " style="left: 137px; top: 673px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Response</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M479 730 L350 730"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink " style="left: 53px; top: 818px; width: 380px; font-size: 32px;">Immediate provide a<br>response after enqueuing</p>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 1173px; top: 473px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1037 530 L1173 530"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 1186px; top: 672px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1037 731 L1186 731"/>
+</svg>
+  <div class="c-flow-node c-flow-node--dark reveal" style="left: 1142px; top: 254px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Judge</strong>
+  <span>(Inference)</span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1315 472 L1218 370"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1263 370 L1346 472"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 1401px; top: 251px; width: 229px; height: 115px;">
+  <strong style="font-size: 23px;">Oanda Market<br>Price Service</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1523 472 L1481 368"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1538 368 L1561 472"/>
+</svg>
+  <svg class="c-flow-db reveal" style="left: 1673px; top: 251px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1726 472 L1698 370"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1741 370 L1754 472"/>
+</svg>
+  <svg class="c-flow-db reveal" style="left: 1395px; top: 886px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1512 788 L1420 886"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1460 886 L1537 788"/>
+</svg>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="28" data-name="race-1-queues">
+<!-- notes: Jerrick. Open and close trades sit on separate queues and run in parallel, so a close can be picked up before its open has been processed. -->
+<header class="c-flow-heading ">
+  <h1>Race Conditions</h1>
+  <p class="c-flow-heading__sub">Close trades processed before its corresponding open trade</p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--bad">Problem</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-queue c-flow-queue--above reveal" style="left: 336px; top: 458px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="10">10</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 498 L900 498"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 900px; top: 440px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <div class="c-flow-queue c-flow-queue--below reveal" style="left: 336px; top: 657px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M628 694 L906 694"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 907px; top: 637px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="29" data-name="race-2-check-db">
+<!-- notes: Jerrick. The close worker takes trade 11 and checks the database for the matching open trade. -->
+<header class="c-flow-heading ">
+  <h1>Race Conditions</h1>
+  <p class="c-flow-heading__sub">Close trades processed before its corresponding open trade</p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--bad">Problem</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-queue c-flow-queue--above " style="left: 336px; top: 458px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="10">10</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 498 L900 498"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 900px; top: 440px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 336px; top: 657px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M628 694 L906 694"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 907px; top: 637px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+  <i class="c-flow-token reveal" data-n="11" style="left: 960px; top: 693px;">11</i>
+  <svg class="c-flow-db reveal" style="left: 1199px; top: 884px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1245 752 L1245 880"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink reveal" style="left: 1266px; top: 775px; width: 340px; font-size: 32px;">Check the DB if there is a<br>corresponding open trade</p>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="30" data-name="race-3-no-match">
+<!-- notes: Jerrick. The open trade for 11 is still waiting in its queue, so the database has nothing. The close cannot be processed. -->
+<header class="c-flow-heading ">
+  <h1>Race Conditions</h1>
+  <p class="c-flow-heading__sub">Close trades processed before its corresponding open trade</p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--bad">Problem</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-queue c-flow-queue--above " style="left: 336px; top: 458px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="10">10</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 498 L900 498"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 900px; top: 440px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 336px; top: 657px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M628 694 L906 694"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 907px; top: 637px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+  <i class="c-flow-token " data-n="11" style="left: 960px; top: 693px;">11</i>
+  <svg class="c-flow-db " style="left: 1199px; top: 884px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1245 752 L1245 880"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink " style="left: 1266px; top: 775px; width: 340px; font-size: 32px;">Check the DB if there is a<br>corresponding open trade</p>
+  <svg class="c-flow-x reveal" style="left: 960px; top: 693px;" viewBox="0 0 80 80" aria-hidden="true">
+  <path d="M8 8 L72 72 M72 8 L8 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--danger reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1213 880 L1213 752"/>
+</svg>
+  <p class="c-flow-note c-flow-note--danger reveal" style="left: 955px; top: 775px; width: 240px; font-size: 32px;">No corresponding<br>open trade!</p>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="31" data-name="race-4-solution">
+<!-- notes: Jerrick. The fix. Do not drop the close and do not block on it. -->
+<header class="c-flow-heading ">
+  <h1>Race Conditions</h1>
+  <p class="c-flow-heading__sub">Close trades processed before its corresponding open trade</p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Solution</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-queue c-flow-queue--above " style="left: 336px; top: 458px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="10">10</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 498 L900 498"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 900px; top: 440px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 336px; top: 657px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M628 694 L906 694"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 907px; top: 637px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+  <i class="c-flow-token " data-n="11" style="left: 960px; top: 693px;">11</i>
+  <svg class="c-flow-db " style="left: 1199px; top: 884px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1245 752 L1245 880"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink " style="left: 1266px; top: 775px; width: 340px; font-size: 32px;">Check the DB if there is a<br>corresponding open trade</p>
+  <svg class="c-flow-arrow c-flow-arrow--danger " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1213 880 L1213 752"/>
+</svg>
+  <p class="c-flow-note c-flow-note--danger " style="left: 955px; top: 775px; width: 240px; font-size: 32px;">No corresponding<br>open trade!</p>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="32" data-name="race-5-requeue">
+<!-- notes: Jerrick. Move the close trade to the back of the close queue and try again later. By then the open trade has usually been processed. -->
+<header class="c-flow-heading ">
+  <h1>Race Conditions</h1>
+  <p class="c-flow-heading__sub">Close trades processed before its corresponding open trade</p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Solution</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-queue c-flow-queue--above " style="left: 336px; top: 458px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="10">10</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 498 L900 498"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 900px; top: 440px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 336px; top: 657px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M628 694 L906 694"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 907px; top: 637px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-db " style="left: 1199px; top: 884px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1245 752 L1245 880"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink " style="left: 1266px; top: 775px; width: 340px; font-size: 32px;">Check the DB if there is a<br>corresponding open trade</p>
+  <svg class="c-flow-arrow c-flow-arrow--danger " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1213 880 L1213 752"/>
+</svg>
+  <p class="c-flow-note c-flow-note--danger " style="left: 955px; top: 775px; width: 240px; font-size: 32px;">No corresponding<br>open trade!</p>
+  <p class="c-flow-note c-flow-note--good reveal" style="left: 240px; top: 872px; width: 480px; font-size: 38px;">Move it to the back of the close<br>queue to try again later</p>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="33" data-name="why-redis">
+<!-- notes: Jerrick. Script: Why Redis for the queues? Redis already handles our feature cache and our live events, so the queues live there too: no extra infrastructure to run. Kafka and RabbitMQ would each be a new broker. Kafka is also built for far more traffic than our thousand or so messages per burst, and it cannot requeue a single message, which our fix relies on. Kafka does keep each trader's events in order, but as you just saw, we handle that in our code. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Why Redis?</h1>
+</header>
+<div class="c-split " style="--split-cols: 520px 1fr; --split-align: center;">
+  
+  <div class="c-flow-kit " style="width: 520px; height: 720px;">
+  
+    <div class="c-redis-roles fk-canvas ">
+  <div class="fk-group" style="left: 0; top: 0; width: 520px; height: 560px;">
+    <span class="fk-group__title">One Redis</span>
+  </div>
+  <div class="fk-node fk-node--dark fk-node--pill fk-node--accent" style="left: 40px; top: 100px; width: 440px; height: 116px;">Trade queues<small>streams</small></div>
+  <div class="fk-node fk-node--pill" style="left: 40px; top: 246px; width: 440px; height: 116px;">Feature cache<small>hashes</small></div>
+  <div class="fk-node fk-node--pill" style="left: 40px; top: 392px; width: 440px; height: 116px;">Live events<small>pub/sub</small></div>
+  <span class="fk-callout reveal" style="left: 0; top: 616px; width: 520px; text-align: center; font-size: 44px;">No extra infrastructure</span>
+</div>
+  
+</div>
+  <table class="c-compare-table reveal is-nowrap">
+  
+    <thead><tr><th></th><th class="is-focus">Redis</th><th>Kafka</th><th>RabbitMQ</th></tr></thead>
+    <tbody>
+      <tr><td>Already in our stack</td><td class="is-focus">Yes</td><td class="is-bad">No</td><td class="is-bad">No</td></tr>
+      <tr><td>Sized for our load</td><td class="is-focus">Yes</td><td class="is-bad">Overkill</td><td>Yes</td></tr>
+      <tr><td>Requeue 1 message</td><td class="is-focus">Yes</td><td class="is-bad">No</td><td>Yes</td></tr>
+      <tr><td>Extra service to run</td><td class="is-focus">None</td><td class="is-bad">New broker</td><td class="is-bad">New broker</td></tr>
+      <tr><td>Per-trader order</td><td class="is-focus">In our code</td><td>Yes</td><td class="is-bad">No</td></tr>
+    </tbody>
+  
+</table>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="34" data-name="cache-check">
+<!-- notes: Jerrick. Script: The Redis hash holds each trader's running stats, which become the Judge's features. Because workers process opens and closes separately, the hash can fall behind the database. So before scoring a trade, the open compares the trade count in the hash with the count in Postgres. If they match, we use the hash. If they don't, we rebuild the hash from Postgres first, so the Judge never scores on stale features. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Check the Cache Before Predicting</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-cache-check fk-canvas ">
+  <div class="fk-node fk-node--dark" style="left: 0; top: 290px; width: 260px; height: 120px;">Trade opens</div>
+
+  <div class="fk-node fk-node--pill" style="left: 360px; top: 110px; width: 380px; height: 120px;">Redis hash<small>trade count</small></div>
+  <div class="fk-node fk-node--outline" style="left: 360px; top: 470px; width: 380px; height: 120px;">Postgres<small>trade count</small></div>
+
+  <div class="fk-node fk-node--outline" style="left: 860px; top: 290px; width: 330px; height: 120px;">Counts match?</div>
+
+  <div class="fk-node fk-node--dark fk-node--accent reveal" style="left: 1320px; top: 110px; width: 408px; height: 120px;">Ask the Judge<small>using the hash</small></div>
+  <div class="fk-node fk-node--accent reveal" style="left: 1320px; top: 470px; width: 408px; height: 120px;">Rebuild the hash<small>from Postgres</small></div>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-cache-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-flow">
+      <path d="M264 330 L354 196" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M264 370 L354 504" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M744 196 L854 324" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M744 504 L854 376" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M1194 324 L1314 196" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M1194 376 L1314 504" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M1524 466 V236" marker-end="url(#fk-cache-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 1222px; top: 216px;">Yes</span>
+  <span class="fk-label" style="left: 1222px; top: 456px;">No</span>
+  <span class="fk-label" style="left: 1544px; top: 334px;">then</span>
+
+  <span class="fk-callout reveal" style="left: 0; top: 650px;">Postgres is the source of truth</span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="35" data-name="sse">
+<!-- notes: Jerrick. Script: For the live dashboard we push updates with Server-Sent Events. Workers publish trade events to Redis, the API subscribes, and streams them to the browser. We first considered WebSockets, but they are two-way, and our dashboard never sends anything back. SSE is one-way, runs over plain HTTP, and the browser reconnects by itself. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Live dashboard using Server-Sent Events (SSE)</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-sse-flow fk-canvas ">
+  <!-- The live path: every hop is one-way -->
+  <div class="fk-node fk-node--dark" style="left: 0; top: 50px; width: 300px; height: 120px;">Workers</div>
+  <div class="fk-node fk-node--pill" style="left: 440px; top: 50px; width: 340px; height: 120px;">Redis<small>pub/sub</small></div>
+  <div class="fk-node fk-node--dark" style="left: 920px; top: 50px; width: 340px; height: 120px;">FastAPI<small>/live-trades/stream</small></div>
+  <div class="fk-node fk-node--outline fk-node--accent" style="left: 1400px; top: 50px; width: 328px; height: 120px;">Dashboard<small>browser</small></div>
+
+  <!-- WebSocket: two-way, more than we need -->
+  <div class="fk-lane" style="left: 0; top: 280px; width: 1728px; height: 160px;"></div>
+  <span class="fk-callout" style="left: 48px; top: 336px; color: var(--ink-muted);">WebSocket</span>
+  <div class="fk-node fk-node--dim" style="left: 520px; top: 318px; width: 220px; height: 84px; font-size: 28px;">Server</div>
+  <div class="fk-node fk-node--dim" style="left: 920px; top: 318px; width: 220px; height: 84px; font-size: 28px;">Browser</div>
+  <span class="fk-label fk-label--plain" style="left: 1210px; top: 340px; font-size: 28px; color: var(--ink-muted);">two-way: we never send back</span>
+
+  <!-- SSE: exactly the one-way push we need -->
+  <div class="fk-lane fk-node--accent reveal" style="left: 0; top: 490px; width: 1728px; height: 160px;"></div>
+  <span class="fk-callout" style="left: 48px; top: 546px;">SSE ✓</span>
+  <div class="fk-node fk-node--dark" style="left: 520px; top: 528px; width: 220px; height: 84px; font-size: 28px;">Server</div>
+  <div class="fk-node fk-node--outline" style="left: 920px; top: 528px; width: 220px; height: 84px; font-size: 28px;">Browser</div>
+  <span class="fk-label fk-label--plain" style="left: 1210px; top: 534px; font-size: 28px;">one-way · plain HTTP<br>reconnects by itself</span>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-sse-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-flow">
+      <path d="M304 110 H434" marker-end="url(#fk-sse-arrow)"/>
+      <path d="M784 110 H914" marker-end="url(#fk-sse-arrow)"/>
+      <path d="M1264 110 H1394" marker-end="url(#fk-sse-arrow)"/>
+      <path d="M744 570 H914" marker-end="url(#fk-sse-arrow)"/>
+    </g>
+    <g class="fk-muted">
+      <path d="M750 360 H910" marker-start="url(#fk-sse-arrow)" marker-end="url(#fk-sse-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 318px; top: 66px;">publish</span>
+  <span class="fk-label" style="left: 796px; top: 66px;">subscribe</span>
+  <span class="fk-label" style="left: 1288px; top: 66px;">stream</span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="36" data-name="docker-local">
+<!-- notes: Jerrick. Script: Finally, everything runs in Docker containers on Catch22's own machine. Three reasons. Our sponsor already has the infrastructure, and the know-how to run it. Trading data is sensitive, so keeping it in their own database is simpler to manage. And there is no extra cost: no monthly cloud bill. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Dockerised, Deployed On-Site</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-local-stack fk-canvas ">
+  <div class="fk-group" style="left: 0; top: 20px; width: 1080px; height: 620px;">
+    <span class="fk-group__title">Catch22’s own machine</span>
+  </div>
+  <div class="fk-node" style="left: 40px; top: 110px; width: 310px; height: 130px;">Dashboard<small>container</small></div>
+  <div class="fk-node fk-node--dark" style="left: 385px; top: 110px; width: 310px; height: 130px;">FastAPI<small>container</small></div>
+  <div class="fk-node fk-node--dark" style="left: 730px; top: 110px; width: 310px; height: 130px;">Workers × N<small>containers</small></div>
+  <div class="fk-node" style="left: 40px; top: 280px; width: 310px; height: 130px;">Redis<small>container</small></div>
+  <div class="fk-node fk-node--dark" style="left: 385px; top: 280px; width: 310px; height: 130px;">Judge<small>container</small></div>
+  <div class="fk-node fk-node--dark fk-node--accent" style="left: 730px; top: 280px; width: 310px; height: 130px;">Postgres<small>trading data</small></div>
+  <div class="fk-node fk-node--outline fk-node--pill" style="left: 240px; top: 480px; width: 600px; height: 84px; font-size: 28px;">Docker · started with one command</div>
+  <span class="fk-note" style="left: 0; top: 664px;">Only outside call: OANDA market prices</span>
+
+  <div class="fk-card reveal" style="left: 1160px; top: 20px; width: 568px; height: 190px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="8" y="8" width="40" height="16" rx="4"/><rect x="8" y="32" width="40" height="16" rx="4"/><path d="M16 16h2M16 40h2M30 16h10M30 40h10"/></svg>
+    <div><strong>Sponsor’s hardware</strong><span>They have the machines and the know-how</span></div>
+  </div>
+  <div class="fk-card reveal" style="left: 1160px; top: 235px; width: 568px; height: 190px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="10" y="24" width="36" height="26" rx="5"/><path d="M18 24v-7a10 10 0 0 1 20 0v7"/><path d="M28 34v6"/></svg>
+    <div><strong>Data stays on-site</strong><span>Sensitive trading data in their own database</span></div>
+  </div>
+  <div class="fk-card reveal" style="left: 1160px; top: 450px; width: 568px; height: 190px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="20"/><path d="M34 21c-2-2-4-3-6-3-4 0-6 2-6 5 0 7 13 3 13 10 0 3-3 5-7 5-3 0-5-1-7-3M28 14v4M28 38v4"/></svg>
+    <div><strong>No extra cost</strong><span>No monthly cloud bill</span></div>
+  </div>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="37" data-name="section-journey">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">06</span>
   <div class="c-section-divider__text">
@@ -4046,7 +5437,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="25" data-name="training-approach">
+<section class="slide" data-slide="38" data-name="training-approach">
 <!-- notes: BA. Our approach to training end to end. One model family, built to be audited: a LightGBM hurdle that scores P(fading wins) and the size of the gain and loss, then combines them as EV = p·E[gain] − (1−p)·E[loss]. Data: 45 one-day campaigns, 68,377 trades, 24 Feb to 12 Aug 2026, one instrument (XAUUSD), about 64 recurring traders. Locked test is campaigns 69–77. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -4079,7 +5470,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="26" data-name="validation">
+<section class="slide" data-slide="39" data-name="validation">
 <!-- notes: Joyce. How we keep ourselves honest: three methodological guardrails. Splits are by campaign in time order: 6 expanding folds on campaigns 33–68, then a locked test block (69–77). Every feature passes a provenance test (blank the current row's exit fields, rebuild the features, assert they are identical) and a leakage gate (forbidden names, |r| with target below 0.95, |ρ| with campaign order below 0.50). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -4113,7 +5504,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="27" data-name="feature-engineering">
+<section class="slide" data-slide="40" data-name="feature-engineering">
 <!-- notes: Yanting. The funnel: we started with every column in the trade export and narrowed to 18 features. Walk top to bottom, one row per step; the next four slides open each step. Counts: 28 raw columns (PYG-90) → 26 point-in-time features (PYG-94, v3 shortlist) → still 26 after testing 48 candidates (PYG-145, v5 = v3) → 18 in the frozen Judge (PYG-185). Row widths are illustrative. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -4142,7 +5533,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="28" data-name="fe-audit">
+<section class="slide" data-slide="41" data-name="fe-audit">
 <!-- notes: Yanting. Step 1 of 4: 28 → usable columns. Every column in master_dataset got exactly one class (target, post-trade, pre-trade, id, constant, duplicate...). The big catch: slPrice/tpPrice are written when the position CLOSES. 37.7% of trades closed exactly at those prices. Five features built on them looked strong and leaked the outcome. Retiring them cost held-out AUC 0.667 → 0.620 (PYG-90, PYG-92). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 1 of 4</span>
@@ -4179,7 +5570,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="29" data-name="fe-signal">
+<section class="slide" data-slide="42" data-name="fe-signal">
 <!-- notes: Yanting. Note the strongest four are all OUTCOME features (the market handed them to the trader); step 4 removes them, so flag it here. Step 2 of 4: build and rank. 26 features built point-in-time in three families (order ticket, rolling trader state inside a campaign, history from earlier campaigns). Ranked on four measures; Spearman is the one to trust. Order-ticket features together score at chance; all the signal is the trader's rolling state. Values below ~0.015 are noise at n=46,520. Near-duplicates (|rho|>0.8) were dropped so importance is not split (PYG-94, PYG-96, PYG-99). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 2 of 4</span>
@@ -4226,7 +5617,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="30" data-name="fe-stress-test">
+<section class="slide" data-slide="43" data-name="fe-stress-test">
 <!-- notes: Yanting. Step 3 of 4: did more help? 22 net-new candidate features from a second feature pass, plus two market blocks: 18 features (ATR, volatility, session, VWAP; -0.0036 AUC, commit 46fd30e) and 4 direction-signed features (chase, trend alignment, provocation, vol rank; +0.0005 AUC, CI [-0.0018, +0.0025], NB11). NB14 re-tests market on the 18-feature roster but its results are not written up yet, so do not quote it. We held the 26 as the frozen, pre-registered shortlist: the burden of proof is on the change. 0 of 22 promoted (PYG-145). Both market blocks had intervals spanning zero (PYG-104). More columns add variance, not signal. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 3 of 4</span>
@@ -4263,7 +5654,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="31" data-name="fe-final-18">
+<section class="slide" data-slide="44" data-name="fe-final-18">
 <!-- notes: Yanting. Step 4 of 4: 26 → 18. Every feature is tagged ticket / behaviour / outcome / counter. The 18 are everything except the 8 outcome-based features. This is the roster the later experiments run on and the only one that has made money in our tests (PYG-185). Source: NB12 "Behaviour or just luck?". OUTCOME = the market handed it to them (win rate, running P&L, streak, drawdown, stop/target hit rates); BEHAVIOUR = the trader chose it. Be upfront: no_outcome is -0.035 held-out AUC vs full, but it is the only arm that made money (+$1,205 at top 5%, +$4,070 at top 10%) and outcome columns took 58.6% of the full model attention. This is a deliberate trade-off. The next slide (Behaviour vs luck) goes deeper. Frozen in one file on 23 Sep. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 4 of 4</span>
@@ -4295,7 +5686,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="32" data-name="behaviour-vs-luck">
+<section class="slide" data-slide="45" data-name="behaviour-vs-luck">
 <!-- notes: Yanting. SHAP shows how much each feature pushed the model's decision. We average that over many trades to get each feature's share of the model's attention (mean |SHAP|, TreeSHAP, same out-of-fold rows for every arm; Notebook 12 section 4). Full 26-feature model: outcome 58.6%, behaviour 25.2%, ticket 12.4%, counters 3.8%. Outcome = what the market handed the trader (win rate, streak, running P&L, drawdown, stop and target hit rates). Final 18 (no_outcome arm): behaviour 76.3%, ticket 18.1%, counters 5.6%. Top single features: prior_win_rate 0.163 in full; prior_sl_use_rate 0.157 in the final 18. Be upfront that the final 18 is -0.035 held-out AUC vs full but the only arm that made money (+$1,205 at top 5%). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -4350,7 +5741,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="34" data-name="magnitude">
+<section class="slide" data-slide="47" data-name="magnitude">
 <!-- notes: Owner TBC. Deep dive 4: where the signal lives. Giving the model a perfect classifier adds +$351 per campaign; perfect gain and loss regressors add +$12,417, 35 times more. So the money is in how big the win or loss is, not only in calling the direction. Right: what we tried and dropped. Market context was rejected four times (18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005; 14 macro features B+C −$23.5k to −$47.6k; NB14 negative on all three learners). Tuned GBDT beats logistic by +0.002 AUC. Learning curves are flat. A same-day trade-context block added +0.0016 AUC but lost $7,571 at top 5%, so money vetoed it. The full decomposition chart is in the appendix. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -4359,7 +5750,7 @@ body.overview .deck-viewport {
 <div class="c-split inset" style="--split-cols: 1fr 1fr; --split-align: start;">
   
   <div class="c-big-stat reveal ">
-  <span class="c-big-stat__value">35x</span>
+  <span class="c-big-stat__value">35×</span>
   <h3>Perfect regressors vs a perfect classifier</h3>
   <p>+$12,417 vs +$351 per campaign at the top-5% readout</p>
 </div>
@@ -4386,7 +5777,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="35" data-name="section-pm">
+<section class="slide" data-slide="48" data-name="section-pm">
 <!-- notes: SCRIPT (~15s, Arin): Last section: how we ran the work as a team. In short: two-week sprints, a retro at the end of every one, and a plan that changes when the results tell us to. I'll cover why we chose Scrum, how a sprint runs, where we are on the timeline, what our retros changed, and what limits the project. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">07</span>
@@ -4399,7 +5790,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="36" data-name="scrum">
+<section class="slide" data-slide="49" data-name="scrum">
 <!-- notes: SCRIPT (~45s, Arin): We ran this project as Scrum, not Waterfall. Waterfall means locking the requirements first, building, and showing the sponsor the result at the end. That couldn't work for us, for three reasons. One: the scope wasn't fixed. Our own Statement of Work left the latency target, the confidence cut-off and the dashboard scope as to be determined. Two: this is research. We can't schedule a model result, so each sprint's scores decided what we tried next. After Sprint 7, for example, the models were only slightly better than random, so we moved on to CatBoost. Three: sponsor inputs arrived mid-project, like the crowding data and TradeLocker access, so we built against stand-ins first. So we ran two-week sprints with a review and a retro each time. Today is the end of Sprint 9. -->
 <!-- notes: Sources: SOW section 3 (TBD items) and the change-request clause; Sprint 7 retro minutes (CatBoost, only slightly better than random); Linear cycle 9 ends 5 Oct. Check: sprint numbering matches what you say aloud. -->
 <header class="c-slide-title ">
@@ -4472,7 +5863,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="37" data-name="sprint-cycle">
+<section class="slide" data-slide="50" data-name="sprint-cycle">
 <!-- notes: SCRIPT (~45s, Arin): Every two weeks we run the same loop. One, plan: we review the stories beforehand, then split into two breakouts, BA for the model and PD for the system, so each squad estimates its own work. Two, build: stand-ups are async in Slack, and nobody has more than one or two tasks in progress. Three, sync: we send Clement short updates two to three times a week. Four, review: we show the sponsor what's done and reshape the backlog. Five, retro: start, stop, continue, and every action gets an owner. Those actions feed straight into the next sprint's plan, which is the arrow along the bottom. Isaiah is our Product Owner, Yan Ting is our Scrum Master, and the work lives in Linear, Slack and Zoom. -->
 <!-- notes: Sources: Linear meeting minutes 27 Aug; Sprint 7 retro minutes. Check: squad membership (BA: Isaiah, Joyce, Yan Ting; PD: Arin, Jamesz, Jerrick) and the 2-3x a week update rhythm with the team. -->
 <header class="c-slide-title ">
@@ -4517,7 +5908,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="38" data-name="timeline">
+<section class="slide" data-slide="51" data-name="timeline">
 <!-- notes: SCRIPT (~40s, Arin): Here's where that puts us on the timeline. The project runs in phases. Phase 0 was scoping in early June. Phase 1 built the baselines: EDA, a scorer and three frozen baselines. Phase 2, which wraps up today, is the Judge and the solution infrastructure. Each phase ends at a gate. Phase 0: logging live and the ID join confirmed. Phase 1: the three baselines frozen before any training. Today is the midpoint gate: does the Judge beat the rules-based system? [Say the gate result here.] From tomorrow, Phase 3 starts: forward paper trading, run daily to build a track record, up to the final gate on 13 November. Handover to Catch22 follows in the last two weeks of November. -->
 <!-- notes: Check before presenting: confirm Phase 0 and Phase 1 gates actually passed, and state the midpoint-gate result in the bracketed line. Dates come from the timeline component (Phase 3: 6 Oct to 16 Nov, handover 17 to 30 Nov). -->
 <header class="c-slide-title ">
@@ -4569,7 +5960,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="39" data-name="retros">
+<section class="slide" data-slide="52" data-name="retros">
 <!-- notes: SCRIPT (~50s, Arin): At the end of every sprint we run a retro, start, stop, continue. This is the one from Sprint 7, and three things stood out. Each got an owner. One: user stories were vague, so people built different things. Now we review stories before planning, and BA and PD plan in separate breakouts. Two: too much was in progress and work got left to the last minute. Now it's at most one or two tasks in progress, and one change per branch. Three: updates were patchy. We added a 7 pm Slack stand-up reminder, and Clement now gets updates two to three times a week. We also kept what worked: async stand-ups and user-centric stories. In the sprint after the retro we closed 39 of 40 issues, up from 17 of 22. That's a raw count, so I wouldn't claim the retro alone caused it, but it's the direction we wanted. -->
 <!-- notes: Source: Linear Sprint 7 retro doc (board + minutes) and cycle stats (39 of 40 in the following sprint, 17 of 22 in Sprint 7). The board also had: start using tech specs, break tasks down further, stop stacking features without merging. -->
 <header class="c-slide-title ">
@@ -4607,7 +5998,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="40" data-name="constraints">
+<section class="slide" data-slide="53" data-name="constraints">
 <!-- notes: SCRIPT (~40s, Arin): Three things limit how far you can trust the results. First, a small test. Our final test is nine held-out campaigns, so a difference smaller than about 0.003 AUC is inside what we can detect. When that happens we say not measurable, never no effect. The sample also isn't random, so results may not generalise. Second, leakage. Stop-loss and take-profit fields are written when a trade closes, so they give away the outcome. Removing them dropped AUC from 0.667 to 0.620. The Judge sits at about 0.61, so the signal is real but modest. Third, cold start. New traders have no history, and for them AUC is about 0.55 against 0.61 for returning traders. -->
 <!-- notes: Sources: PYG-144 and PYG-185 (9 held-out campaigns 69 to 77, MDE, cold start 17% no same-day and 36% no career history), PYG-92 (SL/TP leakage, AUC 0.667 to 0.620). TODO before presenting: Linear shows 45 campaigns in the dataset (33 to 77, PYG-103) while an earlier draft of this slide said 38. Confirm the dataset size and add it back if wanted. -->
 <header class="c-slide-title ">
@@ -4651,7 +6042,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="41" data-name="constraints-system">
+<section class="slide" data-slide="54" data-name="constraints-system">
 <!-- notes: SCRIPT (~35s, Arin): Now the limits from the sponsor side and from our scope. First, paper trading only. There is no live execution. We hand the app over, dockerised, for Catch22 to host locally, and their internal systems are out of scope. Second, no live data feed yet. Today data comes in as manual exports, plus a test endpoint for demos. Automated TradeLocker retrieval needs API access and credentials from Catch22 under the NDA, and how we detect the end of a campaign is still open, because they run campaigns with their own scripts. Third, an open question for Clement: the desk's true trading cost per unit. We assume $7.00. Fading every trade breaks even at $1.28, so which number is right changes the decision. -->
 <!-- notes: Sources: SOW sections 4 and 6; PYG-53; Technical Alignment Spec open decisions; PYG-185 (cost question for Clement). -->
 <header class="c-slide-title ">
@@ -4680,7 +6071,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="42" data-name="edge-setting">
+<section class="slide" data-slide="55" data-name="edge-setting">
 <!-- notes: Owner TBD. The edge is a number we choose before the test, not a model setting: the smallest average profit per faded trade (after the $7-per-lot cost) that would make running the Judge worthwhile. We size the test so an edge that big, if real, would very likely show up. Work back from money: about 95 faded trades per campaign x about 9.4 campaigns a month = roughly 900 faded trades a month, so $3 an edge is about $2,700 a month. Trade-off: test length grows with 1 / edge squared, so halving the edge needs about 4x the campaigns. Campaigns-to-confirm column assumes per-trade sigma of $133-168. The 18 test campaigns already rule out edges above about $6 a trade, about $5,400 a month. Baseline here is zero (does fading make money?); a stricter test compares against random picks of the same size. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Constraints</span>
@@ -4717,7 +6108,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="43" data-name="whats-next">
+<section class="slide" data-slide="56" data-name="whats-next">
 <!-- notes: SCRIPT (~30s, Arin): Where we go next, in three steps. One, trade magnitude: today the Judge says fade or skip, and next we want to size each fade. Two, the real pipeline: wire the Judge into Catch22's live platform API. Three, auto-scaling, so the workers scale with campaign load. Forward paper trading starts tomorrow, and that is the first thing these build on. Then we'll open it up for questions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -4745,16 +6136,20 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="44" data-name="qna">
+<section class="slide" data-slide="57" data-name="qna">
 <!-- notes: SCRIPT (~10s): That's everything from us. Thank you. We're happy to take questions, and we can jump back to the architecture or the timeline if that helps. -->
-<!-- notes: 30 min Q&A. Jump with #19 (architecture) and #38 (timeline); appendix starts at #45 in the URL. -->
+<!-- notes: 30 min Q&A. Jump with #19 (architecture) and #50 (timeline) in the URL. -->
 <div class="c-closing ">
   <h1 class="reveal">Thank you</h1>
+  <div class="c-closing__card reveal">
+    <p></p>
+    <span>Project Cassandra · 5 Oct</span>
+  </div>
 </div>
 </section>
 
 
-<section class="slide" data-slide="45" data-name="section-appendix">
+<section class="slide" data-slide="58" data-name="section-appendix">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">A</span>
   <div class="c-section-divider__text">
@@ -4766,7 +6161,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="46" data-name="app-correlation">
+<section class="slide" data-slide="59" data-name="app-correlation">
 <!-- notes: Appendix. Pearson correlation of the point-in-time features with each other and with the two targets (last two rows and columns). Leaked stop and target fields are already removed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4795,7 +6190,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="47" data-name="app-learning-calibration">
+<section class="slide" data-slide="60" data-name="app-learning-calibration">
 <!-- notes: Appendix. Left: validation AUC against training campaigns on the gross target is flat (correlation −0.383), so more campaigns do not help yet. Right: calibration fitted on out-of-fold predictions only; isotonic moves Brier 0.2384 to 0.2380. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4814,7 +6209,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="48" data-name="app-shap-features">
+<section class="slide" data-slide="61" data-name="app-shap-features">
 <!-- notes: Appendix. Per-feature mean |SHAP|. Solid bars: full 26-feature model. Faded bars: no_outcome model. Colours are feature groups. Take outcome history away and prior_sl_use_rate and sec_since_last_close take over. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4843,7 +6238,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="49" data-name="app-arms">
+<section class="slide" data-slide="62" data-name="app-arms">
 <!-- notes: Appendix. Held-out AUC for each nested feature set on each of the nine locked campaigns (69–77). Full 26 features 0.606, no_outcome (18) 0.571, behaviour_only (14) 0.570, ticket_only (6) 0.510. Paired drop from removing outcome history: −0.035, CI −0.046 to −0.023, 9 of 9 campaigns. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4862,7 +6257,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="50" data-name="app-cost-curve">
+<section class="slide" data-slide="63" data-name="app-cost-curve">
 <!-- notes: Appendix. The reversing cost is a constant $7 per lot, which is what flips the sign of fade-everything. Sweeping the assumed cost from $0 to $7, the model's rule sits between the 13.5th and 22.9th percentile of random selection at the same exposure at every level. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4881,7 +6276,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="51" data-name="app-market-data">
+<section class="slide" data-slide="64" data-name="app-market-data">
 <!-- notes: Appendix. Market-data features on the no_outcome arm, across three learners. Share of mean |SHAP| divided by a uniform share, so 1.0 means indifferent. AUC says neutral-to-better, dollars say worse in all eight arms. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4900,7 +6295,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="52" data-name="app-dropped">
+<section class="slide" data-slide="65" data-name="app-dropped">
 <!-- notes: Appendix. Levers we tried and dropped, with the measured result. Market context: 18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005 (CI −0.0018 to +0.0025); 14 Yahoo macro features B+C −$23.5k to −$47.6k; NB14 flips negative on all three learners. SL/TP channel: even the leaked flag buys only +0.006. Hyperparameters: 50 Optuna trials +0.0028 CV AUC. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4926,7 +6321,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="53" data-name="app-decomposition">
+<section class="slide" data-slide="66" data-name="app-decomposition">
 <!-- notes: Appendix. Value of perfecting each part of the hurdle model, in dollars per campaign at the top-5% readout. As fitted: classifier +687, gain arm +216, loss arm +229. Perfected ceilings: classifier +13,146, gain arm +24,663, loss arm +10,050. Marginal question: perfect classifier given perfect regressors adds +351; perfect gain and loss regressors given a perfect classifier add +12,417, 35 times more. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4945,7 +6340,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="54" data-name="app-cv-layout">
+<section class="slide" data-slide="67" data-name="app-cv-layout">
 <!-- notes: Appendix. Blocked cross-validation layout used in Notebook 12 and the final judge. Pool campaigns 33–68 train six expanding folds (12 campaigns to start, 4-campaign validation blocks). The final model is refit on the whole pool. The locked test block is 69–77, with 78–86 since added to the held-out set. Nothing trains on its own future. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4964,7 +6359,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="55" data-name="app-feature-arms">
+<section class="slide" data-slide="68" data-name="app-feature-arms">
 <!-- notes: Appendix. The 26 features in four buckets (ticket, behaviour, outcome, counter) and which feature set (arm) keeps which. Sets are nested, so the filled region only shrinks left to right and the outcome block disappears first: full 26, no_outcome 18, behaviour_only 14, ticket_only 6. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4993,7 +6388,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="56" data-name="app-topk">
+<section class="slide" data-slide="69" data-name="app-topk">
 <!-- notes: Appendix. Top-k ranking quality: each arm fades the same fraction of every campaign, so exposure is identical and only the picks differ. Realised reverseProfit in $000 against random at matched exposure. The full model, which sees outcome history, sits below random at every fraction (e.g. −$23.1k vs −$14.2k at 50%). The other arms hover around random. All lines are negative at most fractions: this is a ranking check, not a profit claim. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5012,7 +6407,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="57" data-name="app-hyperparams">
+<section class="slide" data-slide="70" data-name="app-hyperparams">
 <!-- notes: Appendix. Final hyperparameters of the v5 judge (judge_v5_gross_18, 18 no_outcome features). Source: scripts/target_ablation.py BASE, CLF_PARAMS, REG_PARAMS. One LightGBM parameter set shared by all three models; the classifier uses binary loss, the gain and loss regressors use huber. Early stopping 100 rounds; final refit at the median best iteration across the six folds: classifier 44 trees, gain 6,392, loss 6,412. Isotonic calibration on leave-one-fold-out predictions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>

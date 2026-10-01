@@ -1,0 +1,5 @@
+<!-- notes: Jerrick. Script: The Redis hash holds each trader's running stats, which become the Judge's features. Because workers process opens and closes separately, the hash can fall behind the database. So before scoring a trade, the open compares the trade count in the hash with the count in Postgres. If they match, we use the hash. If they don't, we rebuild the hash from Postgres first, so the Judge never scores on stale features. -->
+<!-- @slide-title text="Check the Cache Before Predicting" -->
+<!-- @flow-kit -->
+  <!-- @cache-check -->
+<!-- @/flow-kit -->

@@ -1,0 +1,13 @@
+/* === COMPONENT (deck): flow-stage ===
+   Block holding absolutely-positioned flow pieces on the full 1920×1080 stage.
+   Coordinates in child components are stage px (origin = slide top-left).
+   Used by the step-by-step build slides (async processing, race conditions). */
+.c-flow-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.c-flow-stage__defs {
+  position: absolute;
+}
