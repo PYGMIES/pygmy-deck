@@ -12,3 +12,13 @@
 .c-compare-table.is-nowrap td {
   white-space: nowrap;
 }
+
+/* Two-row card grid: shorter cards so 3 + 2 fits the stage (slide 57, What's Next) */
+.c-card-grid.is-two-row .c-grid-card {
+  min-height: 340px;
+  padding: 36px 44px;
+}
+
+/* slide 42: four short bullets must fit under the headings */
+.why-fits li { padding-top: 16px; padding-bottom: 16px; }
+.why-fits li:first-child { border-top: 0; }

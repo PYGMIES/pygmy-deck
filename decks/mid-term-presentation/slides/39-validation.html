@@ -1,7 +1,0 @@
-<!-- notes: Joyce. How we keep ourselves honest: three methodological guardrails. Splits are by campaign in time order: 6 expanding folds on campaigns 33–68, then a locked test block (69–77). Every feature passes a provenance test (blank the current row's exit fields, rebuild the features, assert they are identical) and a leakage gate (forbidden names, |r| with target below 0.95, |ρ| with campaign order below 0.50). -->
-<!-- @slide-title kicker="How We Got Here" text="Validation Frameworks" -->
-<!-- @card-stack class="inset" -->
-  <!-- @icon-card icon="assets/icons/clock.svg" title="Blocked time-series CV" body="Never split a campaign or trader across train/test sets" -->
-  <!-- @icon-card icon="assets/icons/target.svg" title="Point-in-time features only" body="No look-ahead: every feature passes a provenance test and a leakage gate" -->
-  <!-- @icon-card icon="assets/icons/interval.svg" title="Confidence intervals, not win rates" body="Adjacent rows are autocorrelated, which inflates raw win rates" -->
-<!-- @/card-stack -->

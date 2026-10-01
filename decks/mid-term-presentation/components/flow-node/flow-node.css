@@ -1,5 +1,5 @@
 /* === COMPONENT (deck): flow-node ===
-   Rounded labelled box at stage coordinates. tone: dark | mid | good. */
+   Rounded labelled box at stage coordinates. tone: dark | mid | good | bad. */
 .c-flow-node {
   position: absolute;
   display: flex;
@@ -33,5 +33,10 @@
 
 .c-flow-node--good {
   background: var(--success);
+  color: var(--bg);
+}
+
+.c-flow-node--bad {
+  background: var(--danger);
   color: var(--bg);
 }

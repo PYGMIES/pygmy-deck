@@ -1441,6 +1441,59 @@ body.overview .deck-viewport {
     host.addEventListener("pointerleave", hide);
   });
 
+  /* === SCATTER HOVER === any [data-hover-scatter] holds JSON {w, h, p:[{x, y, t, d, v, u, ci?}]} in SVG
+     viewBox units. Pointer picks the nearest point within a radius: ring around the dot + tooltip. */
+  document.querySelectorAll("[data-hover-scatter]").forEach((host) => {
+    const cfg = JSON.parse(host.dataset.hoverScatter);
+    const svg = host.querySelector("svg");
+    const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    ring.setAttribute("class", "sc-ring");
+    ring.setAttribute("r", 17);
+    ring.setAttribute("visibility", "hidden");
+    svg.appendChild(ring);
+    const tip = document.createElement("div");
+    tip.className = "sc-tip";
+    tip.hidden = true;
+    host.appendChild(tip);
+
+    const hide = () => {
+      tip.hidden = true;
+      ring.setAttribute("visibility", "hidden");
+    };
+    const show = (ev) => {
+      const rect = svg.getBoundingClientRect();
+      const ux = ((ev.clientX - rect.left) / rect.width) * cfg.w;
+      const uy = ((ev.clientY - rect.top) / rect.height) * cfg.h;
+      let best = null;
+      let bestD = 40 * 40;
+      cfg.p.forEach((pt) => {
+        const d = (pt.x - ux) ** 2 + (pt.y - uy) ** 2;
+        if (d < bestD) { bestD = d; best = pt; }
+      });
+      if (!best) return hide();
+      ring.setAttribute("cx", best.x);
+      ring.setAttribute("cy", best.y);
+      ring.setAttribute("visibility", "visible");
+      tip.innerHTML = `<b>${best.t}</b><div class="sc-tip__desc">${best.d}</div>` +
+        `<div class="sc-tip__row"><span>Variant</span><span>${best.v}</span></div>` +
+        `<div class="sc-tip__row"><span>$ per campaign</span><span>${best.u}</span></div>` +
+        (best.ci ? `<div class="sc-tip__row is-muted"><span>95% CI</span><span>${best.ci}</span></div>` : "");
+      tip.hidden = false;
+      /* layout px (unscaled): offsetWidth ignores the stage transform */
+      const kx = svg.clientWidth / cfg.w;
+      const ky = svg.clientHeight / cfg.h;
+      const px = best.x * kx;
+      const py = best.y * ky;
+      const left = px + 28 + tip.offsetWidth > svg.clientWidth ? px - tip.offsetWidth - 28 : px + 28;
+      const top = Math.min(Math.max(0, py - tip.offsetHeight / 2), svg.clientHeight - tip.offsetHeight);
+      tip.style.left = Math.max(0, left) + "px";
+      tip.style.top = top + "px";
+    };
+    host.addEventListener("pointermove", show);
+    host.addEventListener("pointerdown", show);
+    host.addEventListener("pointerleave", hide);
+  });
+
   window.addEventListener("hashchange", () => go(fromHash()));
 
   /* === EDIT MODE === E toggles, Ctrl/Cmd+S downloads the edited file */
