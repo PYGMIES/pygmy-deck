@@ -1,7 +1,7 @@
 /* === COMPONENT (deck): flow-kit ===
    Fixed-size canvas + diagram primitives shared by the Key Design Decisions
-   diagrams (async-compare, race-timeline, close-flow, redis-roles, sse-flow,
-   judge-service, local-stack). Same look as arch-diagram: grey lanes,
+   diagrams (async-compare, race-timeline, close-flow, redis-roles, cache-check,
+   sse-flow, judge-service, local-stack). Same look as arch-diagram: grey lanes,
    charcoal nodes, accent data-flow wires, italic wire labels.
    Children are absolutely positioned at design-size px. */
 .c-flow-kit {

@@ -1,6 +1,6 @@
 <!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
 Script: For the live dashboard we push updates with Server-Sent Events. Workers publish trade events to Redis, the API subscribes, and streams them to the browser. We first considered WebSockets, but they are two-way, and our dashboard never sends anything back. SSE is one-way, runs over plain HTTP, and the browser reconnects by itself. -->
-<!-- @slide-title kicker="Design Decision 04" text="Live Dashboard over SSE" -->
+<!-- @slide-title kicker="Design Decision 05" text="Live Dashboard over SSE" -->
 <!-- @flow-kit -->
   <!-- @sse-flow -->
 <!-- @/flow-kit -->

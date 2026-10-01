@@ -1,0 +1,6 @@
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: The Redis hash holds each trader's running stats, which become the Judge's features. Because workers process opens and closes separately, the hash can fall behind the database. So before scoring a trade, the open compares the trade count in the hash with the count in Postgres. If they match, we use the hash. If they don't, we rebuild the hash from Postgres first, so the Judge never scores on stale features. -->
+<!-- @slide-title kicker="Design Decision 04" text="Check the Cache Before Scoring" -->
+<!-- @flow-kit -->
+  <!-- @cache-check -->
+<!-- @/flow-kit -->

@@ -2319,8 +2319,8 @@ body.overview .deck-viewport {
 /* ===== COMPONENT flow-kit ===== */
 /* === COMPONENT (deck): flow-kit ===
    Fixed-size canvas + diagram primitives shared by the Key Design Decisions
-   diagrams (async-compare, race-timeline, close-flow, redis-roles, sse-flow,
-   judge-service, local-stack). Same look as arch-diagram: grey lanes,
+   diagrams (async-compare, race-timeline, close-flow, redis-roles, cache-check,
+   sse-flow, judge-service, local-stack). Same look as arch-diagram: grey lanes,
    charcoal nodes, accent data-flow wires, italic wire labels.
    Children are absolutely positioned at design-size px. */
 .c-flow-kit {
@@ -2644,9 +2644,18 @@ body.overview .deck-viewport {
   z-index: 0;
 }
 
+/* ===== COMPONENT cache-check ===== */
+/* === COMPONENT (deck): cache-check ===
+   Slide 42: an open compares the trade count in the Redis hash with Postgres; on a mismatch
+   it rebuilds the hash from Postgres before asking the Judge.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-cache-check {
+  z-index: 0;
+}
+
 /* ===== COMPONENT sse-flow ===== */
 /* === COMPONENT (deck): sse-flow ===
-   Slide 42: one-way live-event path, then WebSocket (two-way, dimmed) vs SSE (one-way, highlighted).
+   Slide 43: one-way live-event path, then WebSocket (two-way, dimmed) vs SSE (one-way, highlighted).
    Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
 .c-sse-flow {
   z-index: 0;
@@ -2654,7 +2663,7 @@ body.overview .deck-viewport {
 
 /* ===== COMPONENT judge-service ===== */
 /* === COMPONENT (deck): judge-service ===
-   Slide 43: worker <-> Judge container (model baked in, stateless), and what it does without.
+   Slide 44: worker <-> Judge container (model baked in, stateless), and what it does without.
    Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
 .c-judge-service {
   z-index: 0;
@@ -2662,7 +2671,7 @@ body.overview .deck-viewport {
 
 /* ===== COMPONENT local-stack ===== */
 /* === COMPONENT (deck): local-stack ===
-   Slide 44: every service as a Docker container on the sponsor's machine, plus three reasons.
+   Slide 45: every service as a Docker container on the sponsor's machine, plus three reasons.
    Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
 .c-local-stack {
   z-index: 0;
@@ -3636,14 +3645,14 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="24" data-name="design-decisions">
-<!-- notes: Jerrick. Superseded: the Key Design Decisions slides sit TEMPORARILY at 38–44 (end of deck). When the team renumbers, move them here (after 23) and delete this slide. -->
+<!-- notes: Jerrick. Superseded: the Key Design Decisions slides sit TEMPORARILY at 38–45 (end of deck). When the team renumbers, move them here (after 23) and delete this slide. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Key Design Decisions</h1>
 </header>
 <div class="c-placeholder reveal inset" style="--ph-height: auto;">
   <span class="c-placeholder__tag">To do</span>
-  <p>Temporarily moved to slides 38–44 at the end of the deck. Move them here (after slide 23) when the deck is renumbered, then delete this slide.</p>
+  <p>Temporarily moved to slides 38–45 at the end of the deck. Move them here (after slide 23) when the deck is renumbered, then delete this slide.</p>
   <span class="c-placeholder__owner">Jerrick</span>
 </div>
 </section>
@@ -4248,11 +4257,58 @@ Script: Why Redis for the queues? Redis already handles our feature cache and ou
 </section>
 
 
-<section class="slide" data-slide="42" data-name="design-sse">
+<section class="slide" data-slide="42" data-name="design-cache-check">
+<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
+Script: The Redis hash holds each trader's running stats, which become the Judge's features. Because workers process opens and closes separately, the hash can fall behind the database. So before scoring a trade, the open compares the trade count in the hash with the count in Postgres. If they match, we use the hash. If they don't, we rebuild the hash from Postgres first, so the Judge never scores on stale features. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Design Decision 04</span>
+  <h1 class="reveal">Check the Cache Before Scoring</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-cache-check fk-canvas ">
+  <div class="fk-node fk-node--dark" style="left: 0; top: 290px; width: 260px; height: 120px;">Trade opens</div>
+
+  <div class="fk-node fk-node--pill" style="left: 360px; top: 110px; width: 380px; height: 120px;">Redis hash<small>trade count</small></div>
+  <div class="fk-node fk-node--outline" style="left: 360px; top: 470px; width: 380px; height: 120px;">Postgres<small>trade count</small></div>
+
+  <div class="fk-node fk-node--outline" style="left: 860px; top: 290px; width: 330px; height: 120px;">Counts match?</div>
+
+  <div class="fk-node fk-node--dark fk-node--accent reveal" style="left: 1320px; top: 110px; width: 408px; height: 120px;">Ask the Judge<small>using the hash</small></div>
+  <div class="fk-node fk-node--accent reveal" style="left: 1320px; top: 470px; width: 408px; height: 120px;">Rebuild the hash<small>from Postgres</small></div>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-cache-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-flow">
+      <path d="M264 330 L354 196" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M264 370 L354 504" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M744 196 L854 324" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M744 504 L854 376" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M1194 324 L1314 196" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M1194 376 L1314 504" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M1524 466 V236" marker-end="url(#fk-cache-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 1222px; top: 216px;">Yes</span>
+  <span class="fk-label" style="left: 1222px; top: 456px;">No</span>
+  <span class="fk-label" style="left: 1544px; top: 334px;">then</span>
+
+  <span class="fk-callout reveal" style="left: 0; top: 650px;">Postgres is the source of truth</span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="43" data-name="design-sse">
 <!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
 Script: For the live dashboard we push updates with Server-Sent Events. Workers publish trade events to Redis, the API subscribes, and streams them to the browser. We first considered WebSockets, but they are two-way, and our dashboard never sends anything back. SSE is one-way, runs over plain HTTP, and the browser reconnects by itself. -->
 <header class="c-slide-title ">
-  <span class="c-slide-title__kicker reveal">Design Decision 04</span>
+  <span class="c-slide-title__kicker reveal">Design Decision 05</span>
   <h1 class="reveal">Live Dashboard over SSE</h1>
 </header>
 <div class="c-flow-kit " style="width: 1728px; height: 720px;">
@@ -4303,11 +4359,11 @@ Script: For the live dashboard we push updates with Server-Sent Events. Workers 
 </section>
 
 
-<section class="slide" data-slide="43" data-name="design-judge-service">
+<section class="slide" data-slide="44" data-name="design-judge-service">
 <!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
 Script: We host the Judge as its own service, for two reasons. It is self-contained: the model is baked into the Docker image, so it needs no network and no secrets, and its port is only reachable from the host machine. And it has a narrow contract: a worker sends 18 numbers, and the Judge sends back FADE or SKIP. No database, no Redis, no feature computation. -->
 <header class="c-slide-title ">
-  <span class="c-slide-title__kicker reveal">Design Decision 05</span>
+  <span class="c-slide-title__kicker reveal">Design Decision 06</span>
   <h1 class="reveal">Judge as a Separate Service</h1>
 </header>
 <div class="c-flow-kit " style="width: 1728px; height: 720px;">
@@ -4349,11 +4405,11 @@ Script: We host the Judge as its own service, for two reasons. It is self-contai
 </section>
 
 
-<section class="slide" data-slide="44" data-name="design-docker-local">
+<section class="slide" data-slide="45" data-name="design-docker-local">
 <!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
 Script: Finally, everything runs in Docker containers on Catch22's own machine. Three reasons. Our sponsor already has the infrastructure, and the know-how to run it. Trading data is sensitive, so keeping it in their own database is simpler to manage. And there is no extra cost: no monthly cloud bill. -->
 <header class="c-slide-title ">
-  <span class="c-slide-title__kicker reveal">Design Decision 06</span>
+  <span class="c-slide-title__kicker reveal">Design Decision 07</span>
   <h1 class="reveal">Dockerised, Deployed On-Site</h1>
 </header>
 <div class="c-flow-kit " style="width: 1728px; height: 720px;">
