@@ -66,3 +66,16 @@
   padding-bottom: 10px;
   text-align: center;
 }
+
+/* Two-row card grid: shorter cards so 3 + 2 fits the stage (What's Next) */
+.c-card-grid.is-two-row .c-grid-card {
+  min-height: 340px;
+  padding: 36px 44px;
+}
+
+/* Hurdle Model: four short bullets must fit under the headings */
+.why-fits li { padding-top: 16px; padding-bottom: 16px; }
+.why-fits li:first-child { border-top: 0; }
+
+/* Thank-you slide: title only, no info bar */
+.c-closing.is-title-only .c-closing__card { display: none; }

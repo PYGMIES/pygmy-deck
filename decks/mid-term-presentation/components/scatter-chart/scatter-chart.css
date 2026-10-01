@@ -1,0 +1,68 @@
+/* === COMPONENT (deck): scatter-chart ===
+   $ per campaign for every variant tried per notebook (one dot each), inline SVG on the
+   white chart backing. Geometry lives in the viewBox (1728×640). Dots are stacked in a
+   column per notebook; hover (core/runtime.js [data-hover-scatter]) shows what that
+   notebook changed. Slide 38. */
+.c-scatter-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-height: 0;
+}
+
+.c-scatter-chart__plot {
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--chart-bg);
+}
+
+.c-scatter-chart__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+}
+
+.c-scatter-chart__svg text { font-family: var(--font-body); }
+.c-scatter-chart__svg .sc-tick { font-size: 22px; fill: var(--chart-ink-muted); }
+.c-scatter-chart__svg .sc-nb { font-size: 24px; font-weight: 600; fill: var(--chart-ink); }
+.c-scatter-chart__svg .sc-axis { font-size: 22px; fill: var(--chart-ink-muted); }
+.c-scatter-chart__svg .sc-leg { font-size: 22px; font-weight: 600; fill: var(--chart-ink); }
+.c-scatter-chart__svg .sc-grid { stroke: var(--chart-grid); stroke-width: 1.5; }
+.c-scatter-chart__svg .sc-zero { stroke: var(--chart-ink-muted); stroke-width: 2; }
+.c-scatter-chart__svg .sc-dot { stroke: var(--chart-bg); stroke-width: 3; }
+.c-scatter-chart__svg .sc-pos { fill: var(--chart-model); }
+.c-scatter-chart__svg .sc-neg { fill: var(--chart-rand); }
+
+.c-scatter-chart__take {
+  padding-left: 24px;
+  border-left: 6px solid var(--accent);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  letter-spacing: var(--display-tracking);
+}
+
+/* Hover (wired by core/runtime.js [data-hover-scatter]) */
+.c-scatter-chart__svg .sc-ring { fill: none; stroke: var(--chart-ink); stroke-width: 4; pointer-events: none; }
+
+.sc-tip {
+  position: absolute;
+  width: 560px;
+  padding: 18px 22px;
+  border-radius: var(--radius-s);
+  background: var(--chart-bg);
+  border: 2px solid var(--chart-grid);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  color: var(--chart-ink);
+  font-size: 24px;
+  line-height: 1.35;
+  pointer-events: none;
+  z-index: 2;
+}
+.sc-tip[hidden] { display: none; }
+.sc-tip b { display: block; font-size: 26px; font-weight: 700; }
+.sc-tip__desc { margin-bottom: 10px; color: var(--chart-ink-muted); }
+.sc-tip__row { display: flex; justify-content: space-between; gap: 32px; font-variant-numeric: tabular-nums; }
+.sc-tip__row.is-muted { color: var(--chart-ink-muted); }

@@ -1,0 +1,19 @@
+<!-- notes: Jerrick. FastAPI would process the open trade itself: ask the Judge for inference, fetch the Oanda price, write to the database, and wait for all of it. -->
+<!-- @flow-heading title="Processing trades asynchronously" tag="If it was synchronous…" tone="bad" -->
+<!-- @flow-stage -->
+  <!-- @flow-node x="137" y="496" w="213" h="115" label="Request" -->
+  <!-- @flow-node x="479" y="246" w="147" h="742" tone="mid" label="FastAPI" -->
+  <!-- @flow-arrow x1="350" y1="553" x2="479" y2="553" -->
+  <!-- @flow-node x="783" y="473" w="1075" h="115" tone="mid" label="Process open trade" class="reveal" -->
+  <!-- @flow-arrow x1="626" y1="511" x2="783" y2="511" class="reveal" -->
+  <!-- @flow-arrow x1="783" y1="545" x2="626" y2="545" class="reveal" -->
+  <!-- @flow-node x="934" y="251" w="213" h="115" label="Judge" sub="(Inference)" class="reveal" -->
+  <!-- @flow-arrow x1="1010" y1="472" x2="1010" y2="368" class="reveal" -->
+  <!-- @flow-arrow x1="1056" y1="368" x2="1056" y2="472" class="reveal" -->
+  <!-- @flow-node x="1252" y="249" w="228" h="115" tone="mid" size="23" label="Oanda Market<br>Price Service" class="reveal" -->
+  <!-- @flow-arrow x1="1333" y1="472" x2="1333" y2="368" class="reveal" -->
+  <!-- @flow-arrow x1="1389" y1="368" x2="1389" y2="472" class="reveal" -->
+  <!-- @flow-db x="1626" y="246" class="reveal" -->
+  <!-- @flow-arrow x1="1650" y1="472" x2="1650" y2="368" class="reveal" -->
+  <!-- @flow-arrow x1="1693" y1="368" x2="1693" y2="472" class="reveal" -->
+<!-- @/flow-stage -->
