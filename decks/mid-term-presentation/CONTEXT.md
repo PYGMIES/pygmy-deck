@@ -12,7 +12,7 @@
 |---|------|-------|-------|-------|
 | 01 | `01-cover` | Project Cassandra for <Catch22> · course code, supervisor, team (`title-cover`) | — | done |
 | 02 | `02-team` | Meet Our Team: leads (PO Isaiah, SM Yan Ting) + devs (Arin, Jamesz, Jerrick, Joyce) | — | done |
-| 03 | `03-agenda` | Agenda, owners, minutes (sums to 30) | — | done |
+| 03 | `03-agenda` | Agenda (content items only, no owners/minutes) | — | done |
 | 04 | `04-section-problem` | ◆ 01 The Problem | Joyce | — |
 | 05 | `05-sponsor` | Our Sponsor: Catch22 (domain · business needs · our focus) | Joyce | done |
 | 06 | `06-c22-today` | What Catch22 is doing today (flow) | Joyce | done |
@@ -30,22 +30,23 @@
 | 18 | `18-live-trades` | Live trade page @10×, 2 screens | Jerrick | screenshots TODO |
 | 19 | `19-section-architecture` | ◆ 04 System Architecture | Jerrick, James Z | — |
 | 20 | `20-architecture` | Architecture diagram | James Z | done |
-| 21 | `21-design-decisions` | Key design decisions | Jerrick | TODO |
-| 22 | `22-hurdle-model` | What is the hurdle model? + workflow | Jerrick | TODO |
-| 23 | `23-limitations` | Limitations: scaling, decoupling | James Z | TODO |
-| 24 | `24-section-journey` | ◆ 05 How We Got Here | BA | — |
-| 25 | `25-training-approach` | Approach to training | BA | TODO |
-| 26 | `26-feature-engineering` | Feature engineering deep dive | Yanting | TODO |
-| 27 | `27-behaviour-vs-luck` | Behaviour vs luck (SHAP) | Yanting | TODO |
-| 28 | `28-model-selection` | Models tried + selection metrics | Joyce, Isaiah | TODO |
-| 29 | `29-market-data` | Did market data help? | Joyce, Isaiah | TODO |
-| 30 | `30-section-pm` | ◆ 06 Project Management | Yanting | — |
-| 31 | `31-scrum` | Why Scrum over Waterfall | Yanting | TODO |
-| 32 | `32-timeline` | Project timeline (now = Midterm) | Yanting | done |
-| 33 | `33-retros` | What retros changed | Yanting | TODO |
-| 34 | `34-constraints` | Not random sample · 38 campaigns | TBD | done |
-| 35 | `35-whats-next` | Trade magnitude · real pipeline · auto-scaling | TBD | done |
-| 36 | `36-qna` | Questions | — | done |
+| 21 | `21-hurdle-model` | What is the hurdle model? + workflow | Jerrick | TODO |
+| 22 | `22-limitations` | Limitations: scaling, decoupling | James Z | TODO |
+| 23 | `23-section-design-decisions` | ◆ 05 Key Design Decisions | Jerrick | — |
+| 24 | `24-design-decisions` | Key design decisions | Jerrick | TODO |
+| 25 | `25-section-journey` | ◆ 06 How We Got Here | BA | — |
+| 26 | `26-training-approach` | Approach to training | BA | TODO |
+| 27 | `27-feature-engineering` | Feature engineering deep dive | Yanting | TODO |
+| 28 | `28-behaviour-vs-luck` | Behaviour vs luck (SHAP) | Yanting | TODO |
+| 29 | `29-model-selection` | Models tried + selection metrics | Joyce, Isaiah | TODO |
+| 30 | `30-market-data` | Did market data help? | Joyce, Isaiah | TODO |
+| 31 | `31-section-pm` | ◆ 07 Project Management | Yanting | — |
+| 32 | `32-scrum` | Why Scrum over Waterfall | Yanting | TODO |
+| 33 | `33-timeline` | Project timeline (now = Midterm) | Yanting | done |
+| 34 | `34-retros` | What retros changed | Yanting | TODO |
+| 35 | `35-constraints` | Not random sample · 38 campaigns | TBD | done |
+| 36 | `36-whats-next` | Trade magnitude · real pipeline · auto-scaling | TBD | done |
+| 37 | `37-qna` | Questions | — | done |
 
 ## Open items
 - Confirm who presents Constraints & What's Next (agenda says TBD).

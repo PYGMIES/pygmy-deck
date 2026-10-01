@@ -13,6 +13,9 @@ open decks/<deck>/<deck>.html
 ```
 Always rebuild and look at the result after changing slides, components or themes.
 
+## Working with the human
+**When unsure, ask — don't assume.** If a request is ambiguous (which slide, which section, what content, what layout), or a change could be done more than one reasonable way, stop and ask a clarifying question before editing. This applies to scope, wording, numbering/ordering, and anything content-specific (names, numbers, owners) that isn't stated outright.
+
 ## Layout
 | Path | What | Read its CLAUDE.md before editing |
 |------|------|------|

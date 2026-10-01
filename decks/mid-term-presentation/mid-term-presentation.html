@@ -2322,7 +2322,7 @@ body.editing [contenteditable="true"] {
 
 
 <section class="slide" data-slide="03" data-name="agenda">
-<!-- notes: Keep under 30s. Timings add to 30 min; problem recap gets the most time. -->
+<!-- notes: Keep under 30s. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Today</h1>
@@ -2332,44 +2332,50 @@ body.editing [contenteditable="true"] {
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">01</span>
   <h3>The Problem</h3>
-  <span class="c-agenda-item__owner">Joyce</span>
-  <span class="c-agenda-item__mins">7 min</span>
+  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">02</span>
   <h3>Goals &amp; Impact</h3>
-  <span class="c-agenda-item__owner">Joyce</span>
-  <span class="c-agenda-item__mins">4 min</span>
+  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">03</span>
   <h3>Live Demo</h3>
-  <span class="c-agenda-item__owner">Jerrick · Joyce · JS</span>
-  <span class="c-agenda-item__mins">6 min</span>
+  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">04</span>
   <h3>System Architecture</h3>
-  <span class="c-agenda-item__owner">Jerrick · James Z</span>
-  <span class="c-agenda-item__mins">5 min</span>
+  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">05</span>
-  <h3>How We Got Here</h3>
-  <span class="c-agenda-item__owner">BA · Yanting · Joyce · Isaiah</span>
-  <span class="c-agenda-item__mins">5 min</span>
+  <h3>Key Design Decisions</h3>
+  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">06</span>
-  <h3>Project Management</h3>
-  <span class="c-agenda-item__owner">Yanting</span>
-  <span class="c-agenda-item__mins">2 min</span>
+  <h3>How We Got Here</h3>
+  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">07</span>
+  <h3>Project Management</h3>
+  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__mins"></span>
+</li>
+  <li class="c-agenda-item reveal ">
+  <span class="c-agenda-item__num">08</span>
   <h3>Constraints &amp; What’s Next</h3>
-  <span class="c-agenda-item__owner">TBD</span>
-  <span class="c-agenda-item__mins">1 min</span>
+  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__mins"></span>
 </li>
 
 </ol>
@@ -3085,46 +3091,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="21" data-name="design-decisions">
-<!-- notes: Jerrick. The key architectural considerations and why we made each call. -->
-<header class="c-slide-title ">
-  <span class="c-slide-title__kicker reveal">System Architecture</span>
-  <h1 class="reveal">Key Design Decisions</h1>
-</header>
-<div class="c-card-grid inset" style="--grid-cols: 3;">
-  
-  <article class="c-numbered-card reveal ">
-  <span class="c-numbered-card__num">1</span>
-  <div>
-    <h3>Queue-based ingestion</h3>
-    <p>TODO: why Redis queues between FastAPI and workers</p>
-  </div>
-</article>
-  <article class="c-numbered-card reveal ">
-  <span class="c-numbered-card__num">2</span>
-  <div>
-    <h3>Stateless workers</h3>
-    <p>TODO: horizontal scaling, campaign state in cache</p>
-  </div>
-</article>
-  <article class="c-numbered-card reveal ">
-  <span class="c-numbered-card__num">3</span>
-  <div>
-    <h3>Judge as a service</h3>
-    <p>TODO: inference isolated from the pipeline</p>
-  </div>
-</article>
-
-</div>
-<div class="c-placeholder reveal inset" style="--ph-height: auto;">
-  <span class="c-placeholder__tag">To do</span>
-  <p>Architectural considerations: latency budget, throughput, failure modes</p>
-  <span class="c-placeholder__owner">Jerrick</span>
-</div>
-</section>
-
-
-<section class="slide" data-slide="22" data-name="hurdle-model">
+<section class="slide" data-slide="21" data-name="hurdle-model">
 <!-- notes: Jerrick. Define the hurdle model simply, then show its workflow. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -3164,7 +3131,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="23" data-name="limitations">
+<section class="slide" data-slide="22" data-name="limitations">
 <!-- notes: James Z. Be candid: limitations and the path to scale. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -3198,9 +3165,60 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="24" data-name="section-journey">
+<section class="slide" data-slide="23" data-name="section-design-decisions">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">05</span>
+  <div class="c-section-divider__text">
+    <h2 class="reveal">Key Design Decisions</h2>
+    <p class="reveal">The architectural calls we made, and why</p>
+    <span class="c-section-divider__presenter reveal">Jerrick</span>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-slide="24" data-name="design-decisions">
+<!-- notes: Jerrick. The key architectural considerations and why we made each call. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Key Design Decisions</h1>
+</header>
+<div class="c-card-grid inset" style="--grid-cols: 3;">
+  
+  <article class="c-numbered-card reveal ">
+  <span class="c-numbered-card__num">1</span>
+  <div>
+    <h3>Queue-based ingestion</h3>
+    <p>TODO: why Redis queues between FastAPI and workers</p>
+  </div>
+</article>
+  <article class="c-numbered-card reveal ">
+  <span class="c-numbered-card__num">2</span>
+  <div>
+    <h3>Stateless workers</h3>
+    <p>TODO: horizontal scaling, campaign state in cache</p>
+  </div>
+</article>
+  <article class="c-numbered-card reveal ">
+  <span class="c-numbered-card__num">3</span>
+  <div>
+    <h3>Judge as a service</h3>
+    <p>TODO: inference isolated from the pipeline</p>
+  </div>
+</article>
+
+</div>
+<div class="c-placeholder reveal inset" style="--ph-height: auto;">
+  <span class="c-placeholder__tag">To do</span>
+  <p>Architectural considerations: latency budget, throughput, failure modes</p>
+  <span class="c-placeholder__owner">Jerrick</span>
+</div>
+</section>
+
+
+<section class="slide" data-slide="25" data-name="section-journey">
+<div class="c-section-divider ">
+  <span class="c-section-divider__num reveal">06</span>
   <div class="c-section-divider__text">
     <h2 class="reveal">How We Got Here</h2>
     <p class="reveal">Training, features and choosing the final model</p>
@@ -3210,7 +3228,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="25" data-name="training-approach">
+<section class="slide" data-slide="26" data-name="training-approach">
 <!-- notes: BA. Our approach to training end to end. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3243,7 +3261,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="26" data-name="feature-engineering">
+<section class="slide" data-slide="27" data-name="feature-engineering">
 <!-- notes: Yanting. Deep dive: show the metrics behind how each feature is derived. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3277,7 +3295,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="27" data-name="behaviour-vs-luck">
+<section class="slide" data-slide="28" data-name="behaviour-vs-luck">
 <!-- notes: Yanting. Separating behaviour (skill) from outcome (luck), shown with SHAP. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3308,7 +3326,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="28" data-name="model-selection">
+<section class="slide" data-slide="29" data-name="model-selection">
 <!-- notes: Joyce / Isaiah. Models we tried, and the clear metrics we used to pick the final one. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3337,7 +3355,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="29" data-name="market-data">
+<section class="slide" data-slide="30" data-name="market-data">
 <!-- notes: Joyce / Isaiah. Did adding market data (Oanda prices) actually help? -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3360,9 +3378,9 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="30" data-name="section-pm">
+<section class="slide" data-slide="31" data-name="section-pm">
 <div class="c-section-divider ">
-  <span class="c-section-divider__num reveal">06</span>
+  <span class="c-section-divider__num reveal">07</span>
   <div class="c-section-divider__text">
     <h2 class="reveal">Project Management</h2>
     <p class="reveal">How we ran the work</p>
@@ -3372,7 +3390,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="31" data-name="scrum">
+<section class="slide" data-slide="32" data-name="scrum">
 <!-- notes: Yanting. Why Scrum over Waterfall for an R&D-style project. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
@@ -3411,7 +3429,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="32" data-name="timeline">
+<section class="slide" data-slide="33" data-name="timeline">
 <!-- notes: Yanting. We are at the midpoint gate: Phase 2 wraps today, forward paper-trading starts tomorrow. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
@@ -3462,7 +3480,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="33" data-name="retros">
+<section class="slide" data-slide="34" data-name="retros">
 <!-- notes: Yanting. What our retros surfaced and what we changed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
@@ -3496,7 +3514,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="34" data-name="constraints">
+<section class="slide" data-slide="35" data-name="constraints">
 <!-- notes: Be upfront about what limits the conclusions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -3532,7 +3550,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="35" data-name="whats-next">
+<section class="slide" data-slide="36" data-name="whats-next">
 <!-- notes: Close on the roadmap, then hand over to Q&A. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -3560,7 +3578,7 @@ body.editing [contenteditable="true"] {
 </section>
 
 
-<section class="slide" data-slide="36" data-name="qna">
+<section class="slide" data-slide="37" data-name="qna">
 <!-- notes: 30 min Q&A. Keep architecture (15) and timeline (27) handy: jump with #15 / #27 in the URL. -->
 <div class="c-closing ">
   <h1 class="reveal">Questions?</h1>
