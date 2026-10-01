@@ -65,11 +65,10 @@
 | 53 | `53-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Arin | done |
 | 54 | `54-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
 | 55 | `55-timeline` | Project timeline (now = Midterm) | Arin | done |
-| 56 | `56-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, Sprint 8 39/40 issues (`retro-changes`) | Arin | done |
+| 56 | `56-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, 205 story points completed (`retro-changes`) | Arin | done |
 | 57 | `57-constraints` | Constraints · Data & Model: 18 held-out campaigns, not a random sample, C22 rules (1 open trade, first come first served), ~6 months of data (correlated, not independent) | Arin | done (sourced from Linear) |
-| 58 | `58-constraints-system` | Constraints · Sponsor & System: paper trading only, no live feed, true cost unknown ($7.00 assumed) | Arin | done (sourced from Linear) |
 | 59 | `59-edge-setting` | How Big a Test Do We Need?: minimum worthwhile edge per faded trade → $/month → campaigns to confirm; 18 test campaigns detect edges of ~$10+ | TBD | draft |
-| 60 | `60-whats-next` | Auto-retrainer · real pipeline · trade magnitude · auto-scaling · non-functional reqs (5 cards, 3 + 2) | Arin | done |
+| 60 | `60-whats-next` | Auto-retrainer · real pipeline · trade magnitude · auto-scaling · non-functional reqs · observability (6 cards, 3 + 3) | Arin | done |
 | 61 | `61-qna` | Questions | — | done |
 | 62 | `62-section-appendix` | ◆ A Appendix (after Q&A, for backup) | — | — |
 | 63–72 | `63-app-correlation` … `72-app-hyperparams` | Correlation matrix, learning curve + calibration, SHAP by feature, cost sweep, market data, tried and dropped, hurdle decomposition, feature arms, top-k, hyperparameters | — | draft |
