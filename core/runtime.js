@@ -15,9 +15,11 @@
   const counter = stage.querySelector(".deck-counter");
   let current = 0;
 
-  /* === SCALE === uniform fit, never re-layout */
+  const viewport = document.querySelector(".deck-viewport");
+
+  /* === SCALE === uniform fit to the viewport box (shrinks when the notes panel is open), never re-layout */
   function fit() {
-    const scale = Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H);
+    const scale = Math.min(viewport.clientWidth / STAGE_W, viewport.clientHeight / STAGE_H);
     stage.style.setProperty("--stage-scale", scale);
   }
   window.addEventListener("resize", fit);
@@ -41,6 +43,7 @@
     if (counter) counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
     history.replaceState(null, "", `#${current + 1}`);
     syncOverview();
+    syncNotes();
   }
 
   function fromHash() {
@@ -98,6 +101,10 @@
       case "o":
       case "O":
         toggleOverview(true);
+        break;
+      case "n":
+      case "N":
+        toggleNotes();
         break;
     }
   });
@@ -197,9 +204,13 @@
   function save() {
     toggleEdit(false);
     slides.forEach((s) => s.classList.remove("active"));
-    toggleBtn.remove();
+    const notesOpen = document.body.classList.contains("notes-open");
+    toggleNotes(false);
+    const chrome = [toggleBtn, notesBtn, notesPanel];
+    chrome.forEach((el) => el.remove());
     const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-    document.body.appendChild(toggleBtn);
+    chrome.forEach((el) => document.body.appendChild(el));
+    toggleNotes(notesOpen);
     go(current);
     const blob = new Blob([html], { type: "text/html" });
     const a = document.createElement("a");
@@ -256,6 +267,54 @@
       ovCells[current]?.focus();
       ovCells[current]?.scrollIntoView({ block: "center" });
     }
+  }
+
+  /* === SPEAKER NOTES === N or bottom-left corner button. Reads each slide's
+     <!-- notes: … --> comments and shows them in a panel below the stage. */
+  const slideNotes = slides.map((slide) => {
+    const walker = document.createTreeWalker(slide, NodeFilter.SHOW_COMMENT);
+    const found = [];
+    while (walker.nextNode()) {
+      const m = walker.currentNode.nodeValue.match(/^\s*notes:\s*([\s\S]*?)\s*$/);
+      if (m) found.push(m[1]);
+    }
+    return found;
+  });
+
+  const notesBtn = document.createElement("button");
+  notesBtn.className = "notes-toggle";
+  notesBtn.textContent = "NOTES";
+  notesBtn.title = "Toggle speaker notes (N)";
+  notesBtn.addEventListener("click", () => toggleNotes());
+  document.body.appendChild(notesBtn);
+
+  const notesPanel = document.createElement("aside");
+  notesPanel.className = "deck-notes";
+  notesPanel.setAttribute("aria-label", "Speaker notes");
+  document.body.appendChild(notesPanel);
+
+  function syncNotes() {
+    if (!document.body.classList.contains("notes-open")) return;
+    const notes = slideNotes[current];
+    notesPanel.replaceChildren();
+    const head = document.createElement("span");
+    head.className = "deck-notes__head";
+    head.textContent = `Notes · ${String(current + 1).padStart(2, "0")}`;
+    notesPanel.appendChild(head);
+    (notes.length ? notes : ["No notes for this slide."]).forEach((text) => {
+      const p = document.createElement("p");
+      p.textContent = text;
+      if (!notes.length) p.className = "is-empty";
+      notesPanel.appendChild(p);
+    });
+    notesPanel.scrollTop = 0;
+  }
+
+  function toggleNotes(on = !document.body.classList.contains("notes-open")) {
+    document.body.classList.toggle("notes-open", on);
+    notesBtn.textContent = on ? "HIDE NOTES" : "NOTES";
+    syncNotes();
+    fit();
   }
 
   /* === START === */

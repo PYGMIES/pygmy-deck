@@ -137,6 +137,91 @@ body.editing [contenteditable="true"] {
   cursor: text;
 }
 
+/* === SPEAKER NOTES === N or hover bottom-left corner + click (core/runtime.js).
+   Lives outside the stage; when open, the viewport shrinks so the stage
+   rescales above the panel instead of being covered. */
+:root {
+  --notes-h: 24vh; /* window chrome, not slide content */
+}
+
+.notes-toggle {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  padding: 10px 14px;
+  opacity: 0;
+  border: 0;
+  cursor: pointer;
+  font: 600 12px/1 system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border-top-right-radius: 12px;
+  transition: opacity 0.2s;
+}
+
+.notes-toggle:hover,
+.notes-toggle:focus-visible,
+body.notes-open .notes-toggle {
+  opacity: 1;
+}
+
+.deck-notes {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--notes-h);
+  z-index: 90;
+  overflow-y: auto;
+  padding: 18px 32px 18px 140px;
+  background: #161616;
+  color: #e8e8e8;
+  font: 500 17px/1.55 var(--font-body, system-ui), sans-serif;
+  border-top: 1px solid #333;
+  visibility: hidden;
+  transform: translateY(100%);
+  transition: transform 0.25s var(--ease-out), visibility 0s linear 0.25s;
+}
+
+body.notes-open .deck-notes {
+  visibility: visible;
+  transform: none;
+  transition: transform 0.25s var(--ease-out), visibility 0s;
+}
+
+body.notes-open .deck-viewport {
+  bottom: var(--notes-h);
+}
+
+.deck-notes__head {
+  display: block;
+  margin-bottom: 8px;
+  font: 600 12px/1 system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9a9a9a;
+}
+
+.deck-notes p {
+  max-width: 120ch;
+}
+
+.deck-notes p + p {
+  margin-top: 10px;
+}
+
+.deck-notes p.is-empty {
+  color: #8a8a8a;
+  font-style: italic;
+}
+
+body.overview .deck-notes,
+body.overview .notes-toggle {
+  visibility: hidden;
+}
+
 /* === OVERVIEW === grid of every slide, toggled by O / Esc (core/runtime.js) */
 .deck-overview {
   position: fixed;
@@ -238,6 +323,7 @@ body.overview .deck-viewport {
   .slide .reveal,
   .deck-progress,
   .deck-overview,
+  .deck-notes,
   .ov-cell {
     transition: none !important;
     animation: none !important;
@@ -289,6 +375,8 @@ body.overview .deck-viewport {
   .deck-progress,
   .deck-counter,
   .edit-toggle,
+  .notes-toggle,
+  .deck-notes,
   .deck-overview {
     display: none;
   }

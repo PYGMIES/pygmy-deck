@@ -11,11 +11,15 @@
 | E or top-left corner button | toggle inline edit mode |
 | Ctrl/Cmd+S (in edit mode) | download the edited HTML |
 | Esc (in edit mode) | leave edit mode |
+| N or bottom-left corner button | toggle speaker-notes panel (shows the slide's `<!-- notes: … -->`) |
 | O | toggle grid overview of every slide |
 | click a thumbnail / Enter (in overview) | jump to that slide, close overview |
 | Esc or O (in overview) | close overview |
 
 Note: inline edits save a copy of the **built** file only; they do not flow back into `slides/`. Port wanted edits back into the source before rebuilding.
+
+## Speaker notes
+`N` toggles `.deck-notes`, a panel fixed to the bottom of the window (outside `.deck-stage`). `runtime.js` collects each slide's `<!-- notes: … -->` comment nodes at load. While open, `body.notes-open` sets `.deck-viewport { bottom: var(--notes-h) }` and `fit()` scales to the viewport box, so the stage shrinks above the panel rather than being covered. Hidden in print, in overview, and stripped from edit-mode saves.
 
 ## Overview mode
 `O` toggles a `.deck-overview` grid, built lazily on first use by cloning each `.slide` into a scaled (`transform: scale(300/1920)`) `.ov-frame` thumbnail. Clones are static — `.reveal` opacity/transform is forced to its revealed state, no transitions run. The grid is a sibling of `.deck-viewport` in `document.body`, not inside `.deck-stage`, so it isn't affected by the stage's scale-to-fit transform.

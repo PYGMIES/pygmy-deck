@@ -5,7 +5,7 @@
 - **Audience:** Catch22 sponsors (Clement & Lee Yang) + faculty
 - **Density:** speaker-led
 - **Key focus:** impact and requirements met. Intro + problem recap gets the most time.
-- **Status:** skeleton. Slides 01–03, 05–07 (pain points 1–2), 09 (ladder is illustrative), 10–13, 15–17, 20 and 32 carry real content; everything else has `@placeholder` boxes / `TODO:` text for each owner.
+- **Status:** skeleton. Slides 01–03, 05–07 (pain points 1–2), 09 (ladder is illustrative), 10–13, 15–17, 20 and 32–35 carry real content; everything else has `@placeholder` boxes / `TODO:` text for each owner.
 
 ## Outline (owners)
 | # | File | Slide | Owner | State |
@@ -41,14 +41,16 @@
 | 29 | `29-model-selection` | Models tried + selection metrics | Joyce, Isaiah | TODO |
 | 30 | `30-market-data` | Did market data help? | Joyce, Isaiah | TODO |
 | 31 | `31-section-pm` | ◆ 07 Project Management | Yanting | — |
-| 32 | `32-scrum` | Why Scrum over Waterfall | Yanting | TODO |
-| 33 | `33-timeline` | Project timeline (now = Midterm) | Yanting | done |
-| 34 | `34-retros` | What retros changed | Yanting | TODO |
-| 35 | `35-constraints` | Not random sample · 38 campaigns | TBD | done |
-| 36 | `36-whats-next` | Trade magnitude · real pipeline · auto-scaling | TBD | done |
-| 37 | `37-qna` | Questions | — | done |
+| 32 | `32-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Yanting | done |
+| 33 | `33-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Yanting | done |
+| 34 | `34-timeline` | Project timeline (now = Midterm) | Yanting | done |
+| 35 | `35-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, Sprint 8 39/40 issues (`retro-changes`) | Yanting | done |
+| 36 | `36-constraints` | Not random sample · 38 campaigns | TBD | done |
+| 37 | `37-whats-next` | Trade magnitude · real pipeline · auto-scaling | TBD | done |
+| 38 | `38-qna` | Questions | — | done |
 
 ## Open items
+- PM slides 32–35 are sourced from Linear (SOW, Sprint 7 retro board + minutes, cycle stats). Only the Sprint 7 retro is filled in; Calf/Juvenile retro docs are empty templates. Add later retros to slide 35 when written up.
 - Confirm who presents Constraints & What's Next (agenda says TBD).
 - Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 16 charts use rolling windows (p95 130 / p50 57); slide 17 uses fixed 30-min slots (p95 121.4 / p50 59.5).
 - Replace the slide 09 target ladder with measured results + CIs when available.
