@@ -58,7 +58,7 @@
    group headings centred and larger than the card titles */
 .c-split.is-tight {
   gap: 40px;
-  margin-top: -26px;
+  margin-top: -36px;
 }
 
 .c-section-heading.is-compact h2 {

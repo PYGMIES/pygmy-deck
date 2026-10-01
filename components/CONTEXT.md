@@ -25,7 +25,7 @@ Every component accepts an optional `class` param (added to its root). ◻ = blo
 
 | ◻ `step-list` | — | Numbered vertical flow joined by a line; children are `<li>`, optional `<small>` = detail line. ≤6 steps. `class="is-compact"` = detail line per step, rows spaced to fill the column (use `split align="stretch"`); `<li class="is-group">` with a `c-step-list__band` + nested `<ol class="c-step-list__inner">` = framed group. Arrows: `<i class="c-step-list__arrow">` with `--arrow-from/-y/-len/-ang`. |
 | `note-card` | `kicker?`, `title`, `body` | Pale side note (e.g. kicker "Step 1"). Block: children are optional `<li>` tags; `foot` = line under tags. `is-compact` = 98px one-liner, `is-tall` = 190px with a 2–3 line body, `is-dark is-bullets` = charcoal bullet card. Stack in a `column` beside a `step-list`. |
-| `req-card` | `title`, `body`, `icon` | Charcoal card: left-aligned 44px title on top, then a flat icon (inline `<svg viewBox='0 0 48 48'>`, stroke only) beside one 26px sentence. `flex: 1`, so put 3 in a `column` to share its height equally. |
+| `req-card` | `title`, `body`, `icon` | Charcoal card: left-aligned 44px title on top, then one 28px sentence with a flat icon (inline `<svg viewBox='0 0 48 48'>`, stroke only) at the right edge. `flex: 1`, so put 3 in a `column` to share its height equally. |
 | `numbered-card` | `num`, `title`, `body?` | Circled number + title + body. `class="is-light"` for a pale card. |
 | `icon-card` | `icon`, `title`, `body` | `class="is-dim"` fades it. Title row, then mask-tinted icon (`assets/…svg`, drawn black) + body. |
 | `chevron-callout` | `lead`, `quote` | Arrow-shaped lead feeding a big quoted question. |
