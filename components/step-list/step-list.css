@@ -1,0 +1,175 @@
+/* === COMPONENT: step-list === numbered vertical flow joined by a line; children are <li> (add class="reveal" to stagger).
+   Optional <small> inside an li = one-line detail under the step. */
+.c-step-list {
+  list-style: none;
+  counter-reset: step;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.c-step-list li {
+  counter-increment: step;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 66px;
+  padding-left: 96px;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 42px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.c-step-list li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 0;
+  padding-top: 4px;
+}
+
+/* the line between circles */
+.c-step-list li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 32px;
+  top: 66px;
+  width: 3px;
+  height: calc(100% - 66px + 28px);
+  background: var(--rule);
+}
+
+.c-step-list li small {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-weight: var(--body-weight);
+  font-size: var(--fs-small);
+  letter-spacing: var(--body-tracking);
+  color: var(--ink-muted);
+}
+
+/* optional arrow from a step out to the box beside the list: <i class="c-step-list__arrow"></i> inside the li.
+   Starts at --arrow-from (right of the step text) and ends just short of the next column. */
+.c-step-list__arrow {
+  position: absolute;
+  left: var(--arrow-from, 730px);
+  top: var(--arrow-y, 32px);
+  width: var(--arrow-len, calc(100% - var(--arrow-from, 730px) + 80px));
+  height: 3px;
+  background: var(--ink-muted);
+  transform-origin: 0 50%;
+  transform: rotate(var(--arrow-ang, 0deg));
+}
+
+.c-step-list__arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-top: 3px solid var(--ink-muted);
+  border-right: 3px solid var(--ink-muted);
+  transform: rotate(45deg) scale(0.8);
+  transform-origin: 100% 0;
+  right: 2px;
+  top: 1px;
+}
+
+/* --- is-compact: steps with a detail line each, evenly spaced to fill the column height (slide 22) ---
+   One continuous line runs behind the circles; <li class="is-group"> wraps a band + nested
+   <ol class="c-step-list__inner"> in a rounded frame whose sides start at the band's ends. */
+.c-step-list.is-compact {
+  --step-gap: 26px;
+  position: relative;
+  height: 100%;
+  gap: var(--step-gap);
+  padding-left: 27px;
+}
+
+.c-step-list.is-compact::before {
+  content: "";
+  position: absolute;
+  left: 59px;
+  top: 33px;
+  bottom: var(--line-end, 56px); /* set per slide: distance from the list bottom up to the last circle's centre */
+  width: 3px;
+  background: var(--rule);
+}
+
+.c-step-list.is-compact li {
+  min-height: 66px;
+  justify-content: flex-start;
+  padding-top: 12px;
+  line-height: 42px;
+}
+
+.c-step-list.is-compact li::after {
+  content: none;
+}
+
+.c-step-list.is-compact li small {
+  margin-top: 6px;
+  font-size: 22px;
+  line-height: 26px;
+}
+
+.c-step-list__inner {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--step-gap);
+}
+
+.c-step-list.is-compact li.is-group {
+  counter-increment: none;
+  min-height: 0;
+  width: 840px;
+  margin: 24px 0 0 -27px;
+  padding: 44px 24px 26px;
+  border: 3px solid var(--ink);
+  border-top: 0;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.c-step-list.is-compact li.is-group::before {
+  content: none;
+}
+
+/* the band is the top edge of the frame: a pill whose ends are where the frame sides begin */
+.c-step-list__band {
+  position: absolute;
+  top: -24px;
+  left: -3px;
+  right: -3px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  border: 3px solid var(--ink);
+  border-radius: 24px;
+  background: var(--bg);
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

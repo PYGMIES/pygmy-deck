@@ -1,0 +1,38 @@
+/* wide label-card: body runs left-aligned across the card (slide 21 callout) */
+.c-label-card.is-wide p {
+  max-width: none;
+  text-align: left;
+  font-size: 30px;
+  line-height: 1.25;
+}
+
+.c-label-card.is-wide {
+  min-height: 120px;
+}
+
+/* slide 21: drop the second note so the step-5 arrow meets the middle of its left edge */
+.c-note-card.is-offset {
+  margin-top: 125px;
+}
+
+/* slide 22: the first side note is pushed down so the two step-5 notes sit at the bottom of the column */
+.c-note-card.is-start {
+  margin-top: auto;
+}
+
+/* slide 22: connector line stops at the centre of the last circle */
+.c-step-list.is-compact {
+  --line-end: 109px;
+}
+
+/* slide 23: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
+.c-step-list.is-compact.is-close {
+  --step-gap: 27.2px;
+  --line-end: 82px;
+}
+
+/* slide 24: five steps spread over the full height; connector stops at the last circle's centre */
+.c-step-list.is-compact.is-end {
+  --step-gap: 90px;
+  --line-end: 33px;
+}

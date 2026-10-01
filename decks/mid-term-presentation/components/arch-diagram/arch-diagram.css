@@ -40,12 +40,25 @@
   z-index: 3;
   fill: none;
   stroke: currentColor;
-  stroke-width: 3.5;
+  stroke-width: 3;
+  stroke-linecap: round;
   pointer-events: none;
 }
 
 .c-arch__flow {
   color: var(--accent);
+}
+
+.c-arch__wires .is-orange {
+  color: var(--accent);
+}
+
+.c-arch__wires .is-black {
+  color: var(--ink);
+}
+
+.c-arch__wires .is-red {
+  color: var(--danger);
 }
 
 .c-arch__io {
