@@ -1,5 +1,6 @@
 /* === COMPONENT: team-member === charcoal card: big initial top, role + name bottom.
-   class="is-light" for a pale card (used for the dev team). */
+   class="is-light" for a pale card (used for the dev team).
+   photo="assets/x.png" swaps the initial for a photo (cover-cropped, focus = background-position). */
 .c-team-member {
   flex: 1;
   display: flex;
@@ -52,4 +53,18 @@
 
 .c-team-member.is-light .c-team-member__role {
   color: var(--ink-muted);
+}
+
+/* photo variant: the photo fills the space the initial occupied */
+.c-team-member__photo { display: none; }
+
+.c-team-member.has-photo .c-team-member__initial { display: none; }
+
+.c-team-member.has-photo .c-team-member__photo {
+  display: block;
+  flex: 1;
+  min-height: 0;
+  margin-bottom: 28px;
+  border-radius: calc(var(--radius) - 8px);
+  background: var(--photo) var(--focus) / cover no-repeat;
 }

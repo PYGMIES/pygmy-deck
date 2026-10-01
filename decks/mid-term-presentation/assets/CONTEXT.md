@@ -6,7 +6,7 @@
 | `trades_per_slot.png` | Rolling 30-min trade counts with p50/p95 | 15 |
 | `beta_vs_gold.png` | Gold futures price + per-slot beta | 15 |
 | `chosen_timeslots.png` | Trades per 30-min slot, demo slots outlined | 16 |
-| `isaiah.png`, `jamesz.png`, `joyce.png` | Team photos (not used yet; `team-member` has no photo slot) | — |
+| `isaiah.png`, `jamesz.png`, `joyce.png` | Team photos (`team-member` `photo=`) | 02 |
 | `icons/clock.svg` | Blocked time-series CV | 12 |
 | `icons/target.svg` | Point-in-time features | 12 |
 | `icons/interval.svg` | Confidence intervals | 12 |
