@@ -1,0 +1,13 @@
+<!-- notes: Yanting. SHAP shows how much each feature pushed the model's decision. We average that over many trades to get each feature's share of the model's attention (mean |SHAP|, TreeSHAP, same out-of-fold rows for every arm; Notebook 12 section 4). Full 26-feature model: outcome 58.6%, behaviour 25.2%, ticket 12.4%, counters 3.8%. Outcome = what the market handed the trader (win rate, streak, running P&L, drawdown, stop and target hit rates). Final 18 (no_outcome arm): behaviour 76.3%, ticket 18.1%, counters 5.6%. Top single features: prior_win_rate 0.163 in full; prior_sl_use_rate 0.157 in the final 18. Be upfront that the final 18 is -0.035 held-out AUC vs full but the only arm that made money (+$1,205 at top 5%). -->
+<!-- @slide-title kicker="How We Got Here" text="Behaviour, Not Luck" -->
+<!-- @split cols="560px 1fr" class="inset" -->
+  <!-- @column -->
+    <!-- @section-heading title="Reading SHAP" subtitle="How much each feature pushed the model&rsquo;s decision" -->
+    <!-- @bullet-list -->
+      <li class="reveal"><strong>Full model</strong> leans mostly on results: win rate and streak</li>
+      <li class="reveal"><strong>Results</strong> are partly luck, so a lucky streak can fool the model</li>
+      <li class="reveal"><strong>Final Judge</strong> leans on how traders act: stops, sizing, timing</li>
+    <!-- @/bullet-list -->
+  <!-- @/column -->
+  <!-- @shap-bars caption="Share of the model&rsquo;s attention (mean |SHAP|). Source: Notebook 12." -->
+<!-- @/split -->

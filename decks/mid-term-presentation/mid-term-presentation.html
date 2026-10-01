@@ -149,6 +149,100 @@ body.editing [contenteditable="true"] {
   cursor: text;
 }
 
+/* === SPEAKER NOTES === N or hover bottom-left corner + click (core/runtime.js).
+   Lives outside the stage; when open, the viewport shrinks so the stage
+   rescales above the panel instead of being covered. */
+:root {
+  --notes-h: 24vh; /* window chrome, not slide content */
+}
+
+.notes-toggle {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  padding: 10px 14px;
+  opacity: 0;
+  border: 0;
+  cursor: pointer;
+  font: 600 12px/1 system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border-top-right-radius: 12px;
+  transition: opacity 0.2s;
+}
+
+.notes-toggle:hover,
+.notes-toggle:focus-visible,
+body.notes-open .notes-toggle {
+  opacity: 1;
+}
+
+.deck-notes {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--notes-h);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 32px 16px 140px;
+  background: #161616;
+  color: #e8e8e8;
+  font: 500 17px/1.55 var(--font-body, system-ui), sans-serif;
+  border-top: 1px solid #333;
+  visibility: hidden;
+  transform: translateY(100%);
+  transition: transform 0.25s var(--ease-out), visibility 0s linear 0.25s;
+}
+
+body.notes-open .deck-notes {
+  visibility: visible;
+  transform: none;
+  transition: transform 0.25s var(--ease-out), visibility 0s;
+}
+
+body.notes-open .deck-viewport {
+  bottom: var(--notes-h);
+}
+
+.deck-notes__head {
+  display: block;
+  flex: none;
+  margin-bottom: 8px;
+  font: 600 12px/1 system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9a9a9a;
+}
+
+.deck-notes__text {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 120ch;
+  resize: none;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  caret-color: #e8a948;
+}
+
+.deck-notes__text::placeholder {
+  color: #8a8a8a;
+  font-style: italic;
+}
+
+body.overview .deck-notes,
+body.overview .notes-toggle {
+  visibility: hidden;
+}
+
 /* === OVERVIEW === grid of every slide, toggled by O / Esc (core/runtime.js) */
 .deck-overview {
   position: fixed;
@@ -250,6 +344,7 @@ body.overview .deck-viewport {
   .slide .reveal,
   .deck-progress,
   .deck-overview,
+  .deck-notes,
   .ov-cell {
     transition: none !important;
     animation: none !important;
@@ -301,6 +396,8 @@ body.overview .deck-viewport {
   .deck-progress,
   .deck-counter,
   .edit-toggle,
+  .notes-toggle,
+  .deck-notes,
   .deck-overview {
     display: none;
   }
@@ -2038,6 +2135,77 @@ body.overview .deck-viewport {
   transform-origin: center;
 }
 
+/* ===== COMPONENT funnel ===== */
+/* === COMPONENT (deck): funnel ===
+   Stacked bars that narrow top to bottom, each with a one-line "what we did".
+   Bar width is --w per row (illustrative, not proportional to the count).
+   Rows live in the slide as raw .c-funnel__row blocks. */
+.c-funnel {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.c-funnel__row {
+  display: grid;
+  grid-template-columns: 880px 1fr;
+  gap: var(--gap-l);
+  align-items: center;
+}
+
+.c-funnel__bar {
+  width: var(--w, 100%);
+  justify-self: center;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-s);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-funnel__bar b {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+}
+
+.c-funnel__bar span {
+  font-size: var(--fs-small);
+  line-height: 1.2;
+  color: var(--on-card-muted);
+  text-align: left;
+}
+
+.c-funnel__row.is-final .c-funnel__bar {
+  outline: 6px solid var(--accent);
+  outline-offset: -6px;
+}
+
+.c-funnel__row.is-final .c-funnel__bar b {
+  color: var(--accent);
+}
+
+.c-funnel__row p {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: 1.25;
+}
+
+.c-funnel__row p strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--display-tracking);
+  color: var(--ink-accent);
+  margin-bottom: 4px;
+}
+
 /* ===== COMPONENT big-stat ===== */
 /* === COMPONENT: big-stat === oversized number, label, caption */
 .c-big-stat {
@@ -2123,6 +2291,428 @@ body.overview .deck-viewport {
 
 .c-compare-table .is-bad {
   color: var(--ink-muted);
+}
+
+/* ===== COMPONENT shap-bars ===== */
+/* === COMPONENT (deck): shap-bars ===
+   Two 100% stacked bars of mean |SHAP| share by feature bucket, with a
+   "remove outcome features" step between. Segment widths are --w (percent).
+   Numbers come from Notebook 12 §4; edit them in the HTML. */
+.c-shap-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+
+.c-shap-bars__row h4 {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--display-tracking);
+  color: var(--ink-accent);
+}
+
+.c-shap-bars__row h4 span {
+  font-family: var(--font-body);
+  font-weight: var(--body-weight);
+  font-size: var(--fs-small);
+  letter-spacing: var(--body-tracking);
+  color: var(--ink-muted);
+  margin-left: 12px;
+}
+
+.c-shap-bars__bar {
+  display: flex;
+  gap: 6px;
+  height: 120px;
+}
+
+.c-shap-bars__bar i {
+  flex: var(--w) 1 0;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-s);
+  font-style: normal;
+}
+
+.c-shap-bars__bar b {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+}
+
+/* too narrow for a label inside: sit it above the segment */
+.c-shap-bars__bar em {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  font-style: normal;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+  background: none;
+  padding: 0;
+}
+
+.is-outcome   { background: var(--accent); color: var(--ink); }
+.is-behaviour { background: var(--card); color: var(--on-card); }
+.is-ticket    { background: var(--ink-muted); color: var(--on-card); }
+.is-counter   { background: var(--rule); }
+
+.c-shap-bars__step {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-s);
+  height: 84px;
+  padding-left: 12px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+
+.c-shap-bars__step::before {
+  content: "↓";
+  font-size: 44px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.c-shap-bars__step span {
+  font-size: var(--fs-body);
+  color: var(--ink);
+}
+
+.c-shap-bars__legend {
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-s);
+}
+
+.c-shap-bars__legend li {
+  background: none;
+  color: var(--ink-muted);
+  font-size: var(--fs-small);
+  line-height: 1.25;
+  padding-left: 40px;
+  position: relative;
+}
+
+.c-shap-bars__legend li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: inherit;
+}
+
+.c-shap-bars__legend .is-outcome::before   { background: var(--accent); }
+.c-shap-bars__legend .is-behaviour::before { background: var(--card); }
+.c-shap-bars__legend .is-ticket::before    { background: var(--ink-muted); }
+.c-shap-bars__legend .is-counter::before   { background: var(--rule); }
+
+.c-shap-bars figcaption {
+  margin-top: 20px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+
+/* ===== COMPONENT method-compare ===== */
+/* === COMPONENT (deck): method-compare ===
+   Waterfall vs Scrum lanes: label | track | verdict. Waterfall track is a
+   five-step cascade (--i = step index); Scrum track is 13 sprint chips. */
+.c-method {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.c-method__lane {
+  display: grid;
+  grid-template-columns: 300px 1fr 280px;
+  gap: 48px;
+  align-items: center;
+  padding: 24px 44px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.c-method__lane.is-scrum {
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.c-method__head h3 {
+  font-size: 56px;
+}
+
+.c-method__head p {
+  margin-top: 10px;
+  font-size: 22px;
+  line-height: 1.25;
+  color: var(--ink-muted);
+}
+
+.c-method__verdict {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.c-method__verdict b {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.c-method__lane.is-scrum .c-method__verdict b {
+  color: var(--accent);
+}
+
+/* --- waterfall cascade --- */
+.c-method__cascade {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  height: 140px;
+}
+
+.c-method__cascade li {
+  align-self: start;
+  margin-top: calc(var(--i) * 22px);
+  padding: 13px 0 10px;
+  border-radius: var(--radius-s);
+  background: var(--rule);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--ink-muted);
+}
+
+/* --- scrum sprints --- */
+.c-method__sprints-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+.c-method__sprints {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 8px;
+}
+
+.c-method__sprints li {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 64px;
+  padding-top: 4px;
+  border-radius: var(--radius-s);
+  box-shadow: inset 0 0 0 2px var(--rule);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 28px;
+  color: var(--ink-muted);
+}
+
+.c-method__sprints li.is-done {
+  box-shadow: none;
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-method__sprints li.is-now {
+  box-shadow: none;
+  background: var(--accent);
+  color: var(--on-card);
+}
+
+.c-method__sprints li span {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 8px;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--accent);
+}
+
+.c-method .c-method__loop {
+  max-width: none;
+  font-size: 22px;
+  color: var(--ink-muted);
+}
+
+/* ===== COMPONENT sprint-cycle ===== */
+/* === COMPONENT (deck): sprint-cycle ===
+   Five sprint steps in a row with chevron joins, an SVG return arrow
+   (Retro → Plan) drawn on a 1656px-wide viewBox, and a team/tools row. */
+.c-cycle {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+}
+
+.c-cycle__steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.c-cycle__steps li {
+  position: relative;
+  padding: 30px 30px 34px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+/* chevron between steps */
+.c-cycle__steps li + li::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  border-top: 4px solid var(--ink-muted);
+  border-right: 4px solid var(--ink-muted);
+  transform: rotate(45deg);
+}
+
+.c-cycle__steps i {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding-top: 4px;
+  border-radius: 50%;
+  background: var(--on-card);
+  color: var(--card);
+  font-style: normal;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+}
+
+.c-cycle__steps h3 {
+  margin-top: 22px;
+  font-size: 48px;
+  color: var(--on-card);
+}
+
+.c-cycle__steps p {
+  margin-top: 14px;
+  font-size: 24px;
+  line-height: 1.3;
+  max-width: none;
+  color: var(--on-card-muted);
+}
+
+.c-cycle__steps li.is-retro {
+  background: var(--accent);
+}
+
+.c-cycle__steps li.is-retro p {
+  color: var(--on-card);
+}
+
+.c-cycle__steps li.is-retro i {
+  color: var(--accent);
+}
+
+/* --- return arrow --- */
+.c-cycle__loop {
+  position: relative;
+}
+
+.c-cycle__return {
+  display: block;
+  width: 100%;
+  height: 70px;
+  overflow: visible;
+}
+
+.c-cycle__return path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.c-cycle .c-cycle__return-label {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  padding: 0 22px;
+  background: var(--bg);
+  font-size: 22px;
+  font-weight: 700;
+  white-space: nowrap;
+  max-width: none;
+  color: var(--accent);
+}
+
+/* --- team + tools --- */
+.c-cycle__team {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.c-cycle__team section {
+  padding: 26px 32px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  font-size: 24px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.c-cycle__team span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.c-cycle__team b {
+  font-weight: 700;
+  color: var(--ink);
 }
 
 /* ===== COMPONENT project-timeline ===== */
@@ -2385,6 +2975,115 @@ body.overview .deck-viewport {
   max-width: none;
 }
 
+/* ===== COMPONENT retro-changes ===== */
+/* === COMPONENT (deck): retro-changes ===
+   Left: rows of "found" (pale) → "fix" (charcoal) joined by an arrow.
+   Right: accent-outlined outcome stat. */
+.c-retro {
+  display: grid;
+  grid-template-columns: 1fr 440px;
+  gap: 48px;
+  align-items: stretch;
+}
+
+.c-retro__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.c-retro__labels,
+.c-retro__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+}
+
+.c-retro__labels span,
+.c-retro__result span {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.c-retro__row {
+  position: relative;
+}
+
+.c-retro .c-retro__row p {
+  display: flex;
+  align-items: center;
+  min-height: 150px;
+  padding: 26px 34px;
+  border-radius: var(--radius);
+  font-size: 28px;
+  line-height: 1.3;
+  max-width: none;
+}
+
+.c-retro .c-retro__found {
+  background: var(--bg-deep);
+  color: var(--ink-muted);
+}
+
+.c-retro .c-retro__fix {
+  background: var(--card);
+  color: var(--on-card);
+  font-weight: 600;
+}
+
+/* arrow in the gap between found and fix */
+.c-retro__row::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -13px;
+  border-top: 4px solid var(--accent);
+  border-right: 4px solid var(--accent);
+  transform: rotate(45deg);
+}
+
+/* --- outcome --- */
+.c-retro__result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 44px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.c-retro__result b {
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 128px;
+  line-height: 0.9;
+  letter-spacing: var(--display-tracking);
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.c-retro__result h3 {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 2px solid var(--rule);
+  font-size: 40px;
+}
+
+.c-retro .c-retro__result p {
+  margin-top: 14px;
+  font-size: 24px;
+  line-height: 1.35;
+  color: var(--ink-muted);
+}
+
 /* ===== COMPONENT closing ===== */
 /* === COMPONENT: closing === thank-you / call-to-action */
 .c-closing {
@@ -2448,6 +3147,16 @@ body.overview .deck-viewport {
 .c-image-frame figcaption {
   font-size: var(--fs-small);
   color: var(--ink-muted);
+}
+
+/* ===== DECK OVERRIDES ===== */
+/* === DECK OVERRIDES === */
+
+/* Short card row: centre it in the space under the slide title (slide 37) */
+.c-card-grid.is-centered {
+  flex: 1;
+  min-height: 0;
+  align-content: center;
 }
 </style>
 </head>
@@ -3508,7 +4217,244 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="27" data-name="leak">
+<section class="slide" data-slide="27" data-name="feature-engineering">
+<!-- notes: Yanting. The funnel: we started with every column in the trade export and narrowed to 18 features. Walk top to bottom, one row per step; the next four slides open each step. Counts: 28 raw columns (PYG-90) → 26 point-in-time features (PYG-94, v3 shortlist) → still 26 after testing 48 candidates (PYG-145, v5 = v3) → 18 in the frozen Judge (PYG-185). Row widths are illustrative. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">How We Got Here</span>
+  <h1 class="reveal">Feature Engineering</h1>
+</header>
+<div class="c-funnel inset">
+  
+  <div class="c-funnel__row reveal">
+    <div class="c-funnel__bar" style="--w: 100%"><b>28</b><span>columns in the<br>raw trade export</span></div>
+    <p><strong>Audit</strong>Which of these are known when a trade opens?</p>
+  </div>
+  <div class="c-funnel__row reveal">
+    <div class="c-funnel__bar" style="--w: 84%"><b>26</b><span>features we<br>built from them</span></div>
+    <p><strong>Build &amp; rank</strong>Trader history, rebuilt so nothing leaks from the future</p>
+  </div>
+  <div class="c-funnel__row reveal">
+    <div class="c-funnel__bar" style="--w: 68%"><b>26</b><span>kept, out of<br>48 tested</span></div>
+    <p><strong>Stress-test</strong>22 more ideas and market data. None earned a place</p>
+  </div>
+  <div class="c-funnel__row reveal is-final">
+    <div class="c-funnel__bar" style="--w: 52%"><b>18</b><span>in the<br>final Judge</span></div>
+    <p><strong>Freeze</strong>Keep behaviour, drop what depends on luck</p>
+  </div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="28" data-name="fe-audit">
+<!-- notes: Yanting. Step 1 of 4: 28 → usable columns. Every column in master_dataset got exactly one class (target, post-trade, pre-trade, id, constant, duplicate...). The big catch: slPrice/tpPrice are written when the position CLOSES. 37.7% of trades closed exactly at those prices. Five features built on them looked strong and leaked the outcome. Retiring them cost held-out AUC 0.667 → 0.620 (PYG-90, PYG-92). -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Feature Engineering · Step 1 of 4</span>
+  <h1 class="reveal">28 Columns In</h1>
+</header>
+<div class="c-split inset" style="--split-cols: 792px 1fr; --split-align: start;">
+  
+  <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
+  
+    <div class="c-big-stat reveal ">
+  <span class="c-big-stat__value">37.7%</span>
+  <h3>of trades closed exactly at their stop-loss or take-profit price</h3>
+  <p>So those prices are an exit, not an entry</p>
+</div>
+  
+</div>
+  <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
+  
+    <header class="c-section-heading reveal ">
+  <h2>The first question</h2>
+  <p>Would we know this when the trade opens?</p>
+</header>
+    <ul class="c-bullet-list ">
+  
+      <li class="reveal"><strong>Every column</strong> gets one label: usable, answer, ID, constant or duplicate</li>
+      <li class="reveal"><strong>Stop-loss &amp; take-profit</strong> are written at close, so five features built on them leaked the answer</li>
+      <li class="reveal"><strong>Removing them</strong> cost AUC 0.667 → 0.620</li>
+    
+</ul>
+  
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="29" data-name="fe-signal">
+<!-- notes: Yanting. Note the strongest four are all OUTCOME features (the market handed them to the trader); step 4 removes them, so flag it here. Step 2 of 4: build and rank. 26 features built point-in-time in three families (order ticket, rolling trader state inside a campaign, history from earlier campaigns). Ranked on four measures; Spearman is the one to trust. Order-ticket features together score at chance; all the signal is the trader's rolling state. Values below ~0.015 are noise at n=46,520. Near-duplicates (|rho|>0.8) were dropped so importance is not split (PYG-94, PYG-96, PYG-99). -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Feature Engineering · Step 2 of 4</span>
+  <h1 class="reveal">26 Features Built</h1>
+</header>
+<div class="c-split inset" style="--split-cols: 1fr 1fr; --split-align: start;">
+  
+  <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
+  
+    <header class="c-section-heading reveal ">
+  <h2>Where the signal lives</h2>
+  <p>Three families, 26 features, ranked against the outcome</p>
+</header>
+    <ul class="c-bullet-list ">
+  
+      <li class="reveal"><strong>Order ticket (6)</strong>: side, size, time of day. Together no better than chance</li>
+      <li class="reveal"><strong>Same-campaign state (14)</strong>: what the trader has done so far. All the signal lives here</li>
+      <li class="reveal"><strong>Earlier campaigns (6)</strong>: a small extra</li>
+    
+</ul>
+  
+</div>
+  <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
+  
+    <header class="c-section-heading reveal ">
+  <h2>Strongest four</h2>
+  <p>All four reflect results, not choices</p>
+</header>
+    <table class="c-compare-table reveal ">
+  
+      <thead><tr><th>Feature</th><th>Correlation</th></tr></thead>
+      <tbody>
+        <tr><td>Win rate so far</td><td class="is-focus">−0.120</td></tr>
+        <tr><td>Current streak</td><td class="is-focus">−0.109</td></tr>
+        <tr><td>Profit so far</td><td class="is-focus">−0.105</td></tr>
+        <tr><td>Running drawdown</td><td class="is-focus">+0.101</td></tr>
+      </tbody>
+    
+</table>
+  
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="30" data-name="fe-stress-test">
+<!-- notes: Yanting. Step 3 of 4: did more help? 22 net-new candidate features from a second feature pass, plus two market blocks: 18 features (ATR, volatility, session, VWAP; -0.0036 AUC, commit 46fd30e) and 4 direction-signed features (chase, trend alignment, provocation, vol rank; +0.0005 AUC, CI [-0.0018, +0.0025], NB11). NB14 re-tests market on the 18-feature roster but its results are not written up yet, so do not quote it. We held the 26 as the frozen, pre-registered shortlist: the burden of proof is on the change. 0 of 22 promoted (PYG-145). Both market blocks had intervals spanning zero (PYG-104). More columns add variance, not signal. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Feature Engineering · Step 3 of 4</span>
+  <h1 class="reveal">48 Tested, 26 Kept</h1>
+</header>
+<div class="c-split inset" style="--split-cols: 792px 1fr; --split-align: start;">
+  
+  <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
+  
+    <div class="c-big-stat reveal ">
+  <span class="c-big-stat__value">0 / 22</span>
+  <h3>new features earned a place</h3>
+  <p>Each was measured against the 26, with the noise floor attached</p>
+</div>
+  
+</div>
+  <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
+  
+    <header class="c-section-heading reveal ">
+  <h2>Burden of proof is on the change</h2>
+  <p>A feature has to beat the noise to get in</p>
+</header>
+    <ul class="c-bullet-list ">
+  
+      <li class="reveal"><strong>22 extra ideas</strong> on top of our 26: none cleared the bar (one nudged AUC up but failed the dollar check)</li>
+      <li class="reveal"><strong>Market data</strong> (volatility, trend, chasing): tried twice, AUC moved −0.0036 and +0.0005. Both inside the noise</li>
+      <li class="reveal"><strong>More columns</strong> add variance, not signal</li>
+    
+</ul>
+  
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="31" data-name="fe-final-18">
+<!-- notes: Yanting. Step 4 of 4: 26 → 18. Every feature is tagged ticket / behaviour / outcome / counter. The 18 are everything except the 8 outcome-based features. This is the roster the later experiments run on and the only one that has made money in our tests (PYG-185). Source: NB12 "Behaviour or just luck?". OUTCOME = the market handed it to them (win rate, running P&L, streak, drawdown, stop/target hit rates); BEHAVIOUR = the trader chose it. Be upfront: no_outcome is -0.035 held-out AUC vs full, but it is the only arm that made money (+$1,205 at top 5%, +$4,070 at top 10%) and outcome columns took 58.6% of the full model attention. This is a deliberate trade-off. The next slide (Behaviour vs luck) goes deeper. Frozen in one file on 23 Sep. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Feature Engineering · Step 4 of 4</span>
+  <h1 class="reveal">18 In The Judge</h1>
+</header>
+<header class="c-section-heading reveal inset">
+  <h2>26 → 18</h2>
+  <p>We dropped the 8 outcome-based features, the ones luck can move</p>
+</header>
+<div class="c-card-grid inset" style="--grid-cols: 3;">
+  
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">6</span>
+  <h3>Order ticket</h3>
+  <p>Side, size, price vs campaign open, time of day</p>
+</article>
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">8</span>
+  <h3>Behaviour</h3>
+  <p>How big they size, how fast they re-enter, how long they hold, how they use stops</p>
+</article>
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">4</span>
+  <h3>Counters</h3>
+  <p>How many trades and campaigns they have behind them</p>
+</article>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="32" data-name="behaviour-vs-luck">
+<!-- notes: Yanting. SHAP shows how much each feature pushed the model's decision. We average that over many trades to get each feature's share of the model's attention (mean |SHAP|, TreeSHAP, same out-of-fold rows for every arm; Notebook 12 section 4). Full 26-feature model: outcome 58.6%, behaviour 25.2%, ticket 12.4%, counters 3.8%. Outcome = what the market handed the trader (win rate, streak, running P&L, drawdown, stop and target hit rates). Final 18 (no_outcome arm): behaviour 76.3%, ticket 18.1%, counters 5.6%. Top single features: prior_win_rate 0.163 in full; prior_sl_use_rate 0.157 in the final 18. Be upfront that the final 18 is -0.035 held-out AUC vs full but the only arm that made money (+$1,205 at top 5%). -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">How We Got Here</span>
+  <h1 class="reveal">Behaviour, Not Luck</h1>
+</header>
+<div class="c-split inset" style="--split-cols: 560px 1fr; --split-align: start;">
+  
+  <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
+  
+    <header class="c-section-heading reveal ">
+  <h2>Reading SHAP</h2>
+  <p>How much each feature pushed the model&rsquo;s decision</p>
+</header>
+    <ul class="c-bullet-list ">
+  
+      <li class="reveal"><strong>Full model</strong> leans mostly on results: win rate and streak</li>
+      <li class="reveal"><strong>Results</strong> are partly luck, so a lucky streak can fool the model</li>
+      <li class="reveal"><strong>Final Judge</strong> leans on how traders act: stops, sizing, timing</li>
+    
+</ul>
+  
+</div>
+  <figure class="c-shap-bars reveal ">
+  <div class="c-shap-bars__row">
+    <h4>Full model <span>26 features</span></h4>
+    <div class="c-shap-bars__bar">
+      <i class="is-outcome" style="--w: 58.6"><b>59%</b></i>
+      <i class="is-behaviour" style="--w: 25.2"><b>25%</b></i>
+      <i class="is-ticket" style="--w: 12.4"><b>12%</b></i>
+      <i class="is-counter" style="--w: 3.8"><em>4%</em></i>
+    </div>
+  </div>
+  <div class="c-shap-bars__step"><span>Remove the 8 outcome features</span></div>
+  <div class="c-shap-bars__row">
+    <h4>Final Judge <span>18 features</span></h4>
+    <div class="c-shap-bars__bar">
+      <i class="is-behaviour" style="--w: 76.3"><b>76%</b></i>
+      <i class="is-ticket" style="--w: 18.1"><b>18%</b></i>
+      <i class="is-counter" style="--w: 5.6"><em>6%</em></i>
+    </div>
+  </div>
+  <ul class="c-shap-bars__legend">
+    <li class="is-outcome">Outcome<br>win rate, streak, P&amp;L</li>
+    <li class="is-behaviour">Behaviour<br>stops, sizing, re-entry</li>
+    <li class="is-ticket">Order ticket<br>side, size, time</li>
+    <li class="is-counter">Counters<br>trade counts</li>
+  </ul>
+  <figcaption>Share of the model&rsquo;s attention (mean |SHAP|). Source: Notebook 12.</figcaption>
+</figure>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="33" data-name="leak">
 <!-- notes: Owner TBC. Deep dive 1: we caught our own leak. slPrice and tpPrice are written when a trade closes, not when it opens: 37.7% of trades closed at one of the levels, and P(fade wins | closed at stop) = 0.82. Five features carried it. Removing them took held-out AUC from 0.667 to 0.620 on one split and one set of hyperparameters. The leak alone scores 0.622; static-only features score 0.496, which is chance. We also retracted an early +$53k behavioural result for the same reason. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3534,33 +4480,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="28" data-name="behaviour-vs-luck">
-<!-- notes: Yanting. Behaviour (skill) versus outcome history (luck), shown with SHAP. Outcome-history features take 59% of the full model's mean |SHAP|. Dropping them (the no_outcome arm) costs 0.035 AUC (CI −0.046 to −0.023, 9 of 9 campaigns): held-out AUC 0.606 full, 0.571 no_outcome, 0.570 behaviour-only (14 features), 0.510 ticket-only (6 features). Full per-feature SHAP is in the appendix. -->
-<header class="c-slide-title ">
-  <span class="c-slide-title__kicker reveal">How We Got Here</span>
-  <h1 class="reveal">Behaviour, Not Luck</h1>
-</header>
-<div class="c-split inset" style="--split-cols: 560px 1fr; --split-align: start;">
-  
-  <ul class="c-bullet-list ">
-  
-    <li class="reveal"><strong>59%</strong> of the model’s attention sits on win/loss history</li>
-    <li class="reveal"><strong>Drop it:</strong> AUC 0.606 → 0.571, in 9 of 9 campaigns</li>
-    <li class="reveal"><strong>Behaviour alone</strong> still beats ticket size alone: 0.570 vs 0.510</li>
-  
-</ul>
-  <article class="c-chart-card reveal ">
-  <span class="c-chart-card__kicker">Mean |SHAP| share by feature group</span>
-  <h3>Where each model looks</h3>
-  <img src="data:image/png;base64,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errobSodmEtx8fHaE35CY3b9qwl7ltvLa+csol7lm6qIfw5tDDust9fM0KbTh53XvztXSX1325Nqu2SM5odu4+kEANySqLgCbjElcnurefVsztAqJQ3K+OvjNvlUvYifcvh7ys/bXcVyeatzw5w2qDI83KWPWudV7mye6jR6v2Lj4vXRE3kV6Hvhz0qXpsHadTRKU/8jtAIAZG5nYyKTnO9epqE+rvaoqgUVlL+njwK9fFU+W17dlbukvTyrl6++rvG4YuPj1HbpWOXxzaovazwmD7eEz1F3uemtco21IHQboRUA4JZGxdU1MGnSRFWuXFmlS5dRZrdn92717NlDn376ubJmy2aXzZ49SytXrNDWrVt1+nSYunTpptp16lx03U0bN2rixAnatWuX3N3dVbx4CbVu3UZFiha1l8fFxem1V/+nR1u21B133HnD79ut4khYjL7665hW7D6nfo/kUu5sXhet06xSoD2Oi4vX89/t19bDkfqqXX6VzeerphUD1OfHwyoc7K1COb01ZuEJrdx9TjNXndbr94WociFf/bMlXHVLZNHtJf310pgDikso0AIA4KaWvKIql0+AFt/TRZ7uHppxYL1zeZXs+fViiXr29I/7Vmvoprk6GnVWJQJCVNg/yC6vEVRQ2bz9NG3LGv13fI9mH9qo9sXqqJh/Tm09E6rHC1dX8YBgvbx8yg2+lwAAuBYqrq6BKZMnafPmzboV/PDDBDVocJcztDIWzJ9nA6uq1aqler0D+/fr3Xf7ycfHV//732vq2OlFnTlzRv369dHJEyfsOibMeviRRzRp4kTFxsbekPtzK1q/P1KfzTmuxdvCFROX8jpeHm72+FREnP7dGaGT4XFatiNhCKC3p7v8fdzlef6vR3RsQioVdf7Y091Nbm4J1VZLt4drweazN+R+AQBwo7UsWNWGVsaE3QnD/4w2hWvK3c1de8NPqNuqn7Q34qQiYqO19tQBZ8DluF50XML/PFHnjz3d3ZXFw1uvlWqgKXtXJRk6CADArYjgCml2+PAhLV/+n+66++4ky/u/O0DvDRioVq0eS/W6y5YtVXy81KVLV1WpWlU1a9bSq6++ZsOrNWtWO9erW/d2nTx50t4OMs4vK8NstVU2P3fVLOqn7FncVauYn71s88FIG2jtOhqt42djVLekvwJ83HVnaX9FRsdpw/5zerhaVhXP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" alt="Share of total mean absolute SHAP by feature group for four nested models">
-  <p class="c-chart-card__take">Judge the decision,<br>not the outcome</p>
-</article>
-
-</div>
-</section>
-
-
-<section class="slide" data-slide="29" data-name="magnitude">
+<section class="slide" data-slide="34" data-name="magnitude">
 <!-- notes: Owner TBC. Deep dive 4: where the signal lives. Giving the model a perfect classifier adds +$351 per campaign; perfect gain and loss regressors add +$12,417, 35 times more. So the money is in how big the win or loss is, not only in calling the direction. Right: what we tried and dropped. Market context was rejected four times (18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005; 14 macro features B+C −$23.5k to −$47.6k; NB14 negative on all three learners). Tuned GBDT beats logistic by +0.002 AUC. Learning curves are flat. A same-day trade-context block added +0.0016 AUC but lost $7,571 at top 5%, so money vetoed it. The full decomposition chart is in the appendix. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -3596,59 +4516,140 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="30" data-name="section-pm">
+<section class="slide" data-slide="35" data-name="section-pm">
+<!-- notes: SCRIPT (~15s, Arin): Last section: how we ran the work as a team. In short: two-week sprints, a retro at the end of every one, and a plan that changes when the results tell us to. I'll cover why we chose Scrum, how a sprint runs, where we are on the timeline, what our retros changed, and what limits the project. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">07</span>
   <div class="c-section-divider__text">
     <h2 class="reveal">Project Management</h2>
     <p class="reveal">How we ran the work</p>
-    <span class="c-section-divider__presenter reveal">Yanting</span>
+    <span class="c-section-divider__presenter reveal">Arin</span>
   </div>
 </div>
 </section>
 
 
-<section class="slide" data-slide="31" data-name="scrum">
-<!-- notes: Yanting. Why Scrum over Waterfall for an R&D-style project. -->
+<section class="slide" data-slide="36" data-name="scrum">
+<!-- notes: SCRIPT (~45s, Arin): We ran this project as Scrum, not Waterfall. Waterfall means locking the requirements first, building, and showing the sponsor the result at the end. That couldn't work for us, for three reasons. One: the scope wasn't fixed. Our own Statement of Work left the latency target, the confidence cut-off and the dashboard scope as to be determined. Two: this is research. We can't schedule a model result, so each sprint's scores decided what we tried next. After Sprint 7, for example, the models were only slightly better than random, so we moved on to CatBoost. Three: sponsor inputs arrived mid-project, like the crowding data and TradeLocker access, so we built against stand-ins first. So we ran two-week sprints with a review and a retro each time. Today is the end of Sprint 9. -->
+<!-- notes: Sources: SOW section 3 (TBD items) and the change-request clause; Sprint 7 retro minutes (CatBoost, only slightly better than random); Linear cycle 9 ends 5 Oct. Check: sprint numbering matches what you say aloud. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
   <h1 class="reveal">Why Scrum over Waterfall</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 1fr; --split-align: start;">
-  
-  <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
-  
-    <header class="c-section-heading reveal ">
-  <h2>Waterfall</h2>
-  <p>Plan everything up front</p>
-</header>
-    <div class="c-placeholder reveal " style="--ph-height: 440px;">
-  <span class="c-placeholder__tag">To do</span>
-  <p>Why it breaks for research: unknowns, changing data</p>
-  <span class="c-placeholder__owner">Yanting</span>
+<!-- Two lanes: Waterfall cascade (one feedback point) vs our 13 two-week sprints.
+     Sprint state: is-done (finished), is-now (current, midterm), plain = planned. -->
+<div class="c-method inset">
+
+  <section class="c-method__lane is-waterfall reveal">
+    <header class="c-method__head">
+      <h3>Waterfall</h3>
+      <p>Plan everything, then build</p>
+    </header>
+    <ol class="c-method__cascade">
+      <li style="--i: 0;">Requirements</li>
+      <li style="--i: 1;">Design</li>
+      <li style="--i: 2;">Build</li>
+      <li style="--i: 3;">Test</li>
+      <li style="--i: 4;">Deliver</li>
+    </ol>
+    <p class="c-method__verdict">Sponsor feedback<b>Once, at the end</b></p>
+  </section>
+
+  <section class="c-method__lane is-scrum reveal">
+    <header class="c-method__head">
+      <h3>Scrum</h3>
+      <p>What we ran: 2-week sprints</p>
+    </header>
+    <div class="c-method__sprints-wrap">
+      <ol class="c-method__sprints">
+        <li class="is-done">1</li><li class="is-done">2</li><li class="is-done">3</li>
+        <li class="is-done">4</li><li class="is-done">5</li><li class="is-done">6</li>
+        <li class="is-done">7</li><li class="is-done">8</li>
+        <li class="is-now">9<span>Midterm</span></li>
+        <li>10</li><li>11</li><li>12</li><li>13</li>
+      </ol>
+      <p class="c-method__loop">↻ plan · build · review · retro, every sprint</p>
+    </div>
+    <p class="c-method__verdict">Sponsor feedback<b>Every 2 weeks</b></p>
+  </section>
+
 </div>
+<div class="c-card-grid inset" style="--grid-cols: 3;">
   
-</div>
-  <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
-  
-    <header class="c-section-heading reveal ">
-  <h2>Scrum</h2>
-  <p>Short sprints, gated by evidence</p>
-</header>
-    <div class="c-placeholder reveal " style="--ph-height: 440px;">
-  <span class="c-placeholder__tag">To do</span>
-  <p>What it gave us: sprint cadence, go/no-go gates, sponsor check-ins</p>
-  <span class="c-placeholder__owner">Yanting</span>
-</div>
-  
-</div>
+  <article class="c-numbered-card reveal ">
+  <span class="c-numbered-card__num">1</span>
+  <div>
+    <h3>Scope wasn't fixed</h3>
+    <p>SOW left latency, cut-off and dashboard “to be determined”</p>
+  </div>
+</article>
+  <article class="c-numbered-card reveal ">
+  <span class="c-numbered-card__num">2</span>
+  <div>
+    <h3>Results set the next step</h3>
+    <p>Each sprint's model scores set what we tried next</p>
+  </div>
+</article>
+  <article class="c-numbered-card reveal ">
+  <span class="c-numbered-card__num">3</span>
+  <div>
+    <h3>Inputs arrived late</h3>
+    <p>Sponsor data and API access landed mid-project</p>
+  </div>
+</article>
 
 </div>
 </section>
 
 
-<section class="slide" data-slide="32" data-name="timeline">
-<!-- notes: Yanting. We are at the midpoint gate: Phase 2 wraps today, forward paper-trading starts tomorrow. -->
+<section class="slide" data-slide="37" data-name="sprint-cycle">
+<!-- notes: SCRIPT (~45s, Arin): Every two weeks we run the same loop. One, plan: we review the stories beforehand, then split into two breakouts, BA for the model and PD for the system, so each squad estimates its own work. Two, build: stand-ups are async in Slack, and nobody has more than one or two tasks in progress. Three, sync: we send Clement short updates two to three times a week. Four, review: we show the sponsor what's done and reshape the backlog. Five, retro: start, stop, continue, and every action gets an owner. Those actions feed straight into the next sprint's plan, which is the arrow along the bottom. Isaiah is our Product Owner, Yan Ting is our Scrum Master, and the work lives in Linear, Slack and Zoom. -->
+<!-- notes: Sources: Linear meeting minutes 27 Aug; Sprint 7 retro minutes. Check: squad membership (BA: Isaiah, Joyce, Yan Ting; PD: Arin, Jamesz, Jerrick) and the 2-3x a week update rhythm with the team. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Project Management</span>
+  <h1 class="reveal">How We Run a Sprint</h1>
+</header>
+<!-- One 2-week sprint as five steps, with a loop arrow from Retro back to Plan.
+     Bottom row: who does the work and the tools that hold it together. -->
+<div class="c-cycle inset">
+
+  <div class="c-cycle__loop reveal">
+    <ol class="c-cycle__steps">
+      <li><i>1</i><h3>Plan</h3><p>Stories reviewed beforehand, split into BA &amp; PD breakouts</p></li>
+      <li><i>2</i><h3>Build</h3><p>Async stand-up in Slack, 1–2 tasks in progress</p></li>
+      <li><i>3</i><h3>Sync</h3><p>Updates to Clement 2–3× a week</p></li>
+      <li><i>4</i><h3>Review</h3><p>Show the sponsor, update the backlog</p></li>
+      <li class="is-retro"><i>5</i><h3>Retro</h3><p>Start · Stop · Continue, owner per action</p></li>
+    </ol>
+    <svg class="c-cycle__return" viewBox="0 0 1656 70" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M1501 4 V40 Q1501 58 1483 58 H172 Q154 58 154 40 V14" />
+      <path class="c-cycle__head" d="M142 18 L154 2 L166 18" />
+    </svg>
+    <p class="c-cycle__return-label">Retro actions feed the next sprint's plan</p>
+  </div>
+
+  <div class="c-cycle__team reveal">
+    <section>
+      <span>Leads</span>
+      <b>Isaiah</b> Product Owner<br><b>Yan Ting</b> Scrum Master
+    </section>
+    <section>
+      <span>Two squads</span>
+      <b>BA · model</b> Isaiah, Joyce, Yan Ting<br><b>PD · system</b> Arin, Jamesz, Jerrick
+    </section>
+    <section>
+      <span>Tools</span>
+      <b>Linear</b> backlog &amp; sprints<br><b>Slack</b> stand-ups · <b>Zoom</b> ceremonies
+    </section>
+  </div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="38" data-name="timeline">
+<!-- notes: SCRIPT (~40s, Arin): Here's where that puts us on the timeline. The project runs in phases. Phase 0 was scoping in early June. Phase 1 built the baselines: EDA, a scorer and three frozen baselines. Phase 2, which wraps up today, is the Judge and the solution infrastructure. Each phase ends at a gate. Phase 0: logging live and the ID join confirmed. Phase 1: the three baselines frozen before any training. Today is the midpoint gate: does the Judge beat the rules-based system? [Say the gate result here.] From tomorrow, Phase 3 starts: forward paper trading, run daily to build a track record, up to the final gate on 13 November. Handover to Catch22 follows in the last two weeks of November. -->
+<!-- notes: Check before presenting: confirm Phase 0 and Phase 1 gates actually passed, and state the midpoint-gate result in the bracketed line. Dates come from the timeline component (Phase 3: 6 Oct to 16 Nov, handover 17 to 30 Nov). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
   <h1 class="reveal">Project Timeline</h1>
@@ -3698,67 +4699,79 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="33" data-name="retros">
-<!-- notes: Yanting. What our retros surfaced and what we changed. -->
+<section class="slide" data-slide="39" data-name="retros">
+<!-- notes: SCRIPT (~50s, Arin): At the end of every sprint we run a retro, start, stop, continue. This is the one from Sprint 7, and three things stood out. Each got an owner. One: user stories were vague, so people built different things. Now we review stories before planning, and BA and PD plan in separate breakouts. Two: too much was in progress and work got left to the last minute. Now it's at most one or two tasks in progress, and one change per branch. Three: updates were patchy. We added a 7 pm Slack stand-up reminder, and Clement now gets updates two to three times a week. We also kept what worked: async stand-ups and user-centric stories. In the sprint after the retro we closed 39 of 40 issues, up from 17 of 22. That's a raw count, so I wouldn't claim the retro alone caused it, but it's the direction we wanted. -->
+<!-- notes: Source: Linear Sprint 7 retro doc (board + minutes) and cycle stats (39 of 40 in the following sprint, 17 of 22 in Sprint 7). The board also had: start using tech specs, break tasks down further, stop stacking features without merging. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
   <h1 class="reveal">What Our Retros Changed</h1>
 </header>
-<div class="c-card-grid inset" style="--grid-cols: 3;">
-  
-  <article class="c-numbered-card reveal is-light">
-  <span class="c-numbered-card__num">1</span>
-  <div>
-    <h3>TODO: retro finding</h3>
-    <p>What we noticed → what we changed</p>
+<!-- Retro findings → changes (3 rows) beside an outcome stat.
+     Edit rows here; the stat params come from the slide. -->
+<div class="c-retro inset">
+
+  <div class="c-retro__rows">
+    <div class="c-retro__labels"><span>We noticed</span><span>We changed</span></div>
+    <div class="c-retro__row reveal">
+      <p class="c-retro__found">Vague user stories, so we read requirements differently</p>
+      <p class="c-retro__fix">Review stories before planning; BA &amp; PD plan in breakouts</p>
+    </div>
+    <div class="c-retro__row reveal">
+      <p class="c-retro__found">Too much in progress, work left to the last minute</p>
+      <p class="c-retro__fix">Max 1–2 tasks in progress; one change per branch</p>
+    </div>
+    <div class="c-retro__row reveal">
+      <p class="c-retro__found">Patchy updates to each other and the sponsor</p>
+      <p class="c-retro__fix">7 pm Slack stand-up reminder; Clement updated 2–3× a week</p>
+    </div>
   </div>
-</article>
-  <article class="c-numbered-card reveal is-light">
-  <span class="c-numbered-card__num">2</span>
-  <div>
-    <h3>TODO: retro finding</h3>
-    <p>What we noticed → what we changed</p>
-  </div>
-</article>
-  <article class="c-numbered-card reveal is-light">
-  <span class="c-numbered-card__num">3</span>
-  <div>
-    <h3>TODO: retro finding</h3>
-    <p>What we noticed → what we changed</p>
-  </div>
-</article>
+
+  <aside class="c-retro__result reveal">
+    <span>The sprint after</span>
+    <b>39/40</b>
+    <h3>issues done</h3>
+    <p>up from 17 of 22 in Sprint 7</p>
+  </aside>
 
 </div>
 </section>
 
 
-<section class="slide" data-slide="34" data-name="constraints">
-<!-- notes: Be upfront about what limits the conclusions. -->
+<section class="slide" data-slide="40" data-name="constraints">
+<!-- notes: SCRIPT (~40s, Arin): Three things limit how far you can trust the results. First, a small test. Our final test is nine held-out campaigns, so a difference smaller than about 0.003 AUC is inside what we can detect. When that happens we say not measurable, never no effect. The sample also isn't random, so results may not generalise. Second, leakage. Stop-loss and take-profit fields are written when a trade closes, so they give away the outcome. Removing them dropped AUC from 0.667 to 0.620. The Judge sits at about 0.61, so the signal is real but modest. Third, cold start. New traders have no history, and for them AUC is about 0.55 against 0.61 for returning traders. -->
+<!-- notes: Sources: PYG-144 and PYG-185 (9 held-out campaigns 69 to 77, MDE, cold start 17% no same-day and 36% no career history), PYG-92 (SL/TP leakage, AUC 0.667 to 0.620). TODO before presenting: Linear shows 45 campaigns in the dataset (33 to 77, PYG-103) while an earlier draft of this slide said 38. Confirm the dataset size and add it back if wanted. -->
 <header class="c-slide-title ">
-  <span class="c-slide-title__kicker reveal"></span>
-  <h1 class="reveal">Constraints</h1>
+  <span class="c-slide-title__kicker reveal">Constraints · Data &amp; Model</span>
+  <h1 class="reveal">What Limits the Results</h1>
 </header>
 <div class="c-split inset" style="--split-cols: 1fr 1fr; --split-align: end;">
   
   <div class="c-big-stat reveal ">
-  <span class="c-big-stat__value">38</span>
-  <h3>Campaigns in the dataset</h3>
-  <p>Small sample: wide confidence intervals</p>
+  <span class="c-big-stat__value">9</span>
+  <h3>Held-out campaigns</h3>
+  <p>Our final test. Gaps under ~0.003 AUC can’t be told apart</p>
 </div>
   <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
   
     <article class="c-numbered-card reveal ">
   <span class="c-numbered-card__num">1</span>
   <div>
-    <h3>Not a pure random sample</h3>
-    <p>Campaigns and traders weren’t randomly selected, so results may not generalise to every cohort.</p>
+    <h3>Not a random sample</h3>
+    <p>Campaigns and traders weren’t randomly chosen, so results may not generalise.</p>
   </div>
 </article>
     <article class="c-numbered-card reveal ">
   <span class="c-numbered-card__num">2</span>
   <div>
-    <h3>Small dataset</h3>
-    <p>38 campaigns limits model complexity and the precision of every estimate.</p>
+    <h3>Leakage removed, signal modest</h3>
+    <p>Dropping post-trade fields cut AUC from 0.667 to 0.620. Judge sits at ~0.61.</p>
+  </div>
+</article>
+    <article class="c-numbered-card reveal ">
+  <span class="c-numbered-card__num">3</span>
+  <div>
+    <h3>Cold start</h3>
+    <p>New traders have no history: AUC ~0.55 vs ~0.61 for returning ones.</p>
   </div>
 </article>
   
@@ -3768,7 +4781,36 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="35" data-name="edge-setting">
+<section class="slide" data-slide="41" data-name="constraints-system">
+<!-- notes: SCRIPT (~35s, Arin): Now the limits from the sponsor side and from our scope. First, paper trading only. There is no live execution. We hand the app over, dockerised, for Catch22 to host locally, and their internal systems are out of scope. Second, no live data feed yet. Today data comes in as manual exports, plus a test endpoint for demos. Automated TradeLocker retrieval needs API access and credentials from Catch22 under the NDA, and how we detect the end of a campaign is still open, because they run campaigns with their own scripts. Third, an open question for Clement: the desk's true trading cost per unit. We assume $7.00. Fading every trade breaks even at $1.28, so which number is right changes the decision. -->
+<!-- notes: Sources: SOW sections 4 and 6; PYG-53; Technical Alignment Spec open decisions; PYG-185 (cost question for Clement). -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Constraints · Sponsor &amp; System</span>
+  <h1 class="reveal">What Bounds the Scope</h1>
+</header>
+<div class="c-card-grid inset is-centered" style="--grid-cols: 3;">
+  
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">Scope</span>
+  <h3>Paper trading</h3>
+  <p>No live execution. Handed to Catch22 to host locally.</p>
+</article>
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">Data</span>
+  <h3>No live feed yet</h3>
+  <p>Manual exports today. TradeLocker access needs Catch22.</p>
+</article>
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">Open question</span>
+  <h3>True trading cost</h3>
+  <p>Unknown. We assume $7.00 per unit. Clement to confirm.</p>
+</article>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="42" data-name="edge-setting">
 <!-- notes: Owner TBD. The edge is a number we choose before the test, not a model setting: the smallest average profit per faded trade (after the $7-per-lot cost) that would make running the Judge worthwhile. We size the test so an edge that big, if real, would very likely show up. Work back from money: about 95 faded trades per campaign x about 9.4 campaigns a month = roughly 900 faded trades a month, so $3 an edge is about $2,700 a month. Trade-off: test length grows with 1 / edge squared, so halving the edge needs about 4x the campaigns. Campaigns-to-confirm column assumes per-trade sigma of $133-168. The 18 test campaigns already rule out edges above about $6 a trade, about $5,400 a month. Baseline here is zero (does fading make money?); a stricter test compares against random picks of the same size. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Constraints</span>
@@ -3805,8 +4847,8 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="36" data-name="whats-next">
-<!-- notes: Close on the roadmap, then hand over to Q&A. -->
+<section class="slide" data-slide="43" data-name="whats-next">
+<!-- notes: SCRIPT (~30s, Arin): Where we go next, in three steps. One, trade magnitude: today the Judge says fade or skip, and next we want to size each fade. Two, the real pipeline: wire the Judge into Catch22's live platform API. Three, auto-scaling, so the workers scale with campaign load. Forward paper trading starts tomorrow, and that is the first thing these build on. Then we'll open it up for questions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">What’s Next</h1>
@@ -3833,8 +4875,9 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="37" data-name="qna">
-<!-- notes: 30 min Q&A. Keep architecture (19) and timeline (33) handy: jump with #19 / #33; appendix starts at #38 in the URL. -->
+<section class="slide" data-slide="44" data-name="qna">
+<!-- notes: SCRIPT (~10s): That's everything from us. Thank you. We're happy to take questions, and we can jump back to the architecture or the timeline if that helps. -->
+<!-- notes: 30 min Q&A. Jump with #19 (architecture) and #38 (timeline); appendix starts at #45 in the URL. -->
 <div class="c-closing ">
   <h1 class="reveal">Questions?</h1>
   <div class="c-closing__card reveal">
@@ -3845,7 +4888,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="38" data-name="section-appendix">
+<section class="slide" data-slide="45" data-name="section-appendix">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">A</span>
   <div class="c-section-divider__text">
@@ -3857,7 +4900,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="39" data-name="app-correlation">
+<section class="slide" data-slide="46" data-name="app-correlation">
 <!-- notes: Appendix. Pearson correlation of the point-in-time features with each other and with the two targets (last two rows and columns). Leaked stop and target fields are already removed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -3886,7 +4929,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="40" data-name="app-learning-calibration">
+<section class="slide" data-slide="47" data-name="app-learning-calibration">
 <!-- notes: Appendix. Left: validation AUC against training campaigns on the gross target is flat (correlation −0.383), so more campaigns do not help yet. Right: calibration fitted on out-of-fold predictions only; isotonic moves Brier 0.2384 to 0.2380. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -3905,7 +4948,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="41" data-name="app-shap-features">
+<section class="slide" data-slide="48" data-name="app-shap-features">
 <!-- notes: Appendix. Per-feature mean |SHAP|. Solid bars: full 26-feature model. Faded bars: no_outcome model. Colours are feature groups. Take outcome history away and prior_sl_use_rate and sec_since_last_close take over. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -3934,7 +4977,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="42" data-name="app-arms">
+<section class="slide" data-slide="49" data-name="app-arms">
 <!-- notes: Appendix. Held-out AUC for each nested feature set on each of the nine locked campaigns (69–77). Full 26 features 0.606, no_outcome (18) 0.571, behaviour_only (14) 0.570, ticket_only (6) 0.510. Paired drop from removing outcome history: −0.035, CI −0.046 to −0.023, 9 of 9 campaigns. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -3953,7 +4996,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="43" data-name="app-cost-curve">
+<section class="slide" data-slide="50" data-name="app-cost-curve">
 <!-- notes: Appendix. The reversing cost is a constant $7 per lot, which is what flips the sign of fade-everything. Sweeping the assumed cost from $0 to $7, the model's rule sits between the 13.5th and 22.9th percentile of random selection at the same exposure at every level. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -3972,7 +5015,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="45" data-name="app-market-data">
+<section class="slide" data-slide="51" data-name="app-market-data">
 <!-- notes: Appendix. Market-data features on the no_outcome arm, across three learners. Share of mean |SHAP| divided by a uniform share, so 1.0 means indifferent. AUC says neutral-to-better, dollars say worse in all eight arms. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -3991,7 +5034,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="46" data-name="app-dropped">
+<section class="slide" data-slide="52" data-name="app-dropped">
 <!-- notes: Appendix. Levers we tried and dropped, with the measured result. Market context: 18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005 (CI −0.0018 to +0.0025); 14 Yahoo macro features B+C −$23.5k to −$47.6k; NB14 flips negative on all three learners. SL/TP channel: even the leaked flag buys only +0.006. Hyperparameters: 50 Optuna trials +0.0028 CV AUC. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4017,7 +5060,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="47" data-name="app-decomposition">
+<section class="slide" data-slide="53" data-name="app-decomposition">
 <!-- notes: Appendix. Value of perfecting each part of the hurdle model, in dollars per campaign at the top-5% readout. As fitted: classifier +687, gain arm +216, loss arm +229. Perfected ceilings: classifier +13,146, gain arm +24,663, loss arm +10,050. Marginal question: perfect classifier given perfect regressors adds +351; perfect gain and loss regressors given a perfect classifier add +12,417, 35 times more. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4036,7 +5079,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="48" data-name="app-cv-layout">
+<section class="slide" data-slide="54" data-name="app-cv-layout">
 <!-- notes: Appendix. Blocked cross-validation layout used in Notebook 12 and the final judge. Pool campaigns 33–68 train six expanding folds (12 campaigns to start, 4-campaign validation blocks). The final model is refit on the whole pool. The locked test block is 69–77, with 78–86 since added to the held-out set. Nothing trains on its own future. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4055,7 +5098,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="49" data-name="app-feature-arms">
+<section class="slide" data-slide="55" data-name="app-feature-arms">
 <!-- notes: Appendix. The 26 features in four buckets (ticket, behaviour, outcome, counter) and which feature set (arm) keeps which. Sets are nested, so the filled region only shrinks left to right and the outcome block disappears first: full 26, no_outcome 18, behaviour_only 14, ticket_only 6. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4084,7 +5127,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="50" data-name="app-topk">
+<section class="slide" data-slide="56" data-name="app-topk">
 <!-- notes: Appendix. Top-k ranking quality: each arm fades the same fraction of every campaign, so exposure is identical and only the picks differ. Realised reverseProfit in $000 against random at matched exposure. The full model, which sees outcome history, sits below random at every fraction (e.g. −$23.1k vs −$14.2k at 50%). The other arms hover around random. All lines are negative at most fractions: this is a ranking check, not a profit claim. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4103,7 +5146,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="51" data-name="app-hyperparams">
+<section class="slide" data-slide="57" data-name="app-hyperparams">
 <!-- notes: Appendix. Final hyperparameters of the v5 judge (judge_v5_gross_18, 18 no_outcome features). Source: scripts/target_ablation.py BASE, CLF_PARAMS, REG_PARAMS. One LightGBM parameter set shared by all three models; the classifier uses binary loss, the gain and loss regressors use huber. Early stopping 100 rounds; final refit at the median best iteration across the six folds: classifier 44 trees, gain 6,392, loss 6,412. Isotonic calibration on leave-one-fold-out predictions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4191,9 +5234,11 @@ body.overview .deck-viewport {
   const counter = stage.querySelector(".deck-counter");
   let current = 0;
 
-  /* === SCALE === uniform fit, never re-layout */
+  const viewport = document.querySelector(".deck-viewport");
+
+  /* === SCALE === uniform fit to the viewport box (shrinks when the notes panel is open), never re-layout */
   function fit() {
-    const scale = Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H);
+    const scale = Math.min(viewport.clientWidth / STAGE_W, viewport.clientHeight / STAGE_H);
     stage.style.setProperty("--stage-scale", scale);
   }
   window.addEventListener("resize", fit);
@@ -4217,6 +5262,7 @@ body.overview .deck-viewport {
     if (counter) counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
     history.replaceState(null, "", `#${current + 1}`);
     syncOverview();
+    syncNotes();
   }
 
   function fromHash() {
@@ -4274,6 +5320,10 @@ body.overview .deck-viewport {
       case "o":
       case "O":
         toggleOverview(true);
+        break;
+      case "n":
+      case "N":
+        toggleNotes();
         break;
     }
   });
@@ -4373,9 +5423,13 @@ body.overview .deck-viewport {
   function save() {
     toggleEdit(false);
     slides.forEach((s) => s.classList.remove("active"));
-    toggleBtn.remove();
+    const notesOpen = document.body.classList.contains("notes-open");
+    toggleNotes(false);
+    const chrome = [toggleBtn, notesBtn, notesPanel];
+    chrome.forEach((el) => el.remove());
     const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-    document.body.appendChild(toggleBtn);
+    chrome.forEach((el) => document.body.appendChild(el));
+    toggleNotes(notesOpen);
     go(current);
     const blob = new Blob([html], { type: "text/html" });
     const a = document.createElement("a");
@@ -4432,6 +5486,91 @@ body.overview .deck-viewport {
       ovCells[current]?.focus();
       ovCells[current]?.scrollIntoView({ block: "center" });
     }
+  }
+
+  /* === SPEAKER NOTES === N or bottom-left corner button. Reads each slide's
+     <!-- notes: … --> comments into an editable panel below the stage. Edits
+     autosave to localStorage and are written back into the slide's comment
+     node, so Ctrl/Cmd+S in edit mode downloads them too. */
+  const NOTES_KEY = "pygmy-deck-notes:" + location.pathname;
+  const noteNodes = slides.map((slide) => {
+    const walker = document.createTreeWalker(slide, NodeFilter.SHOW_COMMENT);
+    const found = [];
+    while (walker.nextNode()) if (/^\s*notes:/.test(walker.currentNode.nodeValue)) found.push(walker.currentNode);
+    return found;
+  });
+  const noteText = (node) => node.nodeValue.replace(/^\s*notes:\s*/, "").trim();
+  const slideNotes = noteNodes.map((nodes) => nodes.map(noteText).join("\n\n"));
+
+  /* keep the comment node in sync with the text (one node per slide) */
+  function writeNote(i, text) {
+    slideNotes[i] = text;
+    const safe = ` notes: ${text.replace(/--/g, "\u2013")} `;
+    if (noteNodes[i].length) {
+      noteNodes[i][0].nodeValue = safe;
+      noteNodes[i].slice(1).forEach((n) => n.remove());
+      noteNodes[i] = [noteNodes[i][0]];
+    } else if (text.trim()) {
+      const c = document.createComment(safe);
+      slides[i].appendChild(c);
+      noteNodes[i] = [c];
+    }
+  }
+
+  const readSaved = () => {
+    try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch (_) { return {}; }
+  };
+  const saved = readSaved();
+  Object.keys(saved).forEach((k) => {
+    const i = parseInt(k, 10);
+    if (i >= 0 && i < slides.length && typeof saved[k] === "string") writeNote(i, saved[k]);
+  });
+  function persist(i, text) {
+    try {
+      const all = readSaved();
+      all[i] = text;
+      localStorage.setItem(NOTES_KEY, JSON.stringify(all));
+    } catch (_) { /* storage blocked: edits still live in the page until reload */ }
+  }
+
+  const notesBtn = document.createElement("button");
+  notesBtn.className = "notes-toggle";
+  notesBtn.textContent = "NOTES";
+  notesBtn.title = "Toggle speaker notes (N)";
+  notesBtn.addEventListener("click", () => toggleNotes());
+  document.body.appendChild(notesBtn);
+
+  const notesPanel = document.createElement("aside");
+  notesPanel.className = "deck-notes";
+  notesPanel.setAttribute("aria-label", "Speaker notes");
+  const notesHead = document.createElement("span");
+  notesHead.className = "deck-notes__head";
+  const notesArea = document.createElement("textarea");
+  notesArea.className = "deck-notes__text";
+  notesArea.placeholder = "No notes for this slide. Type here to add some.";
+  notesArea.spellcheck = true;
+  notesArea.addEventListener("input", () => {
+    writeNote(current, notesArea.value);
+    persist(current, notesArea.value);
+  });
+  notesArea.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") notesArea.blur();
+  });
+  notesPanel.append(notesHead, notesArea);
+  document.body.appendChild(notesPanel);
+
+  function syncNotes() {
+    if (!document.body.classList.contains("notes-open")) return;
+    notesHead.textContent = `Notes · ${String(current + 1).padStart(2, "0")} · editable, saved in this browser`;
+    notesArea.value = slideNotes[current];
+    notesArea.scrollTop = 0;
+  }
+
+  function toggleNotes(on = !document.body.classList.contains("notes-open")) {
+    document.body.classList.toggle("notes-open", on);
+    notesBtn.textContent = on ? "HIDE NOTES" : "NOTES";
+    syncNotes();
+    fit();
   }
 
   /* === START === */

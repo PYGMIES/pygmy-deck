@@ -1,0 +1,38 @@
+<!-- Two lanes: Waterfall cascade (one feedback point) vs our 13 two-week sprints.
+     Sprint state: is-done (finished), is-now (current, midterm), plain = planned. -->
+<div class="c-method {{class|}}">
+
+  <section class="c-method__lane is-waterfall reveal">
+    <header class="c-method__head">
+      <h3>Waterfall</h3>
+      <p>Plan everything, then build</p>
+    </header>
+    <ol class="c-method__cascade">
+      <li style="--i: 0;">Requirements</li>
+      <li style="--i: 1;">Design</li>
+      <li style="--i: 2;">Build</li>
+      <li style="--i: 3;">Test</li>
+      <li style="--i: 4;">Deliver</li>
+    </ol>
+    <p class="c-method__verdict">Sponsor feedback<b>Once, at the end</b></p>
+  </section>
+
+  <section class="c-method__lane is-scrum reveal">
+    <header class="c-method__head">
+      <h3>Scrum</h3>
+      <p>What we ran: 2-week sprints</p>
+    </header>
+    <div class="c-method__sprints-wrap">
+      <ol class="c-method__sprints">
+        <li class="is-done">1</li><li class="is-done">2</li><li class="is-done">3</li>
+        <li class="is-done">4</li><li class="is-done">5</li><li class="is-done">6</li>
+        <li class="is-done">7</li><li class="is-done">8</li>
+        <li class="is-now">9<span>Midterm</span></li>
+        <li>10</li><li>11</li><li>12</li><li>13</li>
+      </ol>
+      <p class="c-method__loop">↻ plan · build · review · retro, every sprint</p>
+    </div>
+    <p class="c-method__verdict">Sponsor feedback<b>Every 2 weeks</b></p>
+  </section>
+
+</div>

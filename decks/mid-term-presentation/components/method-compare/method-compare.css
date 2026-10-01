@@ -1,0 +1,139 @@
+/* === COMPONENT (deck): method-compare ===
+   Waterfall vs Scrum lanes: label | track | verdict. Waterfall track is a
+   five-step cascade (--i = step index); Scrum track is 13 sprint chips. */
+.c-method {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.c-method__lane {
+  display: grid;
+  grid-template-columns: 300px 1fr 280px;
+  gap: 48px;
+  align-items: center;
+  padding: 24px 44px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.c-method__lane.is-scrum {
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.c-method__head h3 {
+  font-size: 56px;
+}
+
+.c-method__head p {
+  margin-top: 10px;
+  font-size: 22px;
+  line-height: 1.25;
+  color: var(--ink-muted);
+}
+
+.c-method__verdict {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.c-method__verdict b {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.c-method__lane.is-scrum .c-method__verdict b {
+  color: var(--accent);
+}
+
+/* --- waterfall cascade --- */
+.c-method__cascade {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  height: 140px;
+}
+
+.c-method__cascade li {
+  align-self: start;
+  margin-top: calc(var(--i) * 22px);
+  padding: 13px 0 10px;
+  border-radius: var(--radius-s);
+  background: var(--rule);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--ink-muted);
+}
+
+/* --- scrum sprints --- */
+.c-method__sprints-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+.c-method__sprints {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 8px;
+}
+
+.c-method__sprints li {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 64px;
+  padding-top: 4px;
+  border-radius: var(--radius-s);
+  box-shadow: inset 0 0 0 2px var(--rule);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 28px;
+  color: var(--ink-muted);
+}
+
+.c-method__sprints li.is-done {
+  box-shadow: none;
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-method__sprints li.is-now {
+  box-shadow: none;
+  background: var(--accent);
+  color: var(--on-card);
+}
+
+.c-method__sprints li span {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 8px;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--accent);
+}
+
+.c-method .c-method__loop {
+  max-width: none;
+  font-size: 22px;
+  color: var(--ink-muted);
+}

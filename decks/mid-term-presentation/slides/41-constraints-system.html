@@ -1,0 +1,8 @@
+<!-- notes: SCRIPT (~35s, Arin): Now the limits from the sponsor side and from our scope. First, paper trading only. There is no live execution. We hand the app over, dockerised, for Catch22 to host locally, and their internal systems are out of scope. Second, no live data feed yet. Today data comes in as manual exports, plus a test endpoint for demos. Automated TradeLocker retrieval needs API access and credentials from Catch22 under the NDA, and how we detect the end of a campaign is still open, because they run campaigns with their own scripts. Third, an open question for Clement: the desk's true trading cost per unit. We assume $7.00. Fading every trade breaks even at $1.28, so which number is right changes the decision. -->
+<!-- notes: Sources: SOW sections 4 and 6; PYG-53; Technical Alignment Spec open decisions; PYG-185 (cost question for Clement). -->
+<!-- @slide-title kicker="Constraints · Sponsor &amp; System" text="What Bounds the Scope" -->
+<!-- @card-grid cols="3" class="inset is-centered" -->
+  <!-- @grid-card kicker="Scope" title="Paper trading" body="No live execution. Handed to Catch22 to host locally." -->
+  <!-- @grid-card kicker="Data" title="No live feed yet" body="Manual exports today. TradeLocker access needs Catch22." -->
+  <!-- @grid-card kicker="Open question" title="True trading cost" body="Unknown. We assume $7.00 per unit. Clement to confirm." -->
+<!-- @/card-grid -->
