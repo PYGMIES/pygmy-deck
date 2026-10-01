@@ -1,6 +1,6 @@
 /* === COMPONENT: team-member === charcoal card: big initial top, role + name bottom.
    class="is-light" for a pale card (used for the dev team).
-   photo="assets/x.png" swaps the initial for a photo (cover-cropped, focus = background-position). */
+   photo="assets/x.png" swaps the initial for a photo (cover-cropped, focus = background-position; optional size="auto 220%" zooms in). */
 .c-team-member {
   flex: 1;
   display: flex;
@@ -66,5 +66,5 @@
   min-height: 0;
   margin-bottom: 28px;
   border-radius: calc(var(--radius) - 8px);
-  background: var(--photo) var(--focus) / cover no-repeat;
+  background: var(--photo) var(--focus) / var(--size, cover) no-repeat;
 }
