@@ -40,6 +40,7 @@
     }
     if (counter) counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
     history.replaceState(null, "", `#${current + 1}`);
+    syncOverview();
   }
 
   function fromHash() {
@@ -59,6 +60,10 @@
         e.preventDefault();
         save();
       }
+      return;
+    }
+    if (document.body.classList.contains("overview")) {
+      if (e.key === "Escape" || e.key === "o" || e.key === "O") toggleOverview(false);
       return;
     }
     switch (e.key) {
@@ -89,6 +94,10 @@
       case "F":
         if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
         else document.exitFullscreen?.();
+        break;
+      case "o":
+      case "O":
+        toggleOverview(true);
         break;
     }
   });
@@ -198,6 +207,55 @@
     a.download = (location.pathname.split("/").pop() || "deck.html").replace(/\.html?$/, "") + ".html";
     a.click();
     URL.revokeObjectURL(a.href);
+  }
+
+  /* === OVERVIEW === O toggles a grid of every slide; click/Enter a thumbnail to jump */
+  let overview = null;
+  let ovCells = [];
+
+  function buildOverview() {
+    overview = document.createElement("div");
+    overview.className = "deck-overview";
+    ovCells = slides.map((slide, i) => {
+      const cell = document.createElement("button");
+      cell.type = "button";
+      cell.className = "ov-cell";
+      const name = slide.dataset.name || "";
+      cell.setAttribute("aria-label", `Go to slide ${i + 1}${name ? ": " + name : ""}`);
+
+      const frame = document.createElement("div");
+      frame.className = "ov-frame";
+      frame.appendChild(slide.cloneNode(true));
+      cell.appendChild(frame);
+
+      const num = document.createElement("span");
+      num.className = "ov-num";
+      num.textContent = String(i + 1).padStart(2, "0");
+      cell.appendChild(num);
+
+      cell.addEventListener("click", () => {
+        go(i);
+        toggleOverview(false);
+      });
+      return cell;
+    });
+    ovCells.forEach((cell) => overview.appendChild(cell));
+    document.body.appendChild(overview);
+  }
+
+  function syncOverview() {
+    if (!overview) return;
+    ovCells.forEach((cell, i) => cell.classList.toggle("is-current", i === current));
+  }
+
+  function toggleOverview(on) {
+    if (on && !overview) buildOverview();
+    document.body.classList.toggle("overview", on);
+    if (on) {
+      syncOverview();
+      ovCells[current]?.focus();
+      ovCells[current]?.scrollIntoView({ block: "center" });
+    }
   }
 
   /* === START === */

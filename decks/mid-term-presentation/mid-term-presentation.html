@@ -149,12 +149,108 @@ body.editing [contenteditable="true"] {
   cursor: text;
 }
 
+/* === OVERVIEW === grid of every slide, toggled by O / Esc (core/runtime.js) */
+.deck-overview {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  overflow-y: auto;
+  background: var(--bg-deep, #1a1a1a);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  justify-content: center;
+  align-content: start;
+  gap: 28px;
+  padding: 56px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease-out), visibility 0s linear 0.25s;
+}
+
+body.overview .deck-overview {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.25s var(--ease-out), visibility 0s;
+}
+
+body.overview .deck-viewport {
+  visibility: hidden;
+}
+
+.ov-cell {
+  position: relative;
+  width: 300px;
+  height: 168.75px;
+  overflow: hidden;
+  border-radius: var(--radius-s, 12px);
+  border: 2px solid var(--rule, #888);
+  background: var(--bg);
+  cursor: pointer;
+  padding: 0;
+  appearance: none;
+  transition: border-color 0.15s var(--ease-out), transform 0.15s var(--ease-out);
+}
+
+.ov-cell:hover,
+.ov-cell:focus-visible {
+  border-color: var(--accent, #d9922e);
+  transform: scale(1.03);
+  outline: none;
+}
+
+.ov-cell.is-current {
+  border-color: var(--accent, #d9922e);
+  border-width: 3px;
+}
+
+.ov-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: top left;
+  transform: scale(0.15625); /* 300 / 1920 */
+  pointer-events: none;
+}
+
+.ov-frame .slide {
+  position: static;
+  visibility: visible;
+  opacity: 1;
+  transition: none;
+}
+
+.ov-frame .reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.ov-num {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  z-index: 1;
+  font: 600 12px/1 var(--font-body);
+  letter-spacing: 0.06em;
+  color: var(--on-card, #fff);
+  background: var(--card, #000);
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
 /* === REDUCED MOTION === */
 @media (prefers-reduced-motion: reduce) {
   .slide,
   .slide.active,
   .slide .reveal,
-  .deck-progress {
+  .deck-progress,
+  .deck-overview,
+  .ov-cell {
     transition: none !important;
     animation: none !important;
   }
@@ -204,7 +300,8 @@ body.editing [contenteditable="true"] {
 
   .deck-progress,
   .deck-counter,
-  .edit-toggle {
+  .edit-toggle,
+  .deck-overview {
     display: none;
   }
 }
@@ -3636,6 +3733,7 @@ body.editing [contenteditable="true"] {
     }
     if (counter) counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
     history.replaceState(null, "", `#${current + 1}`);
+    syncOverview();
   }
 
   function fromHash() {
@@ -3655,6 +3753,10 @@ body.editing [contenteditable="true"] {
         e.preventDefault();
         save();
       }
+      return;
+    }
+    if (document.body.classList.contains("overview")) {
+      if (e.key === "Escape" || e.key === "o" || e.key === "O") toggleOverview(false);
       return;
     }
     switch (e.key) {
@@ -3685,6 +3787,10 @@ body.editing [contenteditable="true"] {
       case "F":
         if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
         else document.exitFullscreen?.();
+        break;
+      case "o":
+      case "O":
+        toggleOverview(true);
         break;
     }
   });
@@ -3794,6 +3900,55 @@ body.editing [contenteditable="true"] {
     a.download = (location.pathname.split("/").pop() || "deck.html").replace(/\.html?$/, "") + ".html";
     a.click();
     URL.revokeObjectURL(a.href);
+  }
+
+  /* === OVERVIEW === O toggles a grid of every slide; click/Enter a thumbnail to jump */
+  let overview = null;
+  let ovCells = [];
+
+  function buildOverview() {
+    overview = document.createElement("div");
+    overview.className = "deck-overview";
+    ovCells = slides.map((slide, i) => {
+      const cell = document.createElement("button");
+      cell.type = "button";
+      cell.className = "ov-cell";
+      const name = slide.dataset.name || "";
+      cell.setAttribute("aria-label", `Go to slide ${i + 1}${name ? ": " + name : ""}`);
+
+      const frame = document.createElement("div");
+      frame.className = "ov-frame";
+      frame.appendChild(slide.cloneNode(true));
+      cell.appendChild(frame);
+
+      const num = document.createElement("span");
+      num.className = "ov-num";
+      num.textContent = String(i + 1).padStart(2, "0");
+      cell.appendChild(num);
+
+      cell.addEventListener("click", () => {
+        go(i);
+        toggleOverview(false);
+      });
+      return cell;
+    });
+    ovCells.forEach((cell) => overview.appendChild(cell));
+    document.body.appendChild(overview);
+  }
+
+  function syncOverview() {
+    if (!overview) return;
+    ovCells.forEach((cell, i) => cell.classList.toggle("is-current", i === current));
+  }
+
+  function toggleOverview(on) {
+    if (on && !overview) buildOverview();
+    document.body.classList.toggle("overview", on);
+    if (on) {
+      syncOverview();
+      ovCells[current]?.focus();
+      ovCells[current]?.scrollIntoView({ block: "center" });
+    }
   }
 
   /* === START === */
