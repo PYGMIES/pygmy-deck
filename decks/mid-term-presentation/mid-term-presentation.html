@@ -487,6 +487,10 @@ body.overview .deck-viewport {
   --chart-rand: #6f7772;       /* random average */
   --danger: #b3302b;           /* limits, losses */
   --danger-bg: #f8e1df;
+  --success: #1f7a68;          /* good outcomes, solutions */
+  --token-blue: #7fa8de;      /* queue tokens (trade ids), same in both themes */
+  --token-amber: #f5a623;
+  --token-grey: #c9d0da;
 }
 
 /* ===== THEME DARK ===== */
@@ -522,6 +526,10 @@ body.overview .deck-viewport {
   --chart-rand: #6f7772;       /* random average */
   --danger: #e2675f;
   --danger-bg: #3c2322;
+  --success: #4fb89a;          /* good outcomes, solutions */
+  --token-blue: #7fa8de;      /* queue tokens (trade ids), same in both themes */
+  --token-amber: #f5a623;
+  --token-grey: #c9d0da;
 }
 
 /* ===== THEME BASE ===== */
@@ -2135,6 +2143,644 @@ body.overview .deck-viewport {
   transform-origin: center;
 }
 
+/* ===== COMPONENT flow-heading ===== */
+/* === COMPONENT (deck): flow-heading ===
+   Title + optional sub-line + coloured tag (Problem / Solution / Asynchronous).
+   Deliberately NOT .reveal: it stays still between build steps so only the new
+   piece of the diagram animates. */
+.c-flow-heading {
+  flex: none;
+}
+
+.c-flow-heading h1 {
+  font-size: var(--fs-title);
+  line-height: 1;
+}
+
+.c-flow-heading p {
+  max-width: none;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: 1;
+}
+
+.c-flow-heading__sub {
+  margin-top: 22px;
+  font-size: var(--fs-h3);
+}
+
+.c-flow-heading__tag {
+  margin-top: 18px;
+  font-size: var(--fs-h3);
+}
+
+.c-flow-heading__tag--good {
+  color: var(--success);
+}
+
+.c-flow-heading__tag--bad {
+  color: var(--danger);
+}
+
+/* ===== COMPONENT flow-stage ===== */
+/* === COMPONENT (deck): flow-stage ===
+   Block holding absolutely-positioned flow pieces on the full 1920×1080 stage.
+   Coordinates in child components are stage px (origin = slide top-left).
+   Used by the step-by-step build slides (async processing, race conditions). */
+.c-flow-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.c-flow-stage__defs {
+  position: absolute;
+}
+
+/* ===== COMPONENT flow-node ===== */
+/* === COMPONENT (deck): flow-node ===
+   Rounded labelled box at stage coordinates. tone: dark | mid | good. */
+.c-flow-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.c-flow-node strong {
+  font-weight: 700;
+}
+
+.c-flow-node span {
+  font-size: var(--fs-small);
+}
+
+.c-flow-node--dark {
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-flow-node--mid {
+  background: color-mix(in srgb, var(--card) 78%, var(--bg));
+  color: var(--on-card);
+}
+
+.c-flow-node--good {
+  background: var(--success);
+  color: var(--bg);
+}
+
+/* ===== COMPONENT flow-arrow ===== */
+/* === COMPONENT (deck): flow-arrow ===
+   Straight arrow from (x1,y1) to (x2,y2) in stage px. tone: ink | danger.
+   Arrowhead markers are defined once in flow-stage. */
+.c-flow-arrow {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.c-flow-arrow--ink path {
+  stroke: var(--ink);
+  marker-end: url(#flow-head-ink);
+}
+
+.c-flow-arrow--danger path {
+  stroke: var(--danger);
+  marker-end: url(#flow-head-danger);
+}
+
+/* ===== COMPONENT flow-queue ===== */
+/* === COMPONENT (deck): flow-queue ===
+   Three-cell queue, top-left of the cells at (x, y). Label sits above or
+   below (label-pos). Tokens a/b/c are trade ids; colour follows the id
+   (12 blue, 11 amber, 10 grey) so the same trade keeps its colour. */
+.c-flow-queue {
+  position: absolute;
+  width: 291px;
+  height: 82px;
+}
+
+.c-flow-queue__label {
+  position: absolute;
+  left: -40px;
+  right: -40px;
+  max-width: none;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 32px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.c-flow-queue--above .c-flow-queue__label {
+  bottom: 100%;
+  margin-bottom: 18px;
+}
+
+.c-flow-queue--below .c-flow-queue__label {
+  top: 100%;
+  margin-top: 18px;
+}
+
+.c-flow-queue__cells {
+  display: flex;
+}
+
+.c-flow-queue__cell {
+  display: grid;
+  place-items: center;
+  width: 97px;
+  height: 82px;
+  margin-right: -3px;
+  border: 4px solid var(--ink);
+}
+
+.c-flow-queue__tok,
+.c-flow-token {
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 0;
+  color: var(--chart-ink);
+  background: var(--token-grey);
+}
+
+.c-flow-queue__tok:empty {
+  display: none;
+}
+
+.c-flow-queue__tok[data-n="12"],
+.c-flow-token[data-n="12"] {
+  background: var(--token-blue);
+}
+
+.c-flow-queue__tok[data-n="11"],
+.c-flow-token[data-n="11"] {
+  background: var(--token-amber);
+}
+
+/* ===== COMPONENT flow-note ===== */
+/* === COMPONENT (deck): flow-note ===
+   Centred caption at stage coordinates (x, y = top-left, w = width).
+   tone: ink | danger | good. */
+.c-flow-note {
+  position: absolute;
+  max-width: none;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.c-flow-note--danger {
+  color: var(--danger);
+}
+
+.c-flow-note--good {
+  color: var(--success);
+}
+
+/* ===== COMPONENT flow-db ===== */
+/* === COMPONENT (deck): flow-db === database cylinder, top-left at (x, y), 93×118. */
+.c-flow-db {
+  position: absolute;
+  width: 93px;
+  height: 118px;
+  fill: var(--bg);
+  stroke: var(--ink);
+  stroke-width: 5;
+  stroke-linejoin: round;
+}
+
+/* ===== COMPONENT flow-token ===== */
+/* === COMPONENT (deck): flow-token ===
+   A loose trade token, centred on (x, y). Look is shared with the queue tokens
+   (rules live in flow-queue.css). */
+.c-flow-token {
+  position: absolute;
+  margin: -33px 0 0 -33px;
+}
+
+/* ===== COMPONENT flow-x ===== */
+/* === COMPONENT (deck): flow-x === danger-coloured cross centred on (x, y), 80×80. */
+.c-flow-x {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 -40px;
+  fill: none;
+  stroke: var(--danger);
+  stroke-width: 11;
+  stroke-linecap: round;
+}
+
+/* ===== COMPONENT flow-kit ===== */
+/* === COMPONENT (deck): flow-kit ===
+   Fixed-size canvas + diagram primitives shared by the Key Design Decisions
+   diagrams (async-compare, race-timeline, close-flow, redis-roles, cache-check,
+   sse-flow, judge-service, local-stack). Same look as arch-diagram: grey lanes,
+   charcoal nodes, accent data-flow wires, italic wire labels.
+   Children are absolutely positioned at design-size px. */
+.c-flow-kit {
+  --node: color-mix(in srgb, var(--card) 80%, var(--bg));
+  position: relative;
+  flex: none;
+}
+
+.fk-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.fk-canvas > * {
+  position: absolute;
+}
+
+/* --- Lanes (grey panels) --- */
+.fk-lane {
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.fk-lane__label {
+  z-index: 2;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+/* --- Outlined groups --- */
+.fk-group {
+  z-index: 1;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.fk-group--dashed {
+  border-style: dashed;
+}
+
+.fk-group__title {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  letter-spacing: -0.01em;
+}
+
+/* --- Nodes --- */
+.fk-node {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: var(--radius);
+  background: var(--node);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 32px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.fk-node small {
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-card-muted);
+}
+
+.fk-node--dark {
+  background: var(--card);
+}
+
+.fk-node--pill {
+  border-radius: 999px;
+  font-size: 28px;
+}
+
+/* decision / neutral: outlined, ink on canvas */
+.fk-node--outline {
+  background: var(--bg);
+  border: 3px solid var(--ink);
+  color: var(--ink);
+}
+
+.fk-node--outline small {
+  color: var(--ink-muted);
+}
+
+.fk-node--accent {
+  box-shadow: 0 0 0 4px var(--accent);
+}
+
+.fk-node--bad {
+  background: var(--danger-bg);
+  border: 3px solid var(--danger);
+  color: var(--danger);
+}
+
+.fk-node--bad small {
+  color: var(--danger);
+}
+
+.fk-node--dim {
+  background: transparent;
+  border: 3px dashed var(--rule);
+  color: var(--ink-muted);
+}
+
+/* --- Bars (timelines) --- */
+.fk-bar {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  border-radius: var(--radius-s);
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 22px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.fk-bar--soft {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.fk-bar--empty {
+  background: transparent;
+  border: 3px dashed var(--danger);
+  color: var(--danger);
+}
+
+.fk-bar--ok {
+  background: var(--bg);
+  border: 3px solid var(--ink);
+  color: var(--ink);
+}
+
+/* --- Wires (one SVG overlay per diagram) --- */
+.fk-wires {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.fk-flow {
+  color: var(--accent);
+}
+
+.fk-ink {
+  color: var(--ink);
+}
+
+.fk-muted {
+  color: var(--ink-muted);
+}
+
+.fk-danger {
+  color: var(--danger);
+}
+
+.fk-dashed {
+  stroke-dasharray: 10 10;
+}
+
+/* --- Text --- */
+.fk-label {
+  z-index: 4;
+  white-space: nowrap;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.fk-callout {
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.fk-callout--bad {
+  color: var(--danger);
+}
+
+.c-flow-kit .fk-note {
+  z-index: 2;
+  max-width: none;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--ink-muted);
+}
+
+/* --- Small card: icon/title/body, used for takeaways --- */
+.fk-card {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 0 32px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.fk-card svg {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fk-card strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.fk-card span {
+  display: block;
+  margin-top: 8px;
+  font-size: 21px;
+  line-height: 1.25;
+  color: var(--ink-muted);
+}
+
+.fk-label--plain {
+  font-style: normal;
+}
+
+.fk-dots {
+  z-index: 2;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* --- Highlight band (e.g. a race window on a timeline) --- */
+.fk-band {
+  z-index: 1;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+}
+
+/* struck-through: something a component deliberately does without */
+.fk-node--struck {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+}
+
+/* ===== COMPONENT redis-roles ===== */
+/* === COMPONENT (deck): redis-roles ===
+   Slide 41: the one Redis instance doing three jobs (queues highlighted). 520x720 canvas.
+   Primitives come from flow-kit; place inside <!-- @flow-kit width="520px" -->. */
+.c-redis-roles {
+  z-index: 0;
+}
+
+/* ===== COMPONENT compare-table ===== */
+/* === COMPONENT: compare-table ===
+   Children are <thead>/<tbody> rows. Mark a highlighted column cell with
+   class="is-focus", good/bad values with class="is-good" / "is-bad". */
+.c-compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 30px;
+  font-variant-numeric: tabular-nums;
+}
+
+.c-compare-table th,
+.c-compare-table td {
+  padding: 24px 28px;
+  text-align: right;
+  border-bottom: 2px solid var(--rule);
+}
+
+.c-compare-table th:first-child,
+.c-compare-table td:first-child {
+  text-align: left;
+}
+
+.c-compare-table thead th {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 36px;
+  letter-spacing: -0.01em;
+  color: var(--ink-accent);
+  border-bottom: var(--rule-w) solid var(--ink);
+}
+
+.c-compare-table .is-focus {
+  background: var(--card);
+  color: var(--on-card);
+  font-weight: 700;
+}
+
+.c-compare-table thead .is-focus {
+  color: var(--on-card);
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+}
+
+.c-compare-table tbody tr:last-child .is-focus {
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+}
+
+.c-compare-table .is-good::after {
+  content: " \2191";
+}
+
+.c-compare-table .is-bad {
+  color: var(--ink-muted);
+}
+
+/* ===== COMPONENT cache-check ===== */
+/* === COMPONENT (deck): cache-check ===
+   Slide 42: an open compares the trade count in the Redis hash with Postgres; on a mismatch
+   it rebuilds the hash from Postgres before asking the Judge.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-cache-check {
+  z-index: 0;
+}
+
+/* ===== COMPONENT sse-flow ===== */
+/* === COMPONENT (deck): sse-flow ===
+   Slide 43: one-way live-event path, then WebSocket (two-way, dimmed) vs SSE (one-way, highlighted).
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-sse-flow {
+  z-index: 0;
+}
+
+/* ===== COMPONENT local-stack ===== */
+/* === COMPONENT (deck): local-stack ===
+   Slide 45: every service as a Docker container on the sponsor's machine, plus three reasons.
+   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
+.c-local-stack {
+  z-index: 0;
+}
+
 /* ===== COMPONENT funnel ===== */
 /* === COMPONENT (deck): funnel ===
    Stacked bars that narrow top to bottom, each with a one-line "what we did".
@@ -2235,62 +2881,6 @@ body.overview .deck-viewport {
   font-size: var(--fs-body);
   color: var(--ink-muted);
   min-height: 2.7em; /* keeps labels aligned when captions wrap differently */
-}
-
-/* ===== COMPONENT compare-table ===== */
-/* === COMPONENT: compare-table ===
-   Children are <thead>/<tbody> rows. Mark a highlighted column cell with
-   class="is-focus", good/bad values with class="is-good" / "is-bad". */
-.c-compare-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 30px;
-  font-variant-numeric: tabular-nums;
-}
-
-.c-compare-table th,
-.c-compare-table td {
-  padding: 24px 28px;
-  text-align: right;
-  border-bottom: 2px solid var(--rule);
-}
-
-.c-compare-table th:first-child,
-.c-compare-table td:first-child {
-  text-align: left;
-}
-
-.c-compare-table thead th {
-  font-family: var(--font-display);
-  font-weight: var(--display-weight);
-  font-size: 36px;
-  letter-spacing: -0.01em;
-  color: var(--ink-accent);
-  border-bottom: var(--rule-w) solid var(--ink);
-}
-
-.c-compare-table .is-focus {
-  background: var(--card);
-  color: var(--on-card);
-  font-weight: 700;
-}
-
-.c-compare-table thead .is-focus {
-  color: var(--on-card);
-  border-radius: var(--radius-s) var(--radius-s) 0 0;
-}
-
-.c-compare-table tbody tr:last-child .is-focus {
-  border-radius: 0 0 var(--radius-s) var(--radius-s);
-}
-
-.c-compare-table .is-good::after {
-  content: " \2191";
-}
-
-.c-compare-table .is-bad {
-  color: var(--ink-muted);
 }
 
 /* ===== COMPONENT shap-bars ===== */
@@ -3152,11 +3742,17 @@ body.overview .deck-viewport {
 /* ===== DECK OVERRIDES ===== */
 /* === DECK OVERRIDES === */
 
-/* Short card row: centre it in the space under the slide title (slide 37) */
+/* Short card row: centre it in the space under the slide title (slide 50) */
 .c-card-grid.is-centered {
   flex: 1;
   min-height: 0;
   align-content: center;
+}
+
+/* compare-table: keep each cell on one line (slide 33, Why Redis) */
+.c-compare-table.is-nowrap th,
+.c-compare-table.is-nowrap td {
+  white-space: nowrap;
 }
 </style>
 </head>
@@ -4138,7 +4734,802 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="24" data-name="section-journey">
+<section class="slide" data-slide="24" data-name="async-1-request">
+<!-- notes: Jerrick. A trade request arrives at FastAPI. -->
+<header class="c-flow-heading ">
+  <h1>Processing trades asynchronously</h1>
+  <p class="c-flow-heading__sub"></p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Asynchronous</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-node c-flow-node--dark reveal" style="left: 137px; top: 496px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Request</strong>
+  <span></span>
+</div>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 479px; top: 246px; width: 147px; height: 742px;">
+  <strong style="font-size: 28px;">FastAPI</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M350 553 L479 553"/>
+</svg>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="25" data-name="async-2-queues">
+<!-- notes: Jerrick. FastAPI does not process the trade. It drops it onto an open-trade queue or a close-trade queue. -->
+<header class="c-flow-heading ">
+  <h1>Processing trades asynchronously</h1>
+  <p class="c-flow-heading__sub"></p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Asynchronous</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-node c-flow-node--dark " style="left: 137px; top: 496px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Request</strong>
+  <span></span>
+</div>
+  <div class="c-flow-node c-flow-node--mid " style="left: 479px; top: 246px; width: 147px; height: 742px;">
+  <strong style="font-size: 28px;">FastAPI</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M350 553 L479 553"/>
+</svg>
+  <div class="c-flow-queue c-flow-queue--above reveal" style="left: 748px; top: 490px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <div class="c-flow-queue c-flow-queue--below reveal" style="left: 748px; top: 690px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 530 L748 530"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 731 L748 731"/>
+</svg>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="26" data-name="async-3-response">
+<!-- notes: Jerrick. The client gets a response straight after enqueuing, so nobody waits on the model. -->
+<header class="c-flow-heading ">
+  <h1>Processing trades asynchronously</h1>
+  <p class="c-flow-heading__sub"></p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Asynchronous</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-node c-flow-node--dark " style="left: 137px; top: 496px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Request</strong>
+  <span></span>
+</div>
+  <div class="c-flow-node c-flow-node--mid " style="left: 479px; top: 246px; width: 147px; height: 742px;">
+  <strong style="font-size: 28px;">FastAPI</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M350 553 L479 553"/>
+</svg>
+  <div class="c-flow-queue c-flow-queue--above " style="left: 748px; top: 490px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 748px; top: 690px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 530 L748 530"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 731 L748 731"/>
+</svg>
+  <div class="c-flow-node c-flow-node--good reveal" style="left: 137px; top: 673px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Response</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M479 730 L350 730"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink reveal" style="left: 53px; top: 818px; width: 380px; font-size: 32px;">Immediate provide a<br>response after enqueuing</p>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="27" data-name="async-4-workers">
+<!-- notes: Jerrick. Workers pull from each queue. Opening a trade asks the Judge for inference, fetches the Oanda price and writes to the database. Closing a trade only needs the database. -->
+<header class="c-flow-heading ">
+  <h1>Processing trades asynchronously</h1>
+  <p class="c-flow-heading__sub"></p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Asynchronous</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-node c-flow-node--dark " style="left: 137px; top: 496px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Request</strong>
+  <span></span>
+</div>
+  <div class="c-flow-node c-flow-node--mid " style="left: 479px; top: 246px; width: 147px; height: 742px;">
+  <strong style="font-size: 28px;">FastAPI</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M350 553 L479 553"/>
+</svg>
+  <div class="c-flow-queue c-flow-queue--above " style="left: 748px; top: 490px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 748px; top: 690px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 530 L748 530"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 731 L748 731"/>
+</svg>
+  <div class="c-flow-node c-flow-node--good " style="left: 137px; top: 673px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Response</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M479 730 L350 730"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink " style="left: 53px; top: 818px; width: 380px; font-size: 32px;">Immediate provide a<br>response after enqueuing</p>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 1173px; top: 473px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1037 530 L1173 530"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 1186px; top: 672px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1037 731 L1186 731"/>
+</svg>
+  <div class="c-flow-node c-flow-node--dark reveal" style="left: 1142px; top: 254px; width: 213px; height: 115px;">
+  <strong style="font-size: 28px;">Judge</strong>
+  <span>(Inference)</span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1315 472 L1218 370"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1263 370 L1346 472"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 1401px; top: 251px; width: 229px; height: 115px;">
+  <strong style="font-size: 23px;">Oanda Market<br>Price Service</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1523 472 L1481 368"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1538 368 L1561 472"/>
+</svg>
+  <svg class="c-flow-db reveal" style="left: 1673px; top: 251px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1726 472 L1698 370"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1741 370 L1754 472"/>
+</svg>
+  <svg class="c-flow-db reveal" style="left: 1395px; top: 886px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1512 788 L1420 886"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1460 886 L1537 788"/>
+</svg>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="28" data-name="race-1-queues">
+<!-- notes: Jerrick. Open and close trades sit on separate queues and run in parallel, so a close can be picked up before its open has been processed. -->
+<header class="c-flow-heading ">
+  <h1>Race Conditions</h1>
+  <p class="c-flow-heading__sub">Close trades processed before its corresponding open trade</p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--bad">Problem</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-queue c-flow-queue--above reveal" style="left: 336px; top: 458px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="10">10</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 498 L900 498"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 900px; top: 440px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <div class="c-flow-queue c-flow-queue--below reveal" style="left: 336px; top: 657px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M628 694 L906 694"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid reveal" style="left: 907px; top: 637px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="29" data-name="race-2-check-db">
+<!-- notes: Jerrick. The close worker takes trade 11 and checks the database for the matching open trade. -->
+<header class="c-flow-heading ">
+  <h1>Race Conditions</h1>
+  <p class="c-flow-heading__sub">Close trades processed before its corresponding open trade</p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--bad">Problem</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-queue c-flow-queue--above " style="left: 336px; top: 458px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="10">10</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 498 L900 498"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 900px; top: 440px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 336px; top: 657px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M628 694 L906 694"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 907px; top: 637px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+  <i class="c-flow-token reveal" data-n="11" style="left: 960px; top: 693px;">11</i>
+  <svg class="c-flow-db reveal" style="left: 1199px; top: 884px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1245 752 L1245 880"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink reveal" style="left: 1266px; top: 775px; width: 340px; font-size: 32px;">Check the DB if there is a<br>corresponding open trade</p>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="30" data-name="race-3-no-match">
+<!-- notes: Jerrick. The open trade for 11 is still waiting in its queue, so the database has nothing. The close cannot be processed. -->
+<header class="c-flow-heading ">
+  <h1>Race Conditions</h1>
+  <p class="c-flow-heading__sub">Close trades processed before its corresponding open trade</p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--bad">Problem</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-queue c-flow-queue--above " style="left: 336px; top: 458px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="10">10</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 498 L900 498"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 900px; top: 440px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 336px; top: 657px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M628 694 L906 694"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 907px; top: 637px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+  <i class="c-flow-token " data-n="11" style="left: 960px; top: 693px;">11</i>
+  <svg class="c-flow-db " style="left: 1199px; top: 884px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1245 752 L1245 880"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink " style="left: 1266px; top: 775px; width: 340px; font-size: 32px;">Check the DB if there is a<br>corresponding open trade</p>
+  <svg class="c-flow-x reveal" style="left: 960px; top: 693px;" viewBox="0 0 80 80" aria-hidden="true">
+  <path d="M8 8 L72 72 M72 8 L8 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--danger reveal" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1213 880 L1213 752"/>
+</svg>
+  <p class="c-flow-note c-flow-note--danger reveal" style="left: 955px; top: 775px; width: 240px; font-size: 32px;">No corresponding<br>open trade!</p>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="31" data-name="race-4-solution">
+<!-- notes: Jerrick. The fix. Do not drop the close and do not block on it. -->
+<header class="c-flow-heading ">
+  <h1>Race Conditions</h1>
+  <p class="c-flow-heading__sub">Close trades processed before its corresponding open trade</p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Solution</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-queue c-flow-queue--above " style="left: 336px; top: 458px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="10">10</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 498 L900 498"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 900px; top: 440px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 336px; top: 657px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M628 694 L906 694"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 907px; top: 637px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+  <i class="c-flow-token " data-n="11" style="left: 960px; top: 693px;">11</i>
+  <svg class="c-flow-db " style="left: 1199px; top: 884px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1245 752 L1245 880"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink " style="left: 1266px; top: 775px; width: 340px; font-size: 32px;">Check the DB if there is a<br>corresponding open trade</p>
+  <svg class="c-flow-arrow c-flow-arrow--danger " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1213 880 L1213 752"/>
+</svg>
+  <p class="c-flow-note c-flow-note--danger " style="left: 955px; top: 775px; width: 240px; font-size: 32px;">No corresponding<br>open trade!</p>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="32" data-name="race-5-requeue">
+<!-- notes: Jerrick. Move the close trade to the back of the close queue and try again later. By then the open trade has usually been processed. -->
+<header class="c-flow-heading ">
+  <h1>Race Conditions</h1>
+  <p class="c-flow-heading__sub">Close trades processed before its corresponding open trade</p>
+  <p class="c-flow-heading__tag c-flow-heading__tag--good">Solution</p>
+</header>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage ">
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-flow-queue c-flow-queue--above " style="left: 336px; top: 458px;">
+  <p class="c-flow-queue__label">Open trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="10">10</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M626 498 L900 498"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 900px; top: 440px; width: 685px; height: 115px;">
+  <strong style="font-size: 28px;">Process open trade</strong>
+  <span></span>
+</div>
+  <div class="c-flow-queue c-flow-queue--below " style="left: 336px; top: 657px;">
+  <p class="c-flow-queue__label">Close trade queue</p>
+  <div class="c-flow-queue__cells">
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n=""></i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="11">11</i></span>
+    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="12">12</i></span>
+  </div>
+</div>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M628 694 L906 694"/>
+</svg>
+  <div class="c-flow-node c-flow-node--mid " style="left: 907px; top: 637px; width: 678px; height: 115px;">
+  <strong style="font-size: 28px;">Process close trade</strong>
+  <span></span>
+</div>
+  <svg class="c-flow-db " style="left: 1199px; top: 884px;" viewBox="0 0 93 118" aria-hidden="true">
+  <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
+  <path d="M6.5 19 V99 C6.5 107 24 113 46.5 113 C69 113 86.5 107 86.5 99 V19"/>
+  <path d="M6.5 45 C6.5 53 24 59 46.5 59 C69 59 86.5 53 86.5 45"/>
+  <path d="M6.5 72 C6.5 80 24 86 46.5 86 C69 86 86.5 80 86.5 72"/>
+</svg>
+  <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1245 752 L1245 880"/>
+</svg>
+  <p class="c-flow-note c-flow-note--ink " style="left: 1266px; top: 775px; width: 340px; font-size: 32px;">Check the DB if there is a<br>corresponding open trade</p>
+  <svg class="c-flow-arrow c-flow-arrow--danger " viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M1213 880 L1213 752"/>
+</svg>
+  <p class="c-flow-note c-flow-note--danger " style="left: 955px; top: 775px; width: 240px; font-size: 32px;">No corresponding<br>open trade!</p>
+  <p class="c-flow-note c-flow-note--good reveal" style="left: 240px; top: 872px; width: 480px; font-size: 38px;">Move it to the back of the close<br>queue to try again later</p>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="33" data-name="why-redis">
+<!-- notes: Jerrick. Script: Why Redis for the queues? Redis already handles our feature cache and our live events, so the queues live there too: no extra infrastructure to run. Kafka and RabbitMQ would each be a new broker. Kafka is also built for far more traffic than our thousand or so messages per burst, and it cannot requeue a single message, which our fix relies on. Kafka does keep each trader's events in order, but as you just saw, we handle that in our code. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Why Redis?</h1>
+</header>
+<div class="c-split " style="--split-cols: 520px 1fr; --split-align: center;">
+  
+  <div class="c-flow-kit " style="width: 520px; height: 720px;">
+  
+    <div class="c-redis-roles fk-canvas ">
+  <div class="fk-group" style="left: 0; top: 0; width: 520px; height: 560px;">
+    <span class="fk-group__title">One Redis</span>
+  </div>
+  <div class="fk-node fk-node--dark fk-node--pill fk-node--accent" style="left: 40px; top: 100px; width: 440px; height: 116px;">Trade queues<small>streams</small></div>
+  <div class="fk-node fk-node--pill" style="left: 40px; top: 246px; width: 440px; height: 116px;">Feature cache<small>hashes</small></div>
+  <div class="fk-node fk-node--pill" style="left: 40px; top: 392px; width: 440px; height: 116px;">Live events<small>pub/sub</small></div>
+  <span class="fk-callout reveal" style="left: 0; top: 616px; width: 520px; text-align: center; font-size: 44px;">No extra infrastructure</span>
+</div>
+  
+</div>
+  <table class="c-compare-table reveal is-nowrap">
+  
+    <thead><tr><th></th><th class="is-focus">Redis</th><th>Kafka</th><th>RabbitMQ</th></tr></thead>
+    <tbody>
+      <tr><td>Already in our stack</td><td class="is-focus">Yes</td><td class="is-bad">No</td><td class="is-bad">No</td></tr>
+      <tr><td>Sized for our load</td><td class="is-focus">Yes</td><td class="is-bad">Overkill</td><td>Yes</td></tr>
+      <tr><td>Requeue 1 message</td><td class="is-focus">Yes</td><td class="is-bad">No</td><td>Yes</td></tr>
+      <tr><td>Extra service to run</td><td class="is-focus">None</td><td class="is-bad">New broker</td><td class="is-bad">New broker</td></tr>
+      <tr><td>Per-trader order</td><td class="is-focus">In our code</td><td>Yes</td><td class="is-bad">No</td></tr>
+    </tbody>
+  
+</table>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="34" data-name="cache-check">
+<!-- notes: Jerrick. Script: The Redis hash holds each trader's running stats, which become the Judge's features. Because workers process opens and closes separately, the hash can fall behind the database. So before scoring a trade, the open compares the trade count in the hash with the count in Postgres. If they match, we use the hash. If they don't, we rebuild the hash from Postgres first, so the Judge never scores on stale features. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Check the Cache Before Predicting</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-cache-check fk-canvas ">
+  <div class="fk-node fk-node--dark" style="left: 0; top: 290px; width: 260px; height: 120px;">Trade opens</div>
+
+  <div class="fk-node fk-node--pill" style="left: 360px; top: 110px; width: 380px; height: 120px;">Redis hash<small>trade count</small></div>
+  <div class="fk-node fk-node--outline" style="left: 360px; top: 470px; width: 380px; height: 120px;">Postgres<small>trade count</small></div>
+
+  <div class="fk-node fk-node--outline" style="left: 860px; top: 290px; width: 330px; height: 120px;">Counts match?</div>
+
+  <div class="fk-node fk-node--dark fk-node--accent reveal" style="left: 1320px; top: 110px; width: 408px; height: 120px;">Ask the Judge<small>using the hash</small></div>
+  <div class="fk-node fk-node--accent reveal" style="left: 1320px; top: 470px; width: 408px; height: 120px;">Rebuild the hash<small>from Postgres</small></div>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-cache-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-flow">
+      <path d="M264 330 L354 196" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M264 370 L354 504" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M744 196 L854 324" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M744 504 L854 376" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M1194 324 L1314 196" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M1194 376 L1314 504" marker-end="url(#fk-cache-arrow)"/>
+      <path d="M1524 466 V236" marker-end="url(#fk-cache-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 1222px; top: 216px;">Yes</span>
+  <span class="fk-label" style="left: 1222px; top: 456px;">No</span>
+  <span class="fk-label" style="left: 1544px; top: 334px;">then</span>
+
+  <span class="fk-callout reveal" style="left: 0; top: 650px;">Postgres is the source of truth</span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="35" data-name="sse">
+<!-- notes: Jerrick. Script: For the live dashboard we push updates with Server-Sent Events. Workers publish trade events to Redis, the API subscribes, and streams them to the browser. We first considered WebSockets, but they are two-way, and our dashboard never sends anything back. SSE is one-way, runs over plain HTTP, and the browser reconnects by itself. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Live dashboard using Server-Sent Events (SSE)</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-sse-flow fk-canvas ">
+  <!-- The live path: every hop is one-way -->
+  <div class="fk-node fk-node--dark" style="left: 0; top: 50px; width: 300px; height: 120px;">Workers</div>
+  <div class="fk-node fk-node--pill" style="left: 440px; top: 50px; width: 340px; height: 120px;">Redis<small>pub/sub</small></div>
+  <div class="fk-node fk-node--dark" style="left: 920px; top: 50px; width: 340px; height: 120px;">FastAPI<small>/live-trades/stream</small></div>
+  <div class="fk-node fk-node--outline fk-node--accent" style="left: 1400px; top: 50px; width: 328px; height: 120px;">Dashboard<small>browser</small></div>
+
+  <!-- WebSocket: two-way, more than we need -->
+  <div class="fk-lane" style="left: 0; top: 280px; width: 1728px; height: 160px;"></div>
+  <span class="fk-callout" style="left: 48px; top: 336px; color: var(--ink-muted);">WebSocket</span>
+  <div class="fk-node fk-node--dim" style="left: 520px; top: 318px; width: 220px; height: 84px; font-size: 28px;">Server</div>
+  <div class="fk-node fk-node--dim" style="left: 920px; top: 318px; width: 220px; height: 84px; font-size: 28px;">Browser</div>
+  <span class="fk-label fk-label--plain" style="left: 1210px; top: 340px; font-size: 28px; color: var(--ink-muted);">two-way: we never send back</span>
+
+  <!-- SSE: exactly the one-way push we need -->
+  <div class="fk-lane fk-node--accent reveal" style="left: 0; top: 490px; width: 1728px; height: 160px;"></div>
+  <span class="fk-callout" style="left: 48px; top: 546px;">SSE ✓</span>
+  <div class="fk-node fk-node--dark" style="left: 520px; top: 528px; width: 220px; height: 84px; font-size: 28px;">Server</div>
+  <div class="fk-node fk-node--outline" style="left: 920px; top: 528px; width: 220px; height: 84px; font-size: 28px;">Browser</div>
+  <span class="fk-label fk-label--plain" style="left: 1210px; top: 534px; font-size: 28px;">one-way · plain HTTP<br>reconnects by itself</span>
+
+  <svg class="fk-wires" viewBox="0 0 1728 720" aria-hidden="true">
+    <defs>
+      <marker id="fk-sse-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-flow">
+      <path d="M304 110 H434" marker-end="url(#fk-sse-arrow)"/>
+      <path d="M784 110 H914" marker-end="url(#fk-sse-arrow)"/>
+      <path d="M1264 110 H1394" marker-end="url(#fk-sse-arrow)"/>
+      <path d="M744 570 H914" marker-end="url(#fk-sse-arrow)"/>
+    </g>
+    <g class="fk-muted">
+      <path d="M750 360 H910" marker-start="url(#fk-sse-arrow)" marker-end="url(#fk-sse-arrow)"/>
+    </g>
+  </svg>
+  <span class="fk-label" style="left: 318px; top: 66px;">publish</span>
+  <span class="fk-label" style="left: 796px; top: 66px;">subscribe</span>
+  <span class="fk-label" style="left: 1288px; top: 66px;">stream</span>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="36" data-name="docker-local">
+<!-- notes: Jerrick. Script: Finally, everything runs in Docker containers on Catch22's own machine. Three reasons. Our sponsor already has the infrastructure, and the know-how to run it. Trading data is sensitive, so keeping it in their own database is simpler to manage. And there is no extra cost: no monthly cloud bill. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal"></span>
+  <h1 class="reveal">Dockerised, Deployed On-Site</h1>
+</header>
+<div class="c-flow-kit " style="width: 1728px; height: 720px;">
+  
+  <div class="c-local-stack fk-canvas ">
+  <div class="fk-group" style="left: 0; top: 20px; width: 1080px; height: 620px;">
+    <span class="fk-group__title">Catch22’s own machine</span>
+  </div>
+  <div class="fk-node" style="left: 40px; top: 110px; width: 310px; height: 130px;">Dashboard<small>container</small></div>
+  <div class="fk-node fk-node--dark" style="left: 385px; top: 110px; width: 310px; height: 130px;">FastAPI<small>container</small></div>
+  <div class="fk-node fk-node--dark" style="left: 730px; top: 110px; width: 310px; height: 130px;">Workers × N<small>containers</small></div>
+  <div class="fk-node" style="left: 40px; top: 280px; width: 310px; height: 130px;">Redis<small>container</small></div>
+  <div class="fk-node fk-node--dark" style="left: 385px; top: 280px; width: 310px; height: 130px;">Judge<small>container</small></div>
+  <div class="fk-node fk-node--dark fk-node--accent" style="left: 730px; top: 280px; width: 310px; height: 130px;">Postgres<small>trading data</small></div>
+  <div class="fk-node fk-node--outline fk-node--pill" style="left: 240px; top: 480px; width: 600px; height: 84px; font-size: 28px;">Docker · started with one command</div>
+  <span class="fk-note" style="left: 0; top: 664px;">Only outside call: OANDA market prices</span>
+
+  <div class="fk-card reveal" style="left: 1160px; top: 20px; width: 568px; height: 190px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="8" y="8" width="40" height="16" rx="4"/><rect x="8" y="32" width="40" height="16" rx="4"/><path d="M16 16h2M16 40h2M30 16h10M30 40h10"/></svg>
+    <div><strong>Sponsor’s hardware</strong><span>They have the machines and the know-how</span></div>
+  </div>
+  <div class="fk-card reveal" style="left: 1160px; top: 235px; width: 568px; height: 190px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="10" y="24" width="36" height="26" rx="5"/><path d="M18 24v-7a10 10 0 0 1 20 0v7"/><path d="M28 34v6"/></svg>
+    <div><strong>Data stays on-site</strong><span>Sensitive trading data in their own database</span></div>
+  </div>
+  <div class="fk-card reveal" style="left: 1160px; top: 450px; width: 568px; height: 190px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="20"/><path d="M34 21c-2-2-4-3-6-3-4 0-6 2-6 5 0 7 13 3 13 10 0 3-3 5-7 5-3 0-5-1-7-3M28 14v4M28 38v4"/></svg>
+    <div><strong>No extra cost</strong><span>No monthly cloud bill</span></div>
+  </div>
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="37" data-name="section-journey">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">06</span>
   <div class="c-section-divider__text">
@@ -4150,7 +5541,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="25" data-name="training-approach">
+<section class="slide" data-slide="38" data-name="training-approach">
 <!-- notes: BA. Our approach to training end to end. One model family, built to be audited: a LightGBM hurdle that scores P(fading wins) and the size of the gain and loss, then combines them as EV = p·E[gain] − (1−p)·E[loss]. Data: 45 one-day campaigns, 68,377 trades, 24 Feb to 12 Aug 2026, one instrument (XAUUSD), about 64 recurring traders. Locked test is campaigns 69–77. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -4183,7 +5574,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="26" data-name="validation">
+<section class="slide" data-slide="39" data-name="validation">
 <!-- notes: Joyce. How we keep ourselves honest: three methodological guardrails. Splits are by campaign in time order: 6 expanding folds on campaigns 33–68, then a locked test block (69–77). Every feature passes a provenance test (blank the current row's exit fields, rebuild the features, assert they are identical) and a leakage gate (forbidden names, |r| with target below 0.95, |ρ| with campaign order below 0.50). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -4217,7 +5608,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="27" data-name="feature-engineering">
+<section class="slide" data-slide="40" data-name="feature-engineering">
 <!-- notes: Yanting. The funnel: we started with every column in the trade export and narrowed to 18 features. Walk top to bottom, one row per step; the next four slides open each step. Counts: 28 raw columns (PYG-90) → 26 point-in-time features (PYG-94, v3 shortlist) → still 26 after testing 48 candidates (PYG-145, v5 = v3) → 18 in the frozen Judge (PYG-185). Row widths are illustrative. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -4246,7 +5637,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="28" data-name="fe-audit">
+<section class="slide" data-slide="41" data-name="fe-audit">
 <!-- notes: Yanting. Step 1 of 4: 28 → usable columns. Every column in master_dataset got exactly one class (target, post-trade, pre-trade, id, constant, duplicate...). The big catch: slPrice/tpPrice are written when the position CLOSES. 37.7% of trades closed exactly at those prices. Five features built on them looked strong and leaked the outcome. Retiring them cost held-out AUC 0.667 → 0.620 (PYG-90, PYG-92). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 1 of 4</span>
@@ -4283,7 +5674,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="29" data-name="fe-signal">
+<section class="slide" data-slide="42" data-name="fe-signal">
 <!-- notes: Yanting. Note the strongest four are all OUTCOME features (the market handed them to the trader); step 4 removes them, so flag it here. Step 2 of 4: build and rank. 26 features built point-in-time in three families (order ticket, rolling trader state inside a campaign, history from earlier campaigns). Ranked on four measures; Spearman is the one to trust. Order-ticket features together score at chance; all the signal is the trader's rolling state. Values below ~0.015 are noise at n=46,520. Near-duplicates (|rho|>0.8) were dropped so importance is not split (PYG-94, PYG-96, PYG-99). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 2 of 4</span>
@@ -4330,7 +5721,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="30" data-name="fe-stress-test">
+<section class="slide" data-slide="43" data-name="fe-stress-test">
 <!-- notes: Yanting. Step 3 of 4: did more help? 22 net-new candidate features from a second feature pass, plus two market blocks: 18 features (ATR, volatility, session, VWAP; -0.0036 AUC, commit 46fd30e) and 4 direction-signed features (chase, trend alignment, provocation, vol rank; +0.0005 AUC, CI [-0.0018, +0.0025], NB11). NB14 re-tests market on the 18-feature roster but its results are not written up yet, so do not quote it. We held the 26 as the frozen, pre-registered shortlist: the burden of proof is on the change. 0 of 22 promoted (PYG-145). Both market blocks had intervals spanning zero (PYG-104). More columns add variance, not signal. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 3 of 4</span>
@@ -4367,7 +5758,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="31" data-name="fe-final-18">
+<section class="slide" data-slide="44" data-name="fe-final-18">
 <!-- notes: Yanting. Step 4 of 4: 26 → 18. Every feature is tagged ticket / behaviour / outcome / counter. The 18 are everything except the 8 outcome-based features. This is the roster the later experiments run on and the only one that has made money in our tests (PYG-185). Source: NB12 "Behaviour or just luck?". OUTCOME = the market handed it to them (win rate, running P&L, streak, drawdown, stop/target hit rates); BEHAVIOUR = the trader chose it. Be upfront: no_outcome is -0.035 held-out AUC vs full, but it is the only arm that made money (+$1,205 at top 5%, +$4,070 at top 10%) and outcome columns took 58.6% of the full model attention. This is a deliberate trade-off. The next slide (Behaviour vs luck) goes deeper. Frozen in one file on 23 Sep. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Feature Engineering · Step 4 of 4</span>
@@ -4399,7 +5790,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="32" data-name="behaviour-vs-luck">
+<section class="slide" data-slide="45" data-name="behaviour-vs-luck">
 <!-- notes: Yanting. SHAP shows how much each feature pushed the model's decision. We average that over many trades to get each feature's share of the model's attention (mean |SHAP|, TreeSHAP, same out-of-fold rows for every arm; Notebook 12 section 4). Full 26-feature model: outcome 58.6%, behaviour 25.2%, ticket 12.4%, counters 3.8%. Outcome = what the market handed the trader (win rate, streak, running P&L, drawdown, stop and target hit rates). Final 18 (no_outcome arm): behaviour 76.3%, ticket 18.1%, counters 5.6%. Top single features: prior_win_rate 0.163 in full; prior_sl_use_rate 0.157 in the final 18. Be upfront that the final 18 is -0.035 held-out AUC vs full but the only arm that made money (+$1,205 at top 5%). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -4454,33 +5845,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="33" data-name="leak">
-<!-- notes: Owner TBC. Deep dive 1: we caught our own leak. slPrice and tpPrice are written when a trade closes, not when it opens: 37.7% of trades closed at one of the levels, and P(fade wins | closed at stop) = 0.82. Five features carried it. Removing them took held-out AUC from 0.667 to 0.620 on one split and one set of hyperparameters. The leak alone scores 0.622; static-only features score 0.496, which is chance. We also retracted an early +$53k behavioural result for the same reason. -->
-<header class="c-slide-title ">
-  <span class="c-slide-title__kicker reveal">How We Got Here</span>
-  <h1 class="reveal">We Caught Our Own Leak</h1>
-</header>
-<div class="c-split inset" style="--split-cols: 640px 1fr; --split-align: start;">
-  
-  <ul class="c-bullet-list ">
-  
-    <li class="reveal"><strong>Written at close.</strong> Stop and target prices only exist once the trade is over</li>
-    <li class="reveal"><strong>Five features</strong> quietly carried the answer</li>
-    <li class="reveal"><strong>Leak alone</strong> scores 0.622, and the honest static features score chance</li>
-  
-</ul>
-  <article class="c-chart-card reveal ">
-  <span class="c-chart-card__kicker">Held-out AUC</span>
-  <h3>What the leak was worth</h3>
-  <img src="data:image/png;base64,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bmK2jUWLFpott3PnDlN8/G3Txx8PM+aVKlXK5Onpadz29fVJ1Sblem/fvmV69dVX0627TJnSRtsbN6JNLVq0SLetm5ubadasmakem+T9LVOmjCk+/rbpp5+mZvh8JteXsp2vr6+pZMmSqdrmz5/ftHjxonQf259+mmpWS/v27Yz7KleubMwvU6a0MT80NNRsHW+/3T9Vm5TrPX78mCkkJCTd/fn442FG299++80UEBCQbtvy5cubTp8+ZdFxIL16jh49YipTpky62yhatKhp3769mXqPfffdeLP2KV+nyfs3f/58473k7u5umjNnzj334fXXXzfWM2zYR8b8SpUqGfP79XvLmF+3bl1j/sKFC+6r/ps3Y00VKlTIsP327dvuWXvlypWN9uvXrzPFx982nT0babae5BqvXr1iPDaurq6mCxf+NcXH3zb99991U5MmjTOsZdCgQek+73e/Vjt0aH/PxyKt90l6x8u5c+dmy2fY/f4dOnQwzeNA8p+Hh4fZ6+Lu/bz78UpvP4cN+yjDx/D111+3qN7p06dluJ4WLVoYbe/+HK5atWqay4wbNzbd/Uv5WZLW8SHlvLT+NmxYf9/Pzfnz50xVqlRJd9358uUzq/3u9216z401fGZn9jXxoI9zZh7Le32/uvsz8O6/5O+NLi4upgoVKpgKFCiQah1PPPGE6datOFN8/G3T9u3bjPlFixY1xcbGGOv6+++/jPt8fHxM169fS7WN0NBQk7u7e6ptBAYGmo4cOWysKyoqylSjRo1098vb29u0bt1ai19P3377Tao26b3HOnXqZLbelJ93af117tzZrL0l38nu9T0oMDDQdOzY0XTf6xUrVky1jL+/v+mDDz6w6H30yy/LTV5eXulu/6mnnjJdvXol1fOX1l/yd4DMfve41/F58eJFmX6f8scff/xl1x89ru5Tyh5X169f1969+yTJ6MFSq1Yt1a6d1CYyMlLHj59QYmKitm/fkWId6Z8meP78vxoz5ltNnTpVvr6+xvzvvvvemM6XL7/ee+9dTZo0SQsWzNfy5cs0f/489e2bNPZUYmKihg37WJJUuHBhrVy5Ql273hlnJSQkRCtXrjD+MrJy5Qr173+nd0WhQoXMli1cuHCqZQ4ePKRBgwZq7tw5xmORtA/fGdOHDh3SW2+9Zfy3rHfvXlqwYIEmTpygokWLSpJWrFip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8D0MDAzQvHkLjB03/rV9RiIiIiIiIiIiKh69KFwBgKurK778amGh0yxctFjwunbt2liwcLGWqYXsKlXCnDmfvOriERGVmEKhQFpa8Z4KSm8fS0vLEo0ZQERERERUkehN4YqI6G2XlpaGLZt/Lu/FoHI28b1JsLa2Lu/FICIiIiJ6I/CULxERERERERER6SUWroiIiIiIiIiISC+xcEVERERERERERHqJhSsiIiIiIiIiItJLLFwREREREREREZFeYuGKiIiIiIiIiIj0EgtXRERERERERESkl1i4IiIiIiIiIiIivcTCFRERERERERER6SUWroiIiIiIiIiISC+xcEVERERERERERHqJhSsiIiIiIiIiItJLLFwREREREREREZFeYuGKiIiIiIiIiIj0EgtXRERERERERESkl1i4IiIiIiIiIiIivcTCFRERERERERER6SUWroiIiIiIiIiISC+xcEVERERERERERHqJhSsiIiIiIiIiItJLLFwREREREREREZFeYuGKiIiIiIiIiIj0EgtXRERERERERESkl1i4IiIiIiIiIiIivcTCFRERERERERER6SUWroiIiIiIiIiISC+xcEVERERERERERHqJhSsiIiIiIiIiItJLLFwREREREREREZFeYuGKiIiIiIiIiIj0EgtXRERERERERESkl1i4IiIiIiIiIiIivcTCFRERERERERER6SUWroiIiIiIiIiISC+xcEVERERERERERHqJhSsiIiIiIiIiItJLLFwREREREREREZFeYuGKiIiIiIiIiIj0EgtXRERERERERESkl1i4IiIiIiIiIiIivcTCFRERERERERER6SUWroiIiIiIiIiISC+xcEVERERERERERHqJhSsiIiIiIiIiItJLLFwREREREREREZFeYuGKiIiIiIiIiIj0EgtXRERERERERESkl1i4IiIiIiIiIiIivcTCFRERERERERER6SUWroiIiIiIiIiISC+xcEVERERERERERHqJhSsiIiIiIiIiItJLLFwREREREREREZFeYuGKiIiIiIiIiIj0EgtXRERERERERESkl1i4IiIiIiIiIiIivcTCFRERERERERER6SUWroiIiIiIiIiISC+xcEVERERERERERHqJhSsiIiIiIiIiItJLLFwREREREREREZFeYuGKiIiIiIiIiIj0EgtX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YGVtjSlTp2HP7t04dvQIatasiZGjRuO7b79R9VGnjie6dOmK7779BmlpaRg0eAiGDBmK5KQkhIWFYtr0j0pnRRC9BpryTaFQ4NChg4iOfgqJxAjejRph8ZJlak9iKgrzjSoyTbkFAJ98Mkf198OHD3D50kV4edXDwkWLAQDpGenYs3s3EhMTYW1tBV/fdhg8RPerrV7o1q07TIyNceTIYezYsR2mpqZwc3NHn755jxxv2qwZevbsiS2bN0Emk6Fp02bo268/zp45reqjS+cuCAkOxrxP5yI7O1v1uPC//voTlStX1vpkX6LXTVO+nT17BnK5HFs2b8KWzZtU07Zv3wFTp00HACQ+e4Yff/weaWlpsLKygmfduli2fAUsLS2LNX/mG1UkmvJNCWDPnl8RFxcHsdgAjo4OGDlyJLrkexpu6zZtkJqaAr+9vyE5ORnu7h74/PMvBOPO6YL5VnGIZLLcYgzxSfT6nThxHLdv38K8efPLe1F0tmf3r0hNTcWkDyeX96IQFQvzjahsvIm5pYsvv/gc3bv3QNt8Z9KJyhvzjej1Yb7R68Arrkjvde3aDVmZmcjJyYGxsXF5L45OLC0t8c67Pct7MYiKjflGVDbexNwqSnpaGpo2a4Y2bduW96IQCTDfiF4f5hu9DrziioiIiIiIiIiI9BIHZyciIiIiIiIiIr3EwhUREREREREREeklFq6IiIiIiIiIiEgvsXBFRERERERERER6iYUrIiIiIiIiIiLSSyxcERERERERERGRXmLhioiIiIiIiIiI9BILV0REREREREREpJdYuCIiIiIiIiIiIr3EwhUREREREREREeml/wOAJ2FpJOH4RgAAAABJRU5ErkJggg==" alt="Held-out AUC for leak-only, static-only, clean and clean-plus-leak feature sets">
-  <p class="c-chart-card__take">0.667 → 0.620<br>Same split, leak removed</p>
-</article>
-
-</div>
-</section>
-
-
-<section class="slide" data-slide="34" data-name="magnitude">
+<section class="slide" data-slide="47" data-name="magnitude">
 <!-- notes: Owner TBC. Deep dive 4: where the signal lives. Giving the model a perfect classifier adds +$351 per campaign; perfect gain and loss regressors add +$12,417, 35 times more. So the money is in how big the win or loss is, not only in calling the direction. Right: what we tried and dropped. Market context was rejected four times (18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005; 14 macro features B+C −$23.5k to −$47.6k; NB14 negative on all three learners). Tuned GBDT beats logistic by +0.002 AUC. Learning curves are flat. A same-day trade-context block added +0.0016 AUC but lost $7,571 at top 5%, so money vetoed it. The full decomposition chart is in the appendix. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">How We Got Here</span>
@@ -4516,7 +5881,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="35" data-name="section-pm">
+<section class="slide" data-slide="48" data-name="section-pm">
 <!-- notes: SCRIPT (~15s, Arin): Last section: how we ran the work as a team. In short: two-week sprints, a retro at the end of every one, and a plan that changes when the results tell us to. I'll cover why we chose Scrum, how a sprint runs, where we are on the timeline, what our retros changed, and what limits the project. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">07</span>
@@ -4529,7 +5894,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="36" data-name="scrum">
+<section class="slide" data-slide="49" data-name="scrum">
 <!-- notes: SCRIPT (~45s, Arin): We ran this project as Scrum, not Waterfall. Waterfall means locking the requirements first, building, and showing the sponsor the result at the end. That couldn't work for us, for three reasons. One: the scope wasn't fixed. Our own Statement of Work left the latency target, the confidence cut-off and the dashboard scope as to be determined. Two: this is research. We can't schedule a model result, so each sprint's scores decided what we tried next. After Sprint 7, for example, the models were only slightly better than random, so we moved on to CatBoost. Three: sponsor inputs arrived mid-project, like the crowding data and TradeLocker access, so we built against stand-ins first. So we ran two-week sprints with a review and a retro each time. Today is the end of Sprint 9. -->
 <!-- notes: Sources: SOW section 3 (TBD items) and the change-request clause; Sprint 7 retro minutes (CatBoost, only slightly better than random); Linear cycle 9 ends 5 Oct. Check: sprint numbering matches what you say aloud. -->
 <header class="c-slide-title ">
@@ -4602,7 +5967,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="37" data-name="sprint-cycle">
+<section class="slide" data-slide="50" data-name="sprint-cycle">
 <!-- notes: SCRIPT (~45s, Arin): Every two weeks we run the same loop. One, plan: we review the stories beforehand, then split into two breakouts, BA for the model and PD for the system, so each squad estimates its own work. Two, build: stand-ups are async in Slack, and nobody has more than one or two tasks in progress. Three, sync: we send Clement short updates two to three times a week. Four, review: we show the sponsor what's done and reshape the backlog. Five, retro: start, stop, continue, and every action gets an owner. Those actions feed straight into the next sprint's plan, which is the arrow along the bottom. Isaiah is our Product Owner, Yan Ting is our Scrum Master, and the work lives in Linear, Slack and Zoom. -->
 <!-- notes: Sources: Linear meeting minutes 27 Aug; Sprint 7 retro minutes. Check: squad membership (BA: Isaiah, Joyce, Yan Ting; PD: Arin, Jamesz, Jerrick) and the 2-3x a week update rhythm with the team. -->
 <header class="c-slide-title ">
@@ -4647,7 +6012,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="38" data-name="timeline">
+<section class="slide" data-slide="51" data-name="timeline">
 <!-- notes: SCRIPT (~40s, Arin): Here's where that puts us on the timeline. The project runs in phases. Phase 0 was scoping in early June. Phase 1 built the baselines: EDA, a scorer and three frozen baselines. Phase 2, which wraps up today, is the Judge and the solution infrastructure. Each phase ends at a gate. Phase 0: logging live and the ID join confirmed. Phase 1: the three baselines frozen before any training. Today is the midpoint gate: does the Judge beat the rules-based system? [Say the gate result here.] From tomorrow, Phase 3 starts: forward paper trading, run daily to build a track record, up to the final gate on 13 November. Handover to Catch22 follows in the last two weeks of November. -->
 <!-- notes: Check before presenting: confirm Phase 0 and Phase 1 gates actually passed, and state the midpoint-gate result in the bracketed line. Dates come from the timeline component (Phase 3: 6 Oct to 16 Nov, handover 17 to 30 Nov). -->
 <header class="c-slide-title ">
@@ -4699,7 +6064,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="39" data-name="retros">
+<section class="slide" data-slide="52" data-name="retros">
 <!-- notes: SCRIPT (~50s, Arin): At the end of every sprint we run a retro, start, stop, continue. This is the one from Sprint 7, and three things stood out. Each got an owner. One: user stories were vague, so people built different things. Now we review stories before planning, and BA and PD plan in separate breakouts. Two: too much was in progress and work got left to the last minute. Now it's at most one or two tasks in progress, and one change per branch. Three: updates were patchy. We added a 7 pm Slack stand-up reminder, and Clement now gets updates two to three times a week. We also kept what worked: async stand-ups and user-centric stories. In the sprint after the retro we closed 39 of 40 issues, up from 17 of 22. That's a raw count, so I wouldn't claim the retro alone caused it, but it's the direction we wanted. -->
 <!-- notes: Source: Linear Sprint 7 retro doc (board + minutes) and cycle stats (39 of 40 in the following sprint, 17 of 22 in Sprint 7). The board also had: start using tech specs, break tasks down further, stop stacking features without merging. -->
 <header class="c-slide-title ">
@@ -4737,7 +6102,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="40" data-name="constraints">
+<section class="slide" data-slide="53" data-name="constraints">
 <!-- notes: SCRIPT (~40s, Arin): Three things limit how far you can trust the results. First, a small test. Our final test is nine held-out campaigns, so a difference smaller than about 0.003 AUC is inside what we can detect. When that happens we say not measurable, never no effect. The sample also isn't random, so results may not generalise. Second, leakage. Stop-loss and take-profit fields are written when a trade closes, so they give away the outcome. Removing them dropped AUC from 0.667 to 0.620. The Judge sits at about 0.61, so the signal is real but modest. Third, cold start. New traders have no history, and for them AUC is about 0.55 against 0.61 for returning traders. -->
 <!-- notes: Sources: PYG-144 and PYG-185 (9 held-out campaigns 69 to 77, MDE, cold start 17% no same-day and 36% no career history), PYG-92 (SL/TP leakage, AUC 0.667 to 0.620). TODO before presenting: Linear shows 45 campaigns in the dataset (33 to 77, PYG-103) while an earlier draft of this slide said 38. Confirm the dataset size and add it back if wanted. -->
 <header class="c-slide-title ">
@@ -4781,7 +6146,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="41" data-name="constraints-system">
+<section class="slide" data-slide="54" data-name="constraints-system">
 <!-- notes: SCRIPT (~35s, Arin): Now the limits from the sponsor side and from our scope. First, paper trading only. There is no live execution. We hand the app over, dockerised, for Catch22 to host locally, and their internal systems are out of scope. Second, no live data feed yet. Today data comes in as manual exports, plus a test endpoint for demos. Automated TradeLocker retrieval needs API access and credentials from Catch22 under the NDA, and how we detect the end of a campaign is still open, because they run campaigns with their own scripts. Third, an open question for Clement: the desk's true trading cost per unit. We assume $7.00. Fading every trade breaks even at $1.28, so which number is right changes the decision. -->
 <!-- notes: Sources: SOW sections 4 and 6; PYG-53; Technical Alignment Spec open decisions; PYG-185 (cost question for Clement). -->
 <header class="c-slide-title ">
@@ -4810,7 +6175,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="42" data-name="edge-setting">
+<section class="slide" data-slide="55" data-name="edge-setting">
 <!-- notes: Owner TBD. The edge is a number we choose before the test, not a model setting: the smallest average profit per faded trade (after the $7-per-lot cost) that would make running the Judge worthwhile. We size the test so an edge that big, if real, would very likely show up. Work back from money: about 95 faded trades per campaign x about 9.4 campaigns a month = roughly 900 faded trades a month, so $3 an edge is about $2,700 a month. Trade-off: test length grows with 1 / edge squared, so halving the edge needs about 4x the campaigns. Campaigns-to-confirm column assumes per-trade sigma of $133-168. The 18 test campaigns already rule out edges above about $6 a trade, about $5,400 a month. Baseline here is zero (does fading make money?); a stricter test compares against random picks of the same size. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Constraints</span>
@@ -4847,7 +6212,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="43" data-name="whats-next">
+<section class="slide" data-slide="56" data-name="whats-next">
 <!-- notes: SCRIPT (~30s, Arin): Where we go next, in three steps. One, trade magnitude: today the Judge says fade or skip, and next we want to size each fade. Two, the real pipeline: wire the Judge into Catch22's live platform API. Three, auto-scaling, so the workers scale with campaign load. Forward paper trading starts tomorrow, and that is the first thing these build on. Then we'll open it up for questions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -4875,16 +6240,20 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="44" data-name="qna">
+<section class="slide" data-slide="57" data-name="qna">
 <!-- notes: SCRIPT (~10s): That's everything from us. Thank you. We're happy to take questions, and we can jump back to the architecture or the timeline if that helps. -->
-<!-- notes: 30 min Q&A. Jump with #19 (architecture) and #38 (timeline); appendix starts at #45 in the URL. -->
+<!-- notes: 30 min Q&A. Jump with #19 (architecture) and #50 (timeline) in the URL. -->
 <div class="c-closing ">
   <h1 class="reveal">Thank you</h1>
+  <div class="c-closing__card reveal">
+    <p></p>
+    <span>Project Cassandra · 5 Oct</span>
+  </div>
 </div>
 </section>
 
 
-<section class="slide" data-slide="45" data-name="section-appendix">
+<section class="slide" data-slide="58" data-name="section-appendix">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">A</span>
   <div class="c-section-divider__text">
@@ -4896,7 +6265,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="46" data-name="app-correlation">
+<section class="slide" data-slide="59" data-name="app-correlation">
 <!-- notes: Appendix. Pearson correlation of the point-in-time features with each other and with the two targets (last two rows and columns). Leaked stop and target fields are already removed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4925,7 +6294,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="47" data-name="app-learning-calibration">
+<section class="slide" data-slide="60" data-name="app-learning-calibration">
 <!-- notes: Appendix. Left: validation AUC against training campaigns on the gross target is flat (correlation −0.383), so more campaigns do not help yet. Right: calibration fitted on out-of-fold predictions only; isotonic moves Brier 0.2384 to 0.2380. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4944,7 +6313,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="48" data-name="app-shap-features">
+<section class="slide" data-slide="61" data-name="app-shap-features">
 <!-- notes: Appendix. Per-feature mean |SHAP|. Solid bars: full 26-feature model. Faded bars: no_outcome model. Colours are feature groups. Take outcome history away and prior_sl_use_rate and sec_since_last_close take over. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4973,7 +6342,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="49" data-name="app-arms">
+<section class="slide" data-slide="62" data-name="app-arms">
 <!-- notes: Appendix. Held-out AUC for each nested feature set on each of the nine locked campaigns (69–77). Full 26 features 0.606, no_outcome (18) 0.571, behaviour_only (14) 0.570, ticket_only (6) 0.510. Paired drop from removing outcome history: −0.035, CI −0.046 to −0.023, 9 of 9 campaigns. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -4992,7 +6361,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="50" data-name="app-cost-curve">
+<section class="slide" data-slide="63" data-name="app-cost-curve">
 <!-- notes: Appendix. The reversing cost is a constant $7 per lot, which is what flips the sign of fade-everything. Sweeping the assumed cost from $0 to $7, the model's rule sits between the 13.5th and 22.9th percentile of random selection at the same exposure at every level. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5011,7 +6380,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="51" data-name="app-market-data">
+<section class="slide" data-slide="64" data-name="app-market-data">
 <!-- notes: Appendix. Market-data features on the no_outcome arm, across three learners. Share of mean |SHAP| divided by a uniform share, so 1.0 means indifferent. AUC says neutral-to-better, dollars say worse in all eight arms. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5030,7 +6399,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="52" data-name="app-dropped">
+<section class="slide" data-slide="65" data-name="app-dropped">
 <!-- notes: Appendix. Levers we tried and dropped, with the measured result. Market context: 18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005 (CI −0.0018 to +0.0025); 14 Yahoo macro features B+C −$23.5k to −$47.6k; NB14 flips negative on all three learners. SL/TP channel: even the leaked flag buys only +0.006. Hyperparameters: 50 Optuna trials +0.0028 CV AUC. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5056,7 +6425,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="53" data-name="app-decomposition">
+<section class="slide" data-slide="66" data-name="app-decomposition">
 <!-- notes: Appendix. Value of perfecting each part of the hurdle model, in dollars per campaign at the top-5% readout. As fitted: classifier +687, gain arm +216, loss arm +229. Perfected ceilings: classifier +13,146, gain arm +24,663, loss arm +10,050. Marginal question: perfect classifier given perfect regressors adds +351; perfect gain and loss regressors given a perfect classifier add +12,417, 35 times more. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5075,7 +6444,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="54" data-name="app-cv-layout">
+<section class="slide" data-slide="67" data-name="app-cv-layout">
 <!-- notes: Appendix. Blocked cross-validation layout used in Notebook 12 and the final judge. Pool campaigns 33–68 train six expanding folds (12 campaigns to start, 4-campaign validation blocks). The final model is refit on the whole pool. The locked test block is 69–77, with 78–86 since added to the held-out set. Nothing trains on its own future. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5094,7 +6463,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="55" data-name="app-feature-arms">
+<section class="slide" data-slide="68" data-name="app-feature-arms">
 <!-- notes: Appendix. The 26 features in four buckets (ticket, behaviour, outcome, counter) and which feature set (arm) keeps which. Sets are nested, so the filled region only shrinks left to right and the outcome block disappears first: full 26, no_outcome 18, behaviour_only 14, ticket_only 6. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5123,7 +6492,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="56" data-name="app-topk">
+<section class="slide" data-slide="69" data-name="app-topk">
 <!-- notes: Appendix. Top-k ranking quality: each arm fades the same fraction of every campaign, so exposure is identical and only the picks differ. Realised reverseProfit in $000 against random at matched exposure. The full model, which sees outcome history, sits below random at every fraction (e.g. −$23.1k vs −$14.2k at 50%). The other arms hover around random. All lines are negative at most fractions: this is a ranking check, not a profit claim. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5142,7 +6511,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="57" data-name="app-hyperparams">
+<section class="slide" data-slide="70" data-name="app-hyperparams">
 <!-- notes: Appendix. Final hyperparameters of the v5 judge (judge_v5_gross_18, 18 no_outcome features). Source: scripts/target_ablation.py BASE, CLF_PARAMS, REG_PARAMS. One LightGBM parameter set shared by all three models; the classifier uses binary loss, the gain and loss regressors use huber. Early stopping 100 rounds; final refit at the median best iteration across the six folds: classifier 44 trees, gain 6,392, loss 6,412. Isotonic calibration on leave-one-fold-out predictions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
