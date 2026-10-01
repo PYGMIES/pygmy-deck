@@ -3260,7 +3260,7 @@ body.overview .deck-viewport {
 /* ===== COMPONENT method-compare ===== */
 /* === COMPONENT (deck): method-compare ===
    Waterfall vs Scrum lanes: label | track | verdict. Waterfall track is a
-   five-step cascade (--i = step index); Scrum track is 13 sprint chips. */
+   five-step cascade (--i = step index); Scrum track is 8 sprint chips, centred. */
 .c-method {
   display: flex;
   flex-direction: column;
@@ -3341,20 +3341,23 @@ body.overview .deck-viewport {
 .c-method__sprints-wrap {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 34px;
 }
 
 .c-method__sprints {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(13, 1fr);
-  gap: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 }
 
 .c-method__sprints li {
   position: relative;
   display: grid;
   place-items: center;
+  flex: none;
+  width: 88px;
   height: 64px;
   padding-top: 4px;
   border-radius: var(--radius-s);
@@ -3394,6 +3397,7 @@ body.overview .deck-viewport {
 
 .c-method .c-method__loop {
   max-width: none;
+  text-align: center;
   font-size: 22px;
   color: var(--ink-muted);
 }
@@ -6387,7 +6391,7 @@ body.overview .deck-viewport {
   <span class="c-slide-title__kicker reveal">Project Management</span>
   <h1 class="reveal">Why Scrum over Waterfall</h1>
 </header>
-<!-- Two lanes: Waterfall cascade (one feedback point) vs our 13 two-week sprints.
+<!-- Two lanes: Waterfall cascade (one feedback point) vs our 8 two-week sprints.
      Sprint state: is-done (finished), is-now (current, midterm), plain = planned. -->
 <div class="c-method inset">
 
@@ -6413,11 +6417,11 @@ body.overview .deck-viewport {
     </header>
     <div class="c-method__sprints-wrap">
       <ol class="c-method__sprints">
-        <li class="is-done">1</li><li class="is-done">2</li><li class="is-done">3</li>
-        <li class="is-done">4</li><li class="is-done">5</li><li class="is-done">6</li>
-        <li class="is-done">7</li><li class="is-done">8</li>
-        <li class="is-now">9<span>Midterm</span></li>
-        <li>10</li><li>11</li><li>12</li><li>13</li>
+        <li class="is-done">1</li>
+        <li class="is-done">2</li>
+        <li class="is-done">3</li>
+        <li class="is-now">4<span>Midterm</span></li>
+        <li>5</li><li>6</li><li>7</li><li>8</li>
       </ol>
       <p class="c-method__loop">↻ plan · build · review · retro, every sprint</p>
     </div>
@@ -6431,21 +6435,21 @@ body.overview .deck-viewport {
   <span class="c-numbered-card__num">1</span>
   <div>
     <h3>Scope wasn't fixed</h3>
-    <p>SOW left latency, cut-off and dashboard “to be determined”</p>
+    <p>Features to explore, dashboard to be decided later on.</p>
   </div>
 </article>
   <article class="c-numbered-card reveal ">
   <span class="c-numbered-card__num">2</span>
   <div>
     <h3>Results set the next step</h3>
-    <p>Each sprint's model scores set what we tried next</p>
+    <p>Each sprint's model scores affects what we tried next.</p>
   </div>
 </article>
   <article class="c-numbered-card reveal ">
   <span class="c-numbered-card__num">3</span>
   <div>
     <h3>Inputs arrived late</h3>
-    <p>Sponsor data and API access landed mid-project</p>
+    <p>Sponsor data and API access given towards the end of the project.</p>
   </div>
 </article>
 
@@ -6460,8 +6464,7 @@ body.overview .deck-viewport {
   <span class="c-slide-title__kicker reveal">Project Management</span>
   <h1 class="reveal">How We Run a Sprint</h1>
 </header>
-<!-- One 2-week sprint as five steps, with a loop arrow from Retro back to Plan.
-     Bottom row: who does the work and the tools that hold it together. -->
+<!-- One 2-week sprint as five steps, with a loop arrow from Retro back to Plan. -->
 <div class="c-cycle inset">
 
   <div class="c-cycle__loop reveal">
@@ -6479,20 +6482,7 @@ body.overview .deck-viewport {
     <p class="c-cycle__return-label">Retro actions feed the next sprint's plan</p>
   </div>
 
-  <div class="c-cycle__team reveal">
-    <section>
-      <span>Leads</span>
-      <b>Isaiah</b> Product Owner<br><b>Yan Ting</b> Scrum Master
-    </section>
-    <section>
-      <span>Two squads</span>
-      <b>BA · model</b> Isaiah, Joyce, Yan Ting<br><b>PD · system</b> Arin, Jamesz, Jerrick
-    </section>
-    <section>
-      <span>Tools</span>
-      <b>Linear</b> backlog &amp; sprints<br><b>Slack</b> stand-ups · <b>Zoom</b> ceremonies
-    </section>
-  </div>
+  <!-- Leads / squads / tools row (.c-cycle__team) was removed from the built deck by hand; CSS kept in case it returns. -->
 
 </div>
 </section>
@@ -6539,13 +6529,11 @@ body.overview .deck-viewport {
   </section>
 
   <section class="c-timeline__gates reveal">
-    <div class="c-timeline__gate"><span>Phase 0 gate</span>Logging live · ID join confirmed</div>
-    <div class="c-timeline__gate"><span>Phase 1 gate</span>3 baselines frozen pre-training</div>
-    <div class="c-timeline__gate is-now"><span>Midpoint gate · today</span>Judge beats the rules-based system</div>
-    <div class="c-timeline__gate"><span>Final gate</span>Credible forward track record</div>
+    <div class="c-timeline__gate"><span>Phase 0</span>Logging live · ID join confirmed</div>
+    <div class="c-timeline__gate"><span>Phase 1</span>3 baselines frozen pre-training</div>
+    <div class="c-timeline__gate is-now"><span>Phase 2 · today</span>Judge beats the rules-based system</div>
+    <div class="c-timeline__gate"><span>Phase 3</span>Credible forward track record</div>
   </section>
-
-  <p class="c-timeline__foot">Phase 4 (simulation): hardening + data-augmentation overlay during Phase 3.</p>
 </div>
 </section>
 
@@ -6572,7 +6560,7 @@ body.overview .deck-viewport {
       <p class="c-retro__fix">Max 1–2 tasks in progress; one change per branch</p>
     </div>
     <div class="c-retro__row reveal">
-      <p class="c-retro__found">Patchy updates to each other and the sponsor</p>
+      <p class="c-retro__found">unsynchronized updates to each other and the sponsor</p>
       <p class="c-retro__fix">7 pm Slack stand-up reminder; Clement updated 2–3× a week</p>
     </div>
   </div>
@@ -6580,7 +6568,7 @@ body.overview .deck-viewport {
   <aside class="c-retro__result reveal">
     <span>The sprint after</span>
     <b>39/40</b>
-    <h3>issues done</h3>
+    <h3>story points done</h3>
     <p>up from 17 of 22 in Sprint 7</p>
   </aside>
 
