@@ -8,42 +8,50 @@
   <!-- Wires -->
   <svg class="c-arch__wires" viewBox="0 0 1728 800" aria-hidden="true">
     <defs>
-      <marker id="arch-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto-start-reverse">
-        <path d="M0 0 L10 5 L0 10 z" fill="currentColor" stroke="none"/>
+      <marker id="arch-arrow" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+        <path d="M2 2 L10.5 6 L2 10" fill="none" stroke="context-stroke" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
       </marker>
     </defs>
     <g class="c-arch__io">
-      <path d="M244 250 H356" marker-end="url(#arch-arrow)"/>
-      <path d="M356 590 H244" marker-end="url(#arch-arrow)"/>
+      <path d="M196 250 H350" marker-end="url(#arch-arrow)"/>
+      <path d="M350 590 H196" marker-end="url(#arch-arrow)"/>
     </g>
     <g class="c-arch__flow">
-      <path d="M566 285 H626" marker-end="url(#arch-arrow)"/>
-      <path d="M1014 400 H1074" marker-start="url(#arch-arrow)" marker-end="url(#arch-arrow)"/>
-      <path d="M1074 95 H921" marker-start="url(#arch-arrow)" marker-end="url(#arch-arrow)"/>
-      <path d="M626 590 H566" marker-end="url(#arch-arrow)"/>
-      <path d="M1346 282 H1424" marker-start="url(#arch-arrow)" marker-end="url(#arch-arrow)"/>
-      <path d="M1346 475 H1424" marker-start="url(#arch-arrow)" marker-end="url(#arch-arrow)"/>
+      <path class="is-orange" d="M560 232 L724 100" marker-end="url(#arch-arrow)"/>
+      <path class="is-orange" d="M560 250 L648 283" marker-end="url(#arch-arrow)"/>
+      <path class="is-orange" d="M560 262 L648 345" marker-end="url(#arch-arrow)"/>
+      <path class="is-black" d="M914 100 L1094 268" marker-start="url(#arch-arrow)" marker-end="url(#arch-arrow)"/>
+      <path class="is-black" d="M989 285 H1094" marker-end="url(#arch-arrow)"/>
+      <path class="is-black" d="M989 347 L1094 302" marker-end="url(#arch-arrow)"/>
+      <path class="is-black" d="M990 470 L1100 322" marker-start="url(#arch-arrow)" marker-end="url(#arch-arrow)"/>
+      <path class="is-red" d="M1136 342 L990 585" marker-end="url(#arch-arrow)"/>
+      <path class="is-black" d="M1330 284 H1424" marker-start="url(#arch-arrow)" marker-end="url(#arch-arrow)"/>
+      <path class="is-black" d="M1328 318 L1434 430" marker-start="url(#arch-arrow)" marker-end="url(#arch-arrow)"/>
+      <path class="is-red" d="M650 590 H560" marker-end="url(#arch-arrow)"/>
     </g>
   </svg>
 
   <!-- Actors -->
-  <div class="c-arch__actor" style="top: 150px;">
+  <div class="c-arch__actor" style="top: 150px; left: -24px;">
     <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="20" cy="12" r="8"/><circle cx="44" cy="12" r="8"/><path d="M4 44c0-10 7-18 16-18s16 8 16 18zM28 44c0-10 7-18 16-18s16 8 16 18z"/></svg>
     <strong>Campaign Traders</strong>
+    <span>trading on C22’s platform</span>
   </div>
+  <span class="c-arch__wire-label" style="left: 213px; top: 212px; width: 120px;">Trade data</span>
 
-  <div class="c-arch__actor" style="top: 520px;">
+  <div class="c-arch__actor" style="top: 520px; left: -24px;">
     <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="12" r="9"/><path d="M14 46c0-11 8-20 18-20s18 9 18 20z"/></svg>
     <strong>C22</strong>
     <span>Clement &amp; Lee Yang</span>
   </div>
+  <span class="c-arch__wire-label" style="left: 198px; top: 604px; width: 150px;">Reverse trade<br>performance</span>
 
   <!-- I/O -->
-  <div class="c-arch__node" style="left: 362px; top: 200px; width: 198px; height: 100px;">FastAPI<small>ingestion</small></div>
-  <div class="c-arch__node" style="left: 362px; top: 540px; width: 198px; height: 100px;">Dashboard<small>visualisation</small></div>
+  <div class="c-arch__node" style="left: 356px; top: 200px; width: 198px; height: 100px;">FastAPI<small>ingestion</small></div>
+  <div class="c-arch__node" style="left: 356px; top: 540px; width: 198px; height: 100px;">Dashboard<small>visualisation</small></div>
 
   <!-- Data & messaging -->
-  <div class="c-arch__node" style="left: 735px; top: 50px; width: 180px; height: 90px;">Postgres</div>
+  <div class="c-arch__node" style="left: 730px; top: 50px; width: 180px; height: 90px;">Postgres</div>
   <div class="c-arch__group" style="left: 632px; top: 190px; width: 376px; height: 460px;">
     <span class="c-arch__group-title">Redis</span>
   </div>
@@ -60,10 +68,10 @@
   <div class="c-arch__node c-arch__node--dark" style="left: 1100px; top: 236px; width: 220px; height: 100px;">Worker #2</div>
   <span class="c-arch__dots" style="left: 1100px; top: 344px;">···</span>
   <div class="c-arch__node c-arch__node--dark" style="left: 1100px; top: 450px; width: 220px; height: 100px;">Worker #N</div>
-  <p class="c-arch__foot" style="left: 1070px; top: 590px; width: 280px;">Scales automatically</p>
+  <p class="c-arch__foot" style="left: 1070px; top: 600px; width: 280px;">Currently operates with one worker, to be automatically scalable</p>
 
   <!-- Services -->
   <div class="c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
   <div class="c-arch__node" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Oanda Market<br>Price Service</div>
-  <p class="c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">Temporary; C22’s own API replaces it</p>
+  <p class="c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22’s own platform API</p>
 </div>
