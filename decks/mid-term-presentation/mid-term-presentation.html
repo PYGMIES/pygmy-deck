@@ -4873,7 +4873,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="19" data-name="nfrs">
-<!-- notes: James Z. Six requirements in two groups. Data reliability: trade records are stored regardless of operating conditions, with outcomes and exceptions recorded; every trade ends in an explicit success or failure. Consistency under concurrency: several workers write to the same Redis state at once; rolling metrics stay aligned and uncorrupted when trades update at the same time. Idempotency: duplicate, overlapping or retried requests are processed safely, with no state mutation and no double-counting; replayed payloads are recognised. Processing latency: the ingestion API never blocks the caller, and downstream processing is fast enough to handle trades on time. Concurrency and throughput: the system scales to sustain up to hundreds of concurrent trades per minute. Auditability: all execution context, judge decisions and errors are recorded and can be traced to a root cause. -->
+<!-- notes: James Z. Six requirements in two groups. Data integrity and safety: Data reliability (trade records are stored regardless of operating conditions, and every trade ends in an explicit success or failure); Auditability (all execution context, judge decisions and errors are recorded and can be traced to a root cause); Idempotency (duplicate, overlapping or retried requests are processed without double-counting outcomes; replayed payloads are recognised). Execution and performance: Processing latency (the ingestion API never blocks the caller; downstream processing handles trades swiftly); Concurrency and throughput (sustains up to hundreds of concurrent trades per minute, scalably); Sequencing (an open trade is processed before its close trade; a close that arrives early waits and is retried, see the race-condition slides). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
   <h1 class="reveal">Non-Functional Requirements</h1>
@@ -4894,10 +4894,10 @@ body.overview .deck-viewport {
   </div>
 </article>
     <article class="c-req-card reveal ">
-  <h3>Consistency under concurrency</h3>
+  <h3>Auditability</h3>
   <div class="c-req-card__row">
-    <span class="c-req-card__icon"><svg viewBox='3 3 42 42'><path d='M5 10L22 24L5 38'/><path d='M22 24H43'/><path d='M37 18L43 24L37 30'/></svg></span>
-    <p>Rolling metrics remain aligned despite concurrent writes.</p>
+    <span class="c-req-card__icon"><svg viewBox='3 3 42 42'><rect x='7' y='5' width='24' height='34' rx='3'/><path d='M13 15h12'/><path d='M13 22h8'/><circle cx='32' cy='31' r='8'/><path d='M38 37l6 6'/></svg></span>
+    <p>All execution context, judge decisions and errors are recorded.</p>
   </div>
 </article>
     <article class="c-req-card reveal ">
@@ -4912,7 +4912,7 @@ body.overview .deck-viewport {
   <div class="c-column " style="--col-width: auto; --col-gap: 16px;">
   
     <header class="c-section-heading reveal is-compact">
-  <h2>Execution &amp; operational transparency</h2>
+  <h2>Execution &amp; performance</h2>
   <p></p>
 </header>
     <article class="c-req-card reveal ">
@@ -4930,10 +4930,10 @@ body.overview .deck-viewport {
   </div>
 </article>
     <article class="c-req-card reveal ">
-  <h3>Auditability</h3>
+  <h3>Sequencing</h3>
   <div class="c-req-card__row">
-    <span class="c-req-card__icon"><svg viewBox='3 3 42 42'><rect x='7' y='5' width='24' height='34' rx='3'/><path d='M13 15h12'/><path d='M13 22h8'/><circle cx='32' cy='31' r='8'/><path d='M38 37l6 6'/></svg></span>
-    <p>All execution context, judge decisions and errors are recorded.</p>
+    <span class="c-req-card__icon"><svg viewBox='3 3 42 42'><circle cx='9' cy='10' r='4'/><path d='M19 10h24'/><circle cx='9' cy='24' r='4'/><path d='M19 24h24'/><circle cx='9' cy='38' r='4'/><path d='M19 38h24'/></svg></span>
+    <p>Trades are processed sequentially (open comes before close).</p>
   </div>
 </article>
   
