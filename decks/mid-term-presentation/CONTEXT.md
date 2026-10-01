@@ -44,21 +44,21 @@
 | 32 | `32-behaviour-vs-luck` | Behaviour vs luck: SHAP share of attention, full 26 vs final 18 (`shap-bars`) | Yanting | done |
 | 33 | `33-model-selection` | Models tried + selection metrics | Joyce, Isaiah | TODO |
 | 34 | `34-market-data` | Did market data help? | Joyce, Isaiah | TODO |
-| 35 | `35-section-pm` | ◆ 07 Project Management | Yanting | — |
-| 36 | `36-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Yanting | done |
-| 37 | `37-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Yanting | done |
-| 38 | `38-timeline` | Project timeline (now = Midterm) | Yanting | done |
-| 39 | `39-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, Sprint 8 39/40 issues (`retro-changes`) | Yanting | done |
-| 40 | `40-constraints` | Constraints · Data & Model: 9 held-out campaigns, not a random sample, leakage removed (AUC ~0.61), cold start | TBD | done (sourced from Linear) |
-| 41 | `41-constraints-system` | Constraints · Sponsor & System: paper trading only, no live feed, true cost unknown ($7.00 assumed) | TBD | done (sourced from Linear) |
-| 42 | `42-whats-next` | Trade magnitude · real pipeline · auto-scaling | TBD | done |
+| 35 | `35-section-pm` | ◆ 07 Project Management | Arin | — |
+| 36 | `36-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Arin | done |
+| 37 | `37-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
+| 38 | `38-timeline` | Project timeline (now = Midterm) | Arin | done |
+| 39 | `39-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, Sprint 8 39/40 issues (`retro-changes`) | Arin | done |
+| 40 | `40-constraints` | Constraints · Data & Model: 9 held-out campaigns, not a random sample, leakage removed (AUC ~0.61), cold start | Arin | done (sourced from Linear) |
+| 41 | `41-constraints-system` | Constraints · Sponsor & System: paper trading only, no live feed, true cost unknown ($7.00 assumed) | Arin | done (sourced from Linear) |
+| 42 | `42-whats-next` | Trade magnitude · real pipeline · auto-scaling | Arin | done |
 | 43 | `43-qna` | Questions | — | done |
 
 ## Open items
 - Slide 36: Linear (PYG-103) shows 45 campaigns / 68,377 trades; the old slide said 38. The slide now shows the 9 held-out campaigns instead. Confirm the dataset size and decide whether to add it back.
 - Slides 36–37 numbers come from PYG-92, 144, 185 and the SOW; re-check them if the model or the 18-feature freeze changes.
 - PM slides 36–39 are sourced from Linear (SOW, Sprint 7 retro board + minutes, cycle stats). Only the Sprint 7 retro is filled in; Calf/Juvenile retro docs are empty templates. Add later retros to slide 39 when written up.
-- Confirm who presents Constraints & What's Next (agenda says TBD).
+- Constraints & What's Next (slides 40–42) are presented by Arin.
 - Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 16 charts use rolling windows (p95 130 / p50 57); slide 17 uses fixed 30-min slots (p95 121.4 / p50 59.5).
 - Replace the slide 09 target ladder with measured results + CIs when available.
 - Confirm Phase 0 / Phase 1 gates passed → mark them on slide 38 (`project-timeline` gates).
