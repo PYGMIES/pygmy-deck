@@ -28,7 +28,7 @@
 | 16 | `16-chosen-timeslots` | Chosen Timeslots: 3:30–4:00 typical·calm, 5:30–6:00 busy·volatile | Joyce, JS | done |
 | 17 | `17-live-trades` | Live trade page @10×, 2 screens | Jerrick | screenshots TODO |
 | 18 | `18-section-architecture` | ◆ 04 System Architecture | Jamesz | — |
-| 19 | `19-nfrs` | Non-Functional Requirements: 6 requirements in 2 groups (data integrity & safety | execution & performance, 3 cards each) (`req-card`) | Jamesz | done |
+| 19 | `19-nfrs` | Non-Functional Requirements: 6 requirements in 2 groups (data integrity & safety | execution & operational transparency, 3 cards each) (`req-card`) | Jamesz | done |
 | 20 | `20-architecture` | Architecture diagram | James Z | done |
 | 21 | `21-workflow-campaign-start` | Workflow 1: Campaign Start (6-step flow, 2 arrowed notes, transaction callout) | James Z | done |
 | 22 | `22-workflow-open-trade` | Workflow 2: Open Trade (6-step flow, steps 3–6 framed as async, 2 arrowed notes + Key notes card) | James Z | done |
