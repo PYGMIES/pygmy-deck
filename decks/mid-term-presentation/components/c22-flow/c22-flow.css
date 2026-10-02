@@ -1,6 +1,8 @@
 /* === COMPONENT (deck): c22-flow ===
-   Catch22's current workflow: five steps left to right with arrows.
-   The step tagged --focus is the part this project owns. */
+   Catch22's workflow told through Sally (a challenge trader) and Alex (the
+   real-market trader she may be cloning): five steps left to right.
+   The step tagged --focus is the part this project owns.
+   is-step-N: the story is at step N; later steps are dimmed, step N is ringed. */
 .c-c22-flow {
   display: flex;
   align-items: center;
@@ -27,7 +29,7 @@
 }
 
 .c-c22-flow__box {
-  height: 440px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,14 +43,14 @@
 }
 
 .c-c22-flow__box h3 {
-  font-size: 68px;
+  font-size: 60px;
   color: inherit;
   line-height: 0.95;
   letter-spacing: -0.03em;
 }
 
 .c-c22-flow__sub {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 600;
   line-height: 1.2;
   max-width: none;
@@ -81,3 +83,18 @@
   background: var(--card);
   color: var(--on-card);
 }
+
+/* story position: steps after N wait, step N is ringed */
+.c-c22-flow__step { transition: opacity 0.5s var(--ease-out); }
+.c-c22-flow__box { outline: 0 solid transparent; outline-offset: 6px; }
+
+.c-c22-flow.is-step-1 .c-c22-flow__step--s2, .c-c22-flow.is-step-1 .c-c22-flow__step--s3, .c-c22-flow.is-step-1 .c-c22-flow__step--s4, .c-c22-flow.is-step-1 .c-c22-flow__step--s5 { opacity: 0.22; }
+.c-c22-flow.is-step-2 .c-c22-flow__step--s3, .c-c22-flow.is-step-2 .c-c22-flow__step--s4, .c-c22-flow.is-step-2 .c-c22-flow__step--s5 { opacity: 0.22; }
+.c-c22-flow.is-step-3 .c-c22-flow__step--s4, .c-c22-flow.is-step-3 .c-c22-flow__step--s5 { opacity: 0.22; }
+.c-c22-flow.is-step-4 .c-c22-flow__step--s5 { opacity: 0.22; }
+.c-c22-flow.is-step-1 .c-c22-flow__step--s1 .c-c22-flow__box { outline: 6px solid var(--ink); }
+.c-c22-flow.is-step-2 .c-c22-flow__step--s2 .c-c22-flow__box { outline: 6px solid var(--ink); }
+.c-c22-flow.is-step-3 .c-c22-flow__step--s3 .c-c22-flow__box { outline: 6px solid var(--ink); }
+.c-c22-flow.is-step-4 .c-c22-flow__step--s4 .c-c22-flow__box { outline: 6px solid var(--ink); }
+.c-c22-flow.is-step-5 .c-c22-flow__step--s5 .c-c22-flow__box { outline: 6px solid var(--ink); }
+.c-c22-flow.is-step-5 .c-c22-flow__step--s5 .c-c22-flow__box { outline-color: var(--danger); }
