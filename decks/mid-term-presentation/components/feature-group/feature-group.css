@@ -107,3 +107,6 @@
 }
 
 .c-feature-group__foot strong { color: var(--on-card); font-weight: 600; }
+
+/* no foot param → no empty rule at the bottom */
+.c-feature-group .c-feature-group__foot:empty { display: none; }

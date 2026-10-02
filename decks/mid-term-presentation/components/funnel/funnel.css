@@ -67,3 +67,51 @@
   color: var(--ink-accent);
   margin-bottom: 4px;
 }
+
+/* is-in-card: compact funnel inside a charcoal card (panel-card). Rows = version label + centred bar,
+   lighter bars so they read on --card; .is-final bar uses the soft accent. */
+.c-funnel.is-in-card {
+  flex: 1;
+  justify-content: center;
+  gap: 16px;
+}
+
+.c-funnel.is-in-card .c-funnel__row {
+  grid-template-columns: 64px 1fr;
+  gap: var(--gap-s);
+}
+
+.c-funnel.is-in-card .c-funnel__label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  color: var(--on-card-muted);
+}
+
+.c-funnel.is-in-card .c-funnel__bar {
+  height: 74px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--on-card-muted) 45%, transparent);
+}
+
+.c-funnel.is-in-card .c-funnel__bar b { font-size: 44px; }
+
+.c-funnel.is-in-card .is-final .c-funnel__label { color: var(--on-card); }
+
+.c-funnel.is-in-card .is-final .c-funnel__bar {
+  outline: none;
+  background: var(--accent-soft);
+  color: var(--card);
+}
+
+.c-funnel.is-in-card .is-final .c-funnel__bar b { color: var(--card); }
+
+/* caption under a bar (e.g. the final row), centred on the bar column */
+.c-funnel.is-in-card .c-funnel__caption {
+  grid-column: 2;
+  margin-top: -6px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--accent-soft);
+}
