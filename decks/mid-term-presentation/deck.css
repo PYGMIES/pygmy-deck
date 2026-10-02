@@ -136,7 +136,7 @@
 .c-split.is-dropped .c-panel-card__body { justify-content: space-between; }
 .c-split.is-dropped .c-panel-card__body p code { font-family: var(--font-mono); font-size: 20px; color: var(--on-card-muted); }
 
-.dropped-chart { margin: 0; padding: 48px 28px 40px; border-radius: var(--radius-s); background: var(--chart-bg); }
+.dropped-chart { margin: 0; padding: 16px 28px 22px; border-radius: var(--radius-s); background: var(--chart-bg); }
 .dropped-chart svg { display: block; width: 100%; height: auto; font-family: var(--font-body); }
 .dropped-chart .legend text { font-size: 22px; fill: var(--chart-ink); }
 .dropped-chart .grid { stroke: var(--chart-grid); stroke-width: 2; }
@@ -151,3 +151,6 @@
 .dropped-chart .is-without { fill: var(--chart-rand); }
 .dropped-chart circle { stroke: var(--chart-bg); stroke-width: 3; }
 .c-card-grid.is-before-features .c-feature-group__head sub { line-height: 0; }
+.dropped-chart__key { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; margin: 18px 0 0; padding-top: 16px; border-top: 2px solid var(--chart-grid); font-size: 20px; color: var(--chart-ink); }
+.dropped-chart__key dt { font-weight: 600; }
+.dropped-chart__key dd { margin: 0; font-family: var(--font-mono); font-size: 19px; color: var(--chart-ink-muted); }

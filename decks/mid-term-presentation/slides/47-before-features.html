@@ -2,7 +2,7 @@
 No variance: the same value on every trade (always gold, always USD, lot size 100, no swap, cross prices of 1), so there is nothing to learn from.
 IDs and identity: trade and order IDs, the account, email and IP address. These would teach the model who is trading, not how they trade.
 Near-duplicates: pairs with Spearman correlation above 0.8 carry the same information twice. commission and amount are −1.00: the fee is a flat $35 per lot, so commission is just trade size again. We kept amount. openPrice and campaignId are −0.86 because both just follow the gold price over time, so we kept neither.
-Outcome leakage: profit and netProfit are the result of the trade. Our profit is the mirror image of the customer's, and netProfit is profit plus commission and swap. They can never be inputs. -->
+Outcome leakage: profit and netProfit are the result of the trade. profit is the reverse of the reverser's profit, and netProfit is profit plus commission and swap. They can never be inputs. -->
 <!-- @slide-title kicker="Step 02: Feature engineering" text="Raw Fields We Ruled Out" -->
 <!-- @card-grid cols="4" class="inset is-before-features" -->
   <!-- @feature-group count="6" title="No variance" note="Same value on every trade" -->
@@ -20,7 +20,7 @@ Outcome leakage: profit and netProfit are the result of the trade. Our profit is
     <li><strong>Both follow gold’s trend</strong><code>openPrice ↔ campaignId</code><code>r<sub>s</sub> = −0.86</code></li>
   <!-- @/feature-group -->
   <!-- @feature-group count="2" title="Outcome leakage" note="The trade’s result, so never an input" -->
-    <li><strong>Customer profit</strong><code>profit</code><span>Our profit is its mirror image</span></li>
+    <li><strong>Profit</strong><span>The reverse of the reverser’s profit</span></li>
     <li><strong>Profit after costs</strong><code>netProfit</code><code>= profit + commission + swap</code></li>
   <!-- @/feature-group -->
 <!-- @/card-grid -->

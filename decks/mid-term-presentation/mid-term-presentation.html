@@ -4623,7 +4623,7 @@ body.overview .deck-viewport {
 .c-split.is-dropped .c-panel-card__body { justify-content: space-between; }
 .c-split.is-dropped .c-panel-card__body p code { font-family: var(--font-mono); font-size: 20px; color: var(--on-card-muted); }
 
-.dropped-chart { margin: 0; padding: 48px 28px 40px; border-radius: var(--radius-s); background: var(--chart-bg); }
+.dropped-chart { margin: 0; padding: 16px 28px 22px; border-radius: var(--radius-s); background: var(--chart-bg); }
 .dropped-chart svg { display: block; width: 100%; height: auto; font-family: var(--font-body); }
 .dropped-chart .legend text { font-size: 22px; fill: var(--chart-ink); }
 .dropped-chart .grid { stroke: var(--chart-grid); stroke-width: 2; }
@@ -4638,6 +4638,9 @@ body.overview .deck-viewport {
 .dropped-chart .is-without { fill: var(--chart-rand); }
 .dropped-chart circle { stroke: var(--chart-bg); stroke-width: 3; }
 .c-card-grid.is-before-features .c-feature-group__head sub { line-height: 0; }
+.dropped-chart__key { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; margin: 18px 0 0; padding-top: 16px; border-top: 2px solid var(--chart-grid); font-size: 20px; color: var(--chart-ink); }
+.dropped-chart__key dt { font-weight: 600; }
+.dropped-chart__key dd { margin: 0; font-family: var(--font-mono); font-size: 19px; color: var(--chart-ink-muted); }
 </style>
 </head>
 <body>
@@ -7011,7 +7014,7 @@ Q&A: If asked 'isn't it the same number of calls?': Roughly, yes. The difference
 No variance: the same value on every trade (always gold, always USD, lot size 100, no swap, cross prices of 1), so there is nothing to learn from.
 IDs and identity: trade and order IDs, the account, email and IP address. These would teach the model who is trading, not how they trade.
 Near-duplicates: pairs with Spearman correlation above 0.8 carry the same information twice. commission and amount are −1.00: the fee is a flat $35 per lot, so commission is just trade size again. We kept amount. openPrice and campaignId are −0.86 because both just follow the gold price over time, so we kept neither.
-Outcome leakage: profit and netProfit are the result of the trade. Our profit is the mirror image of the customer's, and netProfit is profit plus commission and swap. They can never be inputs. -->
+Outcome leakage: profit and netProfit are the result of the trade. profit is the reverse of the reverser's profit, and netProfit is profit plus commission and swap. They can never be inputs. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Step 02: Feature engineering</span>
   <h1 class="reveal">Raw Fields We Ruled Out</h1>
@@ -7078,7 +7081,7 @@ Outcome leakage: profit and netProfit are the result of the trade. Our profit is
   </header>
   <ul class="c-feature-group__list">
     
-    <li><strong>Customer profit</strong><code>profit</code><span>Our profit is its mirror image</span></li>
+    <li><strong>Profit</strong><span>The reverse of the reverser’s profit</span></li>
     <li><strong>Profit after costs</strong><code>netProfit</code><code>= profit + commission + swap</code></li>
   
   </ul>
@@ -7104,7 +7107,7 @@ Didn't pay: fair to use, but on 9 campaigns the model had never seen, adding the
     <span class="c-feature-group__count">6</span>
     <div>
       <h3>Leakage</h3>
-      <p>Information the model won’t have at trade time</p>
+      <p>Information the model won’t have at open trade time</p>
     </div>
   </header>
   <ul class="c-feature-group__list">
@@ -7125,7 +7128,7 @@ Didn't pay: fair to use, but on 9 campaigns the model had never seen, adding the
   <div class="c-panel-card__body">
     
     <figure class="dropped-chart">
-      <svg viewBox="-60 0 1060 330" role="img" aria-label="Profit without vs with each feature block. Same-day habits: −$1,591 without, −$9,162 with. Market data: +$1,205 without, −$3,515 with.">
+      <svg viewBox="-60 10 1060 310" role="img" aria-label="Profit without vs with each feature block. Same-day habits: −$1,591 without, −$9,162 with. Market data: +$1,205 without, −$3,515 with.">
         <defs>
           <marker id="dropped-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10 z" class="is-with-fill"/>
@@ -7158,6 +7161,10 @@ Didn't pay: fair to use, but on 9 campaigns the model had never seen, adding the
         <text x="913" y="196" class="val">+$1,205</text>
         <text x="634" y="196" class="val is-strong">−$3,515</text>
       </svg>
+      <dl class="dropped-chart__key">
+        <dt>Same-day habits</dt><dd>tc_revenge, tc_side_flip, tc_reentry_fast</dd>
+        <dt>Market data</dt><dd>chase_bps, trend_align_bps, vol_rank</dd>
+      </dl>
     </figure>
     <p class="is-ruled"><strong>Predicted stop-loss</strong> <code>p_sl</code><br>Overlapped 90% with “stop-loss habit”, a feature we already had. Added nothing new.</p>
   
