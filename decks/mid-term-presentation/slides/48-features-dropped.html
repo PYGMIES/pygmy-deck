@@ -1,0 +1,53 @@
+<!-- notes: Yanting. Before the final 18, some features we built didn't make the cut, for two reasons.
+Leakage: the model sees information it wouldn't have yet, like a student seeing the exam answers. It scores brilliantly in testing, then fails for real. All six came from the stop-loss and take-profit columns, which hold the final levels saved when the trade closed, not what was set at the start. 15% of stop-losses had been moved into profit, and 37.7% of trades ended exactly at one of these levels.
+Didn't pay: fair to use, but on 9 campaigns the model had never seen, adding them made our top-5% bets lose more. Same-day habits (trading bigger after a loss, switching buy/sell, jumping back in within 60 seconds): −$1,591 without, −$9,162 with. Market data (chasing a recent price jump, trading with the trend, how volatile the market is): +$1,205 without, −$3,515 with. Predicted stop-loss (p_sl, a separate model's guess of whether this customer sets a stop-loss) overlapped 90% with the stop-loss habit feature we already had, so it added nothing new. -->
+<!-- @slide-title kicker="Step 02: Feature engineering" text="The 13 Features We Dropped" -->
+<!-- @split cols="560px 1fr" class="inset is-dropped" -->
+  <!-- @feature-group count="6" title="Leakage" note="Information the model won’t have at open trade time" -->
+    <li><strong>Stop-loss or target set?</strong><code>has_sl, has_tp</code></li>
+    <li><strong>Distance to stop and target</strong><code>sl_dist_bps, tp_dist_bps, implied_rr</code></li>
+    <li><strong>Stop moved past entry</strong><code>sl_beyond_entry</code></li>
+  <!-- @/feature-group -->
+  <!-- @panel-card count="7" title="Fair, but didn’t pay" note="Profit from our top-5% bets, 9 campaigns the model never saw" -->
+    <figure class="dropped-chart">
+      <svg viewBox="-60 10 1060 310" role="img" aria-label="Profit without vs with each feature block. Same-day habits: −$1,591 without, −$9,162 with. Market data: +$1,205 without, −$3,515 with.">
+        <defs>
+          <marker id="dropped-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" class="is-with-fill"/>
+          </marker>
+        </defs>
+        <!-- legend -->
+        <g class="legend">
+          <circle cx="300" cy="34" r="9" class="is-without"/><text x="318" y="42">without</text>
+          <circle cx="470" cy="34" r="9" class="is-with"/><text x="488" y="42">with the block</text>
+        </g>
+        <!-- grid: x(v) = 220 + (v + 10500) / 12500 * 740 -->
+        <line x1="249.6" y1="70" x2="249.6" y2="270" class="grid"/>
+        <line x1="545.6" y1="70" x2="545.6" y2="270" class="grid"/>
+        <line x1="841.6" y1="70" x2="841.6" y2="270" class="zero"/>
+        <text x="249.6" y="304" class="tick">−$10k</text>
+        <text x="545.6" y="304" class="tick">−$5k</text>
+        <text x="841.6" y="304" class="tick">$0</text>
+        <!-- Same-day habits -->
+        <text x="200" y="138" class="row">Same-day habits</text>
+        <line x1="747.4" y1="130" x2="311" y2="130" class="move" marker-end="url(#dropped-arrow)"/>
+        <circle cx="747.4" cy="130" r="11" class="is-without"><title>Same-day habits, without: −$1,591</title></circle>
+        <circle cx="299.2" cy="130" r="11" class="is-with"><title>Same-day habits, with: −$9,162</title></circle>
+        <text x="747.4" y="106" class="val">−$1,591</text>
+        <text x="299.2" y="106" class="val is-strong">−$9,162</text>
+        <!-- Market data -->
+        <text x="200" y="228" class="row">Market data</text>
+        <line x1="913" y1="220" x2="646" y2="220" class="move" marker-end="url(#dropped-arrow)"/>
+        <circle cx="913" cy="220" r="11" class="is-without"><title>Market data, without: +$1,205</title></circle>
+        <circle cx="634" cy="220" r="11" class="is-with"><title>Market data, with: −$3,515</title></circle>
+        <text x="913" y="196" class="val">+$1,205</text>
+        <text x="634" y="196" class="val is-strong">−$3,515</text>
+      </svg>
+      <dl class="dropped-chart__key">
+        <dt>Same-day habits</dt><dd>tc_revenge, tc_side_flip, tc_reentry_fast</dd>
+        <dt>Market data</dt><dd>chase_bps, trend_align_bps, vol_rank</dd>
+      </dl>
+    </figure>
+    <p class="is-ruled"><strong>Predicted stop-loss</strong> <code>p_sl</code><br>Overlapped 90% with “stop-loss habit”, a feature we already had. Added nothing new.</p>
+  <!-- @/panel-card -->
+<!-- @/split -->

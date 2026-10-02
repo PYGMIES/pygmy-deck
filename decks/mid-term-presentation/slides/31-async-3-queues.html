@@ -1,0 +1,16 @@
+<!-- notes: Jerrick. Script: Instead, FastAPI only puts each trade on an open or a close queue, and responds straight away. -->
+<!-- @dd-heading kicker="Design Decision 01" title="Process Trades Asynchronously" tag="Asynchronous" tone="good" -->
+  <!-- @nfr-concurrency class="is-corner" -->
+<!-- @/dd-heading -->
+<!-- @flow-stage -->
+  <!-- @flow-node x="140" y="460" w="190" h="190" class="is-round" label="Request" -->
+  <!-- @flow-node x="470" y="300" w="150" h="720" tone="api" label="FastAPI" size="32" -->
+  <!-- @flow-arrow x1="330" y1="555" x2="470" y2="555" -->
+  <!-- @flow-node x="140" y="680" w="190" h="190" tone="good" class="is-round reveal" label="Response" -->
+  <!-- @flow-arrow x1="470" y1="775" x2="330" y2="775" class="reveal" -->
+  <!-- @flow-note x="45" y="888" w="380" text="Immediately provide a<br>response after enqueuing" class="reveal" -->
+  <!-- @flow-queue x="740" y="520" label="Open trade queue" class="reveal" -->
+  <!-- @flow-queue x="740" y="720" label="Close trade queue" label-pos="below" class="reveal" -->
+  <!-- @flow-arrow x1="620" y1="561" x2="740" y2="561" class="reveal" -->
+  <!-- @flow-arrow x1="620" y1="761" x2="740" y2="761" class="reveal" -->
+<!-- @/flow-stage -->

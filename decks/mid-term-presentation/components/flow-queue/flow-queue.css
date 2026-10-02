@@ -1,7 +1,9 @@
 /* === COMPONENT (deck): flow-queue ===
    Three-cell queue, top-left of the cells at (x, y). Label sits above or
    below (label-pos). Tokens a/b/c are trade ids; colour follows the id
-   (12 blue, 11 amber, 10 grey) so the same trade keeps its colour. */
+   (12 blue, 11 amber, 10 grey) so the same trade keeps its colour.
+   ma/mb/mc: data-morph keys for the tokens (e.g. "close-11"), so a trade glides between
+   queues, cells and a flow-token with the same key. Label and cells are keyed by label. */
 .c-flow-queue {
   position: absolute;
   width: 291px;

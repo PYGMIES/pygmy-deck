@@ -1,6 +1,6 @@
 /* === COMPONENT (deck): flow-token ===
    A loose trade token, centred on (x, y). Look is shared with the queue tokens
-   (rules live in flow-queue.css). */
+   (rules live in flow-queue.css). morph: data-morph key shared with a queue token. */
 .c-flow-token {
   position: absolute;
   margin: -33px 0 0 -33px;

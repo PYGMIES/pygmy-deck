@@ -1,0 +1,27 @@
+<!-- notes: Jerrick. Script: If we processed trades synchronously, FastAPI would handle each trade inside the request: for an open, ask the Judge, fetch the OANDA price and write to the database; for a close, update the database. -->
+<!-- @dd-heading kicker="Design Decision 01" title="Process Trades Asynchronously" tag="If it was synchronous…" tone="bad" -->
+  <!-- @nfr-concurrency class="is-corner" -->
+<!-- @/dd-heading -->
+<!-- @flow-stage -->
+  <!-- @flow-node x="140" y="460" w="190" h="190" class="is-round" label="Request" -->
+  <!-- @flow-node x="470" y="300" w="150" h="720" tone="api" label="FastAPI" size="32" -->
+  <!-- @flow-arrow x1="330" y1="555" x2="470" y2="555" -->
+  <!-- @flow-node x="760" y="500" w="1064" h="120" tone="work" label="Process open trade" size="32" -->
+  <!-- @flow-arrow x1="620" y1="540" x2="760" y2="540" -->
+  <!-- @flow-arrow x1="760" y1="585" x2="620" y2="585" -->
+  <!-- @flow-node x="900" y="300" w="230" h="120" label="Judge" sub="(Inference)" size="32" -->
+  <!-- @flow-arrow x1="985" y1="500" x2="985" y2="422" -->
+  <!-- @flow-arrow x1="1045" y1="422" x2="1045" y2="500" -->
+  <!-- @flow-node x="1230" y="300" w="260" h="120" tone="ext" label="Oanda Market<br>Price Service" size="27" -->
+  <!-- @flow-arrow x1="1330" y1="500" x2="1330" y2="422" -->
+  <!-- @flow-arrow x1="1390" y1="422" x2="1390" y2="500" -->
+  <!-- @flow-db x="1610" y="300" -->
+  <!-- @flow-arrow x1="1635" y1="500" x2="1635" y2="420" -->
+  <!-- @flow-arrow x1="1680" y1="420" x2="1680" y2="500" -->
+  <!-- @flow-node x="760" y="700" w="1064" h="120" tone="work" label="Process close trade" size="32" -->
+  <!-- @flow-arrow x1="620" y1="740" x2="760" y2="740" -->
+  <!-- @flow-arrow x1="760" y1="785" x2="620" y2="785" -->
+  <!-- @flow-db x="1245" y="900" -->
+  <!-- @flow-arrow x1="1270" y1="820" x2="1270" y2="898" -->
+  <!-- @flow-arrow x1="1315" y1="898" x2="1315" y2="820" -->
+<!-- @/flow-stage -->
