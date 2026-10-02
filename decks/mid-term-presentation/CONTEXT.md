@@ -43,12 +43,12 @@
 | 31 | `31-race-1-queues` | Decision 02 · Race Conditions · Problem: close 11 is ahead of its open | Jerrick | done |
 | 32 | `32-race-2-check-db` | Token 11 moves into the close worker, which checks the DB | Jerrick | done |
 | 33 | `33-race-3-no-match` | No corresponding open trade (red cross) | Jerrick | done |
-| 34 | `34-race-4-solution` | Tag flips to Solution | Jerrick | done |
+| 34 | `34-race-4-solution` | Tag flips to Solution; the cross on trade 11 is gone | Jerrick | done |
 | 35 | `35-race-5-requeue` | Token 11 moves to the back of the close queue | Jerrick | done |
 | 36 | `36-nfr-3-latency` | NFR overview: Processing latency active | Jerrick | done |
-| 37 | `37-why-redis` | Decision 03 · Why Redis?: one Redis + Redis vs Kafka vs RabbitMQ table | Jerrick | done |
+| 37 | `37-why-redis` | Decision 03 · Why Redis?: separate broker (2 systems on the trade's path) vs one in-memory Redis; motivation cards: fewer distributed systems, less network latency (`redis-why`) | Jerrick | done |
 | 38 | `38-nfr-4-deployment` | NFR overview: Deployment active | Jerrick | done |
-| 39 | `39-docker-local` | Decision 04 · Dockerised, Deployed On-Site | Jerrick | done |
+| 39 | `39-docker-local` | Decision 04 · Dockerised, Deployed On-Site: 3 reasons (dark cards, left) + containers on Catch22's machine (right) (`local-stack`) | Jerrick | done |
 | 43 | `43-section-journey` | ◆ 06 How We Got Here | BA | — |
 | 44 | `44-hurdle-model` | What is the hurdle model? Definition + why it fits + 3 arms → gross EV → decision score (`hurdle-flow`) | Jerrick | draft |
 | 45 | `45-training-approach` | Approach to training: data, features, hurdle, evaluate | BA | draft |

@@ -1,0 +1,45 @@
+<div class="c-redis-why fk-canvas {{class|}}">
+  <!-- With a separate broker: two systems on the trade's path -->
+  <div class="fk-lane" style="left: 0; top: 0; width: 840px; height: 470px;"></div>
+  <span class="fk-lane__label" style="left: 40px; top: 34px;">With a separate broker</span>
+  <div class="fk-node fk-node--api" style="left: 40px; top: 110px; width: 190px; height: 100px;">FastAPI</div>
+  <div class="fk-node fk-node--outline" style="left: 320px; top: 110px; width: 220px; height: 100px; font-size: 28px;">Kafka /<br>RabbitMQ</div>
+  <div class="fk-node fk-node--work" style="left: 630px; top: 110px; width: 170px; height: 100px;">Workers</div>
+  <div class="fk-node" style="left: 600px; top: 280px; width: 230px; height: 110px;">Redis<small>cache<br>live events</small></div>
+  <span class="fk-callout fk-callout--bad reveal" style="left: 40px; top: 404px; font-size: 38px;">2 systems on every trade’s path</span>
+
+  <!-- With one Redis: one in-memory system -->
+  <div class="fk-lane fk-node--accent" style="left: 888px; top: 0; width: 840px; height: 470px;"></div>
+  <span class="fk-lane__label" style="left: 928px; top: 34px;">With one Redis</span>
+  <div class="fk-node fk-node--api" style="left: 928px; top: 110px; width: 190px; height: 100px;">FastAPI</div>
+  <div class="fk-node fk-node--dark fk-node--accent" style="left: 1208px; top: 100px; width: 270px; height: 290px;">Redis<small>queues<br>cache<br>live events</small></div>
+  <div class="fk-node fk-node--work" style="left: 1558px; top: 110px; width: 140px; height: 100px;">Workers</div>
+  <span class="fk-callout fk-callout--good reveal" style="left: 928px; top: 404px; font-size: 38px;">1 in-memory system</span>
+
+  <svg class="fk-wires" viewBox="0 0 1728 680" aria-hidden="true">
+    <defs>
+      <marker id="fk-redis-why-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-ink">
+      <path d="M234 160 H314" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M544 160 H624" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M690 214 V274" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M740 274 V214" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M1122 160 H1202" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M1482 145 H1552" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M1552 178 H1482" marker-end="url(#fk-redis-why-arrow)"/>
+    </g>
+  </svg>
+
+  <!-- The motivation: the slide's main point -->
+  <div class="fk-card fk-card--dark reveal" style="left: 0; top: 510px; width: 840px; height: 170px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M28 6L50 17 28 28 6 17z"/><path d="M6 28l22 11 22-11"/><path d="M6 39l22 11 22-11"/></svg>
+    <div><strong>Fewer distributed systems</strong><span>Queues, cache and live events in one store: nothing extra to run or keep in sync</span></div>
+  </div>
+  <div class="fk-card fk-card--dark reveal" style="left: 888px; top: 510px; width: 840px; height: 170px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M31 5L12 31h15l-3 20 20-27H29z"/></svg>
+    <div><strong>Less network latency</strong><span>Workers reach one in-memory store beside them, not a broker plus a cache</span></div>
+  </div>
+</div>

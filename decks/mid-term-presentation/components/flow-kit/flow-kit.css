@@ -240,6 +240,10 @@
   color: var(--danger);
 }
 
+.fk-callout--good {
+  color: var(--success);
+}
+
 .c-flow-kit .fk-note {
   z-index: 2;
   max-width: none;
@@ -311,4 +315,23 @@
 .fk-node--struck {
   text-decoration: line-through;
   text-decoration-thickness: 3px;
+}
+
+/* prominent variant: charcoal card, larger type (the slide's main point) */
+.fk-card--dark {
+  background: var(--card);
+}
+
+.fk-card--dark svg {
+  stroke: var(--on-card);
+}
+
+.fk-card--dark strong {
+  font-size: 40px;
+  color: var(--on-card);
+}
+
+.fk-card--dark span {
+  font-size: 26px;
+  color: var(--on-card-muted);
 }

@@ -1,19 +1,7 @@
-<!-- notes: Jerrick. Script: Why Redis for the queues? It keeps everything in memory, so putting a trade on the queue takes about a millisecond. Redis also already handles our feature cache and our live events, so the queues live there too: no extra infrastructure to run. Kafka and RabbitMQ would each be a new broker. Kafka is also built for far more traffic than our thousand or so messages per burst, and it cannot requeue a single message, which our fix relies on. Kafka does keep each trader's events in order, but as you just saw, we handle that in our code. -->
+<!-- notes: Jerrick. Script: Why Redis? Our main motivation was to keep the system small and fast. Redis already holds our feature cache and live events. A separate broker like Kafka or RabbitMQ would put a second system on every trade's path: workers would talk to a broker and a cache over the network, and we'd have two systems to run and keep in sync. With one in-memory Redis on the same Docker network, queues, cache and live events live in one place. -->
 <!-- @dd-heading kicker="Design Decision 03" title="Why Redis?" -->
   <!-- @nfr-latency class="is-corner" -->
 <!-- @/dd-heading -->
-<!-- @split cols="520px 1fr" align="center" -->
-  <!-- @flow-kit width="520px" height="680px" -->
-    <!-- @redis-roles -->
-  <!-- @/flow-kit -->
-  <!-- @compare-table class="is-nowrap" -->
-    <thead><tr><th></th><th class="is-focus">Redis</th><th>Kafka</th><th>RabbitMQ</th></tr></thead>
-    <tbody>
-      <tr><td>Already in our stack</td><td class="is-focus">Yes</td><td class="is-bad">No</td><td class="is-bad">No</td></tr>
-      <tr><td>Sized for our load</td><td class="is-focus">Yes</td><td class="is-bad">Overkill</td><td>Yes</td></tr>
-      <tr><td>Requeue 1 message</td><td class="is-focus">Yes</td><td class="is-bad">No</td><td>Yes</td></tr>
-      <tr><td>Extra service to run</td><td class="is-focus">None</td><td class="is-bad">New broker</td><td class="is-bad">New broker</td></tr>
-      <tr><td>Per-trader order</td><td class="is-focus">In our code</td><td>Yes</td><td class="is-bad">No</td></tr>
-    </tbody>
-  <!-- @/compare-table -->
-<!-- @/split -->
+<!-- @flow-kit height="680px" -->
+  <!-- @redis-why -->
+<!-- @/flow-kit -->

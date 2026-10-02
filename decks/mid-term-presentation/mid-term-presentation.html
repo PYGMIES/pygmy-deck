@@ -2888,6 +2888,10 @@ body.overview .deck-viewport {
   color: var(--danger);
 }
 
+.fk-callout--good {
+  color: var(--success);
+}
+
 .c-flow-kit .fk-note {
   z-index: 2;
   max-width: none;
@@ -2961,73 +2965,38 @@ body.overview .deck-viewport {
   text-decoration-thickness: 3px;
 }
 
-/* ===== COMPONENT redis-roles ===== */
-/* === COMPONENT (deck): redis-roles ===
-   Slide 41: the one Redis instance doing three jobs (queues highlighted). 520x720 canvas.
-   Primitives come from flow-kit; place inside <!-- @flow-kit width="520px" -->. */
-.c-redis-roles {
-  z-index: 0;
-}
-
-/* ===== COMPONENT compare-table ===== */
-/* === COMPONENT: compare-table ===
-   Children are <thead>/<tbody> rows. Mark a highlighted column cell with
-   class="is-focus", good/bad values with class="is-good" / "is-bad". */
-.c-compare-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 30px;
-  font-variant-numeric: tabular-nums;
-}
-
-.c-compare-table th,
-.c-compare-table td {
-  padding: 24px 28px;
-  text-align: right;
-  border-bottom: 2px solid var(--rule);
-}
-
-.c-compare-table th:first-child,
-.c-compare-table td:first-child {
-  text-align: left;
-}
-
-.c-compare-table thead th {
-  font-family: var(--font-display);
-  font-weight: var(--display-weight);
-  font-size: 36px;
-  letter-spacing: -0.01em;
-  color: var(--ink-accent);
-  border-bottom: var(--rule-w) solid var(--ink);
-}
-
-.c-compare-table .is-focus {
+/* prominent variant: charcoal card, larger type (the slide's main point) */
+.fk-card--dark {
   background: var(--card);
+}
+
+.fk-card--dark svg {
+  stroke: var(--on-card);
+}
+
+.fk-card--dark strong {
+  font-size: 40px;
   color: var(--on-card);
-  font-weight: 700;
 }
 
-.c-compare-table thead .is-focus {
-  color: var(--on-card);
-  border-radius: var(--radius-s) var(--radius-s) 0 0;
+.fk-card--dark span {
+  font-size: 26px;
+  color: var(--on-card-muted);
 }
 
-.c-compare-table tbody tr:last-child .is-focus {
-  border-radius: 0 0 var(--radius-s) var(--radius-s);
-}
-
-.c-compare-table .is-good::after {
-  content: " \2191";
-}
-
-.c-compare-table .is-bad {
-  color: var(--ink-muted);
+/* ===== COMPONENT redis-why ===== */
+/* === COMPONENT (deck): redis-why ===
+   Slide 37: a separate broker puts two systems on every trade's path (left) vs one in-memory
+   Redis for queues, cache and live events (right, highlighted); two dark cards state the
+   motivation (fewer distributed systems, less network latency). 1728x680 canvas.
+   Primitives come from flow-kit; place inside <!-- @flow-kit height="680px" -->. */
+.c-redis-why {
+  z-index: 0;
 }
 
 /* ===== COMPONENT local-stack ===== */
 /* === COMPONENT (deck): local-stack ===
-   Slide 45: every service as a Docker container on the sponsor's machine, plus three reasons.
+   Slide 39: three reasons (prominent dark cards, left) and every service as a Docker container on the sponsor's machine (right).
    Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
 .c-local-stack {
   z-index: 0;
@@ -3722,6 +3691,62 @@ body.overview .deck-viewport {
   font-size: var(--fs-body);
   color: var(--ink-muted);
   min-height: 2.7em; /* keeps labels aligned when captions wrap differently */
+}
+
+/* ===== COMPONENT compare-table ===== */
+/* === COMPONENT: compare-table ===
+   Children are <thead>/<tbody> rows. Mark a highlighted column cell with
+   class="is-focus", good/bad values with class="is-good" / "is-bad". */
+.c-compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 30px;
+  font-variant-numeric: tabular-nums;
+}
+
+.c-compare-table th,
+.c-compare-table td {
+  padding: 24px 28px;
+  text-align: right;
+  border-bottom: 2px solid var(--rule);
+}
+
+.c-compare-table th:first-child,
+.c-compare-table td:first-child {
+  text-align: left;
+}
+
+.c-compare-table thead th {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 36px;
+  letter-spacing: -0.01em;
+  color: var(--ink-accent);
+  border-bottom: var(--rule-w) solid var(--ink);
+}
+
+.c-compare-table .is-focus {
+  background: var(--card);
+  color: var(--on-card);
+  font-weight: 700;
+}
+
+.c-compare-table thead .is-focus {
+  color: var(--on-card);
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+}
+
+.c-compare-table tbody tr:last-child .is-focus {
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+}
+
+.c-compare-table .is-good::after {
+  content: " \2191";
+}
+
+.c-compare-table .is-bad {
+  color: var(--ink-muted);
 }
 
 /* ===== COMPONENT method-compare ===== */
@@ -4459,12 +4484,6 @@ body.overview .deck-viewport {
   flex: 1;
   min-height: 0;
   align-content: center;
-}
-
-/* compare-table: keep each cell on one line (slide 38, Why Redis) */
-.c-compare-table.is-nowrap th,
-.c-compare-table.is-nowrap td {
-  white-space: nowrap;
 }
 
 /* === WORKFLOW SLIDES 21-24 === */
@@ -6523,9 +6542,6 @@ body.overview .deck-viewport {
   <path d="M1246 781 L1246 886"/>
 </svg>
   <p class="c-flow-note c-flow-note--ink " style="left: 1275px; top: 800px; width: 380px; font-size: 30px;">Check the DB if there is a<br>corresponding open trade</p>
-  <svg class="c-flow-x " style="left: 970px; top: 721px;" viewBox="0 0 80 80" aria-hidden="true">
-  <path d="M8 8 L72 72 M72 8 L8 72"/>
-</svg>
   <svg class="c-flow-arrow c-flow-arrow--danger " viewBox="0 0 1920 1080" aria-hidden="true">
   <path d="M1214 886 L1214 781"/>
 </svg>
@@ -6659,7 +6675,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="37" data-name="why-redis">
-<!-- notes: Jerrick. Script: Why Redis for the queues? It keeps everything in memory, so putting a trade on the queue takes about a millisecond. Redis also already handles our feature cache and our live events, so the queues live there too: no extra infrastructure to run. Kafka and RabbitMQ would each be a new broker. Kafka is also built for far more traffic than our thousand or so messages per burst, and it cannot requeue a single message, which our fix relies on. Kafka does keep each trader's events in order, but as you just saw, we handle that in our code. -->
+<!-- notes: Jerrick. Script: Why Redis? Our main motivation was to keep the system small and fast. Redis already holds our feature cache and live events. A separate broker like Kafka or RabbitMQ would put a second system on every trade's path: workers would talk to a broker and a cache over the network, and we'd have two systems to run and keep in sync. With one in-memory Redis on the same Docker network, queues, cache and live events live in one place. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
     <span class="c-dd-heading__kicker" data-morph="ddk-Design Decision 03">Design Decision 03</span>
@@ -6677,33 +6693,53 @@ body.overview .deck-viewport {
 </article>
 
 </header>
-<div class="c-split " style="--split-cols: 520px 1fr; --split-align: center;">
+<div class="c-flow-kit " style="width: 1728px; height: 680px;">
   
-  <div class="c-flow-kit " style="width: 520px; height: 680px;">
-  
-    <div class="c-redis-roles fk-canvas ">
-  <div class="fk-group" style="left: 0; top: 0; width: 520px; height: 560px;">
-    <span class="fk-group__title">One Redis</span>
+  <div class="c-redis-why fk-canvas ">
+  <!-- With a separate broker: two systems on the trade's path -->
+  <div class="fk-lane" style="left: 0; top: 0; width: 840px; height: 470px;"></div>
+  <span class="fk-lane__label" style="left: 40px; top: 34px;">With a separate broker</span>
+  <div class="fk-node fk-node--api" style="left: 40px; top: 110px; width: 190px; height: 100px;">FastAPI</div>
+  <div class="fk-node fk-node--outline" style="left: 320px; top: 110px; width: 220px; height: 100px; font-size: 28px;">Kafka /<br>RabbitMQ</div>
+  <div class="fk-node fk-node--work" style="left: 630px; top: 110px; width: 170px; height: 100px;">Workers</div>
+  <div class="fk-node" style="left: 600px; top: 280px; width: 230px; height: 110px;">Redis<small>cache<br>live events</small></div>
+  <span class="fk-callout fk-callout--bad reveal" style="left: 40px; top: 404px; font-size: 38px;">2 systems on every trade’s path</span>
+
+  <!-- With one Redis: one in-memory system -->
+  <div class="fk-lane fk-node--accent" style="left: 888px; top: 0; width: 840px; height: 470px;"></div>
+  <span class="fk-lane__label" style="left: 928px; top: 34px;">With one Redis</span>
+  <div class="fk-node fk-node--api" style="left: 928px; top: 110px; width: 190px; height: 100px;">FastAPI</div>
+  <div class="fk-node fk-node--dark fk-node--accent" style="left: 1208px; top: 100px; width: 270px; height: 290px;">Redis<small>queues<br>cache<br>live events</small></div>
+  <div class="fk-node fk-node--work" style="left: 1558px; top: 110px; width: 140px; height: 100px;">Workers</div>
+  <span class="fk-callout fk-callout--good reveal" style="left: 928px; top: 404px; font-size: 38px;">1 in-memory system</span>
+
+  <svg class="fk-wires" viewBox="0 0 1728 680" aria-hidden="true">
+    <defs>
+      <marker id="fk-redis-why-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      </marker>
+    </defs>
+    <g class="fk-ink">
+      <path d="M234 160 H314" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M544 160 H624" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M690 214 V274" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M740 274 V214" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M1122 160 H1202" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M1482 145 H1552" marker-end="url(#fk-redis-why-arrow)"/>
+      <path d="M1552 178 H1482" marker-end="url(#fk-redis-why-arrow)"/>
+    </g>
+  </svg>
+
+  <!-- The motivation: the slide's main point -->
+  <div class="fk-card fk-card--dark reveal" style="left: 0; top: 510px; width: 840px; height: 170px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M28 6L50 17 28 28 6 17z"/><path d="M6 28l22 11 22-11"/><path d="M6 39l22 11 22-11"/></svg>
+    <div><strong>Fewer distributed systems</strong><span>Queues, cache and live events in one store: nothing extra to run or keep in sync</span></div>
   </div>
-  <div class="fk-node fk-node--dark fk-node--pill fk-node--accent" style="left: 40px; top: 100px; width: 440px; height: 116px;">Trade queues<small>streams</small></div>
-  <div class="fk-node fk-node--pill" style="left: 40px; top: 246px; width: 440px; height: 116px;">Feature cache<small>hashes</small></div>
-  <div class="fk-node fk-node--pill" style="left: 40px; top: 392px; width: 440px; height: 116px;">Live events<small>pub/sub</small></div>
-  <span class="fk-callout reveal" style="left: 0; top: 616px; width: 520px; text-align: center; font-size: 44px;">No extra infrastructure</span>
+  <div class="fk-card fk-card--dark reveal" style="left: 888px; top: 510px; width: 840px; height: 170px;">
+    <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M31 5L12 31h15l-3 20 20-27H29z"/></svg>
+    <div><strong>Less network latency</strong><span>Workers reach one in-memory store beside them, not a broker plus a cache</span></div>
+  </div>
 </div>
-  
-</div>
-  <table class="c-compare-table reveal is-nowrap">
-  
-    <thead><tr><th></th><th class="is-focus">Redis</th><th>Kafka</th><th>RabbitMQ</th></tr></thead>
-    <tbody>
-      <tr><td>Already in our stack</td><td class="is-focus">Yes</td><td class="is-bad">No</td><td class="is-bad">No</td></tr>
-      <tr><td>Sized for our load</td><td class="is-focus">Yes</td><td class="is-bad">Overkill</td><td>Yes</td></tr>
-      <tr><td>Requeue 1 message</td><td class="is-focus">Yes</td><td class="is-bad">No</td><td>Yes</td></tr>
-      <tr><td>Extra service to run</td><td class="is-focus">None</td><td class="is-bad">New broker</td><td class="is-bad">New broker</td></tr>
-      <tr><td>Per-trader order</td><td class="is-focus">In our code</td><td>Yes</td><td class="is-bad">No</td></tr>
-    </tbody>
-  
-</table>
 
 </div>
 </section>
@@ -6772,30 +6808,30 @@ body.overview .deck-viewport {
 <div class="c-flow-kit " style="width: 1728px; height: 700px;">
   
   <div class="c-local-stack fk-canvas ">
-  <div class="fk-group" style="left: 0; top: 20px; width: 1080px; height: 620px;">
-    <span class="fk-group__title">Catch22’s own machine</span>
-  </div>
-  <div class="fk-node fk-node--outline" style="left: 40px; top: 110px; width: 310px; height: 130px;">Dashboard<small>container</small></div>
-  <div class="fk-node fk-node--api" style="left: 385px; top: 110px; width: 310px; height: 130px;">FastAPI<small>container</small></div>
-  <div class="fk-node fk-node--work" style="left: 730px; top: 110px; width: 310px; height: 130px;">Workers × N<small>containers</small></div>
-  <div class="fk-node" style="left: 40px; top: 280px; width: 310px; height: 130px;">Redis<small>container</small></div>
-  <div class="fk-node fk-node--dark" style="left: 385px; top: 280px; width: 310px; height: 130px;">Judge<small>container</small></div>
-  <div class="fk-node fk-node--dark fk-node--accent" style="left: 730px; top: 280px; width: 310px; height: 130px;">Postgres<small>trading data</small></div>
-  <div class="fk-node fk-node--outline fk-node--pill" style="left: 240px; top: 480px; width: 600px; height: 84px; font-size: 28px;">Docker · started with one command</div>
-  <span class="fk-note" style="left: 0; top: 664px;">Only outside call: OANDA market prices</span>
-
-  <div class="fk-card reveal" style="left: 1160px; top: 20px; width: 568px; height: 190px;">
+  <div class="fk-card fk-card--dark reveal" style="left: 0; top: 20px; width: 620px; height: 190px;">
     <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="8" y="8" width="40" height="16" rx="4"/><rect x="8" y="32" width="40" height="16" rx="4"/><path d="M16 16h2M16 40h2M30 16h10M30 40h10"/></svg>
     <div><strong>Sponsor’s hardware</strong><span>They have the machines and the know-how</span></div>
   </div>
-  <div class="fk-card reveal" style="left: 1160px; top: 235px; width: 568px; height: 190px;">
+  <div class="fk-card fk-card--dark reveal" style="left: 0; top: 235px; width: 620px; height: 190px;">
     <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="10" y="24" width="36" height="26" rx="5"/><path d="M18 24v-7a10 10 0 0 1 20 0v7"/><path d="M28 34v6"/></svg>
     <div><strong>Data stays on-site</strong><span>Sensitive trading data in their own database</span></div>
   </div>
-  <div class="fk-card reveal" style="left: 1160px; top: 450px; width: 568px; height: 190px;">
+  <div class="fk-card fk-card--dark reveal" style="left: 0; top: 450px; width: 620px; height: 190px;">
     <svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="20"/><path d="M34 21c-2-2-4-3-6-3-4 0-6 2-6 5 0 7 13 3 13 10 0 3-3 5-7 5-3 0-5-1-7-3M28 14v4M28 38v4"/></svg>
     <div><strong>No extra cost</strong><span>No monthly cloud bill</span></div>
   </div>
+
+  <div class="fk-group" style="left: 700px; top: 20px; width: 1028px; height: 620px;">
+    <span class="fk-group__title">Catch22’s own machine</span>
+  </div>
+  <div class="fk-node fk-node--outline" style="left: 740px; top: 110px; width: 296px; height: 130px;">Dashboard<small>container</small></div>
+  <div class="fk-node fk-node--api" style="left: 1066px; top: 110px; width: 296px; height: 130px;">FastAPI<small>container</small></div>
+  <div class="fk-node fk-node--work" style="left: 1392px; top: 110px; width: 296px; height: 130px;">Workers × N<small>containers</small></div>
+  <div class="fk-node" style="left: 740px; top: 280px; width: 296px; height: 130px;">Redis<small>container</small></div>
+  <div class="fk-node fk-node--dark" style="left: 1066px; top: 280px; width: 296px; height: 130px;">Judge<small>container</small></div>
+  <div class="fk-node fk-node--dark fk-node--accent" style="left: 1392px; top: 280px; width: 296px; height: 130px;">Postgres<small>trading data</small></div>
+  <div class="fk-node fk-node--outline fk-node--pill" style="left: 934px; top: 480px; width: 560px; height: 84px; font-size: 28px;">Docker · started with one command</div>
+  <span class="fk-note" style="left: 700px; top: 664px;">Only outside call: OANDA market prices</span>
 </div>
 
 </div>

@@ -1,5 +1,5 @@
 /* === COMPONENT (deck): local-stack ===
-   Slide 45: every service as a Docker container on the sponsor's machine, plus three reasons.
+   Slide 39: three reasons (prominent dark cards, left) and every service as a Docker container on the sponsor's machine (right).
    Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
 .c-local-stack {
   z-index: 0;
