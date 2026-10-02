@@ -3205,6 +3205,115 @@ body.overview .deck-viewport {
   color: var(--ink);
 }
 
+/* ===== COMPONENT retro-changes ===== */
+/* === COMPONENT (deck): retro-changes ===
+   Left: rows of "found" (pale) → "fix" (charcoal) joined by an arrow.
+   Right: accent-outlined outcome stat. */
+.c-retro {
+  display: grid;
+  grid-template-columns: 1fr 440px;
+  gap: 48px;
+  align-items: stretch;
+}
+
+.c-retro__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.c-retro__labels,
+.c-retro__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+}
+
+.c-retro__labels span,
+.c-retro__result span {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.c-retro__row {
+  position: relative;
+}
+
+.c-retro .c-retro__row p {
+  display: flex;
+  align-items: center;
+  min-height: 150px;
+  padding: 26px 34px;
+  border-radius: var(--radius);
+  font-size: 28px;
+  line-height: 1.3;
+  max-width: none;
+}
+
+.c-retro .c-retro__found {
+  background: var(--bg-deep);
+  color: var(--ink-muted);
+}
+
+.c-retro .c-retro__fix {
+  background: var(--card);
+  color: var(--on-card);
+  font-weight: 600;
+}
+
+/* arrow in the gap between found and fix */
+.c-retro__row::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -13px;
+  border-top: 4px solid var(--accent);
+  border-right: 4px solid var(--accent);
+  transform: rotate(45deg);
+}
+
+/* --- outcome --- */
+.c-retro__result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 44px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.c-retro__result b {
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 128px;
+  line-height: 0.9;
+  letter-spacing: var(--display-tracking);
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.c-retro__result h3 {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 2px solid var(--rule);
+  font-size: 40px;
+}
+
+.c-retro .c-retro__result p {
+  margin-top: 14px;
+  font-size: 24px;
+  line-height: 1.35;
+  color: var(--ink-muted);
+}
+
 /* ===== COMPONENT project-timeline ===== */
 /* === COMPONENT (deck): project-timeline ===
    Deliverables track, phase bar and go/no-go gates. Everything is placed by
@@ -3463,115 +3572,6 @@ body.overview .deck-viewport {
   font-style: italic;
   color: var(--ink-muted);
   max-width: none;
-}
-
-/* ===== COMPONENT retro-changes ===== */
-/* === COMPONENT (deck): retro-changes ===
-   Left: rows of "found" (pale) → "fix" (charcoal) joined by an arrow.
-   Right: accent-outlined outcome stat. */
-.c-retro {
-  display: grid;
-  grid-template-columns: 1fr 440px;
-  gap: 48px;
-  align-items: stretch;
-}
-
-.c-retro__rows {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.c-retro__labels,
-.c-retro__row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-}
-
-.c-retro__labels span,
-.c-retro__result span {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-
-.c-retro__row {
-  position: relative;
-}
-
-.c-retro .c-retro__row p {
-  display: flex;
-  align-items: center;
-  min-height: 150px;
-  padding: 26px 34px;
-  border-radius: var(--radius);
-  font-size: 28px;
-  line-height: 1.3;
-  max-width: none;
-}
-
-.c-retro .c-retro__found {
-  background: var(--bg-deep);
-  color: var(--ink-muted);
-}
-
-.c-retro .c-retro__fix {
-  background: var(--card);
-  color: var(--on-card);
-  font-weight: 600;
-}
-
-/* arrow in the gap between found and fix */
-.c-retro__row::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 18px;
-  height: 18px;
-  margin: -9px 0 0 -13px;
-  border-top: 4px solid var(--accent);
-  border-right: 4px solid var(--accent);
-  transform: rotate(45deg);
-}
-
-/* --- outcome --- */
-.c-retro__result {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px 44px;
-  border-radius: var(--radius);
-  background: var(--bg-deep);
-  box-shadow: inset 0 0 0 3px var(--accent);
-}
-
-.c-retro__result b {
-  margin-top: 18px;
-  font-family: var(--font-display);
-  font-weight: var(--display-weight);
-  font-size: 128px;
-  line-height: 0.9;
-  letter-spacing: var(--display-tracking);
-  color: var(--accent);
-  white-space: nowrap;
-}
-
-.c-retro__result h3 {
-  margin-top: 18px;
-  padding-top: 18px;
-  border-top: 2px solid var(--rule);
-  font-size: 40px;
-}
-
-.c-retro .c-retro__result p {
-  margin-top: 14px;
-  font-size: 24px;
-  line-height: 1.35;
-  color: var(--ink-muted);
 }
 
 /* ===== COMPONENT closing ===== */
@@ -5782,7 +5782,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="48" data-name="section-pm">
-<!-- notes: SCRIPT (~15s, Arin): Last section: how we ran the work as a team. In short: two-week sprints, a retro at the end of every one, and a plan that changes when the results tell us to. I'll cover why we chose Scrum, how a sprint runs, where we are on the timeline, what our retros changed, and what limits the project. -->
+<!-- notes: SCRIPT (~15s, Arin): Last section: how we ran the work as a team. In short: two-week sprints, a retro at the end of every one, and a plan that changes when the results tell us to. I'll cover why we chose Scrum, how a sprint runs, what our retros changed, where we are on the timeline, and what limits the project. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">07</span>
   <div class="c-section-divider__text">
@@ -5823,7 +5823,7 @@ body.overview .deck-viewport {
   <section class="c-method__lane is-scrum reveal">
     <header class="c-method__head">
       <h3>Scrum</h3>
-      <p>2-week sprints</p>
+      <p>What we ran: 2-week sprints</p>
     </header>
     <div class="c-method__sprints-wrap">
       <ol class="c-method__sprints">
@@ -5833,7 +5833,7 @@ body.overview .deck-viewport {
         <li class="is-now">4<span>Midterm</span></li>
         <li>5</li><li>6</li><li>7</li><li>8</li>
       </ol>
-      <p class="c-method__loop">↻ plan · build · review · retro</p>
+      <p class="c-method__loop">↻ plan · build · review · retro, every sprint</p>
     </div>
     <p class="c-method__verdict">Sponsor feedback<b>Every 2 weeks</b></p>
   </section>
@@ -5868,6 +5868,8 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="50" data-name="sprint-cycle">
+<!-- notes: SCRIPT (~45s, Arin): Every two weeks we run the same loop. One, plan: we review the stories beforehand, then split into two breakouts, BA for the model and PD for the system, so each squad estimates its own work. Two, build: stand-ups are async in Slack, and nobody has more than one or two tasks in progress. Three, sync: we send Clement short updates two to three times a week. Four, review: we show the sponsor what's done and reshape the backlog. Five, retro: start, stop, continue, and every action gets an owner. Those actions feed straight into the next sprint's plan, which is the arrow along the bottom. Isaiah is our Product Owner, Yan Ting is our Scrum Master, and the work lives in Linear, Slack and Zoom. -->
+<!-- notes: Sources: Linear meeting minutes 27 Aug; Sprint 7 retro minutes. Check: squad membership (BA: Isaiah, Joyce, Yan Ting; PD: Arin, Jamesz, Jerrick) and the 2-3x a week update rhythm with the team. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
   <h1 class="reveal">How We Run a Sprint</h1>
@@ -5881,7 +5883,7 @@ body.overview .deck-viewport {
       <li><i>2</i><h3>Build</h3><p>Async stand-up in Slack, 1–2 tasks in progress</p></li>
       <li><i>3</i><h3>Sync</h3><p>Updates to Clement 2–3× a week</p></li>
       <li><i>4</i><h3>Review</h3><p>Show the sponsor, update the backlog</p></li>
-      <li class="is-retro"><i>5</i><h3>Retro</h3><p>Reflect, Improve and Plan</p></li>
+      <li class="is-retro"><i>5</i><h3>Retro</h3><p>Start · Stop · Continue, owner per action</p></li>
     </ol>
     <svg class="c-cycle__return" viewBox="0 0 1656 70" preserveAspectRatio="none" aria-hidden="true">
       <path d="M1501 4 V40 Q1501 58 1483 58 H172 Q154 58 154 40 V14" />
@@ -5896,8 +5898,46 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="51" data-name="timeline">
-<!-- notes: SCRIPT (~40s, Arin): Here's where that puts us on the timeline. The project runs in phases. Phase 0 was scoping in early June. Phase 1 built the baselines: EDA, a scorer and three frozen baselines. Phase 2, which wraps up today, is the Judge and the solution infrastructure. Each phase ends at a gate. Phase 0: logging live and the ID join confirmed. Phase 1: the three baselines frozen before any training. Today is the midpoint gate: does the Judge beat the rules-based system? [Say the gate result here.] From tomorrow, Phase 3 starts: forward paper trading, run daily to build a track record, up to the final gate on 13 November. Handover to Catch22 follows in the last two weeks of November. -->
+<section class="slide" data-slide="51" data-name="retros">
+<!-- notes: SCRIPT (~50s, Arin): At the end of every sprint we run a retro, start, stop, continue. This is the one from Sprint 7, and three things stood out. Each got an owner. One: user stories were vague, so people built different things. Now we review stories before planning, and BA and PD plan in separate breakouts. Two: too much was in progress and work got left to the last minute. Now it's at most one or two tasks in progress, and one change per branch. Three: updates were patchy. We added a 7 pm Slack stand-up reminder, and Clement now gets updates two to three times a week. We also kept what worked: async stand-ups and user-centric stories. In the sprint after the retro we closed 39 of 40 issues, up from 17 of 22. That's a raw count, so I wouldn't claim the retro alone caused it, but it's the direction we wanted. -->
+<!-- notes: Source: Linear Sprint 7 retro doc (board + minutes) and cycle stats (39 of 40 in the following sprint, 17 of 22 in Sprint 7). The board also had: start using tech specs, break tasks down further, stop stacking features without merging. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Project Management</span>
+  <h1 class="reveal">What Our Retros Changed</h1>
+</header>
+<!-- Retro findings → changes (3 rows) beside an outcome stat.
+     Edit rows here; the stat params come from the slide. -->
+<div class="c-retro inset">
+
+  <div class="c-retro__rows">
+    <div class="c-retro__labels"><span>We noticed</span><span>We changed</span></div>
+    <div class="c-retro__row reveal">
+      <p class="c-retro__found">Vague user stories, so we read requirements differently</p>
+      <p class="c-retro__fix">Review stories before planning; BA &amp; PD plan in breakouts</p>
+    </div>
+    <div class="c-retro__row reveal">
+      <p class="c-retro__found">Too much in progress, work left to the last minute</p>
+      <p class="c-retro__fix">Max 1–2 tasks in progress; one change per branch</p>
+    </div>
+    <div class="c-retro__row reveal">
+      <p class="c-retro__found">unsynchronized updates to each other and the sponsor</p>
+      <p class="c-retro__fix">7 pm Slack stand-up reminder; Clement updated 2–3× a week</p>
+    </div>
+  </div>
+
+  <aside class="c-retro__result reveal">
+    <span>The sprint after</span>
+    <b>39/40</b>
+    <h3>story points done</h3>
+    <p>up from 17 of 22 in Sprint 7</p>
+  </aside>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="52" data-name="timeline">
+<!-- notes: SCRIPT (~40s, Arin): Here's where that leaves us on the timeline. The project runs in phases. Phase 0 was scoping in early June. Phase 1 built the baselines: EDA, a scorer and three frozen baselines. Phase 2, which wraps up today, is the Judge and the solution infrastructure. Each phase ends at a gate. Phase 0: logging live and the ID join confirmed. Phase 1: the three baselines frozen before any training. Today is the midpoint gate: does the Judge beat the rules-based system? [Say the gate result here.] From tomorrow, Phase 3 starts: forward paper trading, run daily to build a track record, up to the final gate on 13 November. Handover to Catch22 follows in the last two weeks of November. -->
 <!-- notes: Check before presenting: confirm Phase 0 and Phase 1 gates actually passed, and state the midpoint-gate result in the bracketed line. Dates come from the timeline component (Phase 3: 6 Oct to 16 Nov, handover 17 to 30 Nov). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
@@ -5942,44 +5982,6 @@ body.overview .deck-viewport {
     <div class="c-timeline__gate is-now"><span>Phase 2 · today</span>Judge beats the rules-based system</div>
     <div class="c-timeline__gate"><span>Phase 3</span>Credible forward track record</div>
   </section>
-</div>
-</section>
-
-
-<section class="slide" data-slide="52" data-name="retros">
-<!-- notes: SCRIPT (~50s, Arin): At the end of every sprint we run a retro, start, stop, continue. This is the one from Sprint 7, and three things stood out. Each got an owner. One: user stories were vague, so people built different things. Now we review stories before planning, and BA and PD plan in separate breakouts. Two: too much was in progress and work got left to the last minute. Now it's at most one or two tasks in progress, and one change per branch. Three: updates were patchy. We added a 7 pm Slack stand-up reminder, and Clement now gets updates two to three times a week. We also kept what worked: async stand-ups and user-centric stories. In the sprint after the retro we closed 39 of 40 issues, up from 17 of 22. That's a raw count, so I wouldn't claim the retro alone caused it, but it's the direction we wanted. -->
-<!-- notes: Source: Linear Sprint 7 retro doc (board + minutes) and cycle stats (39 of 40 in the following sprint, 17 of 22 in Sprint 7). The board also had: start using tech specs, break tasks down further, stop stacking features without merging. -->
-<header class="c-slide-title ">
-  <span class="c-slide-title__kicker reveal">Project Management</span>
-  <h1 class="reveal">What Our Retros Changed</h1>
-</header>
-<!-- Retro findings → changes (3 rows) beside an outcome stat.
-     Edit rows here; the stat params come from the slide. -->
-<div class="c-retro inset">
-
-  <div class="c-retro__rows">
-    <div class="c-retro__labels"><span>We noticed</span><span>We changed</span></div>
-    <div class="c-retro__row reveal">
-      <p class="c-retro__found">Vague user stories, so we read requirements differently</p>
-      <p class="c-retro__fix">Review stories before planning; BA &amp; PD plan in breakouts</p>
-    </div>
-    <div class="c-retro__row reveal">
-      <p class="c-retro__found">Too much in progress, work left to the last minute</p>
-      <p class="c-retro__fix">Max 1–2 tasks in progress; one change per branch</p>
-    </div>
-    <div class="c-retro__row reveal">
-      <p class="c-retro__found">unsynchronized updates to each other and the sponsor</p>
-      <p class="c-retro__fix">7 pm Slack stand-up reminder; Clement updated 2–3× a week</p>
-    </div>
-  </div>
-
-  <aside class="c-retro__result reveal">
-    <span>The sprint after</span>
-    <b>39/40</b>
-    <h3>story points done</h3>
-    <p>up from 17 of 22 in Sprint 7</p>
-  </aside>
-
 </div>
 </section>
 
@@ -6124,7 +6126,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="57" data-name="qna">
 <!-- notes: SCRIPT (~10s): That's everything from us. Thank you. We're happy to take questions, and we can jump back to the architecture or the timeline if that helps. -->
-<!-- notes: 30 min Q&A. Jump with #19 (architecture) and #50 (timeline) in the URL. -->
+<!-- notes: 30 min Q&A. Jump with #19 (architecture) and #52 (timeline) in the URL. -->
 <div class="c-closing ">
   <h1 class="reveal">Thank you</h1>
   <div class="c-closing__card reveal">

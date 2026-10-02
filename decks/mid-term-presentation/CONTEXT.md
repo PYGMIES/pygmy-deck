@@ -60,8 +60,8 @@
 | 48 | `48-section-pm` | ◆ 07 Project Management | Arin | — |
 | 49 | `49-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Arin | done |
 | 50 | `50-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
-| 51 | `51-timeline` | Project timeline (now = Midterm) | Arin | done |
-| 52 | `52-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, Sprint 8 39/40 issues (`retro-changes`) | Arin | done |
+| 51 | `51-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, Sprint 8 39/40 issues (`retro-changes`) | Arin | done |
+| 52 | `52-timeline` | Project timeline (now = Midterm) | Arin | done |
 | 53 | `53-constraints` | Constraints · Data & Model: 9 held-out campaigns, not a random sample, leakage removed (AUC ~0.61), cold start | Arin | done (sourced from Linear) |
 | 54 | `54-constraints-system` | Constraints · Sponsor & System: paper trading only, no live feed, true cost unknown ($7.00 assumed) | Arin | done (sourced from Linear) |
 | 55 | `55-edge-setting` | Setting the Edge: minimum worthwhile edge per faded trade → $/month → campaigns to confirm; 18 test campaigns rule out >$6 | TBD | draft |
@@ -84,7 +84,7 @@ Chart PNGs in `assets/` are exported from notebook outputs in `reverse-trade-jud
 - Constraints & What's Next (slides 53–56) are presented by Arin; slide 55 owner TBD.
 - Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 15 charts use rolling windows (p95 130 / p50 57); slide 16 uses fixed 30-min slots (p95 121.4 / p50 59.5).
 - Replace the slide 09 target staircase with measured results + CIs when available.
-- Confirm Phase 0 / Phase 1 gates passed → mark them on slide 51 (`project-timeline` gates).
+- Confirm Phase 0 / Phase 1 gates passed → mark them on slide 52 (`project-timeline` gates).
 - "BA" owner of section 05: confirm name.
 - `33-leak` was deleted from `slides/`; its row is now slide 46 and the numbering has a gap there after the inserts.
 - Slide 26 caption reads "Immediate provide a response after enqueuing" (copied from Jerrick's image); fix the grammar if he agrees.
