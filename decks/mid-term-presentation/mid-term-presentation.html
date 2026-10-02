@@ -4727,7 +4727,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="02" data-name="team">
-<!-- notes: Joyce, ~20s. Isaiah is our Product Owner and Yan Ting is our Scrum Master. Arin, Jamesz, Jerrick and I make up the development team. → Here's what we'll cover today. [CHECK: slide currently shows Jerrick as Scrum Master and Yan Ting as Developer.] -->
+<!-- notes: Isaiah is our Product Owner and Jerrick is our Scrum Master. Arin, Jamesz, Yanting and I make up the development team. → Here's what we'll cover today. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Meet Our Team</h1>
@@ -4802,7 +4802,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="03" data-name="agenda">
-<!-- notes: Joyce, under 30s. We'll start with the problem and our goals, then go straight into a live demo. After that we walk through the architecture, our key design decisions and how we got to the model, then project management, and we close with constraints and what's next. → Let's begin with the problem. -->
+<!-- notes: We'll start with the problem and our goals, then go straight into a live demo. After that we walk through the architecture, our key design decisions and how we got to the model, then project management, and we close with constraints and what's next. → Let's begin with the problem. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Today</h1>
@@ -4863,12 +4863,12 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="04" data-name="section-problem">
-<!-- notes: As a quick recap, let's start with who we're building for. → Our sponsor, Catch22. -->
+<!-- notes: As a quick recap, let's start with who we're building for. → Our sponsor is Catch22. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">01</span>
   <div class="c-section-divider__text">
     <h2 class="reveal">The Problem</h2>
-    <p class="reveal">Recap: how Catch22 decides what to fade today</p>
+    <!-- <p class="reveal">Recap: how Catch22 decides what to fade today</p> -->
     <span class="c-section-divider__presenter reveal"></span>
   </div>
 </div>
@@ -4876,7 +4876,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="05" data-name="sponsor">
-<!-- notes: Joyce, ~25s. Catch22 is a fintech startup that uses retail traders as market signals. We work directly with the founders, Clement and Lee Yang. They trade FICC (Fixed Income, Currencies and Commodities) markets, but we only look at gold. They want consistent profit across campaigns, with decisions made in near real time. Our focus is the Judge, which answers one question: fade the trade, or not? → To see where the Judge fits, let's follow one trader. Meet Sally. -->
+<!-- notes: Which is a fintech startup that uses retail traders as market signals. We work directly with the founders, Clement and Lee Yang. They trade FICC (Fixed Income, Currencies and Commodities) markets, but we only look at gold. They want consistent profit across campaigns, with decisions made in near real time. Our focus is the Judge, which answers one question: fade the trade, or not? → To see where the Judge fits, let's follow one trader. Meet Sally. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Our Sponsor: Catch22</h1>
@@ -4899,8 +4899,8 @@ body.overview .deck-viewport {
 </article>
   <article class="c-grid-card reveal ">
   <span class="c-grid-card__kicker">Our focus</span>
-  <h3>The Judge</h3>
-  <p>Fade the trade, or not?</p>
+  <h3>Improving trading decisions</h3>
+  <p>powered by our Judge model</p>
 </article>
 
 </div>
@@ -4963,7 +4963,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="07" data-name="c22-story-trade">
-<!-- notes: Sally trades in a simulated account, and everyone in the campaign follows the same Catch22 rule book. No real money is involved. [ADD 1-2 of the actual rules imposed on participants here, e.g. ____ and ____.] → But Catch22 isn't watching Sally just for fun. -->
+<!-- notes: Sally trades in a simulated account, and everyone in the campaign follows the same Catch22 rule book. No real money is involved. → But Catch22 isn't watching Sally just for fun. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">What Catch22 does today</span>
   <h1 class="reveal">Sally trades by the rule book</h1>
@@ -5128,7 +5128,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="10" data-name="problem-space">
-<!-- notes: Joyce, ~25s. All of Catch22's alpha rests on one decision: which client's trade do we fade? Today that decision is limited in two ways. Static rules go stale and can't learn new patterns. And they're fragile: when the market shifts, P&L drops into a drawdown, as the sketch shows. → That's the gap we set out to close. -->
+<!-- notes: All of Catch22's alpha rests on one decision: which client's trade do we fade? Today that decision is limited in two ways. Static rules go stale and can't learn new patterns. And they're fragile: when the market shifts, P&L drops into a drawdown, as the sketch shows. → This is the gap we set out to close. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Problem Space</h1>
@@ -5252,7 +5252,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="13" data-name="strategy-comparison">
-<!-- notes: This tracks cumulative P&L across campaigns 69 to 86, and the shaded area is data the model hadn't seen. As you can see, we are beating 2 of our 3 baselines by being the only positive result. Catch22's own rule is still ahead of us, but we're making progress. → At the same time, the model is only part of what we bring. -->
+<!-- notes: This tracks cumulative P&L across campaigns 69 to 86, and the shaded area is data the model hadn't seen. As you can see, we are beating 2 of our 3 baselines by being the only positive result. → At the same time, the model is only part of what we bring. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Goals &amp; Impact</span>
   <h1 class="reveal">We beat 2 of the 3 benchmarks</h1>
@@ -5357,7 +5357,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="15" data-name="milestones">
-<!-- notes: Joyce, ~15s. For midterm we're delivering the Reverse Trade Judge and an analytics dashboard for model performance. For the final we'll add paper trading and automated retraining. → Now let's see how this works in our live demo. -->
+<!-- notes: For midterm we're delivering the Reverse Trade Judge and an analytics dashboard for model performance. For the final we'll add paper trading and automated retraining. → Now let's see how this works in our live demo. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Project Milestones</h1>
@@ -5422,7 +5422,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="16" data-name="section-demo">
-<!-- notes: Quick note first: Clement planned to change his trading platform to host the challenges, so we no longer have API access to the live feed. Instead we use a script that emits trades one by one, simulating trades coming in. You'll watch the Judge decide in real time, replayed at 20x speed on real data.→ First, how we picked the data for this demo. -->
+<!-- notes: Quick note first: Clement planned to change his trading platform to host the challenges, so we no longer have API access to the live feed. Instead we use a script that emits trades, simulating trades coming in. You'll watch the Judge decide in real time, replayed at 20x speed on real data.→ First, how we picked the data for this demo. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">03</span>
   <div class="c-section-divider__text">
@@ -5435,7 +5435,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="17" data-name="market-regimes">
-<!-- notes: Joyce, ~18s. To avoid cherry-picking an easy window, we used two lenses. Activity is the number of trades per slot. Volatility is beta against gold futures. That gives four market conditions, and we picked two opposite corners. → Here's the data behind those labels. -->
+<!-- notes: To avoid cherry-picking an easy window, we used two lenses. Activity is the number of trades per slot. Volatility is beta against gold futures. That gives four market conditions, and we picked two opposite corners. → Here's the data behind those labels. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Live Demo</span>
   <h1 class="reveal">How We Picked the Demo Data</h1>
@@ -5496,7 +5496,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="18" data-name="demo-data">
-<!-- notes: Joyce, ~21s. On the left, we counted trades in a rolling 30-minute window. Typical sits near p50, the median, and busy is p95 and above. On the right, we measured each slot's beta against gold futures. One or less is calm, above one is volatile. → Applying both rules gives us our two timeslots. -->
+<!-- notes: On the left, we counted trades in a rolling 30-minute window. Typical sits near p50, the median, and busy is p95 and above. On the right, we measured each slot's beta against gold futures. One or less is calm, above one is volatile. → Applying both rules gives us our two timeslots. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Live Demo</span>
   <h1 class="reveal">The Data Behind Our Choice</h1>
@@ -5521,7 +5521,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="19" data-name="chosen-timeslots">
-<!-- notes: Joyce to Jerrick, ~21s. Our typical, calm slot is 3:30 to 4:00, and our busy, volatile slot is 5:30 to 6:00. Together they test the Judge in both an ordinary and a stressful market. → With that, I'll hand over to Jerrick to start the demo. -->
+<!-- notes: Our typical, calm slot is 3:30 to 4:00, and our busy, volatile slot is 5:30 to 6:00. Together they test the Judge in both an ordinary and a stressful market. → With that, I'll hand over to Jerrick to start the demo. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Live Demo</span>
   <h1 class="reveal">Chosen Timeslots</h1>
