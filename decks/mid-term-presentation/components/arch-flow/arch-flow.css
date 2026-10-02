@@ -1,0 +1,361 @@
+/* === COMPONENT (deck): arch-flow ===
+   One step of the open / close trade walkthrough on the same 1728×800 canvas and coordinates as arch-diagram.
+   The slide only passes `flow` (open | close) and `step` (1–6). Everything else is timing:
+   - nodes (.n-*) appear at the step in --from and stay;
+   - wires (.a-*) appear at --at: fully opaque on that step, 50% on every later step (--also = a second step it is current again);
+   - 99 = never shown in that flow.
+   No animation, so nothing extra is needed for prefers-reduced-motion. */
+.c-arch-flow {
+  --node: color-mix(in srgb, var(--card) 80%, var(--bg));
+  position: relative;
+  width: 1728px;
+  height: 800px;
+  flex: none;
+}
+
+.c-arch-flow > * {
+  position: absolute;
+}
+
+/* ---------- timing per flow ---------- */
+.c-arch-flow.is-open {
+  --f-postgres: 2; --f-redis: 2; --f-openq: 2; --f-closeq: 2; --f-workers: 3;
+  --f-cache: 4; --f-judge: 4; --f-market: 5; --f-pubsub: 99; --f-dash: 99; --f-c22: 99;
+}
+
+.c-arch-flow.is-close {
+  --f-postgres: 1; --f-redis: 1; --f-openq: 1; --f-closeq: 1; --f-workers: 2;
+  --f-market: 4; --f-cache: 5; --f-judge: 99; --f-pubsub: 6; --f-dash: 6; --f-c22: 6;
+}
+
+.c-arch-flow .n-traders, .c-arch-flow .n-fastapi { --from: 1; }
+.c-arch-flow .n-postgres { --from: var(--f-postgres); }
+.c-arch-flow .n-redis { --from: var(--f-redis); }
+.c-arch-flow .n-openq { --from: var(--f-openq); }
+.c-arch-flow .n-closeq { --from: var(--f-closeq); }
+.c-arch-flow .n-workers { --from: var(--f-workers); }
+.c-arch-flow .n-cache { --from: var(--f-cache); }
+.c-arch-flow .n-judge { --from: var(--f-judge); }
+.c-arch-flow .n-market { --from: var(--f-market); }
+.c-arch-flow .n-pubsub { --from: var(--f-pubsub); }
+.c-arch-flow .n-dash, .c-arch-flow .n-c22 { --from: var(--f-dash); }
+
+.c-arch-flow .a-in { --at: 1; }
+.c-arch-flow.is-open .a-fp { --at: 2; }
+.c-arch-flow.is-close .a-fp { --at: 1; }
+.c-arch-flow.is-open .a-fo { --at: 2; }
+.c-arch-flow.is-close .a-fc { --at: 1; }
+.c-arch-flow.is-open .a-oq { --at: 3; }
+.c-arch-flow.is-close .a-cq { --at: 2; }
+.c-arch-flow.is-open .a-pw { --at: 6; }
+.c-arch-flow.is-close .a-pw { --at: 3; --also: 5; }
+.c-arch-flow.is-open .a-jw { --at: 4; }
+.c-arch-flow.is-open .a-cw { --at: 4; }
+.c-arch-flow.is-close .a-cw { --at: 5; }
+.c-arch-flow.is-open .a-mw { --at: 5; }
+.c-arch-flow.is-close .a-mw { --at: 4; }
+.c-arch-flow.is-close .a-wps, .c-arch-flow.is-close .a-pd, .c-arch-flow.is-close .a-dc { --at: 6; }
+/* wires that do not exist in a flow */
+.c-arch-flow.is-open .a-fc, .c-arch-flow.is-open .a-cq, .c-arch-flow.is-open .a-wps, .c-arch-flow.is-open .a-pd, .c-arch-flow.is-open .a-dc,
+.c-arch-flow.is-close .a-fo, .c-arch-flow.is-close .a-oq, .c-arch-flow.is-close .a-jw { --at: 99; }
+
+/* nodes: hidden before their step, visible from it */
+.c-arch-flow .n-traders, .c-arch-flow .n-fastapi, .c-arch-flow .n-postgres, .c-arch-flow .n-redis, .c-arch-flow .n-openq,
+.c-arch-flow .n-closeq, .c-arch-flow .n-workers, .c-arch-flow .n-cache, .c-arch-flow .n-judge, .c-arch-flow .n-market,
+.c-arch-flow .n-pubsub, .c-arch-flow .n-dash, .c-arch-flow .n-c22 {
+  opacity: clamp(0, calc(var(--step) - var(--from) + 1), 1);
+}
+
+/* wires: 0 before --at, 1 on it, 0.5 after; a second "current" step (--also) goes back to 1 */
+.c-arch-flow__wires {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+.c-arch-flow .w {
+  --also: 99;
+  --d: calc(var(--step) - var(--at, 99));
+  stroke: var(--accent);
+  opacity: max(
+    calc(clamp(0, calc(1 + var(--d)), 1) - 0.5 * clamp(0, var(--d), 1)),
+    clamp(0, calc(1 - (var(--step) - var(--also)) * (var(--step) - var(--also))), 1)
+  );
+}
+
+.c-arch-flow .w-io {
+  stroke: var(--ink);
+}
+
+/* ---------- looks (same as arch-diagram) ---------- */
+.c-arch-flow__lane {
+  top: 0;
+  bottom: 0;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.c-arch-flow__lane span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 26px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.c-arch-flow__group {
+  z-index: 1;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.c-arch-flow__group-title {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+}
+
+.c-arch-flow__node {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background: var(--node);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.c-arch-flow__node small {
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-card-muted);
+}
+
+.c-arch-flow__node--pill {
+  font-size: 26px;
+  border-radius: 999px;
+}
+
+.c-arch-flow__node--dark {
+  background: var(--card);
+}
+
+.c-arch-flow__node--judge {
+  box-shadow: 0 0 0 4px var(--accent);
+}
+
+.c-arch-flow__dots {
+  width: 220px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.c-arch-flow__actor {
+  width: 236px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.c-arch-flow__actor svg {
+  width: 96px;
+  height: 72px;
+  fill: var(--ink);
+}
+
+.c-arch-flow__actor strong {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 32px;
+  letter-spacing: -0.01em;
+}
+
+.c-arch-flow__actor span {
+  font-size: 20px;
+  color: var(--ink-muted);
+}
+
+.c-arch-flow .c-arch-flow__wire-label {
+  white-space: nowrap;
+  text-align: center;
+  font-style: italic;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ---------- step tracker (top right, level with the slide title) ---------- */
+.c-arch-flow__tracker {
+  top: -150px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.c-arch-flow__tracker-label {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.c-arch-flow__tracker-label b {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: var(--display-weight);
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+.c-arch-flow__tracker-bar {
+  display: flex;
+  gap: 8px;
+}
+
+.c-arch-flow__tracker-bar i {
+  --cur: clamp(0, calc(1 - (var(--step) - var(--i)) * (var(--step) - var(--i))), 1);
+  --past: clamp(0, calc(var(--step) - var(--i)), 1);
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--rule);
+  overflow: hidden;
+}
+
+.c-arch-flow__tracker-bar i::before,
+.c-arch-flow__tracker-bar i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.c-arch-flow__tracker-bar i::before {
+  background: var(--card);
+  opacity: var(--past);
+}
+
+.c-arch-flow__tracker-bar i::after {
+  background: var(--accent);
+  opacity: var(--cur);
+}
+
+.c-arch-flow .c-arch-flow__end {
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--danger);
+}
+
+/* ---------- step description: soft accent panel, charcoal number ---------- */
+.c-arch-flow__step {
+  left: -24px;
+  top: 392px;
+  width: 342px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.c-arch-flow__num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  padding-top: 3px;
+}
+
+.c-arch-flow__step p {
+  max-width: none;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  padding-top: 1px;
+}
+
+/* ---------- optional small note beside the step panel (param: note = <h4>title</h4><ol><li>…</li></ol>) ---------- */
+.c-arch-flow__note {
+  left: 334px;
+  top: 364px;
+  width: 288px;
+  padding: 10px 14px 12px;
+  border: 2px solid var(--rule);
+  border-radius: var(--radius-s);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.c-arch-flow__note:empty {
+  display: none;
+}
+
+.c-arch-flow__note h4 {
+  margin-bottom: 4px;
+  font-family: var(--font-body);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.c-arch-flow__note ol {
+  list-style: decimal;
+  padding-left: 22px;
+}
+
+.c-arch-flow__note li {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.c-arch-flow__note li + li {
+  margin-top: 2px;
+}
