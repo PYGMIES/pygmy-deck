@@ -230,3 +230,23 @@
 .c-arch.is-no-note-4 .c-arch__foot.p4 {
   visibility: hidden;
 }
+
+/* --- pillar colour ramp: component fills get darker left to right (Input/Output lightest, Judge darkest).
+   The Oanda / market price box keeps its own fill. Applies whatever the slide's focus or opacity. --- */
+.c-arch {
+  --tone-1: color-mix(in srgb, var(--card) 62%, var(--bg));
+  --tone-2: color-mix(in srgb, var(--card) 76%, var(--bg));
+  --tone-3: color-mix(in srgb, var(--card) 88%, var(--bg));
+  --tone-4: var(--card);
+}
+
+.c-arch__node.p1 { background: var(--tone-1); }
+.c-arch__node.p2 { background: var(--tone-2); }
+.c-arch__node.p3 { background: var(--tone-3); }
+.c-arch__node--judge { background: var(--tone-4); }
+
+/* small labels need full contrast on the two lightest fills */
+.c-arch__node.p1 small,
+.c-arch__node.p2 small {
+  color: var(--on-card);
+}

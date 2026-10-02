@@ -9,7 +9,7 @@
 
 /* === WORKFLOW SLIDES 21-24 === */
 
-/* wide label-card: body runs left-aligned across the card (slide 77 callout) */
+/* wide label-card: body runs left-aligned across the card (slide 80 callout) */
 .c-label-card.is-wide p {
   max-width: none;
   text-align: left;
@@ -21,28 +21,28 @@
   min-height: 120px;
 }
 
-/* slide 77: drop the second note so the step-5 arrow meets the middle of its left edge */
+/* slide 80: drop the second note so the step-5 arrow meets the middle of its left edge */
 .c-note-card.is-offset {
   margin-top: 125px;
 }
 
-/* slide 78: the first of the two tall notes is pushed down so both sit at the bottom of the column */
+/* slide 81: the first of the two tall notes is pushed down so both sit at the bottom of the column */
 .c-note-card.is-start {
   margin-top: auto;
 }
 
-/* slide 78: connector line stops at the centre of the last circle */
+/* slide 81: connector line stops at the centre of the last circle */
 .c-step-list.is-compact {
   --line-end: 109px;
 }
 
-/* slide 79: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
+/* slide 82: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
 .c-step-list.is-compact.is-close {
   --step-gap: 27.2px;
   --line-end: 82px;
 }
 
-/* slide 80: five steps spread over the full height; connector stops at the last circle's centre */
+/* slide 83: five steps spread over the full height; connector stops at the last circle's centre */
 .c-step-list.is-compact.is-end {
   --step-gap: 90px;
   --line-end: 33px;
