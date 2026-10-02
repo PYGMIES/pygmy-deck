@@ -68,6 +68,33 @@ body {
   transition: opacity 0.5s var(--ease-out), visibility 0s;
 }
 
+/* === MATCH AND MOVE === (runtime.js) while paired elements glide, the old slide stays
+   underneath as the backdrop and the new one sits on top with a see-through background. */
+.slide.morph-from {
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+  transition: none;
+}
+
+.slide.morph-to {
+  z-index: 2;
+  background: transparent;
+  transition: none;
+}
+
+/* new pieces wait until the old slide's content has faded */
+.slide.morph-to .reveal {
+  transition-delay: calc(var(--i, 0) * 90ms + 400ms);
+}
+
+/* the old slide's content holds still while it fades (no reverse reveal) */
+.slide.morph-from .reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
 /* === REVEAL ANIMATIONS ===
    Any direct child of a slide, plus anything with .reveal, fades up in
    sequence when the slide becomes active. --i is assigned by runtime.js. */

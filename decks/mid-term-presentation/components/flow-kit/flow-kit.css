@@ -108,6 +108,26 @@
   color: var(--ink-muted);
 }
 
+/* role colours shared with flow-node (async diagram): api = FastAPI, work = workers */
+.fk-node--api {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.fk-node--api small {
+  color: var(--ink);
+}
+
+.fk-node--work {
+  background: var(--bg-deep);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 3px var(--ink);
+}
+
+.fk-node--work small {
+  color: var(--ink-muted);
+}
+
 .fk-node--accent {
   box-shadow: 0 0 0 4px var(--accent);
 }

@@ -1,5 +1,7 @@
 /* === COMPONENT (deck): flow-node ===
-   Rounded labelled box at stage coordinates. tone: dark | mid | good | bad. */
+   Rounded labelled box at stage coordinates. class="is-round" makes it a circle.
+   tone (one colour per role): dark (client, Judge) | api (FastAPI) | work (workers) |
+   ext (external service) | mid | good | bad. */
 .c-flow-node {
   position: absolute;
   display: flex;
@@ -24,6 +26,26 @@
 .c-flow-node--dark {
   background: var(--card);
   color: var(--on-card);
+}
+
+.c-flow-node.is-round {
+  border-radius: 50%;
+}
+
+.c-flow-node--api {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.c-flow-node--work {
+  background: var(--bg-deep);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 3px var(--ink);
+}
+
+.c-flow-node--ext {
+  background: var(--accent-soft);
+  color: var(--ink);
 }
 
 .c-flow-node--mid {

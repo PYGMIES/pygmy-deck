@@ -1,0 +1,16 @@
+<!-- notes: Jerrick. Script: The close worker takes trade 11 and checks the database for its open trade. -->
+<!-- @dd-heading kicker="Design Decision 02" title="Race Conditions" sub="Close trades processed before its corresponding open trade" tag="Problem" tone="bad" -->
+  <!-- @nfr-sequencing class="is-corner" -->
+<!-- @/dd-heading -->
+<!-- @flow-stage -->
+  <!-- @flow-queue x="340" y="480" label="Open trade queue" a="12" b="11" c="10" ma="open-12" mb="open-11" mc="open-10" -->
+  <!-- @flow-arrow x1="631" y1="521" x2="900" y2="521" -->
+  <!-- @flow-node x="900" y="461" w="700" h="120" tone="work" label="Process open trade" size="32" -->
+  <!-- @flow-queue x="340" y="680" label="Close trade queue" label-pos="below" a="" b="" c="12" mb="" mc="close-12" -->
+  <!-- @flow-arrow x1="631" y1="721" x2="900" y2="721" -->
+  <!-- @flow-node x="900" y="661" w="700" h="120" tone="work" label="Process close trade" size="32" -->
+  <!-- @flow-token n="11" x="970" y="721" morph="close-11" -->
+  <!-- @flow-db x="1200" y="890" class="reveal" -->
+  <!-- @flow-arrow x1="1246" y1="781" x2="1246" y2="886" class="reveal" -->
+  <!-- @flow-note x="1275" y="800" w="380" size="30" text="Check the DB if there is a<br>corresponding open trade" class="reveal" -->
+<!-- @/flow-stage -->

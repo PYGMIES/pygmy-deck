@@ -1,0 +1,4 @@
+/* === COMPONENT (deck): nfr-latency === one NFR card; styles are .c-nfr-card in nfr-overview.css. */
+.c-nfr-latency {
+  flex: none;
+}

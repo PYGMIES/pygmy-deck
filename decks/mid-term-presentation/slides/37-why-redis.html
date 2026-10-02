@@ -1,7 +1,9 @@
-<!-- notes: Jerrick. Script: Why Redis for the queues? Redis already handles our feature cache and our live events, so the queues live there too: no extra infrastructure to run. Kafka and RabbitMQ would each be a new broker. Kafka is also built for far more traffic than our thousand or so messages per burst, and it cannot requeue a single message, which our fix relies on. Kafka does keep each trader's events in order, but as you just saw, we handle that in our code. -->
-<!-- @slide-title text="Why Redis?" -->
+<!-- notes: Jerrick. Script: Why Redis for the queues? It keeps everything in memory, so putting a trade on the queue takes about a millisecond. Redis also already handles our feature cache and our live events, so the queues live there too: no extra infrastructure to run. Kafka and RabbitMQ would each be a new broker. Kafka is also built for far more traffic than our thousand or so messages per burst, and it cannot requeue a single message, which our fix relies on. Kafka does keep each trader's events in order, but as you just saw, we handle that in our code. -->
+<!-- @dd-heading kicker="Design Decision 03" title="Why Redis?" -->
+  <!-- @nfr-latency class="is-corner" -->
+<!-- @/dd-heading -->
 <!-- @split cols="520px 1fr" align="center" -->
-  <!-- @flow-kit width="520px" -->
+  <!-- @flow-kit width="520px" height="680px" -->
     <!-- @redis-roles -->
   <!-- @/flow-kit -->
   <!-- @compare-table class="is-nowrap" -->

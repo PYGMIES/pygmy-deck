@@ -80,6 +80,33 @@ body {
   transition: opacity 0.5s var(--ease-out), visibility 0s;
 }
 
+/* === MATCH AND MOVE === (runtime.js) while paired elements glide, the old slide stays
+   underneath as the backdrop and the new one sits on top with a see-through background. */
+.slide.morph-from {
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+  transition: none;
+}
+
+.slide.morph-to {
+  z-index: 2;
+  background: transparent;
+  transition: none;
+}
+
+/* new pieces wait until the old slide's content has faded */
+.slide.morph-to .reveal {
+  transition-delay: calc(var(--i, 0) * 90ms + 400ms);
+}
+
+/* the old slide's content holds still while it fades (no reverse reveal) */
+.slide.morph-from .reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
 /* === REVEAL ANIMATIONS ===
    Any direct child of a slide, plus anything with .reveal, fades up in
    sequence when the slide becomes active. --i is assigned by runtime.js. */
@@ -789,6 +816,9 @@ body.overview .deck-viewport {
   color: var(--on-card);
 }
 
+/* no presenter param → no empty pill */
+.c-section-divider__presenter:empty { display: none; }
+
 /* ===== COMPONENT split ===== */
 /* === COMPONENT: split === multi-column layout; each child is a column */
 .c-split {
@@ -1291,9 +1321,169 @@ body.overview .deck-viewport {
     slide.querySelectorAll(".reveal").forEach((el, i) => el.style.setProperty("--i", i));
   });
 
+  /* === MATCH AND MOVE === Keynote-style "magic move" between adjacent slides.
+     Opt-in per element: the same non-empty data-morph key on both slides glides from its old box
+     to its new one (FLIP: translate + scale + opacity) over MORPH_MS. Inside a [data-morph-scope],
+     direct children with identical markup pair up on their own and stay put, so repeated build
+     pieces don't flicker. Everything else crossfades. Slides with no pairs switch as before.
+     Skipped for jumps (more than one slide), reduced motion, edit and overview modes. */
+  const MORPH_MS = 1000;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let booted = false;
+  let finishMorph = null;
+
+  /* markup identity, ignoring the reveal class and the --i index the runtime adds */
+  const signature = (el) =>
+    el.outerHTML
+      .replace(/\s*--i:\s*\d+;?/g, "")
+      .replace(/\sstyle="\s*"/g, "")
+      .replace(/\breveal\b/g, "")
+      .replace(/\s+/g, " ")
+      .replace(/\s"/g, '"');
+
+  function morphPairs(from, to) {
+    const pairs = [];
+    const used = new Set();
+    const pair = (a, b) => {
+      pairs.push([a, b]);
+      used.add(a);
+      used.add(b);
+    };
+    const keyed = new Map();
+    from.querySelectorAll("[data-morph]").forEach((el) => {
+      if (el.dataset.morph && !keyed.has(el.dataset.morph)) keyed.set(el.dataset.morph, el);
+    });
+    to.querySelectorAll("[data-morph]").forEach((el) => {
+      const a = el.dataset.morph && keyed.get(el.dataset.morph);
+      if (a && !used.has(a)) pair(a, el);
+    });
+    const fromScopes = from.querySelectorAll("[data-morph-scope]");
+    to.querySelectorAll("[data-morph-scope]").forEach((scope, i) => {
+      if (!fromScopes[i]) return;
+      const bySig = new Map();
+      Array.from(fromScopes[i].children).forEach((el) => {
+        if (used.has(el) || el.dataset.morph) return;
+        const sig = signature(el);
+        if (!bySig.has(sig)) bySig.set(sig, []);
+        bySig.get(sig).push(el);
+      });
+      Array.from(scope.children).forEach((el) => {
+        if (used.has(el) || el.dataset.morph) return;
+        const match = (bySig.get(signature(el)) || []).shift();
+        if (match) pair(match, el);
+      });
+    });
+    return { pairs, used };
+  }
+
+  /* the slide's leaves that are neither paired nor hold a pair: these crossfade */
+  function fadeUnits(root, used) {
+    const units = [];
+    const holdsPair = (el) => Array.from(used).some((u) => u !== el && el.contains(u));
+    (function walk(el) {
+      Array.from(el.children).forEach((child) => {
+        if (used.has(child)) return;
+        if (holdsPair(child)) walk(child);
+        else units.push(child);
+      });
+    })(root);
+    return units;
+  }
+
+  /* screen box without the translate of .reveal (or any other transform) on the way up */
+  function boxOf(el, scale) {
+    const r = el.getBoundingClientRect();
+    let tx = 0;
+    let ty = 0;
+    for (let n = el; n && !n.classList.contains("slide"); n = n.parentElement) {
+      const t = getComputedStyle(n).transform;
+      if (t && t !== "none") {
+        const m = new DOMMatrixReadOnly(t);
+        tx += m.m41;
+        ty += m.m42;
+      }
+    }
+    return { x: r.left - tx * scale, y: r.top - ty * scale, w: r.width, h: r.height };
+  }
+
+  function morph(from, to) {
+    const body = document.body.classList;
+    if (!booted || reduceMotion.matches || body.contains("editing") || body.contains("overview")) return;
+    const { pairs, used } = morphPairs(from, to);
+    if (!pairs.length) return;
+
+    const scale = parseFloat(stage.style.getPropertyValue("--stage-scale")) || 1;
+    const plan = pairs.map(([a, b]) => ({
+      a,
+      b,
+      first: boxOf(a, scale),
+      last: boxOf(b, scale),
+      op0: parseFloat(getComputedStyle(a).opacity),
+      op1: b.classList.contains("reveal") ? 1 : parseFloat(getComputedStyle(b).opacity),
+    }));
+    const fadeOut = fadeUnits(from, used);
+    const fadeIn = fadeUnits(to, used).filter((el) => !el.classList.contains("reveal"));
+
+    from.classList.add("morph-from");
+    to.classList.add("morph-to");
+    const anims = [];
+    const ease = "cubic-bezier(0.65, 0, 0.35, 1)";
+    plan.forEach(({ a, b, first, last, op0, op1 }) => {
+      a.style.visibility = "hidden";
+      b.style.transition = "none";
+      b.style.opacity = String(op1);
+      b.style.transform = "none";
+      const dx = (first.x - last.x) / scale;
+      const dy = (first.y - last.y) / scale;
+      const sx = last.w ? first.w / last.w : 1;
+      const sy = last.h ? first.h / last.h : 1;
+      const still = Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5 && Math.abs(sx - 1) < 0.01 && Math.abs(sy - 1) < 0.01;
+      if (still && Math.abs(op0 - op1) < 0.01) return;
+      /* travel above everything else on the slide */
+      if (getComputedStyle(b).position === "static") b.style.position = "relative";
+      b.style.zIndex = "10";
+      anims.push(b.animate(
+        [
+          { transformOrigin: "0 0", transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`, opacity: op0 },
+          { transformOrigin: "0 0", transform: "none", opacity: op1 },
+        ],
+        { duration: MORPH_MS, easing: ease }
+      ));
+    });
+    fadeOut.forEach((el) => {
+      anims.push(el.animate([{ opacity: getComputedStyle(el).opacity }, { opacity: 0 }], { duration: MORPH_MS * 0.35, fill: "forwards" }));
+    });
+    fadeIn.forEach((el) => {
+      const op = getComputedStyle(el).opacity;
+      anims.push(el.animate([{ opacity: 0 }, { opacity: op }], { duration: MORPH_MS / 2, delay: MORPH_MS * 0.4, fill: "backwards" }));
+    });
+
+    const timer = setTimeout(() => finishMorph && finishMorph(), MORPH_MS + 60);
+    finishMorph = () => {
+      finishMorph = null;
+      clearTimeout(timer);
+      from.style.transition = "none";
+      from.classList.remove("morph-from");
+      to.classList.remove("morph-to");
+      anims.forEach((anim) => anim.cancel());
+      plan.forEach(({ a, b }) => {
+        a.style.visibility = "";
+        b.style.transition = "";
+        b.style.opacity = "";
+        b.style.transform = "";
+        b.style.position = "";
+        b.style.zIndex = "";
+      });
+      void from.offsetWidth;
+      from.style.transition = "";
+    };
+  }
+
   /* === NAVIGATION === */
   function go(index) {
     const next = Math.max(0, Math.min(slides.length - 1, index));
+    if (finishMorph) finishMorph();
+    if (Math.abs(next - current) === 1) morph(slides[current], slides[next]);
     slides[current].classList.remove("active");
     current = next;
     slides[current].classList.add("active");
@@ -1672,6 +1862,7 @@ body.overview .deck-viewport {
   current = 0;
   slides[0].classList.add("active");
   go(fromHash());
+  booted = true;
 })();
 </script>
 </body>
