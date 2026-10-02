@@ -4,8 +4,8 @@ Bespoke diagrams, absolutely positioned on fixed canvases. Edit coordinates in t
 
 | Component | Canvas | What |
 |-----------|--------|------|
-| `c22-flow` | `class?` (`is-step-2`…`is-step-5`) | Sally-and-Alex story strip: Discord challenge → Sally joins → Sally trades → signal (Alex) → The Judge (our focus). `is-step-N` rings step N and dims later steps. Slides 06–09. |
-| `c22-story` | `who`, `line`, `small?` | Narration block under the strip: speaker label, one big line, optional aside. Slides 06–09. |
+| `c22-flow` | `class?` (`is-step-2`…`is-step-5`) | Sally-and-Alex story strip: Discord challenge → Sally joins → Sally trades → signal (Alex) → The Judge (our focus). `is-step-N` rings step N and dims later steps. Previously slides 06–09 (replaced by Canva images). |
+| `c22-story` | `who`, `line`, `small?` | Narration block under the strip: speaker label, one big line, optional aside. Previously slides 06–09 (replaced by Canva images). |
 | `bar-ladder` | 588px tall | Four ascending bars (fade everything < coin flip < C22 current < our Judge). Heights illustrative; optional `caption`. Slide 09. |
 | `equity-chart` | `takeaway`, `class?` | Inline-SVG cumulative P&L lines (fade everything, live rule, top 5%, random + 5–95% band) on white backing, plus takeaway. Data baked in by script; edit the SVG paths. Slide 10. |
 | `scatter-chart` | `takeaway`, `class?` | Inline-SVG scatter: $/campaign for every top-5% variant in NB07–15 (locked 69–77), one dot each, hover shows the notebook title + variant + CI. Data baked in from `reverse-trade-judge/results/pnl_by_notebook.csv`; titles from `summarised.md` §3. Hover via `core/runtime.js` `[data-hover-scatter]`. Slide 38. |

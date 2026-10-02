@@ -1,0 +1,14 @@
+/* === COMPONENT: full-image === full-bleed 1920×1080 picture (e.g. a slide exported from Canva) */
+.c-full-image {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  background: var(--bg);
+}
+
+.c-full-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
