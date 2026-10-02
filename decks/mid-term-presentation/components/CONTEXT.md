@@ -9,7 +9,6 @@ Bespoke diagrams, absolutely positioned on fixed canvases. Edit coordinates in t
 | `equity-chart` | `takeaway`, `class?` | Inline-SVG cumulative P&L lines (fade everything, live rule, top 5%, random + 5–95% band) on white backing, plus takeaway. Data baked in by script; edit the SVG paths. Slide 10. |
 | `scatter-chart` | `takeaway`, `class?` | Inline-SVG scatter: $/campaign for every top-5% variant in NB07–15 (locked 69–77), one dot each, hover shows the notebook title + variant + CI. Data baked in from `reverse-trade-judge/results/pnl_by_notebook.csv`; titles from `summarised.md` §3. Hover via `core/runtime.js` `[data-hover-scatter]`. Slide 38. |
 | `arch-diagram` | 1728×800 | 4 layer lanes, nodes, accent-coloured data-flow wires. Slide 19. |
-<<<<<<< Updated upstream
 | `method-compare` | flow | Waterfall cascade lane vs Scrum 13-sprint lane (`is-done` / `is-now`), sponsor-feedback verdict per lane. Slide 49. |
 | `sprint-cycle` | flow | 5 sprint steps with chevrons, SVG return arrow Retro → Plan (path x-coords assume 1656px width), leads/squads/tools row. Slide 50. |
 | `retro-changes` | `kicker?`, `value`, `label`, `caption?` | Rows of noticed (pale) → changed (charcoal), plus accent outcome stat. Rows edited in the HTML. Slide 52. |
@@ -28,9 +27,6 @@ Bespoke diagrams, absolutely positioned on fixed canvases. Edit coordinates in t
 | `flow-db` / `flow-x` | `x y` | Database cylinder (top-left) / red cross (centred). |
 
 In the build slides give `class="reveal"` only to the piece(s) new on that step, so the flip looks like the piece popping in.
-=======
-| `project-timeline` | fills slide | Deliverables track, phases, go/no-go gates. Positions by day offset `--d` (days since 1 Jun, span 183). `is-now` marks today; `is-done` / `is-next` on phases. Slide 36. |
->>>>>>> Stashed changes
 
 Layout components (flow, not fixed canvas):
 
@@ -40,7 +36,7 @@ Layout components (flow, not fixed canvas):
 | ◻ `team-roster` | — | Row of `team-group`s, vertically centred. Slide 02. |
 | ◻ `team-group` | `label`, `size?` | Labelled cluster; `size` = member count so every card gets equal width. |
 | `team-member` | `initial`, `role`, `name` | Card: initial in a ring, role + name at bottom. `class="is-light"` for pale. |
-| ◻ `feature-group` | `count`, `title`, `note?`, `cols?` (1) | Charcoal card: big count, title, note, then `<li><strong>Plain name</strong><code>code_name</code></li>` children. `cols` = list columns; in a `card-grid` the card spans that many grid columns. Optional `<em>verdict</em>` in an li renders as a pill on the right; `foot?` adds a closing line under the list. Slides 28–30. |
-| `ab-result` | `title`, `a-label`, `a-value`, `b-label`, `b-value`, `caption?`, `body?`, `foot?`, `span?` (1) | Pale panel: title, two result tiles (A value in `--danger`, B tile accent-tinted), caption, body, foot. `span` = card-grid columns. Slide 29. |
-| ◻ `panel-card` | `title`, `count?`, `note?`, `span?` (1) | Charcoal card: optional big count, title, note, then free content. Styles plain `<table>` and `<p>` children; `class="is-ruled"` on a child adds a hairline above it. Slide 27. |
-| ◻ `column-chart` | `max`, `label?` | CSS bar chart filling its container: children `<li style="--v: 21"><b>21</b><span>30 Jul</span></li>`, `class="is-focus"` highlights a bar. Bars grow in (reduced-motion safe). Slide 27. |
+| ◻ `feature-group` | `count`, `title`, `note?`, `cols?` (1) | Charcoal card: big count, title, note, then `<li><strong>Plain name</strong><code>code_name</code></li>` children. `cols` = list columns; in a `card-grid` the card spans that many grid columns. Optional `<em>verdict</em>` in an li renders as a pill on the right; `foot?` adds a closing line under the list. Slides 49–51. |
+| `ab-result` | `title`, `a-label`, `a-value`, `b-label`, `b-value`, `caption?`, `body?`, `foot?`, `span?` (1) | Pale panel: title, two result tiles (A value in `--danger`, B tile accent-tinted), caption, body, foot. `span` = card-grid columns. Slide 50. |
+| ◻ `panel-card` | `title`, `count?`, `note?`, `span?` (1) | Charcoal card: optional big count, title, note, then free content. Styles plain `<table>` and `<p>` children; `class="is-ruled"` on a child adds a hairline above it. Slide 48. |
+| ◻ `column-chart` | `max`, `label?` | CSS bar chart filling its container: children `<li style="--v: 21"><b>21</b><span>30 Jul</span></li>`, `class="is-focus"` highlights a bar. Bars grow in (reduced-motion safe). Slide 48. |
