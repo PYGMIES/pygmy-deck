@@ -12,7 +12,7 @@
 /* ===== CORE STAGE ===== */
 /* =====================================================================
    === CORE STAGE ===
-   Fixed 1920x1080 canvas, scaled uniformly to the viewport by runtime.js.
+   Fixed 1920×1080 canvas, scaled uniformly to the viewport by runtime.js.
    Slides never reflow — the whole stage letterboxes / pillarboxes.
    ===================================================================== */
 
@@ -42,7 +42,7 @@ body {
   overflow: hidden;
 }
 
-/* === STAGE === authored at 1920x1080; --stage-scale set by runtime.js */
+/* === STAGE === authored at 1920×1080; --stage-scale set by runtime.js */
 .deck-stage {
   position: absolute;
   left: 50%;
@@ -407,7 +407,7 @@ body.overview .deck-viewport {
 /* =====================================================================
    === THEME TOKENS ===
    Theme-independent design tokens: fonts, type scale, spacing, radii,
-   motion. All sizes are at the 1920x1080 design size (px on purpose).
+   motion. All sizes are at the 1920×1080 design size (px on purpose).
    Colours live in light.css / dark.css.
    ===================================================================== */
 
@@ -1227,7 +1227,7 @@ body.overview .deck-viewport {
 /* === COMPONENT (deck): pnl-sketch ===
    Schematic (not data) P&L curve for the rule-based system: steady climb,
    sudden market shift, sharp drawdown, slow recovery. White chart backing,
-   --chart-* tokens only. Geometry lives in the SVG viewBox (570x215). Slide 07. */
+   --chart-* tokens only. Geometry lives in the SVG viewBox (570×215). Slide 07. */
 .c-pnl-sketch {
   display: flex;
   flex-direction: column;
@@ -1389,7 +1389,7 @@ body.overview .deck-viewport {
 /* ===== COMPONENT equity-chart ===== */
 /* === COMPONENT (deck): equity-chart ===
    Cumulative P&L by campaign for each strategy, drawn as inline SVG on the
-   white chart backing. Geometry lives in the SVG viewBox (1728x640); series
+   white chart backing. Geometry lives in the SVG viewBox (1728×640); series
    colours come from --chart-* tokens. Slide 10. */
 .c-equity-chart {
   display: flex;
@@ -1525,7 +1525,7 @@ body.overview .deck-viewport {
 }
 
 /* ===== COMPONENT quadrant ===== */
-/* === COMPONENT: quadrant === 2x2 matrix; children are 4 quadrant-cell
+/* === COMPONENT: quadrant === 2×2 matrix; children are 4 quadrant-cell
    (order: row-a/col-a, row-a/col-b, row-b/col-a, row-b/col-b) */
 .c-quadrant {
   display: grid;
@@ -1752,7 +1752,7 @@ body.overview .deck-viewport {
 
 /* ===== COMPONENT arch-diagram ===== */
 /* === COMPONENT (deck): arch-diagram ===
-   Project Cassandra system architecture on a 1728x800 canvas.
+   Project Cassandra system architecture on a 1728×800 canvas.
    Lanes → nodes → one SVG wire overlay (accent = data flow, ink = actors). */
 .c-arch {
   --node: color-mix(in srgb, var(--card) 80%, var(--bg));
@@ -2303,7 +2303,7 @@ body.overview .deck-viewport {
 
 /* ===== COMPONENT flow-stage ===== */
 /* === COMPONENT (deck): flow-stage ===
-   Block holding absolutely-positioned flow pieces on the full 1920x1080 stage.
+   Block holding absolutely-positioned flow pieces on the full 1920×1080 stage.
    Coordinates in child components are stage px (origin = slide top-left).
    Used by the step-by-step build slides (async processing, race conditions). */
 .c-flow-stage {
@@ -2385,7 +2385,7 @@ body.overview .deck-viewport {
 }
 
 /* ===== COMPONENT flow-db ===== */
-/* === COMPONENT (deck): flow-db === database cylinder, top-left at (x, y), 93x118. */
+/* === COMPONENT (deck): flow-db === database cylinder, top-left at (x, y), 93×118. */
 .c-flow-db {
   position: absolute;
   width: 93px;
@@ -2552,7 +2552,7 @@ body.overview .deck-viewport {
 }
 
 /* ===== COMPONENT flow-x ===== */
-/* === COMPONENT (deck): flow-x === danger-coloured cross centred on (x, y), 80x80. */
+/* === COMPONENT (deck): flow-x === danger-coloured cross centred on (x, y), 80×80. */
 .c-flow-x {
   position: absolute;
   width: 80px;
@@ -3515,7 +3515,7 @@ body.overview .deck-viewport {
 /* ===== COMPONENT scatter-chart ===== */
 /* === COMPONENT (deck): scatter-chart ===
    $ per campaign for every variant tried per notebook (one dot each), inline SVG on the
-   white chart backing. Geometry lives in the viewBox (1728x640). Dots are stacked in a
+   white chart backing. Geometry lives in the viewBox (1728×640). Dots are stacked in a
    column per notebook; hover (core/runtime.js [data-hover-scatter]) shows what that
    notebook changed. Slide 38. */
 .c-scatter-chart {
@@ -4563,7 +4563,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="01" data-name="cover">
-<!-- notes: Opener. 30 min talk + 30 min Q&A. Frame: impact and requirements met. -->
+<!-- notes: Joyce. Good afternoon Prof, I'm Joyce and we're Team Pygmy. This is Project Cassandra, built for our sponsor, Catch22. → Before we start, let's meet our team. -->
 <div class="c-title-cover ">
   <div class="c-title-cover__main">
     <div class="c-title-cover__text">
@@ -4584,7 +4584,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="02" data-name="team">
-<!-- notes: Quick intros, ~20s. Leads first, then the dev team. -->
+<!-- notes: Isaiah is our Product Owner and Jerrick is our Scrum Master. Arin, Jamesz, Yanting and I make up the development team. Here's what we'll cover today -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Meet Our Team</h1>
@@ -4659,7 +4659,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="03" data-name="agenda">
-<!-- notes: Keep under 30s. -->
+<!-- notes: We'll start with the problem and our goals, then go straight into a live demo. After that we walk through the architecture, our key design decisions and how we got to the model, then project management, and we close with constraints and what's next. → Let's begin with the problem. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Today</h1>
@@ -4710,7 +4710,7 @@ body.overview .deck-viewport {
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">08</span>
-  <h3>Constraints &amp; What’s Next</h3>
+  <h3>Constraints &amp; What's Next</h3>
   <span class="c-agenda-item__owner"></span>
   <span class="c-agenda-item__mins"></span>
 </li>
@@ -4720,6 +4720,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="04" data-name="section-problem">
+<!-- notes: As a quick recap, let's meet our sponsor again - Our sponsor, Catch22. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">01</span>
   <div class="c-section-divider__text">
@@ -4732,7 +4733,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="05" data-name="sponsor">
-<!-- notes: Joyce. Who we are building for. Catch22 is a fintech startup that treats retail traders as market signals. Our data is Gold (XAU/USD). -->
+<!-- notes: Joyce, ~25s. Catch22 is a fintech startup that uses retail traders as market signals. We work directly with the founders, Clement and Lee Yang. They trade FICC markets, but the scope of our project is focused only on gold. They want consistent profit across campaigns, with decisions made in near real time. Our focus is the Judge, which answers one question: fade the trade, or not? → To see where the Judge fits and C22 workflow, let's follow one trader. Meet Sally. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Our Sponsor: Catch22</h1>
@@ -4745,7 +4746,7 @@ body.overview .deck-viewport {
   
   <article class="c-grid-card reveal ">
   <span class="c-grid-card__kicker">Domain</span>
-  <h3>Fixed Income, Currencies, Commodities markets</h3>
+  <h3>FICC markets</h3>
   <p>Our data: XAU/USD (Gold)</p>
 </article>
   <article class="c-grid-card reveal ">
@@ -4764,17 +4765,17 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="06" data-name="c22-story-join">
-<!-- notes: Joyce. Meet Sally. A trading challenge is announced on Discord, 2-3 times a week, and she joins along with about 500 other traders. -->
+<!-- notes: Joyce: Sally is a retail trader. Two to three times a week, Catch22 posts a trading challenge on Discord. Sally signs up, and so do about 500 other traders. → Once she's in, she starts trading. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">What Catch22 does today</span>
   <h1 class="reveal">Sally joins a challenge</h1>
 </header>
 <div class="c-c22-flow is-step-2">
   <div class="c-c22-flow__step c-c22-flow__step--s1 reveal">
-    <span class="c-c22-flow__tag">C22 Campaign</span>
+    <span class="c-c22-flow__tag">Challenge</span>
     <div class="c-c22-flow__box">
       <div class="c-c22-flow__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDE4YzYtMyAxMS00IDE4LTRzMTIgMSAxOCA0YzQgOCA2IDE2IDYgMjYtNSA0LTEwIDYtMTUgN2wtMy01Yy00IDEtOCAxLTEyIDBsLTMgNWMtNS0xLTEwLTMtMTUtNyAwLTEwIDItMTggNi0yNnoiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjMzIiByPSIyLjUiIGZpbGw9IiMwMDAiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjMzIiByPSIyLjUiIGZpbGw9IiMwMDAiLz48L3N2Zz4K)"></div>
-      <p class="c-c22-flow__sub">Announced on Discord</p>
+      <p class="c-c22-flow__sub">Announced on Discord<br>2-3x a week</p>
     </div>
   </div>
   <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
@@ -4812,24 +4813,24 @@ body.overview .deck-viewport {
 </div>
 <div class="c-c22-story reveal ">
   <span class="c-c22-story__who">Sally · a trader</span>
-  <p class="c-c22-story__line">Sally sees a trading challenge on Discord and signs up</p>
+  <p class="c-c22-story__line">Sally sees a trading challenge on Discord and signs up. So do about 500 other traders.</p>
   <p class="c-c22-story__small">A new challenge runs 2-3 times a week.</p>
 </div>
 </section>
 
 
 <section class="slide" data-slide="07" data-name="c22-story-trade">
-<!-- notes: Joyce. Sally trades in a simulated account under the conditions in C22’s rule book. Same rules for every trader in the challenge. -->
+<!-- notes: Sally trades in C22's simulated trading environment, and everyone in the challenge follows the same Catch22 rule book. No real money is involved.→ But Catch22 isn't watching Sally just for fun. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">What Catch22 does today</span>
   <h1 class="reveal">Sally trades by the rule book</h1>
 </header>
 <div class="c-c22-flow is-step-3">
   <div class="c-c22-flow__step c-c22-flow__step--s1 reveal">
-    <span class="c-c22-flow__tag">C22 Campaign</span>
+    <span class="c-c22-flow__tag">Challenge</span>
     <div class="c-c22-flow__box">
       <div class="c-c22-flow__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDE4YzYtMyAxMS00IDE4LTRzMTIgMSAxOCA0YzQgOCA2IDE2IDYgMjYtNSA0LTEwIDYtMTUgN2wtMy01Yy00IDEtOCAxLTEyIDBsLTMgNWMtNS0xLTEwLTMtMTUtNyAwLTEwIDItMTggNi0yNnoiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjMzIiByPSIyLjUiIGZpbGw9IiMwMDAiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjMzIiByPSIyLjUiIGZpbGw9IiMwMDAiLz48L3N2Zz4K)"></div>
-      <p class="c-c22-flow__sub">Announced on Discord</p>
+      <p class="c-c22-flow__sub">Announced on Discord<br>2-3x a week</p>
     </div>
   </div>
   <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
@@ -4867,24 +4868,24 @@ body.overview .deck-viewport {
 </div>
 <div class="c-c22-story reveal ">
   <span class="c-c22-story__who">Sally · a trader</span>
-  <p class="c-c22-story__line">Sally opens a trade, and everything she does stays inside C22’s rule book.</p>
+  <p class="c-c22-story__line">Sally opens a trade, and everything she does stays inside C22's rule book.</p>
   <p class="c-c22-story__small">Simulated environment, same conditions for all ~500 traders.</p>
 </div>
 </section>
 
 
 <section class="slide" data-slide="08" data-name="c22-story-signal">
-<!-- notes: Joyce. C22 reads Sally’s trade as a signal: someone in the real market, say Alex, is doing the same thing right now. -->
+<!-- notes: Catch22 reads each simulated trade as a signal of the real market. Sally stands in for Alex, a real trader making the same move in the real market right now. With about 500 Sallys, Catch22 is sampling the crowd to see what real traders are doing. → So what can it do with that signal? -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">What Catch22 does today</span>
-  <h1 class="reveal">Sally’s trade is a signal</h1>
+  <h1 class="reveal">Sally's trade is a signal</h1>
 </header>
 <div class="c-c22-flow is-step-4">
   <div class="c-c22-flow__step c-c22-flow__step--s1 reveal">
-    <span class="c-c22-flow__tag">C22 Campaign</span>
+    <span class="c-c22-flow__tag">Challenge</span>
     <div class="c-c22-flow__box">
       <div class="c-c22-flow__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDE4YzYtMyAxMS00IDE4LTRzMTIgMSAxOCA0YzQgOCA2IDE2IDYgMjYtNSA0LTEwIDYtMTUgN2wtMy01Yy00IDEtOCAxLTEyIDBsLTMgNWMtNS0xLTEwLTMtMTUtNyAwLTEwIDItMTggNi0yNnoiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjMzIiByPSIyLjUiIGZpbGw9IiMwMDAiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjMzIiByPSIyLjUiIGZpbGw9IiMwMDAiLz48L3N2Zz4K)"></div>
-      <p class="c-c22-flow__sub">Announced on Discord</p>
+      <p class="c-c22-flow__sub">Announced on Discord<br>2-3x a week</p>
     </div>
   </div>
   <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
@@ -4900,7 +4901,7 @@ body.overview .deck-viewport {
     <span class="c-c22-flow__tag">Sally</span>
     <div class="c-c22-flow__box">
       <h3>Trades</h3>
-      <p class="c-c22-flow__sub">Inside C22’s rule book</p>
+      <p class="c-c22-flow__sub">Inside C22's rule book</p>
     </div>
   </div>
   <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
@@ -4929,17 +4930,17 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="09" data-name="c22-story-judge">
-<!-- notes: Joyce. C22 can reverse (fade) the trade against Alex and hopefully profit, but not every trade is worth reversing. The Judge model decides: fade it, or not. This is our focus. -->
+<!-- notes: Catch22 can reverse, or fade, the trade against Alex and hopefully profit. But not every trade is worth reversing. Fade the right ones and Catch22 profits. Fade the wrong ones and it loses. The Judge makes that call, and it's our focus. → Let's look at why that call is hard today. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">What Catch22 does today</span>
   <h1 class="reveal">The Judge makes the call</h1>
 </header>
 <div class="c-c22-flow is-step-5">
   <div class="c-c22-flow__step c-c22-flow__step--s1 reveal">
-    <span class="c-c22-flow__tag">C22 Campaign</span>
+    <span class="c-c22-flow__tag">Challenge</span>
     <div class="c-c22-flow__box">
       <div class="c-c22-flow__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDE4YzYtMyAxMS00IDE4LTRzMTIgMSAxOCA0YzQgOCA2IDE2IDYgMjYtNSA0LTEwIDYtMTUgN2wtMy01Yy00IDEtOCAxLTEyIDBsLTMgNWMtNS0xLTEwLTMtMTUtNyAwLTEwIDItMTggNi0yNnoiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjMzIiByPSIyLjUiIGZpbGw9IiMwMDAiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjMzIiByPSIyLjUiIGZpbGw9IiMwMDAiLz48L3N2Zz4K)"></div>
-      <p class="c-c22-flow__sub">Announced on Discord</p>
+      <p class="c-c22-flow__sub">Announced on Discord<br>2-3x a week</p>
     </div>
   </div>
   <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
@@ -4955,7 +4956,7 @@ body.overview .deck-viewport {
     <span class="c-c22-flow__tag">Sally</span>
     <div class="c-c22-flow__box">
       <h3>Trades</h3>
-      <p class="c-c22-flow__sub">Inside C22’s rule book</p>
+      <p class="c-c22-flow__sub">Inside C22's rule book</p>
     </div>
   </div>
   <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
@@ -4984,7 +4985,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="10" data-name="problem-space">
-<!-- notes: Joyce. The core conflict: all alpha hinges on one decision. Then the pain points: the existing system is heavily constrained. -->
+<!-- notes: All of Catch22's alpha rests on one decision: which client's trade do we fade? Today that decision is limited in two ways. Static rules go stale and can't learn new patterns. And they're fragile: when the market shifts, P&L drops into a drawdown, as the sketch shows. → This is the gap we set out to close. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Problem Space</h1>
@@ -4992,8 +4993,8 @@ body.overview .deck-viewport {
 <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-l);">
   
   <div class="c-chevron-callout reveal ">
-  <p class="c-chevron-callout__lead"><span>Catch22’s entire alpha depends on one <u>critical decision</u>:</span></p>
-  <blockquote><span>“Which client’s trade do we fade (reverse) to maximise profit?”</span></blockquote>
+  <p class="c-chevron-callout__lead"><span>Catch22's entire alpha depends on one <u>critical decision</u>:</span></p>
+  <blockquote><span>“Which client's trade do we fade (reverse) to maximise profit?”</span></blockquote>
 </div>
   <header class="c-section-heading reveal ">
   <h2>Pain points</h2>
@@ -5004,19 +5005,19 @@ body.overview .deck-viewport {
     <article class="c-numbered-card reveal ">
   <span class="c-numbered-card__num">1</span>
   <div>
-    <h3>Static rules: a system that can’t learn</h3>
-    <p>Hard-coded rules go stale; they can’t evolve with new trading patterns across campaigns.</p>
+    <h3>Static rules: a system that can't learn</h3>
+    <p>Hard-coded rules go stale; they can't evolve with new trading patterns across campaigns.</p>
   </div>
 </article>
     <article class="c-numbered-card reveal ">
   <span class="c-numbered-card__num">2</span>
   <div>
     <h3>Rules are fragile to market shifts</h3>
-    <p>When conditions change suddenly, fixed rules can’t adapt, and P&amp;L swings with them.</p>
+    <p>When conditions change suddenly, fixed rules can't adapt, and P&amp;L swings with them.</p>
   </div>
 </article>
     <figure class="c-pnl-sketch reveal ">
-  <figcaption class="c-pnl-sketch__title">Shape of today’s P&amp;L</figcaption>
+  <figcaption class="c-pnl-sketch__title">Shape of today's P&amp;L</figcaption>
   <svg class="c-pnl-sketch__svg" viewBox="0 0 570 240" role="img" aria-label="Schematic profit over time: steady climb, a sudden market shift, a sharp drawdown, then a slow recovery">
     <line class="ps-axis" x1="36" y1="22" x2="36" y2="215"/>
     <line class="ps-axis" x1="36" y1="215" x2="552" y2="215"/>
@@ -5041,6 +5042,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="11" data-name="section-goals">
+<!-- notes: So what did we commit to, and where do we stand? -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">02</span>
   <div class="c-section-divider__text">
@@ -5053,7 +5055,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="12" data-name="success-metrics">
-<!-- notes: Joyce. The three bars the Judge must clear. Fill the right column with current results + CIs. -->
+<!-- notes: We want the our version of the Judge to beat three baselines. First, fading every trade. Second, a random coin-flip. Third, Catch22's current rule, which is still work in progress. Think of it as a staircase we climb one step at a time. This chart is only an illustrative target, not a result. → Here is how the real numbers look. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Our Success Metrics</h1>
@@ -5077,7 +5079,7 @@ body.overview .deck-viewport {
   <p>A fully randomised coin-flip baseline</p>
 </div>
       <div class="c-label-card reveal ">
-  <h3>Match C22’s<br>Current Rule</h3>
+  <h3>Match C22's<br>Current Rule</h3>
   <p>In-flight: on par with, or beating, the existing model</p>
 </div>
     
@@ -5094,7 +5096,7 @@ body.overview .deck-viewport {
   <div class="c-bar-ladder__bars">
     <div class="c-bar-ladder__col" style="--h: 26%; --o: 0.25;"><i></i><span>Fade<br>everything</span></div>
     <div class="c-bar-ladder__col" style="--h: 50%; --o: 0.4;"><i></i><span>Coin flip</span></div>
-    <div class="c-bar-ladder__col" style="--h: 74%; --o: 0.65;"><i></i><span>C22’s current<br>model</span></div>
+    <div class="c-bar-ladder__col" style="--h: 74%; --o: 0.65;"><i></i><span>C22's current<br>model</span></div>
     <div class="c-bar-ladder__col is-ours" style="--h: 100%;"><i></i><span>Our Judge</span></div>
   </div>
   <figcaption>Illustrative target, not measured results.</figcaption>
@@ -5107,13 +5109,13 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="13" data-name="strategy-comparison">
-<!-- notes: Joyce. All four strategies on one scale, campaigns 69-86. Campaigns 78-86 are new data the model never saw. Fade everything trades about 20x more than the model rules, so it sets the scale. The grey band is where 90% of random 5%-per-campaign picks land. Top 5% is a hindsight report card; the pool threshold is the rule that can run live. Hover the chart for exact numbers. -->
+<!-- notes: This tracks cumulative P&L across campaigns 69 to 86, and the shaded area is data the model hadn't seen. From the charts, you can see that we have beaten  baselines that is random and fade-everything.Don't read out numbers. Catch22's own rule is still ahead of us, but we're making progress. → We also want to emphasize that the model is only part of what we bring. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Goals &amp; Impact</span>
   <h1 class="reveal">We beat 2 of the 3 benchmarks</h1>
 </header>
 <figure class="c-equity-chart reveal inset">
-  <div class="c-equity-chart__plot" data-hover-chart='{"w":1728,"t":92,"b":576,"p":[{"x":130.0,"t":"Campaign 69 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"−$1,169","y":182.1},{"k":"live","l":"Pool threshold (live rule)","v":"+$18","y":172.5},{"k":"fade","l":"Fade everything","v":"−$9,258","y":247.3},{"k":"rand","l":"Random, same count (avg)","v":"−$477","y":176.5}],"b":"−$2,920 to +$1,926"},{"x":209.3,"t":"Campaign 70 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"−$223","y":174.5},{"k":"live","l":"Pool threshold (live rule)","v":"+$578","y":168.0},{"k":"fade","l":"Fade everything","v":"−$13,875","y":284.6},{"k":"rand","l":"Random, same count (avg)","v":"−$720","y":178.5}],"b":"−$3,609 to +$2,155"},{"x":288.6,"t":"Campaign 71 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$1,053","y":164.2},{"k":"live","l":"Pool threshold (live rule)","v":"+$1,267","y":162.4},{"k":"fade","l":"Fade everything","v":"−$13,993","y":285.5},{"k":"rand","l":"Random, same count (avg)","v":"−$729","y":178.5}],"b":"−$3,987 to +$2,623"},{"x":367.9,"t":"Campaign 72 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$1,860","y":157.7},{"k":"live","l":"Pool threshold (live rule)","v":"+$2,052","y":156.1},{"k":"fade","l":"Fade everything","v":"−$15,774","y":299.9},{"k":"rand","l":"Random, same count (avg)","v":"−$805","y":179.2}],"b":"−$4,442 to +$2,898"},{"x":447.2,"t":"Campaign 73 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$3,779","y":142.2},{"k":"live","l":"Pool threshold (live rule)","v":"+$3,251","y":146.4},{"k":"fade","l":"Fade everything","v":"−$20,434","y":337.5},{"k":"rand","l":"Random, same count (avg)","v":"−$1,011","y":180.8}],"b":"−$5,041 to +$3,107"},{"x":526.5,"t":"Campaign 74 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$6,588","y":119.5},{"k":"live","l":"Pool threshold (live rule)","v":"+$4,233","y":138.5},{"k":"fade","l":"Fade everything","v":"−$20,811","y":340.5},{"k":"rand","l":"Random, same count (avg)","v":"−$1,018","y":180.9}],"b":"−$5,310 to +$3,400"},{"x":605.8,"t":"Campaign 75 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$5,923","y":124.9},{"k":"live","l":"Pool threshold (live rule)","v":"+$2,940","y":149.0},{"k":"fade","l":"Fade everything","v":"−$28,038","y":398.8},{"k":"rand","l":"Random, same count (avg)","v":"−$1,374","y":183.8}],"b":"−$5,997 to +$3,336"},{"x":685.1,"t":"Campaign 76 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$2,597","y":151.7},{"k":"live","l":"Pool threshold (live rule)","v":"−$572","y":177.3},{"k":"fade","l":"Fade everything","v":"−$22,161","y":351.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,078","y":181.4}],"b":"−$6,073 to +$4,143"},{"x":764.4,"t":"Campaign 77 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$1,205","y":162.9},{"k":"live","l":"Pool threshold (live rule)","v":"−$1,579","y":185.4},{"k":"fade","l":"Fade everything","v":"−$28,232","y":400.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,383","y":183.8}],"b":"−$6,494 to +$3,986"},{"x":843.6,"t":"Campaign 78 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$345","y":169.9},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,283","y":191.1},{"k":"fade","l":"Fade everything","v":"−$33,188","y":440.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,628","y":185.8}],"b":"−$6,836 to +$3,758"},{"x":922.9,"t":"Campaign 79 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$775","y":166.4},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,423","y":192.2},{"k":"fade","l":"Fade everything","v":"−$30,338","y":417.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,481","y":184.6}],"b":"−$6,764 to +$4,036"},{"x":1002.2,"t":"Campaign 80 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$287","y":170.4},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,628","y":193.9},{"k":"fade","l":"Fade everything","v":"−$39,358","y":490.2},{"k":"rand","l":"Random, same count (avg)","v":"−$1,929","y":188.2}],"b":"−$7,334 to +$3,616"},{"x":1081.5,"t":"Campaign 81 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$227","y":170.8},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,399","y":192.0},{"k":"fade","l":"Fade everything","v":"−$42,910","y":518.8},{"k":"rand","l":"Random, same count (avg)","v":"−$2,108","y":189.7}],"b":"−$7,485 to +$3,448"},{"x":1160.8,"t":"Campaign 82 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"−$59","y":173.1},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,481","y":192.7},{"k":"fade","l":"Fade everything","v":"−$40,818","y":501.9},{"k":"rand","l":"Random, same count (avg)","v":"−$2,008","y":188.9}],"b":"−$7,551 to +$3,610"},{"x":1240.1,"t":"Campaign 83 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$111","y":171.8},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,400","y":192.0},{"k":"fade","l":"Fade everything","v":"−$43,700","y":525.2},{"k":"rand","l":"Random, same count (avg)","v":"−$2,147","y":190.0}],"b":"−$7,771 to +$3,629"},{"x":1319.4,"t":"Campaign 84 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$759","y":166.5},{"k":"live","l":"Pool threshold (live rule)","v":"−$911","y":180.0},{"k":"fade","l":"Fade everything","v":"−$25,153","y":375.6},{"k":"rand","l":"Random, same count (avg)","v":"−$1,244","y":182.7}],"b":"−$7,361 to +$4,959"},{"x":1398.7,"t":"Campaign 85 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$498","y":168.6},{"k":"live","l":"Pool threshold (live rule)","v":"−$1,158","y":182.0},{"k":"fade","l":"Fade everything","v":"−$19,510","y":330.1},{"k":"rand","l":"Random, same count (avg)","v":"−$979","y":180.6}],"b":"−$7,223 to +$5,355"},{"x":1478.0,"t":"Campaign 86 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$12","y":172.6},{"k":"live","l":"Pool threshold (live rule)","v":"−$970","y":180.5},{"k":"fade","l":"Fade everything","v":"−$11,905","y":268.7},{"k":"rand","l":"Random, same count (avg)","v":"−$613","y":177.6}],"b":"−$6,918 to +$5,785"}]}'>
+  <div class="c-equity-chart__plot" data-hover-chart='{"w":1728,"t":92,"b":576,"p":[{"x":130.0,"t":"Campaign 69 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"−$1,169","y":182.1},{"k":"live","l":"Pool threshold (live rule)","v":"+$18","y":172.5},{"k":"fade","l":"Fade everything","v":"-$9,258","y":247.3},{"k":"rand","l":"Random, same count (avg)","v":"−$477","y":176.5}],"b":"−$2,920 to +$1,926"},{"x":209.3,"t":"Campaign 70 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"−$223","y":174.5},{"k":"live","l":"Pool threshold (live rule)","v":"+$578","y":168.0},{"k":"fade","l":"Fade everything","v":"−$13,875","y":284.6},{"k":"rand","l":"Random, same count (avg)","v":"−$720","y":178.5}],"b":"−$3,609 to +$2,155"},{"x":288.6,"t":"Campaign 71 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$1,053","y":164.2},{"k":"live","l":"Pool threshold (live rule)","v":"+$1,267","y":162.4},{"k":"fade","l":"Fade everything","v":"−$13,993","y":285.5},{"k":"rand","l":"Random, same count (avg)","v":"−$729","y":178.5}],"b":"−$3,987 to +$2,623"},{"x":367.9,"t":"Campaign 72 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$1,860","y":157.7},{"k":"live","l":"Pool threshold (live rule)","v":"+$2,052","y":156.1},{"k":"fade","l":"Fade everything","v":"−$15,774","y":299.9},{"k":"rand","l":"Random, same count (avg)","v":"−$805","y":179.2}],"b":"−$4,442 to +$2,898"},{"x":447.2,"t":"Campaign 73 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$3,779","y":142.2},{"k":"live","l":"Pool threshold (live rule)","v":"+$3,251","y":146.4},{"k":"fade","l":"Fade everything","v":"−$20,434","y":337.5},{"k":"rand","l":"Random, same count (avg)","v":"−$1,011","y":180.8}],"b":"−$5,041 to +$3,107"},{"x":526.5,"t":"Campaign 74 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$6,588","y":119.5},{"k":"live","l":"Pool threshold (live rule)","v":"+$4,233","y":138.5},{"k":"fade","l":"Fade everything","v":"−$20,811","y":340.5},{"k":"rand","l":"Random, same count (avg)","v":"−$1,018","y":180.9}],"b":"−$5,310 to +$3,400"},{"x":605.8,"t":"Campaign 75 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$5,923","y":124.9},{"k":"live","l":"Pool threshold (live rule)","v":"+$2,940","y":149.0},{"k":"fade","l":"Fade everything","v":"−$28,038","y":398.8},{"k":"rand","l":"Random, same count (avg)","v":"−$1,374","y":183.8}],"b":"−$5,997 to +$3,336"},{"x":685.1,"t":"Campaign 76 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$2,597","y":151.7},{"k":"live","l":"Pool threshold (live rule)","v":"−$572","y":177.3},{"k":"fade","l":"Fade everything","v":"−$22,161","y":351.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,078","y":181.4}],"b":"−$6,073 to +$4,143"},{"x":764.4,"t":"Campaign 77 · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$1,205","y":162.9},{"k":"live","l":"Pool threshold (live rule)","v":"−$1,579","y":185.4},{"k":"fade","l":"Fade everything","v":"−$28,232","y":400.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,383","y":183.8}],"b":"−$6,494 to +$3,986"},{"x":843.6,"t":"Campaign 78 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$345","y":169.9},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,283","y":191.1},{"k":"fade","l":"Fade everything","v":"−$33,188","y":440.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,628","y":185.8}],"b":"−$6,836 to +$3,758"},{"x":922.9,"t":"Campaign 79 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$775","y":166.4},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,423","y":192.2},{"k":"fade","l":"Fade everything","v":"−$30,338","y":417.4},{"k":"rand","l":"Random, same count (avg)","v":"−$1,481","y":184.6}],"b":"−$6,764 to +$4,036"},{"x":1002.2,"t":"Campaign 80 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$287","y":170.4},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,628","y":193.9},{"k":"fade","l":"Fade everything","v":"−$39,358","y":490.2},{"k":"rand","l":"Random, same count (avg)","v":"−$1,929","y":188.2}],"b":"−$7,334 to +$3,616"},{"x":1081.5,"t":"Campaign 81 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$227","y":170.8},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,399","y":192.0},{"k":"fade","l":"Fade everything","v":"−$42,910","y":518.8},{"k":"rand","l":"Random, same count (avg)","v":"−$2,108","y":189.7}],"b":"−$7,485 to +$3,448"},{"x":1160.8,"t":"Campaign 82 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"−$59","y":173.1},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,481","y":192.7},{"k":"fade","l":"Fade everything","v":"−$40,818","y":501.9},{"k":"rand","l":"Random, same count (avg)","v":"−$2,008","y":188.9}],"b":"−$7,551 to +$3,610"},{"x":1240.1,"t":"Campaign 83 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$111","y":171.8},{"k":"live","l":"Pool threshold (live rule)","v":"−$2,400","y":192.0},{"k":"fade","l":"Fade everything","v":"−$43,700","y":525.2},{"k":"rand","l":"Random, same count (avg)","v":"−$2,147","y":190.0}],"b":"−$7,771 to +$3,629"},{"x":1319.4,"t":"Campaign 84 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$759","y":166.5},{"k":"live","l":"Pool threshold (live rule)","v":"−$911","y":180.0},{"k":"fade","l":"Fade everything","v":"−$25,153","y":375.6},{"k":"rand","l":"Random, same count (avg)","v":"−$1,244","y":182.7}],"b":"−$7,361 to +$4,959"},{"x":1398.7,"t":"Campaign 85 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$498","y":168.6},{"k":"live","l":"Pool threshold (live rule)","v":"−$1,158","y":182.0},{"k":"fade","l":"Fade everything","v":"−$19,510","y":330.1},{"k":"rand","l":"Random, same count (avg)","v":"−$979","y":180.6}],"b":"−$7,223 to +$5,355"},{"x":1478.0,"t":"Campaign 86 · new · running total","r":[{"k":"top","l":"Top 5% per campaign (report card)","v":"+$12","y":172.6},{"k":"live","l":"Pool threshold (live rule)","v":"−$970","y":180.5},{"k":"fade","l":"Fade everything","v":"−$11,905","y":268.7},{"k":"rand","l":"Random, same count (avg)","v":"−$613","y":177.6}],"b":"−$6,918 to +$5,785"}]}'>
     <svg class="c-equity-chart__svg" viewBox="0 0 1728 640" role="img" aria-label="Cumulative profit by campaign for each strategy">
     <rect class="ec-new" x="804.0" y="92" width="682.0" height="484"/>
     <text class="ec-tick ec-newtxt" x="814.0" y="118">new data (78-86) →</text>
@@ -5180,7 +5182,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="14" data-name="business-value">
-<!-- notes: Joyce. Value beyond the model itself: closer to a research partnership. The end-to-end suite is ETL and cleaning, the Judge, a monitoring dashboard and paper-trade simulation, much bigger than the judge C22 has today. -->
+<!-- notes: Our project is closer to a research partnership. We bring fresh eyes on feature engineering and modelling beyond the current rules. We're also building an end-to-end suite, from the ETL pipeline to monitoring and paper trading. → Here is how that suite splits across our milestones. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Goals &amp; Impact</span>
   <h1 class="reveal">Beyond the Model</h1>
@@ -5212,7 +5214,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="15" data-name="milestones">
-<!-- notes: Joyce. Where we are against the plan: the Judge and its infrastructure plus the analytics dashboard land at midterm; paper trading and auto-retraining are the final-presentation scope. -->
+<!-- notes: In terms of project progress, For midterm we're delivering the Reverse Trade Judge and an analytics dashboard for model performance. For the final we'll add paper trading and automated retraining. → Now let's see how this works in our live demo. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Project Milestones</h1>
@@ -5257,7 +5259,7 @@ body.overview .deck-viewport {
   <h3>Paper Trading</h3>
   <div class="c-icon-card__row">
     <i class="c-icon-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDZoMjZsMTAgMTB2NDJIMTR6Ii8+PHBhdGggZD0iTTQwIDZ2MTBoMTAiLz48cGF0aCBkPSJNMjAgNDZsOC05IDYgNSAxMC0xMiIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
-    <p>Live paper trading simulator</p>
+    <p>Forward paper trading simulator</p>
   </div>
 </article>
       <article class="c-icon-card reveal is-dim">
@@ -5277,11 +5279,12 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="16" data-name="section-demo">
+<!-- notes: A quick note first: Clement's team changed platforms of where they are hosting the traders, so we no longer have API access to the live feed. Instead we use a script that emits trades one by one, simulating trades coming in. You'll watch the Judge decide in real time, replayed at 20x speed on real data. → First, I want to explain how we picked the data for this demo. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">03</span>
   <div class="c-section-divider__text">
     <h2 class="reveal">Live Demo</h2>
-    <p class="reveal">Watch the Judge decide in real time, replayed at 10x speed</p>
+    <p class="reveal">Watch the Judge decide in real time, replayed at 20x speed</p>
     <span class="c-section-divider__presenter reveal">Jerrick · Joyce · JS</span>
   </div>
 </div>
@@ -5289,7 +5292,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="17" data-name="market-regimes">
-<!-- notes: Joyce + JS. Two lenses for picking replay data: how busy the slot is (trades per slot, p50 vs p95) and how volatile the market is (beta vs Gold Futures). We replay two slots: Typical + Calm and Busy + Volatile. -->
+<!-- notes: To avoid cherry-picking an easy window, we used two lenses. Activity is the number of trades per slot. Volatility is beta against gold futures. That gives four market conditions, and we picked two opposite corners. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Live Demo</span>
   <h1 class="reveal">How We Picked the Demo Data</h1>
@@ -5350,7 +5353,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="18" data-name="demo-data">
-<!-- notes: Joyce + JS. The evidence behind the two lenses. Left: activity is trades in a rolling 30-minute window (p50 = typical, p95 = busy). Right: volatility is beta against Gold Futures per 30-minute slot. -->
+<!-- notes: On the left, we counted trades in a rolling 30-minute window. Typical sits near p50, the median, and busy is p95 and above. On the right, we measured each slot's beta against gold futures. One or less is calm, above one is volatile. → Applying both rules gives us our two timeslots. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Live Demo</span>
   <h1 class="reveal">The Data Behind Our Choice</h1>
@@ -5375,7 +5378,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="19" data-name="chosen-timeslots">
-<!-- notes: Joyce + JS. The two slots we replay: Typical + Calm at 3:30-4:00 and Busy + Volatile at 5:30-6:00 (US time, 14 Aug). Thresholds here are fixed 30-minute slots (p95 121.4, p50 59.5). -->
+<!-- notes: Our typical, calm slot is 3:30 to 4:00, and our busy, volatile slot is 5:30 to 6:00. Together they test the Judge in both an ordinary and a stressful market. → With that, I'll hand over to Jerrick to start the demo. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Live Demo</span>
   <h1 class="reveal">Chosen Timeslots</h1>
@@ -5551,7 +5554,7 @@ body.overview .deck-viewport {
   <div class="c-arch__actor" style="top: 150px; left: -24px;">
     <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="20" cy="12" r="8"/><circle cx="44" cy="12" r="8"/><path d="M4 44c0-10 7-18 16-18s16 8 16 18zM28 44c0-10 7-18 16-18s16 8 16 18z"/></svg>
     <strong>Campaign Traders</strong>
-    <span>trading on C22’s platform</span>
+    <span>trading on C22's platform</span>
   </div>
   <span class="c-arch__wire-label" style="left: 213px; top: 212px; width: 120px;">Trade data</span>
 
@@ -5589,7 +5592,7 @@ body.overview .deck-viewport {
   <!-- Services -->
   <div class="c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
   <div class="c-arch__node" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Oanda Market<br>Price Service</div>
-  <p class="c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22’s own platform API</p>
+  <p class="c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22's own platform API</p>
 </div>
 </section>
 
@@ -6929,11 +6932,11 @@ body.overview .deck-viewport {
   
   <div class="c-local-stack fk-canvas ">
   <div class="fk-group" style="left: 0; top: 20px; width: 1080px; height: 620px;">
-    <span class="fk-group__title">Catch22’s own machine</span>
+    <span class="fk-group__title">Catch22's own machine</span>
   </div>
   <div class="fk-node" style="left: 40px; top: 110px; width: 310px; height: 130px;">Dashboard<small>container</small></div>
   <div class="fk-node fk-node--dark" style="left: 385px; top: 110px; width: 310px; height: 130px;">FastAPI<small>container</small></div>
-  <div class="fk-node fk-node--dark" style="left: 730px; top: 110px; width: 310px; height: 130px;">Workers x N<small>containers</small></div>
+  <div class="fk-node fk-node--dark" style="left: 730px; top: 110px; width: 310px; height: 130px;">Workers × N<small>containers</small></div>
   <div class="fk-node" style="left: 40px; top: 280px; width: 310px; height: 130px;">Redis<small>container</small></div>
   <div class="fk-node fk-node--dark" style="left: 385px; top: 280px; width: 310px; height: 130px;">Judge<small>container</small></div>
   <div class="fk-node fk-node--dark fk-node--accent" style="left: 730px; top: 280px; width: 310px; height: 130px;">Postgres<small>trading data</small></div>
@@ -6942,7 +6945,7 @@ body.overview .deck-viewport {
 
   <div class="fk-card reveal" style="left: 1160px; top: 20px; width: 568px; height: 190px;">
     <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="8" y="8" width="40" height="16" rx="4"/><rect x="8" y="32" width="40" height="16" rx="4"/><path d="M16 16h2M16 40h2M30 16h10M30 40h10"/></svg>
-    <div><strong>Sponsor’s hardware</strong><span>They have the machines and the know-how</span></div>
+    <div><strong>Sponsor's hardware</strong><span>They have the machines and the know-how</span></div>
   </div>
   <div class="fk-card reveal" style="left: 1160px; top: 235px; width: 568px; height: 190px;">
     <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="10" y="24" width="36" height="26" rx="5"/><path d="M18 24v-7a10 10 0 0 1 20 0v7"/><path d="M28 34v6"/></svg>
@@ -6971,7 +6974,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="47" data-name="hurdle-model">
-<!-- notes: Jerrick. Judge v5 is a hurdle model with three arms. Each fills in one term of EV = p x E[gain] − (1 − p) x E[loss]. The classifier gives p (calibrated); the two Huber regressors give the dollar gain and loss. This is gross EV: the models train on gross = −profit. Direction only, fade or skip. amount only sets the cost: score = ev − 7.00 x amount, and we take the trade if it lands in the top 5% of the frozen pool distribution. Trade magnitude: TODO, to be covered later. -->
+<!-- notes: Jerrick. Judge v5 is a hurdle model with three arms. Each fills in one term of EV = p × E[gain] − (1 − p) × E[loss]. The classifier gives p (calibrated); the two Huber regressors give the dollar gain and loss. This is gross EV: the models train on gross = −profit. Direction only, fade or skip. amount only sets the cost: score = ev − 7.00 × amount, and we take the trade if it lands in the top 5% of the frozen pool distribution. Trade magnitude: TODO, to be covered later. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
   <h1 class="reveal">An ensemble of LightGBM models</h1>
@@ -7019,12 +7022,12 @@ body.overview .deck-viewport {
   <i class="c-hurdle__down" aria-hidden="true"></i>
   <div class="c-hurdle__ev">
     <small>Gross EV</small>
-    <strong>p x E[gain] − (1 − p) x E[loss]</strong>
+    <strong>p × E[gain] − (1 − p) × E[loss]</strong>
   </div>
   <i class="c-hurdle__down" aria-hidden="true"></i>
   <div class="c-hurdle__decision">
     <small>Decision</small>
-    <strong>score = EV − 7.00 x amount</strong>
+    <strong>score = EV − 7.00 × amount</strong>
     <span>Fade if the score is in the top 5% of the frozen pool</span>
   </div>
 </div>
@@ -7054,7 +7057,7 @@ body.overview .deck-viewport {
   <article class="c-grid-card reveal ">
   <span class="c-grid-card__kicker">Step 03</span>
   <h3>Train</h3>
-  <p>Hurdle: P(win) x gain − loss</p>
+  <p>Hurdle: P(win) × gain − loss</p>
 </article>
   <article class="c-grid-card reveal ">
   <span class="c-grid-card__kicker">Step 04</span>
@@ -7181,7 +7184,7 @@ Didn't pay: fair to use, but on days the model had never seen they lost money or
     <span class="c-feature-group__count">6</span>
     <div>
       <h3>Leakage</h3>
-      <p>Information the model won’t have at trade time</p>
+      <p>Information the model won't have at trade time</p>
     </div>
   </header>
   <ul class="c-feature-group__list">
@@ -7197,7 +7200,7 @@ Didn't pay: fair to use, but on days the model had never seen they lost money or
   <header class="c-feature-group__head">
     <span class="c-feature-group__count">7</span>
     <div>
-      <h3>Fair, but didn’t pay</h3>
+      <h3>Fair, but didn't pay</h3>
       <p>Tested on days the model had never seen</p>
     </div>
   </header>
@@ -7241,7 +7244,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
     <li><strong>Profit so far today</strong><code>cum_prior_profit</code></li>
     <li><strong>Profit on past days</strong><code>cum_prior_campaign_profit</code></li>
     <li><strong>Current win/loss streak</strong><code>current_streak</code></li>
-    <li><strong>Drop from today’s best</strong><code>running_drawdown</code></li>
+    <li><strong>Drop from today's best</strong><code>running_drawdown</code></li>
     <li><strong>Stops actually hit</strong><code>prior_stop_hit_rate</code></li>
     <li><strong>Targets actually hit</strong><code>prior_target_hit_rate</code></li>
   
@@ -7291,7 +7294,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
     <li><strong>Trade size</strong><code>amount</code></li>
     <li><strong>Hour opened</strong><code>hour_utc</code></li>
     <li><strong>Time on a clock face</strong><code>tod_sin, tod_cos</code></li>
-    <li><strong>Gold’s move today</strong><code>price_vs_campaign_open_bps</code></li>
+    <li><strong>Gold's move today</strong><code>price_vs_campaign_open_bps</code></li>
   
   </ul>
   <p class="c-feature-group__foot"></p>
@@ -7301,7 +7304,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
     <span class="c-feature-group__count">8</span>
     <div>
       <h3>Earlier today</h3>
-      <p>From the customer’s finished trades today</p>
+      <p>From the customer's finished trades today</p>
     </div>
   </header>
   <ul class="c-feature-group__list">
@@ -7484,7 +7487,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
 <div class="c-split inset" style="--split-cols: 1fr 1fr; --split-align: start;">
   
   <div class="c-big-stat reveal ">
-  <span class="c-big-stat__value">35x</span>
+  <span class="c-big-stat__value">35×</span>
   <h3>Perfect regressors vs a perfect classifier</h3>
   <p>+$12,417 vs +$351 per campaign at the top-5% readout</p>
 </div>
@@ -7498,7 +7501,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
   
       <thead><tr><th>Lever</th><th>Result</th></tr></thead>
       <tbody>
-        <tr><td>Market data</td><td class="is-bad">Rejected 4x</td></tr>
+        <tr><td>Market data</td><td class="is-bad">Rejected 4×</td></tr>
         <tr><td>Tuned GBDT vs logistic</td><td class="is-bad">+0.002 AUC</td></tr>
         <tr><td>More campaigns</td><td class="is-bad">Flat curve</td></tr>
       </tbody>
@@ -7728,7 +7731,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
   <div class="c-big-stat reveal ">
   <span class="c-big-stat__value">18</span>
   <h3>Held-out campaigns</h3>
-  <p>Our final test set. Small AUC gaps can’t be told apart</p>
+  <p>Our final test set. Small AUC gaps can't be told apart</p>
 </div>
   <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
   
@@ -7736,7 +7739,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
   <span class="c-numbered-card__num">1</span>
   <div>
     <h3>Not a random sample</h3>
-    <p>Campaigns and traders weren’t randomly chosen, so results may not generalise.</p>
+    <p>Campaigns and traders weren't randomly chosen, so results may not generalise.</p>
   </div>
 </article>
     <article class="c-numbered-card reveal ">
@@ -7750,7 +7753,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
   <span class="c-numbered-card__num">3</span>
   <div>
     <h3>Only ~6 months of data</h3>
-    <p>Too short a range. Trades are correlated, so samples aren’t independent.</p>
+    <p>Too short a range. Trades are correlated, so samples aren't independent.</p>
   </div>
 </article>
   
@@ -7769,7 +7772,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
 <div class="c-split inset" style="--split-cols: 1fr 1.4fr; --split-align: end;">
   
   <div class="c-big-stat reveal ">
-  <span class="c-big-stat__value">4x</span>
+  <span class="c-big-stat__value">4×</span>
   <h3>More campaigns each time the edge halves</h3>
   <p>The smaller the edge we care about, the longer it takes to confirm</p>
 </div>
@@ -7801,7 +7804,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
 <!-- notes: SCRIPT (~30s, Arin): Where we go next, in six steps. One, an auto-retrainer so the Judge keeps learning as new data lands. Two, the real pipeline: wire the Judge into Catch22's live platform API. Three, trade magnitude: today the Judge says fade or skip, and next we want to size each fade. Four, auto-scaling, so the workers scale with campaign load. Five, non-functional requirements: latency, throughput and the rest. Six, observability: Prometheus and Grafana so we can identify bottlenecks. Forward paper trading starts tomorrow, and that is the first thing these build on. Then we'll open it up for questions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
-  <h1 class="reveal">What’s Next</h1>
+  <h1 class="reveal">What's Next</h1>
 </header>
 <div class="c-card-grid inset is-two-row" style="--grid-cols: 3;">
   
@@ -7813,7 +7816,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
   <article class="c-grid-card reveal ">
   <span class="c-grid-card__kicker">Next 02</span>
   <h3>Real pipeline</h3>
-  <p>Wire the Judge into C22’s live platform API</p>
+  <p>Wire the Judge into C22's live platform API</p>
 </article>
   <article class="c-grid-card reveal ">
   <span class="c-grid-card__kicker">Next 03</span>
@@ -7992,7 +7995,7 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
   
     <thead><tr><th>Lever</th><th>Result</th></tr></thead>
     <tbody>
-      <tr><td>Market context</td><td class="is-bad">Rejected 4x</td></tr>
+      <tr><td>Market context</td><td class="is-bad">Rejected 4×</td></tr>
       <tr><td>Stop / target channel</td><td class="is-bad">+0.006 AUC at best</td></tr>
       <tr><td>Hyperparameter tuning</td><td class="is-bad">+0.0028 CV AUC</td></tr>
       <tr><td>Tuned GBDT vs logistic</td><td class="is-bad">+0.002 AUC</td></tr>
@@ -8468,10 +8471,10 @@ Same result on the wider 45-feature set: +$6,879 without them. -->
     }
   }
 
-  // /* === SPEAKER NOTES === N or bottom-left corner button. Reads each slide's
-  //    <!-- notes: … --> comments into an editable panel below the stage. Edits
-  //    autosave to localStorage and are written back into the slide's comment
-  //    node, so Ctrl/Cmd+S in edit mode downloads them too. */
+  /* === SPEAKER NOTES === N or bottom-left corner button. Reads each slide's
+     <!-- notes: … --> comments into an editable panel below the stage. Edits
+     autosave to localStorage and are written back into the slide's comment
+     node, so Ctrl/Cmd+S in edit mode downloads them too. */
   const NOTES_KEY = "pygmy-deck-notes:" + location.pathname;
   const noteNodes = slides.map((slide) => {
     const walker = document.createTreeWalker(slide, NodeFilter.SHOW_COMMENT);
