@@ -20,7 +20,7 @@
 | 3 | `03-agenda` | Agenda (content items only, no owners/minutes) | — | done |
 | 4 | `04-section-problem` | ◆ 01 The Problem | Joyce | — |
 | 5 | `05-sponsor` | Our Sponsor: Catch22 (domain · business needs · our focus) | Joyce | done |
-| 6 | `06-c22-story-join` | Story 1: Sally joins a challenge (`c22-flow` is-step-2 + `c22-story`) | Joyce | done |
+| 6 | `06-c22-story-join` | Story 1: Sally joins a C22 campaign (`c22-flow` is-step-2 + `c22-story`) | Joyce | done |
 | 7 | `07-c22-story-trade` | Story 2: Sally trades inside C22's rule book (generic, no specific rules) | Joyce | done |
 | 8 | `08-c22-story-signal` | Story 3: her trade is a signal that someone in the real market (Alex) is doing the same | Joyce | done |
 | 9 | `09-c22-story-judge` | Story 4: C22 can reverse Alex's trade; the Judge decides (our focus) | Joyce | done |
