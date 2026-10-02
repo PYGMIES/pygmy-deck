@@ -80,12 +80,13 @@
 | 76 | `76-whats-next` | Auto-retrainer · real pipeline · trade magnitude · auto-scaling · non-functional reqs · observability (6 cards, 3 + 3) | Arin | done |
 | 77 | `77-qna` | Questions | — | done |
 | 78 | `78-section-appendix` | ◆ A Appendix (after Q&A, for backup) | — | — |
-| 79 | `79-workflow-campaign-start` | Workflow 1: Campaign Start (6-step flow, 2 arrowed notes, transaction callout) | James Z | done |
-| 80 | `80-workflow-open-trade` | Workflow 2: Open Trade (6-step flow, steps 3–6 framed as async, 2 arrowed notes + Key notes card) | James Z | done |
-| 81 | `81-workflow-close-trade` | Workflow 3: Close Trade (6-step flow, steps 3–6 framed as async, Key notes card) | James Z | done |
-| 82 | `82-workflow-campaign-end` | Workflow 4: Campaign End & Evaluation (5-step flow, Key notes card) | James Z | done |
-| 83–92 | `83-app-correlation` … `92-app-hyperparams` | Correlation matrix, learning curve + calibration, SHAP by feature, cost sweep, market data, tried and dropped, hurdle decomposition, feature arms, top-k, hyperparameters | — | draft |
-| 93–95 | `93-market-regimes`, `94-demo-data`, `95-chosen-timeslots` | Demo-data selection slides (moved from 17–19 to the end of the appendix): 2×2 + how we measure, trades per slot / beta vs Gold, chosen timeslots | Joyce, JS | done |
+| 79 | `79-app-latency-throughput` | Latency and throughput evidence: gold move-time by hour and adverse-check curve (two charts as exported), plus key latency and throughput points (`chart-pair`, `point-list`) | James Z | done |
+| 80 | `80-workflow-campaign-start` | Workflow 1: Campaign Start (6-step flow, 2 arrowed notes, transaction callout) | James Z | done |
+| 81 | `81-workflow-open-trade` | Workflow 2: Open Trade (6-step flow, steps 3–6 framed as async, 2 arrowed notes + Key notes card) | James Z | done |
+| 82 | `82-workflow-close-trade` | Workflow 3: Close Trade (6-step flow, steps 3–6 framed as async, Key notes card) | James Z | done |
+| 83 | `83-workflow-campaign-end` | Workflow 4: Campaign End & Evaluation (5-step flow, Key notes card) | James Z | done |
+| 84–93 | `84-app-correlation` … `93-app-hyperparams` | Correlation matrix, learning curve + calibration, SHAP by feature, cost sweep, market data, tried and dropped, hurdle decomposition, feature arms, top-k, hyperparameters | — | draft |
+| 94–96 | `94-market-regimes`, `95-demo-data`, `96-chosen-timeslots` | Demo-data selection slides (moved from 17–19 to the end of the appendix): 2×2 + how we measure, trades per slot / beta vs Gold, chosen timeslots | Joyce, JS | done |
 
 Chart PNGs in `assets/` are exported from notebook outputs in `reverse-trade-judge/` (leak_worth, shap_*, auc_by_campaign_arm, hurdle_decomposition, correlation_matrix, learning_curve_calibration, cost_curve, model_vs_random, market_data_shap).
 
