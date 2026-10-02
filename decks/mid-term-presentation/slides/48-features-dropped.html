@@ -3,14 +3,14 @@ Leakage: the model sees information it wouldn't have yet, like a student seeing 
 Didn't pay: fair to use, but on 9 campaigns the model had never seen, adding them made our top-5% bets lose more. Same-day habits (trading bigger after a loss, switching buy/sell, jumping back in within 60 seconds): −$1,591 without, −$9,162 with. Market data (chasing a recent price jump, trading with the trend, how volatile the market is): +$1,205 without, −$3,515 with. Predicted stop-loss (p_sl, a separate model's guess of whether this customer sets a stop-loss) overlapped 90% with the stop-loss habit feature we already had, so it added nothing new. -->
 <!-- @slide-title kicker="Step 02: Feature engineering" text="The 13 Features We Dropped" -->
 <!-- @split cols="560px 1fr" class="inset is-dropped" -->
-  <!-- @feature-group count="6" title="Leakage" note="Information the model won’t have at trade time" -->
+  <!-- @feature-group count="6" title="Leakage" note="Information the model won’t have at open trade time" -->
     <li><strong>Stop-loss or target set?</strong><code>has_sl, has_tp</code></li>
     <li><strong>Distance to stop and target</strong><code>sl_dist_bps, tp_dist_bps, implied_rr</code></li>
     <li><strong>Stop moved past entry</strong><code>sl_beyond_entry</code></li>
   <!-- @/feature-group -->
   <!-- @panel-card count="7" title="Fair, but didn’t pay" note="Profit from our top-5% bets, 9 campaigns the model never saw" -->
     <figure class="dropped-chart">
-      <svg viewBox="-60 0 1060 330" role="img" aria-label="Profit without vs with each feature block. Same-day habits: −$1,591 without, −$9,162 with. Market data: +$1,205 without, −$3,515 with.">
+      <svg viewBox="-60 10 1060 310" role="img" aria-label="Profit without vs with each feature block. Same-day habits: −$1,591 without, −$9,162 with. Market data: +$1,205 without, −$3,515 with.">
         <defs>
           <marker id="dropped-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10 z" class="is-with-fill"/>
@@ -43,6 +43,10 @@ Didn't pay: fair to use, but on 9 campaigns the model had never seen, adding the
         <text x="913" y="196" class="val">+$1,205</text>
         <text x="634" y="196" class="val is-strong">−$3,515</text>
       </svg>
+      <dl class="dropped-chart__key">
+        <dt>Same-day habits</dt><dd>tc_revenge, tc_side_flip, tc_reentry_fast</dd>
+        <dt>Market data</dt><dd>chase_bps, trend_align_bps, vol_rank</dd>
+      </dl>
     </figure>
     <p class="is-ruled"><strong>Predicted stop-loss</strong> <code>p_sl</code><br>Overlapped 90% with “stop-loss habit”, a feature we already had. Added nothing new.</p>
   <!-- @/panel-card -->
