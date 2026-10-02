@@ -29,11 +29,7 @@
 | 12 | `12-success-metrics` | 3 key goals + target staircase (illustrative) | Joyce | measured results TODO |
 | 13 | `13-strategy-comparison` | We beat 2 of the 3 benchmarks: cumulative P&L, all strategies on one scale (`equity-chart`) | Joyce | done |
 | 14 | `14-business-value` | Research partnership value | Joyce | done |
-| 15 | `15-milestones` | Project Milestones: midterm vs final | Joyce | done |
 | 16 | `16-section-demo` | ◆ 03 Live Demo | Jerrick | — |
-| 17 | `17-market-regimes` | How We Picked the Demo Data: 2×2 + how we measure | Joyce, JS | done |
-| 18 | `18-demo-data` | The Data Behind Our Choice (trades per slot, beta vs Gold) | Joyce, JS | done |
-| 19 | `19-chosen-timeslots` | Chosen Timeslots: 3:30–4:00 typical·calm, 5:30–6:00 busy·volatile | Joyce, JS | done |
 | 20 | `20-section-architecture` | ◆ 04 System Architecture | Jamesz | — |
 | 21 | `21-nfrs` | Non-Functional Requirements: 6 requirements in 2 groups (data integrity & safety: reliability, auditability, idempotency | execution & performance: latency, throughput, sequencing) (`req-card`). Three of these cards are mirrored in section 05 (`nfr-*`): keep them in sync, see CLAUDE.md | Jamesz | done |
 | 22 | `22-architecture-input-output` | Architecture, pillar 1 Input/Output in focus; pillars 2–4 faded, no side notes, only the traders → FastAPI and Dashboard → C22 arrows (`arch-diagram` `is-nodes-only is-numbered is-focus-1`) | James Z | done |
@@ -83,19 +79,21 @@
 | 66 | `66-magnitude` | Deep dive: 35× magnitude over direction + what we dropped | TBC | draft |
 | 67 | `67-section-pm` | ◆ 07 Project Management | Arin | — |
 | 68 | `68-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Arin | done |
-| 69 | `69-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
-| 70 | `70-timeline` | Project timeline (now = Midterm) | Arin | done |
-| 71 | `71-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, 205 story points completed (`retro-changes`) | Arin | done |
-| 72 | `72-constraints` | Constraints · Data & Model: 18 held-out campaigns, not a random sample, C22 rules (1 open trade, first come first served), ~6 months of data (correlated, not independent) | Arin | done (sourced from Linear) |
-| 73 | `73-edge-setting` | How Big a Test Do We Need?: minimum worthwhile edge per faded trade → $/month → campaigns to confirm; 18 test campaigns detect edges of ~$10+ | TBD | draft |
-| 74 | `74-whats-next` | Auto-retrainer · real pipeline · trade magnitude · auto-scaling · non-functional reqs · observability (6 cards, 3 + 3) | Arin | done |
-| 75 | `75-qna` | Questions | — | done |
-| 76 | `76-section-appendix` | ◆ A Appendix (after Q&A, for backup) | — | — |
-| 77 | `77-workflow-campaign-start` | Workflow 1: Campaign Start (6-step flow, 2 arrowed notes, transaction callout) | James Z | done |
-| 78 | `78-workflow-open-trade` | Workflow 2: Open Trade (6-step flow, steps 3–6 framed as async, 2 arrowed notes + Key notes card) | James Z | done |
-| 79 | `79-workflow-close-trade` | Workflow 3: Close Trade (6-step flow, steps 3–6 framed as async, Key notes card) | James Z | done |
-| 80 | `80-workflow-campaign-end` | Workflow 4: Campaign End & Evaluation (5-step flow, Key notes card) | James Z | done |
-| 81–90 | `81-app-correlation` … `100-app-hyperparams` | Correlation matrix, learning curve + calibration, SHAP by feature, cost sweep, market data, tried and dropped, hurdle decomposition, feature arms, top-k, hyperparameters | — | draft |
+| 69 | `69-timeline` | Project timeline (now = Midterm) | Arin | done |
+| 70 | `70-milestones` | Project Milestones: midterm vs final (moved from 15) | Joyce | done |
+| 71 | `71-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
+| 72 | `72-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, 205 story points completed (`retro-changes`) | Arin | done |
+| 73 | `73-constraints` | Constraints · Data & Model: 18 held-out campaigns, not a random sample, C22 rules (1 open trade, first come first served), ~6 months of data (correlated, not independent) | Arin | done (sourced from Linear) |
+| 74 | `74-edge-setting` | How Big a Test Do We Need?: minimum worthwhile edge per faded trade → $/month → campaigns to confirm; 18 test campaigns detect edges of ~$10+ | TBD | draft |
+| 75 | `75-whats-next` | Auto-retrainer · real pipeline · trade magnitude · auto-scaling · non-functional reqs · observability (6 cards, 3 + 3) | Arin | done |
+| 76 | `76-qna` | Questions | — | done |
+| 77 | `77-section-appendix` | ◆ A Appendix (after Q&A, for backup) | — | — |
+| 78 | `78-workflow-campaign-start` | Workflow 1: Campaign Start (6-step flow, 2 arrowed notes, transaction callout) | James Z | done |
+| 79 | `79-workflow-open-trade` | Workflow 2: Open Trade (6-step flow, steps 3–6 framed as async, 2 arrowed notes + Key notes card) | James Z | done |
+| 80 | `80-workflow-close-trade` | Workflow 3: Close Trade (6-step flow, steps 3–6 framed as async, Key notes card) | James Z | done |
+| 81 | `81-workflow-campaign-end` | Workflow 4: Campaign End & Evaluation (5-step flow, Key notes card) | James Z | done |
+| 82–91 | `82-app-correlation` … `91-app-hyperparams` | Correlation matrix, learning curve + calibration, SHAP by feature, cost sweep, market data, tried and dropped, hurdle decomposition, feature arms, top-k, hyperparameters | — | draft |
+| 92–94 | `92-market-regimes`, `93-demo-data`, `94-chosen-timeslots` | Demo-data selection slides (moved from 17–19 to the end of the appendix): 2×2 + how we measure, trades per slot / beta vs Gold, chosen timeslots | Joyce, JS | done |
 
 Chart PNGs in `assets/` are exported from notebook outputs in `reverse-trade-judge/` (leak_worth, shap_*, auc_by_campaign_arm, hurdle_decomposition, correlation_matrix, learning_curve_calibration, cost_curve, model_vs_random, market_data_shap).
 

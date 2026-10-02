@@ -146,6 +146,7 @@
 .dropped-chart .row { font-size: 24px; font-weight: 600; fill: var(--chart-ink); text-anchor: end; }
 .dropped-chart .val { font-size: 22px; fill: var(--chart-ink-muted); text-anchor: middle; }
 .dropped-chart .val.is-strong { font-size: 26px; font-weight: 700; fill: var(--chart-ink); }
+.dropped-chart .val.is-diff { font-size: 22px; font-weight: 700; fill: var(--danger); }
 .dropped-chart .move { stroke: var(--danger); stroke-width: 4; }
 .dropped-chart .is-with, .dropped-chart .is-with-fill { fill: var(--danger); }
 .dropped-chart .is-without { fill: var(--chart-rand); }
