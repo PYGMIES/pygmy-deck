@@ -49,3 +49,6 @@
   text-transform: uppercase;
   color: var(--on-card);
 }
+
+/* no presenter param → no empty pill */
+.c-section-divider__presenter:empty { display: none; }

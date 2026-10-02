@@ -1,0 +1,22 @@
+<!-- notes: Yanting. The twist. Outcome features describe how the customer's earlier trades turned out, not how they trade. There are 8 of them.
+We used SHAP to see what the model actually relies on. SHAP shows how much each feature pushed the model's decision; we average that over many trades to get each feature's share of the model's attention (mean |SHAP|, TreeSHAP, same out-of-fold rows for every arm; Notebook 12 section 4).
+Full 26-feature model: outcome 58.6%, behaviour 25.2%, ticket 12.4%, counters 3.8%. More than half its attention went on results: win rate, streak, running P&L. Top single feature: prior_win_rate 0.163.
+Results are partly luck, so a lucky streak can fool the model. Remove the 8 outcome features and the final 18 leans on how traders act: behaviour 76.3%, ticket 18.1%, counters 5.6%. Top feature becomes prior_sl_use_rate 0.157.
+Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only arm that made money (+$1,205 at top 5%). Earlier test: −$4,242 with outcome features vs +$1,593 without, across 9 unseen campaigns. -->
+<!-- @slide-title kicker="Step 02: Feature engineering" text="Why We Left Out Outcomes" -->
+<!-- @split cols="1fr 1fr" class="inset is-outcome-shap" -->
+  <!-- @feature-group count="8" title="Outcome features" note="How their earlier trades turned out, not how they trade" cols="2" -->
+    <li><strong>Win rate today</strong><code>prior_win_rate</code></li>
+    <li><strong>Win rate on past days</strong><code>prior_campaign_win_rate</code></li>
+    <li><strong>Profit so far today</strong><code>cum_prior_profit</code></li>
+    <li><strong>Profit on past days</strong><code>cum_prior_campaign_profit</code></li>
+    <li><strong>Current win/loss streak</strong><code>current_streak</code></li>
+    <li><strong>Drop from today’s best</strong><code>running_drawdown</code></li>
+    <li><strong>Stops actually hit</strong><code>prior_stop_hit_rate</code></li>
+    <li><strong>Targets actually hit</strong><code>prior_target_hit_rate</code></li>
+  <!-- @/feature-group -->
+  <!-- @column -->
+    <!-- @section-heading title="Using SHAP" subtitle="SHAP shows each feature&rsquo;s share of the model&rsquo;s decision." -->
+    <!-- @shap-bars caption="Share of the model&rsquo;s attention (mean |SHAP|). Source: Notebook 12." -->
+  <!-- @/column -->
+<!-- @/split -->
