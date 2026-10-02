@@ -1,0 +1,26 @@
+<!-- notes: Yanting. Before building any features, we cleaned the raw columns. Four reasons a column went.
+No variance: the same value on every trade (always gold, always USD, lot size 100, no swap, cross prices of 1), so there is nothing to learn from.
+IDs and identity: trade and order IDs, the account, email and IP address. These would teach the model who is trading, not how they trade.
+Near-duplicates: pairs with Spearman correlation above 0.8 carry the same information twice. commission and amount are −1.00: the fee is a flat $35 per lot, so commission is just trade size again. We kept amount. openPrice and campaignId are −0.86 because both just follow the gold price over time, so we kept neither.
+Outcome leakage: profit and netProfit are the result of the trade. Our profit is the mirror image of the customer's, and netProfit is profit plus commission and swap. They can never be inputs. -->
+<!-- @slide-title kicker="Step 02: Feature engineering" text="Raw Fields We Ruled Out" -->
+<!-- @card-grid cols="4" class="inset is-before-features" -->
+  <!-- @feature-group count="6" title="No variance" note="Same value on every trade" -->
+    <li><strong>Same contract</strong><code>instrument = XAUUSD</code><code>currency = USD</code><code>lotSize = 100</code></li>
+    <li><strong>Never charged</strong><code>swap = 0</code></li>
+    <li><strong>Cross price always 1</strong><code>openTradeCrossPrice</code><code>closeTradeCrossPrice</code></li>
+  <!-- @/feature-group -->
+  <!-- @feature-group count="7" title="IDs &amp; identity" note="Teaches who trades, not how they trade" -->
+    <li><strong>Trade and order IDs</strong><code>positionId, closeTradeId</code><code>openOrderId, closeOrderId</code></li>
+    <li><strong>Account</strong><code>accountId</code></li>
+    <li><strong>Personal data</strong><code>EMAIL, IP_ADDRESS</code></li>
+  <!-- @/feature-group -->
+  <!-- @feature-group count="3" title="Near-duplicates" note="Spearman correlation<br>r<sub>s</sub>&nbsp;&gt;&nbsp;0.8" -->
+    <li><strong>Fee tracks size</strong><code>commission ↔ amount</code><code>r<sub>s</sub> = −1.00</code></li>
+    <li><strong>Both follow gold’s trend</strong><code>openPrice ↔ campaignId</code><code>r<sub>s</sub> = −0.86</code></li>
+  <!-- @/feature-group -->
+  <!-- @feature-group count="2" title="Outcome leakage" note="The trade’s result, so never an input" -->
+    <li><strong>Customer profit</strong><code>profit</code><span>Our profit is its mirror image</span></li>
+    <li><strong>Profit after costs</strong><code>netProfit</code><code>= profit + commission + swap</code></li>
+  <!-- @/feature-group -->
+<!-- @/card-grid -->
