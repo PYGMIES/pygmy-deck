@@ -3,7 +3,7 @@
 The engine every deck shares. Changes here affect **all** decks — rebuild and check every deck after editing.
 
 - `stage.css` — viewport wrapper, 1920×1080 `.deck-stage`, `.slide` visibility switching, `.reveal` stagger, progress/counter chrome, edit-mode styles, reduced-motion and print rules.
-- `runtime.js` — scale-to-fit, navigation, reveal indices, hash deep-linking, edit mode.
+- `runtime.js` — scale-to-fit, navigation, match-and-move (`data-morph`), reveal indices, hash deep-linking, edit mode.
 
 Rules:
 - Keep the stage fixed at 1920×1080; scaling is `transform: translate(-50%,-50%) scale(var(--stage-scale))`. Don't add breakpoints.

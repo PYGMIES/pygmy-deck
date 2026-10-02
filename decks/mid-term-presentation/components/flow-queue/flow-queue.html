@@ -1,8 +1,8 @@
 <div class="c-flow-queue c-flow-queue--{{label-pos|above}} {{class|}}" style="left: {{x}}px; top: {{y}}px;">
-  <p class="c-flow-queue__label">{{label}}</p>
+  <p class="c-flow-queue__label" data-morph="ql-{{label}}">{{label}}</p>
   <div class="c-flow-queue__cells">
-    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="{{a|}}">{{a|}}</i></span>
-    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="{{b|}}">{{b|}}</i></span>
-    <span class="c-flow-queue__cell"><i class="c-flow-queue__tok" data-n="{{c|}}">{{c|}}</i></span>
+    <span class="c-flow-queue__cell" data-morph="qc-{{label}}-a"><i class="c-flow-queue__tok" data-n="{{a|}}" data-morph="{{ma|}}">{{a|}}</i></span>
+    <span class="c-flow-queue__cell" data-morph="qc-{{label}}-b"><i class="c-flow-queue__tok" data-n="{{b|}}" data-morph="{{mb|}}">{{b|}}</i></span>
+    <span class="c-flow-queue__cell" data-morph="qc-{{label}}-c"><i class="c-flow-queue__tok" data-n="{{c|}}" data-morph="{{mc|}}">{{c|}}</i></span>
   </div>
 </div>

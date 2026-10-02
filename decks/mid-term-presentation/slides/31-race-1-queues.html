@@ -1,0 +1,12 @@
+<!-- notes: Jerrick. Script: Open and close trades sit on separate queues and run in parallel, so a close can be picked up before its open has been processed. -->
+<!-- @dd-heading kicker="Design Decision 02" title="Race Conditions" sub="Close trades processed before its corresponding open trade" tag="Problem" tone="bad" -->
+  <!-- @nfr-sequencing class="is-corner" -->
+<!-- @/dd-heading -->
+<!-- @flow-stage -->
+  <!-- @flow-queue x="340" y="480" label="Open trade queue" a="12" b="11" c="10" ma="open-12" mb="open-11" mc="open-10" class="reveal" -->
+  <!-- @flow-arrow x1="631" y1="521" x2="900" y2="521" class="reveal" -->
+  <!-- @flow-node x="900" y="461" w="700" h="120" tone="work" label="Process open trade" size="32" class="reveal" -->
+  <!-- @flow-queue x="340" y="680" label="Close trade queue" label-pos="below" a="" b="12" c="11" mb="close-12" mc="close-11" class="reveal" -->
+  <!-- @flow-arrow x1="631" y1="721" x2="900" y2="721" class="reveal" -->
+  <!-- @flow-node x="900" y="661" w="700" h="120" tone="work" label="Process close trade" size="32" class="reveal" -->
+<!-- @/flow-stage -->

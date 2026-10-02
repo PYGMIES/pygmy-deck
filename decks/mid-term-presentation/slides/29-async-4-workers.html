@@ -1,0 +1,32 @@
+<!-- notes: Jerrick. Script: Workers then take trades off the queues and process them in parallel: the Judge, the OANDA price and the database for opens, the database for closes. Adding workers adds throughput. -->
+<!-- @dd-heading kicker="Design Decision 01" title="Process Trades Asynchronously" tag="Asynchronous" tone="good" -->
+  <!-- @nfr-concurrency class="is-corner" -->
+<!-- @/dd-heading -->
+<!-- @flow-stage -->
+  <!-- @flow-node x="140" y="460" w="190" h="190" class="is-round" label="Request" -->
+  <!-- @flow-node x="470" y="300" w="150" h="720" tone="api" label="FastAPI" size="32" -->
+  <!-- @flow-arrow x1="330" y1="555" x2="470" y2="555" -->
+  <!-- @flow-node x="140" y="680" w="190" h="190" tone="good" class="is-round" label="Response" -->
+  <!-- @flow-arrow x1="470" y1="775" x2="330" y2="775" -->
+  <!-- @flow-note x="45" y="888" w="380" text="Immediately provide a<br>response after enqueuing" -->
+  <!-- @flow-queue x="740" y="520" label="Open trade queue" -->
+  <!-- @flow-queue x="740" y="720" label="Close trade queue" label-pos="below" -->
+  <!-- @flow-arrow x1="620" y1="561" x2="740" y2="561" -->
+  <!-- @flow-arrow x1="620" y1="761" x2="740" y2="761" -->
+  <!-- @flow-node x="1180" y="501" w="644" h="120" tone="work" label="Process open trade" size="32" class="reveal" -->
+  <!-- @flow-arrow x1="1031" y1="561" x2="1180" y2="561" class="reveal" -->
+  <!-- @flow-node x="1180" y="701" w="644" h="120" tone="work" label="Process close trade" size="32" class="reveal" -->
+  <!-- @flow-arrow x1="1031" y1="761" x2="1180" y2="761" class="reveal" -->
+  <!-- @flow-node x="1190" y="300" w="210" h="120" label="Judge" sub="(Inference)" size="32" class="reveal" -->
+  <!-- @flow-arrow x1="1265" y1="501" x2="1265" y2="422" class="reveal" -->
+  <!-- @flow-arrow x1="1325" y1="422" x2="1325" y2="501" class="reveal" -->
+  <!-- @flow-node x="1425" y="300" w="250" h="120" tone="ext" label="Oanda Market<br>Price Service" size="27" class="reveal" -->
+  <!-- @flow-arrow x1="1520" y1="501" x2="1520" y2="422" class="reveal" -->
+  <!-- @flow-arrow x1="1580" y1="422" x2="1580" y2="501" class="reveal" -->
+  <!-- @flow-db x="1712" y="300" class="reveal" -->
+  <!-- @flow-arrow x1="1737" y1="501" x2="1737" y2="420" class="reveal" -->
+  <!-- @flow-arrow x1="1782" y1="420" x2="1782" y2="501" class="reveal" -->
+  <!-- @flow-db x="1455" y="905" class="reveal" -->
+  <!-- @flow-arrow x1="1480" y1="821" x2="1480" y2="903" class="reveal" -->
+  <!-- @flow-arrow x1="1525" y1="903" x2="1525" y2="821" class="reveal" -->
+<!-- @/flow-stage -->

@@ -1,6 +1,8 @@
 /* === COMPONENT: req-card === charcoal card: left-aligned title on top, then a flat icon beside one sentence. Every icon is the same fixed size, small enough not to crowd the sentence.
    Same padding on all four sides; the title + row block is centred vertically.
-   Cards grow to share the height of a flex column equally (flex: 1). */
+   Cards grow to share the height of a flex column equally (flex: 1).
+   SYNC: decks/mid-term-presentation mirrors this design in .c-nfr-card (components/nfr-overview/nfr-overview.css)
+   for the section-05 NFR cards; change both together (see that deck's CLAUDE.md). */
 .c-req-card {
   flex: 1;
   min-height: 0;
