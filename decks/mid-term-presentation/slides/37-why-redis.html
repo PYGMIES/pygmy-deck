@@ -1,0 +1,8 @@
+<!-- notes: Jerrick. Script: Why Redis for the queues? Our main motivation was to keep the number of distributed systems down, because every extra system is another thing a trade can wait on. Redis already held our feature cache and our live events. Adding Kafka or RabbitMQ would put a second system on every trade's path: another connection, another set of failures and retries, and a queue and a cache to keep in sync across two systems. Even starting or ending a campaign, where we reset the queues and the cache together with the database, would involve three systems instead of two. With one Redis, every trade depends on a single in-memory store, so there are fewer places for latency to come from.
+Q&A: If asked 'isn't it the same number of calls?': Roughly, yes. The difference is how many systems those calls go to. Each extra system brings its own latency spikes, failures and retries, and a slow trade then has two places it could be stuck. With one in-memory store, there is one. -->
+<!-- @dd-heading kicker="Design Decision 03" title="Why Redis?" -->
+  <!-- @nfr-latency class="is-corner" -->
+<!-- @/dd-heading -->
+<!-- @flow-kit height="680px" -->
+  <!-- @redis-why -->
+<!-- @/flow-kit -->

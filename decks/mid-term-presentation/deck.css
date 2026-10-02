@@ -7,12 +7,6 @@
   align-content: center;
 }
 
-/* compare-table: keep each cell on one line (slide 38, Why Redis) */
-.c-compare-table.is-nowrap th,
-.c-compare-table.is-nowrap td {
-  white-space: nowrap;
-}
-
 /* === WORKFLOW SLIDES 21-24 === */
 
 /* wide label-card: body runs left-aligned across the card (slide 21 callout) */

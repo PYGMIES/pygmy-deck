@@ -5,7 +5,7 @@
 - **Audience:** Catch22 sponsors (Clement & Lee Yang) + faculty
 - **Density:** speaker-led
 - **Key focus:** impact and requirements met. Intro + problem recap gets the most time.
-- **Status:** skeleton. Most content slides are done; the section-05 `design-decisions` slide still has TODOs or placeholders, and 44, 46, 52, 53, 55, 63 are drafts.
+- **Status:** skeleton. Most content slides are done; 44, 46, 52, 53, 55, 63 are drafts.
 
 ## Outline (owners)
 | # | File | Slide | Owner | State |
@@ -27,31 +27,28 @@
 | 15 | `15-demo-data` | The Data Behind Our Choice (trades per slot, beta vs Gold) | Joyce, JS | done |
 | 16 | `16-chosen-timeslots` | Chosen Timeslots: 3:30–4:00 typical·calm, 5:30–6:00 busy·volatile | Joyce, JS | done |
 | 17 | `17-section-architecture` | ◆ 04 System Architecture | Jamesz | — |
-| 18 | `18-nfrs` | Non-Functional Requirements: 6 requirements in 2 groups (data integrity & safety: reliability, auditability, idempotency | execution & performance: latency, throughput, sequencing) (`req-card`) | Jamesz | done |
+| 18 | `18-nfrs` | Non-Functional Requirements: 6 requirements in 2 groups (data integrity & safety: reliability, auditability, idempotency | execution & performance: latency, throughput, sequencing) (`req-card`). Three of these cards are mirrored in section 05 (`nfr-*`): keep them in sync, see CLAUDE.md | Jamesz | done |
 | 19 | `19-architecture` | Architecture diagram | James Z | done |
 | 20 | `20-workflow-campaign-start` | Workflow 1: Campaign Start (6-step flow, 2 arrowed notes, transaction callout) | James Z | done |
 | 21 | `21-workflow-open-trade` | Workflow 2: Open Trade (6-step flow, steps 3–6 framed as async, 2 arrowed notes + Key notes card) | James Z | done |
 | 22 | `22-workflow-close-trade` | Workflow 3: Close Trade (6-step flow, steps 3–6 framed as async, Key notes card) | James Z | done |
 | 23 | `23-workflow-campaign-end` | Workflow 4: Campaign End & Evaluation (5-step flow, Key notes card) | James Z | done |
-| 24 | `24-sync-1-request` | Processing trades asynchronously, "If it was synchronous…" step 1: Request → FastAPI (build, one element per slide) | Jerrick | done (rebuilt from Jerrick's images) |
-| 25 | `25-sync-2-open` | Sync step 2: FastAPI → Process open trade, with Judge, Oanda price service, database | Jerrick | done |
-| 26 | `26-sync-3-close` | Sync step 3: Process close trade + database | Jerrick | done |
-| 27 | `27-sync-4-response` | Sync step 4: Response only after the whole process is completed | Jerrick | done |
-| 28 | `28-section-design-decisions` | ◆ 05 Key Design Decisions | Jerrick | — |
-| 29 | `29-design-decisions` | Key design decisions | Jerrick | TODO |
-| 30 | `30-async-1-request` | Processing trades asynchronously, step 1: Request → FastAPI (build, one element per slide) | Jerrick | done (rebuilt from Jerrick's images) |
-| 31 | `31-async-2-queues` | Step 2: FastAPI → open / close trade queues | Jerrick | done |
-| 32 | `32-async-3-response` | Step 3: immediate response after enqueuing | Jerrick | done (caption copied verbatim: "Immediate provide a response…") |
-| 33 | `33-async-4-workers` | Step 4: workers, Judge (inference), Oanda price service, database | Jerrick | done |
-| 34 | `34-race-1-queues` | Race conditions · Problem: close trade 11 can be ahead of its open trade (open 12,11,10 / close 12,11) | Jerrick | done |
-| 35 | `35-race-2-check-db` | Close worker takes 11, checks the DB for the open trade | Jerrick | done |
-| 36 | `36-race-3-no-match` | No corresponding open trade: 11 fails (red cross) | Jerrick | done |
-| 37 | `37-race-4-solution` | Solution (tag flips green) | Jerrick | done |
-| 38 | `38-race-5-requeue` | Move it to the back of the close queue to try again later | Jerrick | done |
-| 39 | `39-why-redis` | Why Redis?: one Redis (streams, hashes, pub/sub) + Redis vs Kafka vs RabbitMQ table (`redis-roles`, `compare-table`) | Jerrick | done |
-| 40 | `40-cache-check` | Check the Cache Before Predicting: Redis hash vs Postgres trade count → Judge, else rebuild (`cache-check`) | Jerrick | done |
-| 41 | `41-sse` | Live dashboard using Server-Sent Events: Workers → Redis → FastAPI → Dashboard; WebSocket vs SSE (`sse-flow`) | Jerrick | done |
-| 42 | `42-docker-local` | Dockerised, Deployed On-Site: containers on Catch22's machine + 3 reasons (`local-stack`) | Jerrick | done |
+| 24 | `24-section-design-decisions` | ◆ 05 Key Design Decisions | Jerrick | — |
+| 25 | `25-nfr-1-concurrency` | NFR overview (`nfr-overview`): Concurrency & throughput active, others 50% | Jerrick | done |
+| 26 | `26-async-1-sync` | Decision 01 · Process Trades Asynchronously, "If it was synchronous…": Request → FastAPI → process open (Judge, OANDA, DB) / close (DB) | Jerrick | done |
+| 27 | `27-async-2-sync-response` | + Response only after the whole process is completed | Jerrick | done |
+| 28 | `28-async-3-queues` | "Asynchronous": FastAPI → open/close queues, immediate response | Jerrick | done |
+| 29 | `29-async-4-workers` | + workers processing open (Judge, OANDA, DB) and close (DB) | Jerrick | done |
+| 30 | `30-nfr-2-sequencing` | NFR overview: Sequencing active | Jerrick | done |
+| 31 | `31-race-1-queues` | Decision 02 · Race Conditions · Problem: close 11 is ahead of its open | Jerrick | done |
+| 32 | `32-race-2-check-db` | Token 11 moves into the close worker, which checks the DB | Jerrick | done |
+| 33 | `33-race-3-no-match` | No corresponding open trade (red cross) | Jerrick | done |
+| 34 | `34-race-4-solution` | Tag flips to Solution; the cross on trade 11 is gone | Jerrick | done |
+| 35 | `35-race-5-requeue` | Token 11 moves to the back of the close queue | Jerrick | done |
+| 36 | `36-nfr-3-latency` | NFR overview: Processing latency active | Jerrick | done |
+| 37 | `37-why-redis` | Decision 03 · Why Redis?: separate broker (2 systems on the trade's path) vs one in-memory Redis; motivation cards: fewer distributed systems, less network latency (`redis-why`) | Jerrick | done |
+| 38 | `38-nfr-4-deployment` | NFR overview: Deployment active | Jerrick | done |
+| 39 | `39-docker-local` | Decision 04 · Dockerised, Deployed On-Site: 3 reasons (dark cards, left) + containers on Catch22's machine (right) (`local-stack`) | Jerrick | done |
 | 43 | `43-section-journey` | ◆ 06 How We Got Here | BA | — |
 | 44 | `44-hurdle-model` | What is the hurdle model? Definition + why it fits + 3 arms → gross EV → decision score (`hurdle-flow`) | Jerrick | draft |
 | 45 | `45-training-approach` | Approach to training: data, features, hurdle, evaluate | BA | draft |
@@ -86,12 +83,11 @@ Chart PNGs in `assets/` are exported from notebook outputs in `reverse-trade-jud
 - Constraints & What's Next (slides 61–64) are presented by Arin; slide 63 owner TBD.
 - Slide 62 lists "Non-functional reqs" as a next step while slide 18 already presents the NFRs; decide whether the card stays.
 - Slide 44 (`hurdle-model`) sits in the "How We Got Here" section.
-- Slides 24–27 (sync, "if it was synchronous") follow the workflow slides 20–23 and lead into the async build at 30–33.
 - Slides 51 (`app-cv-layout`, after the feature slides) and 52 (`app-arms`) were moved from the appendix into the main flow.
 - Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 15 charts use rolling windows (p95 130 / p50 57); slide 16 uses fixed 30-min slots (p95 121.4 / p50 59.5).
 - Replace the slide 09 target staircase with measured results + CIs when available.
 - Confirm Phase 0 / Phase 1 gates passed → mark them on slide 59 (`project-timeline` gates).
 - "BA" owner of section 05: confirm name.
-- Slide 32 caption reads "Immediate provide a response after enqueuing" (copied from Jerrick's image); fix the grammar if he agrees.
-- Slides 24–38 are a step-by-step build (sync, async, race condition): each slide repeats the previous diagram and only the new piece has `reveal`. Keep them in order when editing.
+- Section 05 (24–39) is framed by the NFRs: the `nfr-overview` slide (25, 30, 36, 38) opens each group with that NFR at full opacity, and every content slide carries the same card top-right (`dd-heading`). Adjacent slides use match-and-move (`data-morph`, core/CONTEXT.md): the NFR card glides between the grid and the corner, trade tokens glide between queue and worker, and identical diagram pieces stay put. Builds (26–29, 31–35) repeat the previous diagram; only new pieces have `reveal`. Keep them in order when editing.
+- Slide numbers 40–42 are unused (gap left so 43+ keep their names).
 - Find all TODOs: `grep -rn "@placeholder\|TODO" decks/mid-term-presentation/slides`

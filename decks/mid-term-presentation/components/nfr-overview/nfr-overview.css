@@ -1,0 +1,78 @@
+/* === COMPONENT (deck): nfr-overview ===
+   2x2 grid of NFR cards that opens each Key Design Decisions group. Children are the four
+   nfr-* cards; give the inactive ones class="is-dim" (50% opacity).
+   Also holds the shared .c-nfr-card styles used by nfr-concurrency / -sequencing / -latency /
+   -deployment, both here and in the dd-heading corner (class="is-corner", 0.84x). Each card
+   carries data-morph="nfr-<name>", so the runtime glides it between the grid and the corner.
+   SYNC: .c-nfr-card mirrors the shared req-card design on slide 18; change both together
+   (see the deck's CLAUDE.md). */
+.c-nfr-overview {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 700px);
+  grid-auto-rows: 200px;
+  gap: 40px 48px;
+  place-content: center;
+}
+
+.c-nfr-card {
+  --s: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(14px * var(--s));
+  width: calc(700px * var(--s));
+  height: calc(200px * var(--s));
+  padding: 0 calc(36px * var(--s));
+  border-radius: calc(var(--radius) * var(--s));
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-nfr-card.is-dim {
+  opacity: 0.5;
+  will-change: opacity; /* own layer: avoids banding in the half-transparent card */
+}
+
+.c-nfr-card.is-corner {
+  --s: 0.84;
+}
+
+.c-nfr-card h3 {
+  font-size: calc(42px * var(--s));
+  line-height: 1.05;
+  color: var(--on-card);
+}
+
+.c-nfr-card__row {
+  display: flex;
+  align-items: center;
+  gap: calc(20px * var(--s));
+}
+
+.c-nfr-card__icon {
+  flex: none;
+  width: calc(64px * var(--s));
+  height: calc(64px * var(--s));
+}
+
+.c-nfr-card__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.c-nfr-card p {
+  flex: 1;
+  min-width: 0;
+  max-width: none;
+  font-size: calc(27px * var(--s));
+  line-height: 1.3;
+  color: var(--on-card-muted);
+}

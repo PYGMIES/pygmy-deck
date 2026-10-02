@@ -15,13 +15,16 @@ Bespoke diagrams, absolutely positioned on fixed canvases. Edit coordinates in t
 | `funnel` | ◻ block, rows in HTML | Stacked charcoal bars narrowing top to bottom (`.c-funnel__row` with `--w` width, bar number + label, right-hand "what we did"); `is-final` row gets the accent outline. Widths illustrative. `class="is-in-card"`: compact version inside a `panel-card` (`.c-funnel__label` version label + centred bar, optional `.c-funnel__caption` under a bar). Slide 47. |
 | `shap-bars` | `caption?` | Two 100% stacked bars (full 26 vs final 18) of mean \|SHAP\| share by bucket, step arrow between, legend. Numbers from NB12 §4, edited in the HTML. Slide 49 (compacted there via `.is-outcome-shap`). |
 | `project-timeline` | fills slide | Deliverables track, phases, go/no-go gates. Positions by day offset `--d` (days since 1 Jun, span 183). `is-now` marks today; `is-done` / `is-next` on phases. Slide 51. |
-| `flow-kit` | ◻ block, `width?` | Canvas + shared diagram primitives (lanes, nodes, wires) for the design-decision diagrams below. Slides 37–40. |
-| `redis-roles` / `cache-check` / `sse-flow` / `local-stack` | — | Diagrams placed inside `flow-kit`: One Redis (streams/hashes/pub-sub); cache-vs-Postgres check; SSE vs WebSocket; Docker stack + 3 reasons. Copied from branch `claude/final-year-presentation-i03j97`. |
-| `flow-stage` | ◻ block | Full-stage (1920×1080) container for absolutely positioned flow pieces + shared arrowhead markers. Wrap the pieces below in it. Slides 24–36. |
-| `flow-heading` | `title`, `sub?`, `tag?`, `tone?` (good\|bad) | Non-animated title + sub-line + coloured tag ("Asynchronous", "Problem", "Solution"). |
-| `flow-node` | `x y w h label`, `sub?`, `tone?` (dark\|mid\|good\|bad), `size?` | Rounded labelled box at stage coordinates. |
-| `flow-queue` | `x y label`, `label-pos?` (above\|below), `a b c` | 3-cell queue; tokens `a/b/c` are trade ids, coloured by id (12 blue, 11 amber, 10 grey). |
-| `flow-token` | `n x y` | Loose trade token centred on (x, y). |
+| `flow-kit` | ◻ block, `width?`, `height?` | Canvas + shared diagram primitives (lanes, nodes incl. `fk-node--api` / `--work` role colours, wires, `fk-card` / `fk-card--dark` takeaway cards, `fk-callout--bad` / `--good`) for the design-decision diagrams below. Slides 37, 39. |
+| `redis-why` / `local-stack` | — | Diagrams placed inside `flow-kit`. `redis-why` (slide 37): separate broker = 2 systems on every trade's path vs 1 in-memory Redis, plus two dark motivation cards (fewer distributed systems, less network latency). `local-stack` (slide 39): three reasons as dark cards on the left, Docker containers on Catch22's machine on the right. |
+| `nfr-overview` | ◻ block | 2×2 grid of the four NFR cards opening each design-decision group (slides 25, 30, 36, 38). Holds the shared `.c-nfr-card` styles. Inactive cards get `class="is-dim"` (50%). |
+| `nfr-concurrency` / `nfr-sequencing` / `nfr-latency` / `nfr-deployment` | `class?` | One NFR card (text + icon from slide 18; Deployment is new). `is-dim` = 50%, `is-corner` = 0.84× for the `dd-heading` corner. `data-morph="nfr-<name>"`, so it glides between grid and corner. |
+| `dd-heading` | ◻ block, `kicker title`, `sub?`, `tag?`, `tone?` (good\|bad) | Design-decision heading: kicker, 86px title, sub-line, coloured tag; child = the group's NFR card with `class="is-corner"`, pinned top-right. Pieces keyed with `data-morph`, so identical headings stay put. |
+| `flow-stage` | ◻ block | Full-stage (1920×1080) container for absolutely positioned flow pieces + shared arrowhead markers; `data-morph-scope`, so identical pieces on adjacent slides stay put. Slides 26–35. |
+| `flow-heading` | `title`, `sub?`, `tag?`, `tone?` (good\|bad) | Non-animated title + sub-line + coloured tag. Currently unused (section 05 uses `dd-heading`). |
+| `flow-node` | `x y w h label`, `sub?`, `tone?`, `size?` (30) | Rounded labelled box at stage coordinates; `class="is-round"` for a circle. Tones by role: dark (client, Judge) · api (FastAPI, amber) · work (workers, light + outline) · ext (external service, pale amber) · mid · good · bad. |
+| `flow-queue` | `x y label`, `label-pos?` (above\|below), `a b c`, `ma mb mc` | 3-cell queue; tokens `a/b/c` are trade ids, coloured by id (12 blue, 11 amber, 10 grey). `ma/mb/mc` = morph keys (e.g. `close-11`) so a trade glides between cells and a `flow-token`. |
+| `flow-token` | `n x y`, `morph?` | Loose trade token centred on (x, y); `morph` shares a key with a queue token. |
 | `flow-arrow` | `x1 y1 x2 y2`, `tone?` (ink\|danger) | Straight arrow in stage px. |
 | `flow-note` | `x y w text`, `tone?` (ink\|danger\|good), `size?` | Centred caption. |
 | `flow-db` / `flow-x` | `x y` | Database cylinder (top-left) / red cross (centred). |
