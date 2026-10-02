@@ -51,18 +51,25 @@
 
 .c-arch__wires .is-orange {
   color: var(--accent);
+  stroke: var(--accent); /* set on the line itself so the arrowhead (context-stroke) matches it */
 }
 
 .c-arch__wires .is-black {
   color: var(--ink);
+  stroke: var(--ink);
 }
 
 .c-arch__wires .is-red {
   color: var(--danger);
+  stroke: var(--danger);
 }
 
 .c-arch__io {
   color: var(--ink);
+}
+
+.c-arch__io path {
+  stroke: var(--ink);
 }
 
 .c-arch__group {
@@ -173,4 +180,53 @@
   text-align: center;
   color: var(--ink-muted);
   max-width: none;
+}
+
+/* is-nodes-only: components plus only the two outer arrows (traders → FastAPI, Dashboard → C22); hides every other flow arrow */
+.c-arch.is-nodes-only .c-arch__flow {
+  visibility: hidden;
+}
+
+/* --- pillar spotlight (slides 22-25) ---
+   is-numbered: a number badge before each pillar name. is-focus-N: every other pillar (lane, nodes, side notes) drops to 30%;
+   from pillar 2 on, the outer traders / C22 arrows and their labels fade too. is-no-notes hides the side notes. */
+.c-arch.is-numbered .c-arch__lane span::before {
+  content: attr(data-n);
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  padding-top: 2px;
+  vertical-align: middle;
+}
+
+.c-arch.is-numbered .c-arch__lane span {
+  letter-spacing: 0.08em;
+}
+
+.c-arch.is-focus-1 :is(.p2, .p3, .p4),
+.c-arch.is-focus-2 :is(.p1, .p3, .p4),
+.c-arch.is-focus-3 :is(.p1, .p2, .p4),
+.c-arch.is-focus-4 :is(.p1, .p2, .p3),
+.c-arch:is(.is-focus-2, .is-focus-3, .is-focus-4) :is(.c-arch__io, .c-arch__wire-label) {
+  opacity: 0.3;
+}
+
+.c-arch.is-no-notes .c-arch__foot {
+  visibility: hidden;
+}
+
+/* hide the side note of one pillar (slides 23-24) */
+.c-arch.is-no-note-3 .c-arch__foot.p3,
+.c-arch.is-no-note-4 .c-arch__foot.p4 {
+  visibility: hidden;
 }

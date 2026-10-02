@@ -13,7 +13,7 @@ Build: `python3 build.py <deck>` → `decks/<deck>/<deck>.html` (committed; neve
 Density: follow the mode in `CONTEXT.md`. Speaker-led = one idea per slide, ≤3 bullets. Reading-first = up to 6 items, but split before it gets cramped.
 
 ## Keep slide 21 and the NFR cards in section 05 in sync
-Slide 21 (`slides/21-nfrs.html`, `req-card`) is the source of truth for the non-functional requirements. Section 05 (Key Design Decisions, slides 27–42) repeats three of them as `nfr-*` cards: in the NFR overview slides (28, 33, 39, 41) and top-right on every content slide (`dd-heading`). **Whenever you change anything about slide 21's cards, make the same change to these in the same task:**
+Slide 21 (`slides/21-nfrs.html`, `req-card`) is the source of truth for the non-functional requirements. Section 05 (Key Design Decisions, slides 39–54) repeats three of them as `nfr-*` cards: in the NFR overview slides (40, 45, 51, 53) and top-right on every content slide (`dd-heading`). **Whenever you change anything about slide 21's cards, make the same change to these in the same task:**
 
 | Slide 21 (`req-card`) | Section 05 counterpart |
 |---|---|
@@ -23,6 +23,6 @@ Slide 21 (`slides/21-nfrs.html`, `req-card`) is the source of truth for the non-
 | Card design: colours, radius, padding, font sizes, icon size/stroke (`components/req-card/req-card.css`) | `.c-nfr-card` in `components/nfr-overview/nfr-overview.css` |
 
 - The `nfr-deployment` card is not on slide 21 but must keep the same design as the other three.
-- If an NFR is renamed, removed or added, also update the overview slides (28, 33, 39, 41), the speaker notes that name it, and the section-05 outline in `CONTEXT.md`. Don't change the `data-morph="nfr-<name>"` keys: match-and-move between the overview and the corner card depends on them.
+- If an NFR is renamed, removed or added, also update the overview slides (40, 45, 51, 53), the speaker notes that name it, and the section-05 outline in `CONTEXT.md`. Don't change the `data-morph="nfr-<name>"` keys: match-and-move between the overview and the corner card depends on them.
 - The reverse holds too: if you change an `nfr-*` card's wording, ask whether slide 21 should change as well.
 - Rebuild and check slides 21 and 27–42.
