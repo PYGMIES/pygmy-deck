@@ -1694,6 +1694,40 @@ body.overview .deck-viewport {
   color: var(--on-card);
 }
 
+/* --- timings (appendix latency slide) ---
+   .c-arch__ms: a small charcoal chip on a hop with its p50 and, below, p99. is-hot = the slow hop (accent). Passed in through the `timings` param. */
+.c-arch__ms {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 12px 6px;
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  transform: translate(-50%, -50%);
+}
+
+.c-arch__ms small {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--on-card-muted);
+}
+
+.c-arch__ms.is-hot {
+  background: var(--accent);
+  color: var(--card);
+}
+
+.c-arch__ms.is-hot small {
+  color: var(--card);
+}
+
 /* ===== COMPONENT arch-flow ===== */
 /* === COMPONENT (deck): arch-flow ===
    One step of the open / close trade walkthrough on the same 1728×800 canvas and coordinates as arch-diagram.
@@ -5825,6 +5859,8 @@ body.overview .deck-viewport {
   <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
   <div class="p4 c-arch__node" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Oanda Market<br>Price Service</div>
   <p class="p4 c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22’s own platform API</p>
+
+  
 </div>
 </section>
 
@@ -5911,6 +5947,8 @@ body.overview .deck-viewport {
   <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
   <div class="p4 c-arch__node" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Oanda Market<br>Price Service</div>
   <p class="p4 c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22’s own platform API</p>
+
+  
 </div>
 </section>
 
@@ -5997,6 +6035,8 @@ body.overview .deck-viewport {
   <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
   <div class="p4 c-arch__node" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Oanda Market<br>Price Service</div>
   <p class="p4 c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22’s own platform API</p>
+
+  
 </div>
 </section>
 
@@ -6083,6 +6123,8 @@ body.overview .deck-viewport {
   <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
   <div class="p4 c-arch__node" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Oanda Market<br>Price Service</div>
   <p class="p4 c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22’s own platform API</p>
+
+  
 </div>
 </section>
 
@@ -6169,6 +6211,8 @@ body.overview .deck-viewport {
   <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
   <div class="p4 c-arch__node" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Oanda Market<br>Price Service</div>
   <p class="p4 c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22’s own platform API</p>
+
+  
 </div>
 </section>
 
@@ -9583,7 +9627,169 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="80" data-name="workflow-campaign-start">
+<section class="slide" data-slide="80" data-name="app-latency-budget">
+<!-- notes: Appendix. Follows the latency and throughput evidence slide. Left: what the historical data says about the 10c adverse-price check. It only works if the time from client fill to desk order stays around 100 ms; at 1 s roughly 30% of trades already fail it. That is why the 10c latency limit is the requirement that matters, not concurrency: 6 trades/min is the busiest period anywhere in the data. Keeping failures at 1% needs about 15-30 ms. In a calm minute (p10 volatility) 5% failures allows about 0.7 s, but in the most volatile 1% of minutes (news spikes) it is about 3 ms and most trades fail whatever the system does. These numbers assume the check compares prices once, when the desk places its order; if a move to +10c at any point before that counts, the limits roughly halve. There is no data finer than one second, so sub-second figures were scaled down from 1-10 minute measurements and cross-checked against the second-stamped fills. Below 1 s the real market moves slower than the scaling predicts, so the budget is on the cautious side. Right: our own peak run (peak-790963676.csv): 102 trades through the pipeline, 99 completed and 3 marked slipped (OANDA's price moved between the cached candle and the pipeline's read). The clock starts when the API receives the trade, so the time from the client's fill to reaching us is not included. Received to decision published is 31 ms at the median, 88 ms at p90, 228 ms at p99. Received to OANDA price read is 558 ms at the median and 951 ms at p99. About 10% of trades are over 100 ms. The median is fine; the slow tail is on the Slow 10% slide. If the desk order has to wait for the OANDA price check, almost every trade misses the budget. Bursts of 4-5 trades did not slow anything noticeably. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
+  <h1 class="reveal">Latency Budget vs Measured</h1>
+</header>
+<div class="c-split " style="--split-cols: 1fr 1fr; --split-align: start;">
+  
+  <section class="c-point-list ">
+  <h3 class="reveal">What the data says<small>10c adverse-price check</small></h3>
+  <ul>
+    <li><strong>Under ~100 ms:</strong> the check only works if fill → desk order is this fast. At 1 s, ~30% of trades already fail.</li>
+    <li><strong>Strict budget:</strong> ≤1% failing needs ~15–30 ms.</li>
+    <li><strong>Calm vs volatile:</strong> 5% failing allows ~0.7 s in a calm minute, ~3 ms in the most volatile 1% (news spikes).</li>
+    <li><strong>Stricter reading:</strong> if any move to +10c before the order counts, limits roughly halve.</li>
+    <li><strong>Data limit:</strong> nothing finer than 1 s, so sub-second is scaled. The real market is slower there, so these limits are cautious.</li>
+  </ul>
+</section>
+  <div class="c-column " style="--col-width: auto; --col-gap: 16px;">
+  
+    <header class="c-section-heading reveal ">
+  <h2>Our peak run</h2>
+  <p>Milliseconds from API receipt. 102 trades: 99 completed, 3 slipped. About 10% pass 100 ms; the desk order waits on OANDA.</p>
+</header>
+    <table class="c-compare-table reveal ">
+  
+      <thead><tr><th></th><th>p50</th><th>p90</th><th>p99</th><th>Max</th></tr></thead>
+      <tbody>
+        <tr><td>Decision</td><td class="is-focus">31</td><td>88</td><td>228</td><td>241</td></tr>
+        <tr><td>OANDA read</td><td class="is-focus">558</td><td>746</td><td>951</td><td>1,850</td></tr>
+      </tbody>
+    
+</table>
+  
+</div>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="81" data-name="app-latency-architecture">
+<!-- notes: Appendix. Where the time goes for an open trade, measured in a peak run of 102 trades (peak-790963676.csv). Each chip is the median time of that hop, with the 99th percentile beneath. The clock starts when the API receives the trade; the client round trip (13 ms median) is measured separately and is not part of the 31 ms to a published decision. API to Postgres is the campaign lookup plus storing the open trade. Queue wait is about half a millisecond. The worker's Postgres chip is counting earlier closed trades (2 ms median, 108 ms at p99) plus storing the prediction (3 ms). The Judge call is 14 ms median, of which the model itself is about 3 ms; the rest is network and a new HTTP client built per call. The Oanda price read dominates everything else at about 0.5 s and is the step that decides whether the order meets the latency budget. -->
+<header class="c-slide-title is-static">
+  <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
+  <h1 class="reveal">Where the Time Goes</h1>
+</header>
+<div class="c-arch is-timed">
+  <!-- Lanes -->
+  <div class="c-arch__lane p1" style="left: 330px; width: 250px;"><span data-n="1">Input/Output</span></div>
+  <div class="c-arch__lane p2" style="left: 610px; width: 420px;"><span data-n="2">Data &amp; Messaging</span></div>
+  <div class="c-arch__lane p3" style="left: 1060px; width: 300px;"><span data-n="3">Pipeline</span></div>
+  <div class="c-arch__lane p4" style="left: 1390px; width: 338px;"><span data-n="4">Services</span></div>
+
+  <!-- Wires -->
+  <svg class="c-arch__wires" viewBox="0 0 1728 800" aria-hidden="true">
+    <defs>
+      <marker id="arch-arrow-timed" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+        <path d="M2 2 L10.5 6 L2 10" fill="none" stroke="context-stroke" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <g class="c-arch__io">
+      <path d="M196 250 H350" marker-end="url(#arch-arrow-timed)"/>
+      <path d="M350 590 H196" marker-end="url(#arch-arrow-timed)"/>
+    </g>
+    <g class="c-arch__flow">
+      <path class="is-orange" d="M560 232 L724 100" marker-end="url(#arch-arrow-timed)"/>
+      <path class="is-orange" d="M560 250 L648 283" marker-end="url(#arch-arrow-timed)"/>
+      <path class="is-orange" d="M560 262 L648 345" marker-end="url(#arch-arrow-timed)"/>
+      <path class="is-black" d="M914 100 L1094 268" marker-start="url(#arch-arrow-timed)" marker-end="url(#arch-arrow-timed)"/>
+      <path class="is-black" d="M989 285 H1094" marker-end="url(#arch-arrow-timed)"/>
+      <path class="is-black" d="M989 347 L1094 302" marker-end="url(#arch-arrow-timed)"/>
+      <path class="is-black" d="M990 470 L1100 322" marker-start="url(#arch-arrow-timed)" marker-end="url(#arch-arrow-timed)"/>
+      <path class="is-red" d="M1136 342 L990 585" marker-end="url(#arch-arrow-timed)"/>
+      <path class="is-black" d="M1330 284 H1424" marker-start="url(#arch-arrow-timed)" marker-end="url(#arch-arrow-timed)"/>
+      <path class="is-black" d="M1328 318 L1434 430" marker-start="url(#arch-arrow-timed)" marker-end="url(#arch-arrow-timed)"/>
+      <path class="is-red" d="M650 590 H560" marker-end="url(#arch-arrow-timed)"/>
+    </g>
+  </svg>
+
+  <!-- Actors -->
+  <div class="c-arch__actor" style="top: 150px; left: -24px;">
+    <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="20" cy="12" r="8"/><circle cx="44" cy="12" r="8"/><path d="M4 44c0-10 7-18 16-18s16 8 16 18zM28 44c0-10 7-18 16-18s16 8 16 18z"/></svg>
+    <strong>Campaign Traders</strong>
+    <span>trading on C22’s platform</span>
+  </div>
+  <span class="c-arch__wire-label" style="left: 213px; top: 212px; width: 120px;">Trade data</span>
+
+  <div class="c-arch__actor" style="top: 520px; left: -24px;">
+    <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="12" r="9"/><path d="M14 46c0-11 8-20 18-20s18 9 18 20z"/></svg>
+    <strong>C22</strong>
+    <span>Clement &amp; Lee Yang</span>
+  </div>
+  <span class="c-arch__wire-label" style="left: 198px; top: 604px; width: 150px;">Reverse trade<br>performance</span>
+
+  <!-- I/O -->
+  <div class="p1 c-arch__node" style="left: 356px; top: 200px; width: 198px; height: 100px;">FastAPI<small>ingestion</small></div>
+  <div class="p1 c-arch__node" style="left: 356px; top: 540px; width: 198px; height: 100px;">Dashboard<small>visualisation</small></div>
+
+  <!-- Data & messaging -->
+  <div class="p2 c-arch__node" style="left: 730px; top: 50px; width: 180px; height: 90px;">Postgres</div>
+  <div class="p2 c-arch__group" style="left: 632px; top: 190px; width: 376px; height: 460px;">
+    <span class="c-arch__group-title">Redis</span>
+  </div>
+  <div class="p2 c-arch__node c-arch__node--pill" style="left: 655px; top: 260px; width: 330px; height: 50px;">Open Trade Queue</div>
+  <div class="p2 c-arch__node c-arch__node--pill" style="left: 655px; top: 322px; width: 330px; height: 50px;">Close Trade Queue</div>
+  <div class="p2 c-arch__node c-arch__node--pill" style="left: 655px; top: 440px; width: 330px; height: 60px;">Campaign Cache</div>
+  <div class="p2 c-arch__node c-arch__node--pill" style="left: 655px; top: 560px; width: 330px; height: 60px;">Pub/Sub</div>
+
+  <!-- Pipeline -->
+  <div class="p3 c-arch__group" style="left: 1080px; top: 50px; width: 260px; height: 520px;">
+    <span class="c-arch__group-title">Workers</span>
+  </div>
+  <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 110px; width: 220px; height: 100px;">Worker #1</div>
+  <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 236px; width: 220px; height: 100px;">Worker #2</div>
+  <span class="p3 c-arch__dots" style="left: 1100px; top: 344px;">···</span>
+  <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 450px; width: 220px; height: 100px;">Worker #N</div>
+  <p class="p3 c-arch__foot" style="left: 1070px; top: 600px; width: 280px;">Currently operates with one worker, to be automatically scalable</p>
+
+  <!-- Services -->
+  <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
+  <div class="p4 c-arch__node" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Oanda Market<br>Price Service</div>
+  <p class="p4 c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22’s own platform API</p>
+
+  <span class='c-arch__ms' style='left:268px;top:285px'>13 ms<small>p99 48 ms</small></span><span class='c-arch__ms' style='left:610px;top:150px'>6 ms<small>p99 27 ms</small></span><span class='c-arch__ms' style='left:585px;top:368px'>1 ms<small>p99 7 ms</small></span><span class='c-arch__ms' style='left:1041px;top:243px'>0.5 ms<small>p99 1.5 ms</small></span><span class='c-arch__ms is-hot' style='left:985px;top:135px'>5 ms<small>p99 119 ms</small></span><span class='c-arch__ms' style='left:1040px;top:395px'>0.7 ms<small>p99 10 ms</small></span><span class='c-arch__ms' style='left:1030px;top:525px'>0.3 ms<small>p99 0.7 ms</small></span><span class='c-arch__ms is-hot' style='left:1377px;top:236px'>14 ms<small>p99 98 ms</small></span><span class='c-arch__ms is-hot' style='left:1383px;top:380px'>509 ms<small>p99 907 ms</small></span><p class='c-arch__foot' style='left:700px;top:-40px;width:1028px;text-align:right'>p50 of 102 open trades, p99 beneath. The clock starts when the API receives the trade.</p>
+</div>
+</section>
+
+
+<section class="slide" data-slide="82" data-name="app-latency-tail">
+<!-- notes: Appendix. Why the slowest 10% of decisions are slow, from the peak run of 102 trades. Three steps cause the tail. The Judge call: median 10 ms for network and client, 32 ms at p90, 87 ms at p99; judge.client_setup alone is 80 ms at p99 because a new HTTP client (and its TLS setup) is built on every call, so a shared client would remove most of it. Counting earlier closed trades: one query with a bad tail, 2 ms median but 107 ms at p99, worth an EXPLAIN and probably a missing index. Storing the open trade: two commits, 8 ms median and 31 ms at p99, which could be one. What turned out not to be the problem: queue wait is about 0.5 ms (p99 1.5 ms); every Redis step is under 1 ms at the median; the judge model itself takes about 3 ms; bursts of 5 did not slow anything down. An earlier suspicion that open trades would sit behind a one-second wait was wrong; with 15 workers one is always free, and the 645 ms seen in the smoke run was a cold start. The real problem is OANDA, on both open and close. Clock note: the containers' clocks differ from the Mac's, so we measure from when the API receives the trade; a --host-clock switch changes it back to the seed's send time. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
+  <h1 class="reveal">The Slow 10%</h1>
+</header>
+<div class="c-split " style="--split-cols: 1fr 1fr; --split-align: start;">
+  
+  <section class="c-point-list ">
+  <h3 class="reveal">What slows the tail<small>p50 → p99</small></h3>
+  <ul>
+    <li><strong>Judge call:</strong> 10 → 87 ms. A new HTTP client is built every call (80 ms at p99). Share one.</li>
+    <li><strong>Counting closed trades:</strong> 2 → 107 ms. One DB query with a bad tail. Check with EXPLAIN, likely a missing index.</li>
+    <li><strong>Storing the open trade:</strong> 8 → 31 ms. Two commits where one would do.</li>
+  </ul>
+</section>
+  <section class="c-point-list ">
+  <h3 class="reveal">Not the problem<small>ruled out</small></h3>
+  <ul>
+    <li><strong>Queue wait:</strong> 0.5 ms (p99 1.5 ms). With 15 workers, one is always free.</li>
+    <li><strong>Redis steps:</strong> under 1 ms at the median.</li>
+    <li><strong>Judge model:</strong> about 3 ms.</li>
+    <li><strong>Bursts of 5:</strong> no slowdown.</li>
+  </ul>
+</section>
+
+</div>
+<div class="c-label-card reveal ">
+  <h3>The real problem<br>is OANDA</h3>
+  <p>If the desk order waits for the ~558 ms price read, about 100% of trades miss the budget.</p>
+</div>
+</section>
+
+
+<section class="slide" data-slide="83" data-name="workflow-campaign-start">
 <!-- notes: James Z. Walk the six steps top to bottom. Pause on step 1 (reference price) and step 5 (six history features; a new trader gets zeros/nulls, not an error). Land the callout: one transaction, so a failed Redis write rolls everything back. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -9636,7 +9842,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="81" data-name="workflow-open-trade">
+<section class="slide" data-slide="84" data-name="workflow-open-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the trade is queued, a worker runs steps 3-6. Step 4: 18 features built live from the trade plus the cached history, then the Judge decides. Step 5: Oanda is a stand-in for C22's market data; slippage is the gap between the trader's entry price and ours. Key notes: in production, market data is polled or read from C22 directly and no response is sent. C22's slippage threshold is 0.10; we adjusted it for the demo because of the historical data. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -9694,7 +9900,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="82" data-name="workflow-close-trade">
+<section class="slide" data-slide="85" data-name="workflow-close-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the close is queued, a worker runs steps 3-6. Key notes: the Redis rolling metrics update even if the simulated close fails (e.g. the market price fetch). They are updated with a read-check-write retry pattern instead of locks. Reverse-trading PnL streams to the dashboard the moment each trade closes. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -9737,7 +9943,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="83" data-name="workflow-campaign-end">
+<section class="slide" data-slide="86" data-name="workflow-campaign-end">
 <!-- notes: James Z. Five steps, top to bottom. The /end call is idempotent: a second request for an already ended campaign does nothing and does not rerun the flow. Open trades are force-failed so the evaluation only uses completed trades. The same completed trades are scored three ways: Judge-led reverse, reverse all trades, coin-flip-led reverse. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -9779,7 +9985,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="84" data-name="app-correlation">
+<section class="slide" data-slide="87" data-name="app-correlation">
 <!-- notes: Appendix. Pearson correlation of the point-in-time features with each other and with the two targets (last two rows and columns). Leaked stop and target fields are already removed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9808,7 +10014,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="85" data-name="app-learning-calibration">
+<section class="slide" data-slide="88" data-name="app-learning-calibration">
 <!-- notes: Appendix. Left: validation AUC against training campaigns on the gross target is flat (correlation −0.383), so more campaigns do not help yet. Right: calibration fitted on out-of-fold predictions only; isotonic moves Brier 0.2384 to 0.2380. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9827,7 +10033,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="86" data-name="app-shap-features">
+<section class="slide" data-slide="89" data-name="app-shap-features">
 <!-- notes: Appendix. Per-feature mean |SHAP|. Solid bars: full 26-feature model. Faded bars: no_outcome model. Colours are feature groups. Take outcome history away and prior_sl_use_rate and sec_since_last_close take over. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9856,7 +10062,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="87" data-name="app-cost-curve">
+<section class="slide" data-slide="90" data-name="app-cost-curve">
 <!-- notes: Appendix. The reversing cost is a constant $7 per lot, which is what flips the sign of fade-everything. Sweeping the assumed cost from $0 to $7, the model's rule sits between the 13.5th and 22.9th percentile of random selection at the same exposure at every level. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9875,7 +10081,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="88" data-name="app-market-data">
+<section class="slide" data-slide="91" data-name="app-market-data">
 <!-- notes: Appendix. Market-data features on the no_outcome arm, across three learners. Share of mean |SHAP| divided by a uniform share, so 1.0 means indifferent. AUC says neutral-to-better, dollars say worse in all eight arms. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9894,7 +10100,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="89" data-name="app-dropped">
+<section class="slide" data-slide="92" data-name="app-dropped">
 <!-- notes: Appendix. Levers we tried and dropped, with the measured result. Market context: 18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005 (CI −0.0018 to +0.0025); 14 Yahoo macro features B+C −$23.5k to −$47.6k; NB14 flips negative on all three learners. SL/TP channel: even the leaked flag buys only +0.006. Hyperparameters: 50 Optuna trials +0.0028 CV AUC. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9920,7 +10126,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="90" data-name="app-decomposition">
+<section class="slide" data-slide="93" data-name="app-decomposition">
 <!-- notes: Appendix. Value of perfecting each part of the hurdle model, in dollars per campaign at the top-5% readout. As fitted: classifier +687, gain arm +216, loss arm +229. Perfected ceilings: classifier +13,146, gain arm +24,663, loss arm +10,050. Marginal question: perfect classifier given perfect regressors adds +351; perfect gain and loss regressors given a perfect classifier add +12,417, 35 times more. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9939,7 +10145,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="91" data-name="app-feature-arms">
+<section class="slide" data-slide="94" data-name="app-feature-arms">
 <!-- notes: Appendix. The 26 features in four buckets (ticket, behaviour, outcome, counter) and which feature set (arm) keeps which. Sets are nested, so the filled region only shrinks left to right and the outcome block disappears first: full 26, no_outcome 18, behaviour_only 14, ticket_only 6. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9968,7 +10174,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="92" data-name="app-topk">
+<section class="slide" data-slide="95" data-name="app-topk">
 <!-- notes: Appendix. Top-k ranking quality: each arm fades the same fraction of every campaign, so exposure is identical and only the picks differ. Realised reverseProfit in $000 against random at matched exposure. The full model, which sees outcome history, sits below random at every fraction (e.g. −$23.1k vs −$14.2k at 50%). The other arms hover around random. All lines are negative at most fractions: this is a ranking check, not a profit claim. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9987,7 +10193,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="93" data-name="app-hyperparams">
+<section class="slide" data-slide="96" data-name="app-hyperparams">
 <!-- notes: Appendix. Final hyperparameters of the v5 judge (judge_v5_gross_18, 18 no_outcome features). Source: scripts/target_ablation.py BASE, CLF_PARAMS, REG_PARAMS. One LightGBM parameter set shared by all three models; the classifier uses binary loss, the gain and loss regressors use huber. Early stopping 100 rounds; final refit at the median best iteration across the six folds: classifier 44 trees, gain 6,392, loss 6,412. Isotonic calibration on leave-one-fold-out predictions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -10054,7 +10260,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="94" data-name="market-regimes">
+<section class="slide" data-slide="97" data-name="market-regimes">
 <!-- notes: To avoid cherry-picking an easy window, we used two lenses. Activity is the number of trades per slot. Volatility is beta against gold futures. That gives four market conditions, and we picked two opposite corners. → Here’s the data behind those labels. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -10115,7 +10321,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="95" data-name="demo-data">
+<section class="slide" data-slide="98" data-name="demo-data">
 <!-- notes: On the left, we counted trades in a rolling 30-minute window. Typical sits near p50, the median, and busy is p95 and above. On the right, we measured each slot’s beta against gold futures. One or less is calm, above one is volatile. → Applying both rules gives us our two timeslots. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -10140,7 +10346,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 </section>
 
 
-<section class="slide" data-slide="96" data-name="chosen-timeslots">
+<section class="slide" data-slide="99" data-name="chosen-timeslots">
 <!-- notes: Our typical, calm slot is 3:30 to 4:00, and our busy, volatile slot is 5:30 to 6:00. Together they test the Judge in both an ordinary and a stressful market. → With that, I’ll hand over to Jerrick to start the demo. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
