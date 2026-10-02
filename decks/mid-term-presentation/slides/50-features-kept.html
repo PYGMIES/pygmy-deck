@@ -1,0 +1,27 @@
+<!-- notes: Yanting. The final feature set: 18 features in three groups, moving back in time. The trade itself, what the customer did earlier today, and what they did on earlier days. All built from information available when the trade opened. -->
+<!-- @slide-title kicker="Step 02: Feature engineering" text="The 18 Features We Kept" -->
+<!-- @card-grid cols="4" class="inset" -->
+  <!-- @feature-group count="6" title="The trade itself" note="Side, amount, hour given; others derived" -->
+    <li><strong>Buy or sell</strong><code>side_is_buy</code></li>
+    <li><strong>Trade size</strong><code>amount</code></li>
+    <li><strong>Hour opened</strong><code>hour_utc</code></li>
+    <li><strong>Time on a clock face</strong><code>tod_sin, tod_cos</code></li>
+    <li><strong>Gold’s move today</strong><code>price_vs_campaign_open_bps</code></li>
+  <!-- @/feature-group -->
+  <!-- @feature-group count="8" title="Earlier today" note="From the customer’s finished trades today" cols="2" -->
+    <li><strong>Trades so far today</strong><code>n_prior_trades</code></li>
+    <li><strong>First trade of the day</strong><code>is_cold_start</code></li>
+    <li><strong>Size vs their usual</strong><code>escalation_ratio</code></li>
+    <li><strong>Wait since last trade</strong><code>sec_since_last_close</code></li>
+    <li><strong>Usual hold time</strong><code>mean_prior_duration</code></li>
+    <li><strong>Stop-loss habit</strong><code>prior_sl_use_rate</code></li>
+    <li><strong>Take-profit habit</strong><code>prior_tp_use_rate</code></li>
+    <li><strong>Usual stop distance</strong><code>mean_prior_sl_dist_bps</code></li>
+  <!-- @/feature-group -->
+  <!-- @feature-group count="4" title="Earlier days" note="From campaigns already finished" -->
+    <li><strong>Past days traded</strong><code>n_prior_campaigns</code></li>
+    <li><strong>Trades on past days</strong><code>n_prior_campaign_trades</code></li>
+    <li><strong>Days since last traded</strong><code>days_since_last_campaign</code></li>
+    <li><strong>Past stop-loss habit</strong><code>prior_campaign_sl_use_rate</code></li>
+  <!-- @/feature-group -->
+<!-- @/card-grid -->

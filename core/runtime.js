@@ -15,9 +15,11 @@
   const counter = stage.querySelector(".deck-counter");
   let current = 0;
 
-  /* === SCALE === uniform fit, never re-layout */
+  const viewport = document.querySelector(".deck-viewport");
+
+  /* === SCALE === uniform fit to the viewport box (shrinks when the notes panel is open), never re-layout */
   function fit() {
-    const scale = Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H);
+    const scale = Math.min(viewport.clientWidth / STAGE_W, viewport.clientHeight / STAGE_H);
     stage.style.setProperty("--stage-scale", scale);
   }
   window.addEventListener("resize", fit);
@@ -41,6 +43,7 @@
     if (counter) counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
     history.replaceState(null, "", `#${current + 1}`);
     syncOverview();
+    syncNotes();
   }
 
   function fromHash() {
@@ -98,6 +101,10 @@
       case "o":
       case "O":
         toggleOverview(true);
+        break;
+      case "n":
+      case "N":
+        toggleNotes();
         break;
     }
   });
@@ -174,6 +181,59 @@
     host.addEventListener("pointerleave", hide);
   });
 
+  /* === SCATTER HOVER === any [data-hover-scatter] holds JSON {w, h, p:[{x, y, t, d, v, u, ci?}]} in SVG
+     viewBox units. Pointer picks the nearest point within a radius: ring around the dot + tooltip. */
+  document.querySelectorAll("[data-hover-scatter]").forEach((host) => {
+    const cfg = JSON.parse(host.dataset.hoverScatter);
+    const svg = host.querySelector("svg");
+    const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    ring.setAttribute("class", "sc-ring");
+    ring.setAttribute("r", 17);
+    ring.setAttribute("visibility", "hidden");
+    svg.appendChild(ring);
+    const tip = document.createElement("div");
+    tip.className = "sc-tip";
+    tip.hidden = true;
+    host.appendChild(tip);
+
+    const hide = () => {
+      tip.hidden = true;
+      ring.setAttribute("visibility", "hidden");
+    };
+    const show = (ev) => {
+      const rect = svg.getBoundingClientRect();
+      const ux = ((ev.clientX - rect.left) / rect.width) * cfg.w;
+      const uy = ((ev.clientY - rect.top) / rect.height) * cfg.h;
+      let best = null;
+      let bestD = 40 * 40;
+      cfg.p.forEach((pt) => {
+        const d = (pt.x - ux) ** 2 + (pt.y - uy) ** 2;
+        if (d < bestD) { bestD = d; best = pt; }
+      });
+      if (!best) return hide();
+      ring.setAttribute("cx", best.x);
+      ring.setAttribute("cy", best.y);
+      ring.setAttribute("visibility", "visible");
+      tip.innerHTML = `<b>${best.t}</b><div class="sc-tip__desc">${best.d}</div>` +
+        `<div class="sc-tip__row"><span>Variant</span><span>${best.v}</span></div>` +
+        `<div class="sc-tip__row"><span>$ per campaign</span><span>${best.u}</span></div>` +
+        (best.ci ? `<div class="sc-tip__row is-muted"><span>95% CI</span><span>${best.ci}</span></div>` : "");
+      tip.hidden = false;
+      /* layout px (unscaled): offsetWidth ignores the stage transform */
+      const kx = svg.clientWidth / cfg.w;
+      const ky = svg.clientHeight / cfg.h;
+      const px = best.x * kx;
+      const py = best.y * ky;
+      const left = px + 28 + tip.offsetWidth > svg.clientWidth ? px - tip.offsetWidth - 28 : px + 28;
+      const top = Math.min(Math.max(0, py - tip.offsetHeight / 2), svg.clientHeight - tip.offsetHeight);
+      tip.style.left = Math.max(0, left) + "px";
+      tip.style.top = top + "px";
+    };
+    host.addEventListener("pointermove", show);
+    host.addEventListener("pointerdown", show);
+    host.addEventListener("pointerleave", hide);
+  });
+
   window.addEventListener("hashchange", () => go(fromHash()));
 
   /* === EDIT MODE === E toggles, Ctrl/Cmd+S downloads the edited file */
@@ -197,9 +257,13 @@
   function save() {
     toggleEdit(false);
     slides.forEach((s) => s.classList.remove("active"));
-    toggleBtn.remove();
+    const notesOpen = document.body.classList.contains("notes-open");
+    toggleNotes(false);
+    const chrome = [toggleBtn, notesBtn, notesPanel];
+    chrome.forEach((el) => el.remove());
     const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-    document.body.appendChild(toggleBtn);
+    chrome.forEach((el) => document.body.appendChild(el));
+    toggleNotes(notesOpen);
     go(current);
     const blob = new Blob([html], { type: "text/html" });
     const a = document.createElement("a");
@@ -256,6 +320,91 @@
       ovCells[current]?.focus();
       ovCells[current]?.scrollIntoView({ block: "center" });
     }
+  }
+
+  /* === SPEAKER NOTES === N or bottom-left corner button. Reads each slide's
+     <!-- notes: … --> comments into an editable panel below the stage. Edits
+     autosave to localStorage and are written back into the slide's comment
+     node, so Ctrl/Cmd+S in edit mode downloads them too. */
+  const NOTES_KEY = "pygmy-deck-notes:" + location.pathname;
+  const noteNodes = slides.map((slide) => {
+    const walker = document.createTreeWalker(slide, NodeFilter.SHOW_COMMENT);
+    const found = [];
+    while (walker.nextNode()) if (/^\s*notes:/.test(walker.currentNode.nodeValue)) found.push(walker.currentNode);
+    return found;
+  });
+  const noteText = (node) => node.nodeValue.replace(/^\s*notes:\s*/, "").trim();
+  const slideNotes = noteNodes.map((nodes) => nodes.map(noteText).join("\n\n"));
+
+  /* keep the comment node in sync with the text (one node per slide) */
+  function writeNote(i, text) {
+    slideNotes[i] = text;
+    const safe = ` notes: ${text.replace(/--/g, "\u2013")} `;
+    if (noteNodes[i].length) {
+      noteNodes[i][0].nodeValue = safe;
+      noteNodes[i].slice(1).forEach((n) => n.remove());
+      noteNodes[i] = [noteNodes[i][0]];
+    } else if (text.trim()) {
+      const c = document.createComment(safe);
+      slides[i].appendChild(c);
+      noteNodes[i] = [c];
+    }
+  }
+
+  const readSaved = () => {
+    try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch (_) { return {}; }
+  };
+  const saved = readSaved();
+  Object.keys(saved).forEach((k) => {
+    const i = parseInt(k, 10);
+    if (i >= 0 && i < slides.length && typeof saved[k] === "string") writeNote(i, saved[k]);
+  });
+  function persist(i, text) {
+    try {
+      const all = readSaved();
+      all[i] = text;
+      localStorage.setItem(NOTES_KEY, JSON.stringify(all));
+    } catch (_) { /* storage blocked: edits still live in the page until reload */ }
+  }
+
+  const notesBtn = document.createElement("button");
+  notesBtn.className = "notes-toggle";
+  notesBtn.textContent = "NOTES";
+  notesBtn.title = "Toggle speaker notes (N)";
+  notesBtn.addEventListener("click", () => toggleNotes());
+  document.body.appendChild(notesBtn);
+
+  const notesPanel = document.createElement("aside");
+  notesPanel.className = "deck-notes";
+  notesPanel.setAttribute("aria-label", "Speaker notes");
+  const notesHead = document.createElement("span");
+  notesHead.className = "deck-notes__head";
+  const notesArea = document.createElement("textarea");
+  notesArea.className = "deck-notes__text";
+  notesArea.placeholder = "No notes for this slide. Type here to add some.";
+  notesArea.spellcheck = true;
+  notesArea.addEventListener("input", () => {
+    writeNote(current, notesArea.value);
+    persist(current, notesArea.value);
+  });
+  notesArea.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") notesArea.blur();
+  });
+  notesPanel.append(notesHead, notesArea);
+  document.body.appendChild(notesPanel);
+
+  function syncNotes() {
+    if (!document.body.classList.contains("notes-open")) return;
+    notesHead.textContent = `Notes · ${String(current + 1).padStart(2, "0")} · editable, saved in this browser`;
+    notesArea.value = slideNotes[current];
+    notesArea.scrollTop = 0;
+  }
+
+  function toggleNotes(on = !document.body.classList.contains("notes-open")) {
+    document.body.classList.toggle("notes-open", on);
+    notesBtn.textContent = on ? "HIDE NOTES" : "NOTES";
+    syncNotes();
+    fit();
   }
 
   /* === START === */

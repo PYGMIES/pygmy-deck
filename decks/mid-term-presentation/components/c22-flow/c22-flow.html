@@ -1,45 +1,45 @@
 <div class="c-c22-flow {{class|}}">
-  <aside class="c-c22-flow__note reveal">
-    <h4>Why does fading pay off?</h4>
-    <p>C22 uses its participants as market signals: when a trader buys gold at $1,900 as a losing position, C22 fades it.</p>
-  </aside>
-
-  <svg class="c-c22-flow__wires" viewBox="0 0 1728 760" aria-hidden="true">
-    <defs>
-      <marker id="c22-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
-        <path d="M1 1 L10 6 L1 11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </marker>
-    </defs>
-    <path d="M440 400 H612" marker-end="url(#c22-arrow)"/>
-    <path d="M1180 400 L1372 270" marker-end="url(#c22-arrow)"/>
-    <path d="M1180 400 L1372 585" marker-end="url(#c22-arrow)"/>
-  </svg>
-
-  <div class="c-c22-flow__clients reveal">
-    <h3>500<br>Clients</h3>
-    <p class="c-c22-flow__italic">Day-long “campaign”<br>trading FICC (e.g. Gold)</p>
-    <hr>
-    <div class="c-c22-flow__limit"><strong>-4%</strong><span>Loss Limit</span></div>
-    <p class="c-c22-flow__italic">Hard drawdown ceiling</p>
+  <div class="c-c22-flow__step reveal">
+    <span class="c-c22-flow__tag">&nbsp;</span>
+    <div class="c-c22-flow__box">
+      <div class="c-c22-flow__icon" style="--icon: url(assets/icons/discord.svg)"></div>
+      <p class="c-c22-flow__sub">Trading challenge announced<br>2–3× a week</p>
+    </div>
   </div>
+  <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
 
-  <span class="c-c22-flow__label" style="left: 440px; width: 172px; top: 330px;">trades via</span>
-
-  <div class="c-c22-flow__platform reveal">
-    <h3>C22 Trading Platform</h3>
-    <p>(the platform C22 controls)</p>
-    <div class="c-c22-flow__inner">Markov Chain Judge</div>
-    <div class="c-c22-flow__inner">Hard-coded rules +<br>Founder’s judgement</div>
+  <div class="c-c22-flow__step reveal">
+    <span class="c-c22-flow__tag">Campaign</span>
+    <div class="c-c22-flow__box">
+      <h3>~500 traders</h3>
+      <p class="c-c22-flow__sub">Join each time</p>
+    </div>
   </div>
+  <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
 
-  <span class="c-c22-flow__label c-c22-flow__label--fork" style="left: 1188px; width: 150px; top: 372px;">Decides to either</span>
-
-  <div class="c-c22-flow__outcome reveal" style="top: 150px;">
-    <h3>FADE</h3>
-    <p>House holds the loser internally, captures the client’s loss, pays no spread</p>
+  <div class="c-c22-flow__step reveal">
+    <span class="c-c22-flow__tag">Trader</span>
+    <div class="c-c22-flow__box">
+      <h3>Sim trades</h3>
+      <p class="c-c22-flow__sub">Trade in a simulated env</p>
+    </div>
   </div>
-  <div class="c-c22-flow__outcome reveal" style="top: 470px;">
-    <h3>PASS</h3>
-    <p>Trade expected to win, or unclear</p>
+  <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
+
+  <div class="c-c22-flow__step c-c22-flow__step--focus reveal">
+    <span class="c-c22-flow__tag">Our focus</span>
+    <div class="c-c22-flow__box">
+      <h3>The Judge</h3>
+      <p class="c-c22-flow__sub">Fade the trade or not?</p>
+    </div>
+  </div>
+  <svg class="c-c22-flow__arrow" viewBox="0 0 48 40" aria-hidden="true"><path d="M2 14h22V4l22 16-22 16V26H2z"/></svg>
+
+  <div class="c-c22-flow__step c-c22-flow__step--market reveal">
+    <span class="c-c22-flow__tag">C22</span>
+    <div class="c-c22-flow__box">
+      <h3>Real market</h3>
+      <p class="c-c22-flow__sub">Live trade placed for profit</p>
+    </div>
   </div>
 </div>

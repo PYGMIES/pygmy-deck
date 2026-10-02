@@ -1,6 +1,0 @@
-<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
-Script: We host the Judge as its own service, for two reasons. It is self-contained: the model is baked into the Docker image, so it needs no network and no secrets, and its port is only reachable from the host machine. And it has a narrow contract: a worker sends 18 numbers, and the Judge sends back FADE or SKIP. No database, no Redis, no feature computation. -->
-<!-- @slide-title kicker="Design Decision 06" text="Judge as a Separate Service" -->
-<!-- @flow-kit -->
-  <!-- @judge-service -->
-<!-- @/flow-kit -->

@@ -1,6 +1,0 @@
-<!-- notes: Jerrick. TEMPORARY position at the end of the deck: move to just after 23-section-design-decisions (replacing 24) when the team renumbers.
-Script: Our first decision was to process trades asynchronously. Every trade needs a Judge score and a market price from OANDA, about 350 milliseconds each. If the API did that work before replying, trades would pile up behind each other: with 500 traders, the last one would wait around three minutes. So the API only saves the trade, puts it on a Redis queue, and replies in about a millisecond. A pool of workers then takes trades off the queue and processes them in parallel. -->
-<!-- @slide-title kicker="Design Decision 01" text="Process Trades Asynchronously" -->
-<!-- @flow-kit -->
-  <!-- @async-compare -->
-<!-- @/flow-kit -->

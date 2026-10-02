@@ -1,0 +1,42 @@
+/* === COMPONENT (deck): flow-node ===
+   Rounded labelled box at stage coordinates. tone: dark | mid | good | bad. */
+.c-flow-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.c-flow-node strong {
+  font-weight: 700;
+}
+
+.c-flow-node span {
+  font-size: var(--fs-small);
+}
+
+.c-flow-node--dark {
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-flow-node--mid {
+  background: color-mix(in srgb, var(--card) 78%, var(--bg));
+  color: var(--on-card);
+}
+
+.c-flow-node--good {
+  background: var(--success);
+  color: var(--bg);
+}
+
+.c-flow-node--bad {
+  background: var(--danger);
+  color: var(--bg);
+}

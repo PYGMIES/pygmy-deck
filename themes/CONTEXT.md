@@ -3,6 +3,7 @@
 ## Fonts
 - `--font-display`: League Spartan (700 default, 800 for big numbers). Tight tracking `--display-tracking: -0.035em`, leading `--display-leading: 0.88`.
 - `--font-body`: Montserrat 500 as a Garet substitute; `--body-tracking: 0.02em` gives Garet's airy feel.
+- `--font-mono`: JetBrains Mono for code names, falling back to system monospace. Not in the default fonts URL; decks that use it add it via `fonts_url` (see `mid-term-presentation`).
 - Loaded via the Google Fonts URL in `build.py` (`DEFAULT_FONTS_URL`); a deck can override with `"fonts_url"` in `deck.json`.
 
 ## Type scale (px @1920)

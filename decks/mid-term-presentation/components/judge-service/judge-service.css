@@ -1,6 +1,0 @@
-/* === COMPONENT (deck): judge-service ===
-   Slide 44: worker <-> Judge container (model baked in, stateless), and what it does without.
-   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
-.c-judge-service {
-  z-index: 0;
-}

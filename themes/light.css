@@ -31,4 +31,8 @@
   --chart-rand: #6f7772;       /* random average */
   --danger: #b3302b;           /* limits, losses */
   --danger-bg: #f8e1df;
+  --success: #1f7a68;          /* good outcomes, solutions */
+  --token-blue: #7fa8de;      /* queue tokens (trade ids), same in both themes */
+  --token-amber: #f5a623;
+  --token-grey: #c9d0da;
 }

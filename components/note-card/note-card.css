@@ -1,0 +1,154 @@
+/* === COMPONENT: note-card === pale side note: small kicker (e.g. "Step 1"), heading, body */
+.c-note-card {
+  padding: 24px 32px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  color: var(--ink);
+}
+
+.c-note-card__kicker {
+  display: block;
+  margin-bottom: 6px;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.c-note-card h3 {
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.c-note-card p {
+  margin-top: 10px;
+  max-width: none;
+  font-size: 24px;
+  line-height: 1.28;
+  color: var(--ink-muted);
+}
+
+/* optional tags: children are <li>, wrap into rows */
+.c-note-card__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.c-note-card__tags:not(:has(li)) {
+  display: none;
+}
+
+.c-note-card__tags li {
+  padding: 6px 14px;
+  border-radius: var(--radius-s);
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.c-note-card__foot {
+  margin-top: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* is-compact: short side note, fixed height, one body line */
+.c-note-card.is-compact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 98px;
+  padding: 0 28px;
+}
+
+.c-note-card.is-compact h3 {
+  font-size: 30px;
+}
+
+.c-note-card.is-compact p {
+  margin-top: 4px;
+  font-size: 22px;
+  line-height: 28px;
+}
+
+/* is-dark: charcoal card (like label-card); is-bullets: children render as a plain bullet list */
+.c-note-card.is-dark {
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-note-card.is-dark h3 {
+  font-size: 32px;
+  color: var(--on-card);
+}
+
+.c-note-card.is-bullets .c-note-card__tags {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.c-note-card.is-bullets .c-note-card__tags li {
+  position: relative;
+  padding: 0 0 0 24px;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.c-note-card.is-bullets .c-note-card__tags li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* is-tall: side note with a title and a 2-3 line body, fixed height */
+.c-note-card.is-tall {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 190px;
+  padding: 0 32px;
+}
+
+.c-note-card.is-tall h3 {
+  font-size: 34px;
+}
+
+.c-note-card.is-tall p {
+  margin-top: 8px;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+/* nested list inside a bullet: dash markers */
+.c-note-card__sub {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 0;
+}
+
+.c-note-card.is-bullets .c-note-card__sub li::before {
+  top: 15px;
+  width: 10px;
+  height: 3px;
+  border-radius: 2px;
+}

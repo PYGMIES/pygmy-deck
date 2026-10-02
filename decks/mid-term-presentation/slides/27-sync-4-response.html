@@ -1,0 +1,28 @@
+<!-- notes: Jerrick. The client only gets a response once the whole process is completed, so every caller waits on the model and the database. -->
+<!-- @flow-heading title="Processing trades asynchronously" tag="If it was synchronous…" tone="bad" -->
+<!-- @flow-stage -->
+  <!-- @flow-node x="137" y="496" w="213" h="115" label="Request" -->
+  <!-- @flow-node x="479" y="246" w="147" h="742" tone="mid" label="FastAPI" -->
+  <!-- @flow-arrow x1="350" y1="553" x2="479" y2="553" -->
+  <!-- @flow-node x="783" y="473" w="1075" h="115" tone="mid" label="Process open trade" -->
+  <!-- @flow-arrow x1="626" y1="511" x2="783" y2="511" -->
+  <!-- @flow-arrow x1="783" y1="545" x2="626" y2="545" -->
+  <!-- @flow-node x="934" y="251" w="213" h="115" label="Judge" sub="(Inference)" -->
+  <!-- @flow-arrow x1="1010" y1="472" x2="1010" y2="368" -->
+  <!-- @flow-arrow x1="1056" y1="368" x2="1056" y2="472" -->
+  <!-- @flow-node x="1252" y="249" w="228" h="115" tone="mid" size="23" label="Oanda Market<br>Price Service" -->
+  <!-- @flow-arrow x1="1333" y1="472" x2="1333" y2="368" -->
+  <!-- @flow-arrow x1="1389" y1="368" x2="1389" y2="472" -->
+  <!-- @flow-db x="1626" y="246" -->
+  <!-- @flow-arrow x1="1650" y1="472" x2="1650" y2="368" -->
+  <!-- @flow-arrow x1="1693" y1="368" x2="1693" y2="472" -->
+  <!-- @flow-node x="789" y="672" w="1075" h="115" tone="mid" label="Process close trade" -->
+  <!-- @flow-arrow x1="626" y1="713" x2="789" y2="713" -->
+  <!-- @flow-arrow x1="789" y1="747" x2="626" y2="747" -->
+  <!-- @flow-db x="1281" y="874" -->
+  <!-- @flow-arrow x1="1306" y1="788" x2="1306" y2="872" -->
+  <!-- @flow-arrow x1="1345" y1="872" x2="1345" y2="788" -->
+  <!-- @flow-node x="137" y="673" w="213" h="115" tone="bad" label="Response" class="reveal" -->
+  <!-- @flow-arrow x1="479" y1="730" x2="350" y2="730" class="reveal" -->
+  <!-- @flow-note x="63" y="811" w="380" text="Only after whole<br>process is completed" class="reveal" -->
+<!-- @/flow-stage -->

@@ -1,7 +1,159 @@
-/* === Deck-level overrides (mid-term-presentation) === */
+/* === DECK OVERRIDES === */
 
-/* compare-table: keep each cell on one line (slide 41) */
+/* Short card row: centre it in the space under the slide title (slide 55) */
+.c-card-grid.is-centered {
+  flex: 1;
+  min-height: 0;
+  align-content: center;
+}
+
+/* compare-table: keep each cell on one line (slide 38, Why Redis) */
 .c-compare-table.is-nowrap th,
 .c-compare-table.is-nowrap td {
   white-space: nowrap;
 }
+
+/* === WORKFLOW SLIDES 21-24 === */
+
+/* wide label-card: body runs left-aligned across the card (slide 21 callout) */
+.c-label-card.is-wide p {
+  max-width: none;
+  text-align: left;
+  font-size: 30px;
+  line-height: 1.25;
+}
+
+.c-label-card.is-wide {
+  min-height: 120px;
+}
+
+/* slide 21: drop the second note so the step-5 arrow meets the middle of its left edge */
+.c-note-card.is-offset {
+  margin-top: 125px;
+}
+
+/* slide 22: the first of the two tall notes is pushed down so both sit at the bottom of the column */
+.c-note-card.is-start {
+  margin-top: auto;
+}
+
+/* slide 22: connector line stops at the centre of the last circle */
+.c-step-list.is-compact {
+  --line-end: 109px;
+}
+
+/* slide 23: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
+.c-step-list.is-compact.is-close {
+  --step-gap: 27.2px;
+  --line-end: 82px;
+}
+
+/* slide 24: five steps spread over the full height; connector stops at the last circle's centre */
+.c-step-list.is-compact.is-end {
+  --step-gap: 90px;
+  --line-end: 33px;
+}
+
+/* slide 19: tighter layout for the requirement cards: closer to the title, narrow gap between the two columns,
+   group headings centred and larger than the card titles */
+.c-split.is-tight {
+  gap: 40px;
+  margin-top: -36px;
+}
+
+.c-section-heading.is-compact h2 {
+  font-size: 50px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+/* Two-row card grid: shorter cards so 3 + 2 fits the stage (What's Next) */
+.c-card-grid.is-two-row .c-grid-card {
+  min-height: 340px;
+  padding: 36px 44px;
+}
+
+/* Hurdle Model: four short bullets must fit under the headings */
+.why-fits li { padding-top: 16px; padding-bottom: 16px; }
+.why-fits li:first-child { border-top: 0; }
+
+/* Thank-you slide: title only, no info bar */
+.c-closing.is-title-only .c-closing__card { display: none; }
+
+/* How the Data was used (slide 47): taller cards, roomier description, larger campaign split table */
+.c-card-grid.is-data-use .c-panel-card { min-height: 660px; }
+.c-card-grid.is-data-use .c-panel-card__head p { line-height: 1.6; }
+.c-card-grid.is-data-use table { font-size: 34px; }
+.c-card-grid.is-data-use th { font-size: 24px; padding-bottom: 12px; }
+.c-card-grid.is-data-use td { padding: 12px 0; }
+.c-card-grid.is-data-use td:last-child { font-size: 32px; }
+
+/* Before Deriving Features (slide 47): four feature-group cards in one row, compacted to fit the stage */
+.c-card-grid.is-before-features { gap: 28px; }
+.c-card-grid.is-before-features .c-feature-group { gap: 20px; padding: 30px 30px 32px; }
+.c-card-grid.is-before-features .c-feature-group__head { padding-bottom: 18px; }
+.c-card-grid.is-before-features .c-feature-group__count { font-size: 68px; }
+.c-card-grid.is-before-features .c-feature-group__count sub { font-size: 0.5em; line-height: 0; }
+.c-card-grid.is-before-features .c-feature-group h3 { font-size: 34px; }
+.c-card-grid.is-before-features .c-feature-group__head p { font-size: 21px; line-height: 1.35; }
+.c-card-grid.is-before-features .c-feature-group__list { gap: 18px; }
+.c-card-grid.is-before-features .c-feature-group__list li { row-gap: 4px; }
+.c-card-grid.is-before-features .c-feature-group__list strong { font-size: 23px; }
+.c-card-grid.is-before-features .c-feature-group__list code { font-size: 17px; }
+.c-card-grid.is-before-features .c-feature-group__list span { font-size: 18px; line-height: 1.3; color: var(--on-card-muted); }
+.c-card-grid.is-before-features .c-feature-group__foot { padding-top: 18px; font-size: 22px; }
+
+/* Why We Left Out Outcomes (slide 49): outcome card left, SHAP bars right */
+.c-split.is-outcome-shap { gap: var(--gap-l); align-items: stretch; }
+.c-split.is-outcome-shap .c-feature-group { grid-column: auto; }
+.c-split.is-outcome-shap .c-column { justify-content: center; }
+.c-split.is-outcome-shap .c-column { gap: 28px; }
+.c-split.is-outcome-shap .c-section-heading h2 { font-size: 52px; }
+.c-split.is-outcome-shap .c-section-heading p { font-size: 24px; line-height: 1.35; }
+.c-split.is-outcome-shap .c-shap-bars__row h4 { font-size: 34px; margin-bottom: 10px; }
+.c-split.is-outcome-shap .c-shap-bars__row h4 span { font-size: 20px; }
+.c-split.is-outcome-shap .c-shap-bars__bar { height: 84px; }
+.c-split.is-outcome-shap .c-shap-bars__bar b { font-size: 40px; }
+.c-split.is-outcome-shap .c-shap-bars__bar em { font-size: 18px; }
+.c-split.is-outcome-shap .c-shap-bars__step { height: 60px; }
+.c-split.is-outcome-shap .c-shap-bars__step::before { font-size: 32px; }
+.c-split.is-outcome-shap .c-shap-bars__step span { font-size: 24px; }
+.c-split.is-outcome-shap .c-shap-bars__legend { grid-template-columns: repeat(2, 1fr); gap: 14px 24px; margin-top: 26px; }
+.c-split.is-outcome-shap .c-shap-bars__legend li { font-size: 19px; padding-left: 34px; }
+.c-split.is-outcome-shap .c-shap-bars__legend li::before { width: 22px; height: 22px; }
+.c-split.is-outcome-shap .c-shap-bars figcaption { margin-top: 16px; font-size: 18px; }
+/* slide 47: taller cards, roomier spacing for readability */
+.c-card-grid.is-before-features .c-feature-group { min-height: 720px; gap: 30px; padding: 36px 34px 40px; }
+.c-card-grid.is-before-features .c-feature-group__head { padding-bottom: 26px; }
+.c-card-grid.is-before-features .c-feature-group h3 { margin-top: 18px; }
+.c-card-grid.is-before-features .c-feature-group__head p { font-size: 23px; line-height: 1.45; margin-top: 12px; }
+.c-card-grid.is-before-features .c-feature-group__list { gap: 32px; }
+.c-card-grid.is-before-features .c-feature-group__list li { row-gap: 8px; }
+.c-card-grid.is-before-features .c-feature-group__list strong { font-size: 26px; }
+.c-card-grid.is-before-features .c-feature-group__list code { font-size: 19px; line-height: 1.4; }
+.c-card-grid.is-before-features .c-feature-group__list span { font-size: 20px; line-height: 1.4; }
+
+/* The 13 Features We Dropped (slide 48): leakage card left, "didn't pay" card with a without→with chart right */
+.c-split.is-dropped { gap: var(--gap-l); align-items: stretch; }
+.c-split.is-dropped .c-feature-group { grid-column: auto; }
+.c-split.is-dropped .c-panel-card__head { display: grid; grid-template-columns: auto 1fr; column-gap: 24px; align-items: center; }
+.c-split.is-dropped .c-panel-card__count { grid-row: span 2; margin: 0; }
+.c-split.is-dropped .c-panel-card__head p { margin-top: 6px; }
+.c-split.is-dropped .c-panel-card__body { justify-content: space-between; }
+.c-split.is-dropped .c-panel-card__body p code { font-family: var(--font-mono); font-size: 20px; color: var(--on-card-muted); }
+
+.dropped-chart { margin: 0; padding: 48px 28px 40px; border-radius: var(--radius-s); background: var(--chart-bg); }
+.dropped-chart svg { display: block; width: 100%; height: auto; font-family: var(--font-body); }
+.dropped-chart .legend text { font-size: 22px; fill: var(--chart-ink); }
+.dropped-chart .grid { stroke: var(--chart-grid); stroke-width: 2; }
+.dropped-chart .zero { stroke: var(--chart-ink-muted); stroke-width: 2; stroke-dasharray: 6 6; }
+.dropped-chart .tick { font-size: 20px; fill: var(--chart-ink-muted); text-anchor: middle; }
+.dropped-chart .tick.is-small { font-size: 17px; }
+.dropped-chart .row { font-size: 24px; font-weight: 600; fill: var(--chart-ink); text-anchor: end; }
+.dropped-chart .val { font-size: 22px; fill: var(--chart-ink-muted); text-anchor: middle; }
+.dropped-chart .val.is-strong { font-size: 26px; font-weight: 700; fill: var(--chart-ink); }
+.dropped-chart .move { stroke: var(--danger); stroke-width: 4; }
+.dropped-chart .is-with, .dropped-chart .is-with-fill { fill: var(--danger); }
+.dropped-chart .is-without { fill: var(--chart-rand); }
+.dropped-chart circle { stroke: var(--chart-bg); stroke-width: 3; }
+.c-card-grid.is-before-features .c-feature-group__head sub { line-height: 0; }

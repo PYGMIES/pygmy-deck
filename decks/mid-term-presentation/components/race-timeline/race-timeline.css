@@ -1,6 +1,0 @@
-/* === COMPONENT (deck): race-timeline ===
-   Slide 39: a close processed while its open is still in progress (old behaviour: FAILED).
-   Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
-.c-race-timeline {
-  z-index: 0;
-}
