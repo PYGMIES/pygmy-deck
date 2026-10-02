@@ -1666,6 +1666,62 @@ body.overview .deck-viewport {
   max-width: none;
 }
 
+/* ===== COMPONENT compare-table ===== */
+/* === COMPONENT: compare-table ===
+   Children are <thead>/<tbody> rows. Mark a highlighted column cell with
+   class="is-focus", good/bad values with class="is-good" / "is-bad". */
+.c-compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 30px;
+  font-variant-numeric: tabular-nums;
+}
+
+.c-compare-table th,
+.c-compare-table td {
+  padding: 24px 28px;
+  text-align: right;
+  border-bottom: 2px solid var(--rule);
+}
+
+.c-compare-table th:first-child,
+.c-compare-table td:first-child {
+  text-align: left;
+}
+
+.c-compare-table thead th {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 36px;
+  letter-spacing: -0.01em;
+  color: var(--ink-accent);
+  border-bottom: var(--rule-w) solid var(--ink);
+}
+
+.c-compare-table .is-focus {
+  background: var(--card);
+  color: var(--on-card);
+  font-weight: 700;
+}
+
+.c-compare-table thead .is-focus {
+  color: var(--on-card);
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+}
+
+.c-compare-table tbody tr:last-child .is-focus {
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+}
+
+.c-compare-table .is-good::after {
+  content: " \2191";
+}
+
+.c-compare-table .is-bad {
+  color: var(--ink-muted);
+}
+
 /* ===== COMPONENT req-card ===== */
 /* === COMPONENT: req-card === charcoal card: left-aligned title on top, then a flat icon beside one sentence. Every icon is the same fixed size, small enough not to crowd the sentence.
    Same padding on all four sides; the title + row block is centred vertically.
@@ -2243,7 +2299,7 @@ body.overview .deck-viewport {
    Also holds the shared .c-nfr-card styles used by nfr-concurrency / -sequencing / -latency /
    -deployment, both here and in the dd-heading corner (class="is-corner", 0.84x). Each card
    carries data-morph="nfr-<name>", so the runtime glides it between the grid and the corner.
-   SYNC: .c-nfr-card mirrors the shared req-card design on slide 18; change both together
+   SYNC: .c-nfr-card mirrors the shared req-card design on slide 19; change both together
    (see the deck's CLAUDE.md). */
 .c-nfr-overview {
   flex: 1;
@@ -2318,28 +2374,28 @@ body.overview .deck-viewport {
 
 /* ===== COMPONENT nfr-concurrency ===== */
 /* === COMPONENT (deck): nfr-concurrency === one NFR card; styles are .c-nfr-card in nfr-overview.css.
-   SYNC: title, sentence and icon copy slide 18's "Concurrency & throughput" req-card; change both together. */
+   SYNC: title, sentence and icon copy slide 19's "Concurrency & throughput" req-card; change both together. */
 .c-nfr-concurrency {
   flex: none;
 }
 
 /* ===== COMPONENT nfr-sequencing ===== */
 /* === COMPONENT (deck): nfr-sequencing === one NFR card; styles are .c-nfr-card in nfr-overview.css.
-   SYNC: title, sentence and icon copy slide 18's "Sequencing" req-card; change both together. */
+   SYNC: title, sentence and icon copy slide 19's "Sequencing" req-card; change both together. */
 .c-nfr-sequencing {
   flex: none;
 }
 
 /* ===== COMPONENT nfr-latency ===== */
 /* === COMPONENT (deck): nfr-latency === one NFR card; styles are .c-nfr-card in nfr-overview.css.
-   SYNC: title, sentence and icon copy slide 18's "Processing latency" req-card; change both together. */
+   SYNC: title, sentence and icon copy slide 19's "Processing latency" req-card; change both together. */
 .c-nfr-latency {
   flex: none;
 }
 
 /* ===== COMPONENT nfr-deployment ===== */
 /* === COMPONENT (deck): nfr-deployment === one NFR card; styles are .c-nfr-card in nfr-overview.css.
-   Not on slide 18, but keep it consistent with the other NFR cards. */
+   Not on slide 19, but keep it consistent with the other NFR cards. */
 .c-nfr-deployment {
   flex: none;
 }
@@ -2994,7 +3050,7 @@ body.overview .deck-viewport {
 
 /* ===== COMPONENT redis-why ===== */
 /* === COMPONENT (deck): redis-why ===
-   Slide 37: a separate broker puts two systems on every trade's path (left) vs one in-memory
+   Slide 38: a separate broker puts two systems on every trade's path (left) vs one in-memory
    Redis for queues, cache and live events (right, highlighted); two dark cards state the
    motivation (fewer distributed systems, less network latency). 1728x680 canvas.
    Primitives come from flow-kit; place inside <!-- @flow-kit height="680px" -->. */
@@ -3004,7 +3060,7 @@ body.overview .deck-viewport {
 
 /* ===== COMPONENT local-stack ===== */
 /* === COMPONENT (deck): local-stack ===
-   Slide 39: three reasons (prominent dark cards, left) and every service as a Docker container on the sponsor's machine (right).
+   Slide 40: three reasons (prominent dark cards, left) and every service as a Docker container on the sponsor's machine (right).
    Primitives come from flow-kit; place inside <!-- @flow-kit -->. */
 .c-local-stack {
   z-index: 0;
@@ -3699,62 +3755,6 @@ body.overview .deck-viewport {
   font-size: var(--fs-body);
   color: var(--ink-muted);
   min-height: 2.7em; /* keeps labels aligned when captions wrap differently */
-}
-
-/* ===== COMPONENT compare-table ===== */
-/* === COMPONENT: compare-table ===
-   Children are <thead>/<tbody> rows. Mark a highlighted column cell with
-   class="is-focus", good/bad values with class="is-good" / "is-bad". */
-.c-compare-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 30px;
-  font-variant-numeric: tabular-nums;
-}
-
-.c-compare-table th,
-.c-compare-table td {
-  padding: 24px 28px;
-  text-align: right;
-  border-bottom: 2px solid var(--rule);
-}
-
-.c-compare-table th:first-child,
-.c-compare-table td:first-child {
-  text-align: left;
-}
-
-.c-compare-table thead th {
-  font-family: var(--font-display);
-  font-weight: var(--display-weight);
-  font-size: 36px;
-  letter-spacing: -0.01em;
-  color: var(--ink-accent);
-  border-bottom: var(--rule-w) solid var(--ink);
-}
-
-.c-compare-table .is-focus {
-  background: var(--card);
-  color: var(--on-card);
-  font-weight: 700;
-}
-
-.c-compare-table thead .is-focus {
-  color: var(--on-card);
-  border-radius: var(--radius-s) var(--radius-s) 0 0;
-}
-
-.c-compare-table tbody tr:last-child .is-focus {
-  border-radius: 0 0 var(--radius-s) var(--radius-s);
-}
-
-.c-compare-table .is-good::after {
-  content: " \2191";
-}
-
-.c-compare-table .is-bad {
-  color: var(--ink-muted);
 }
 
 /* ===== COMPONENT method-compare ===== */
@@ -4641,6 +4641,24 @@ body.overview .deck-viewport {
 .dropped-chart__key { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; margin: 18px 0 0; padding-top: 16px; border-top: 2px solid var(--chart-grid); font-size: 20px; color: var(--chart-ink); }
 .dropped-chart__key dt { font-weight: 600; }
 .dropped-chart__key dd { margin: 0; font-family: var(--font-mono); font-size: 19px; color: var(--chart-ink-muted); }
+
+/* Demo Campaigns (slide 17): short two-column lookup table, centred in the space under the
+   slide title, larger type so the campaign IDs read from the back of the room */
+.c-compare-table.is-lookup {
+  width: 1100px;
+  margin: auto;
+  font-size: 42px;
+}
+
+.c-compare-table.is-lookup th,
+.c-compare-table.is-lookup td {
+  padding: 30px 40px;
+  text-align: center;
+}
+
+.c-compare-table.is-lookup thead th {
+  font-size: 42px;
+}
 </style>
 </head>
 <body>
@@ -5345,7 +5363,27 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="17" data-name="section-architecture">
+<section class="slide" data-slide="17" data-name="demo-campaigns">
+<!-- notes: Owner TBD. The four campaigns in the demo, one per timeslot: 78 is Typical Calm, 79 Typical Volatile, 80 Busiest Calm and 81 Busiest Volatile. Use the campaign ID to tell them apart on the dashboard. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Live Demo</span>
+  <h1 class="reveal">Demo Campaigns</h1>
+</header>
+<table class="c-compare-table reveal is-lookup">
+  
+  <thead><tr><th class="is-focus">Campaign ID</th><th>Timeslot</th></tr></thead>
+  <tbody>
+    <tr><td class="is-focus">78</td><td>Typical Calm</td></tr>
+    <tr><td class="is-focus">79</td><td>Typical Volatile</td></tr>
+    <tr><td class="is-focus">80</td><td>Busiest Calm</td></tr>
+    <tr><td class="is-focus">81</td><td>Busiest Volatile</td></tr>
+  </tbody>
+
+</table>
+</section>
+
+
+<section class="slide" data-slide="18" data-name="section-architecture">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">04</span>
   <div class="c-section-divider__text">
@@ -5357,9 +5395,9 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="18" data-name="nfrs">
+<section class="slide" data-slide="19" data-name="nfrs">
 <!-- notes: James Z. Six requirements in two groups. Data integrity and safety: Data reliability (trade records are stored regardless of operating conditions, and every trade ends in an explicit success or failure); Auditability (all execution context, judge decisions and errors are recorded and can be traced to a root cause); Idempotency (duplicate, overlapping or retried requests are processed without double-counting outcomes; replayed payloads are recognised). Execution and performance: Processing latency (the ingestion API never blocks the caller; downstream processing handles trades swiftly); Concurrency and throughput (sustains up to hundreds of concurrent trades per minute, scalably); Sequencing (an open trade is processed before its close trade; a close that arrives early waits and is retried, see the race-condition slides). -->
-<!-- SYNC: these cards are repeated in section 05 (slides 24–39) as the nfr-concurrency, nfr-sequencing and nfr-latency components (text, icons) and .c-nfr-card in nfr-overview.css (design). Change them together; see this deck's CLAUDE.md. -->
+<!-- SYNC: these cards are repeated in section 05 (slides 25–40) as the nfr-concurrency, nfr-sequencing and nfr-latency components (text, icons) and .c-nfr-card in nfr-overview.css (design). Change them together; see this deck's CLAUDE.md. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
   <h1 class="reveal">Non-Functional Requirements</h1>
@@ -5429,7 +5467,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="19" data-name="architecture">
+<section class="slide" data-slide="20" data-name="architecture">
 <!-- notes: James Z. Left to right by layer: ingestion → Redis queues → workers → Judge inference. Dashboard reads from pub/sub. Oanda is temporary. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -5515,7 +5553,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="20" data-name="workflow-campaign-start">
+<section class="slide" data-slide="21" data-name="workflow-campaign-start">
 <!-- notes: James Z. Walk the six steps top to bottom. Pause on step 1 (reference price) and step 5 (six history features; a new trader gets zeros/nulls, not an error). Land the callout: one transaction, so a failed Redis write rolls everything back. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -5568,7 +5606,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="21" data-name="workflow-open-trade">
+<section class="slide" data-slide="22" data-name="workflow-open-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the trade is queued, a worker runs steps 3-6. Step 4: 18 features built live from the trade plus the cached history, then the Judge decides. Step 5: Oanda is a stand-in for C22's market data; slippage is the gap between the trader's entry price and ours. Key notes: in production, market data is polled or read from C22 directly and no response is sent. C22's slippage threshold is 0.10; we adjusted it for the demo because of the historical data. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -5626,7 +5664,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="22" data-name="workflow-close-trade">
+<section class="slide" data-slide="23" data-name="workflow-close-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the close is queued, a worker runs steps 3-6. Key notes: the Redis rolling metrics update even if the simulated close fails (e.g. the market price fetch). They are updated with a read-check-write retry pattern instead of locks. Reverse-trading PnL streams to the dashboard the moment each trade closes. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -5669,7 +5707,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="23" data-name="workflow-campaign-end">
+<section class="slide" data-slide="24" data-name="workflow-campaign-end">
 <!-- notes: James Z. Five steps, top to bottom. The /end call is idempotent: a second request for an already ended campaign does nothing and does not rerun the flow. Open trades are force-failed so the evaluation only uses completed trades. The same completed trades are scored three ways: Judge-led reverse, reverse all trades, coin-flip-led reverse. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -5711,7 +5749,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="24" data-name="section-design-decisions">
+<section class="slide" data-slide="25" data-name="section-design-decisions">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">05</span>
   <div class="c-section-divider__text">
@@ -5723,7 +5761,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="25" data-name="nfr-1-concurrency">
+<section class="slide" data-slide="26" data-name="nfr-1-concurrency">
 <!-- notes: Jerrick. Script: Each design decision comes from one of our non-functional requirements. First, concurrency and throughput: we have to keep up with hundreds of trades a minute. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Driven by our non-functional requirements</span>
@@ -5764,7 +5802,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="26" data-name="async-1-sync">
+<section class="slide" data-slide="27" data-name="async-1-sync">
 <!-- notes: Jerrick. Script: If we processed trades synchronously, FastAPI would handle each trade inside the request: for an open, ask the Judge, fetch the OANDA price and write to the database; for a close, update the database. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -5876,7 +5914,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="27" data-name="async-2-sync-response">
+<section class="slide" data-slide="28" data-name="async-2-sync-response">
 <!-- notes: Jerrick. Script: The caller only gets a response once all of that is done, so every trade waits on the model, the market data and the database, and trades pile up behind each other. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -5996,7 +6034,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="28" data-name="async-3-queues">
+<section class="slide" data-slide="29" data-name="async-3-queues">
 <!-- notes: Jerrick. Script: Instead, FastAPI only puts each trade on an open or a close queue, and responds straight away. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -6074,7 +6112,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="29" data-name="async-4-workers">
+<section class="slide" data-slide="30" data-name="async-4-workers">
 <!-- notes: Jerrick. Script: Workers then take trades off the queues and process them in parallel: the Judge, the OANDA price and the database for opens, the database for closes. Adding workers adds throughput. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -6210,7 +6248,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="30" data-name="nfr-2-sequencing">
+<section class="slide" data-slide="31" data-name="nfr-2-sequencing">
 <!-- notes: Jerrick. Script: Second, sequencing: a trade's open has to be processed before its close. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Driven by our non-functional requirements</span>
@@ -6251,7 +6289,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="31" data-name="race-1-queues">
+<section class="slide" data-slide="32" data-name="race-1-queues">
 <!-- notes: Jerrick. Script: Open and close trades sit on separate queues and run in parallel, so a close can be picked up before its open has been processed. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -6318,7 +6356,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="32" data-name="race-2-check-db">
+<section class="slide" data-slide="33" data-name="race-2-check-db">
 <!-- notes: Jerrick. Script: The close worker takes trade 11 and checks the database for its open trade. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -6396,7 +6434,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="33" data-name="race-3-no-match">
+<section class="slide" data-slide="34" data-name="race-3-no-match">
 <!-- notes: Jerrick. Script: But the open for 11 is still waiting in its queue, so the database has nothing yet. Before our fix, the close failed the trade. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -6481,7 +6519,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="34" data-name="race-4-solution">
+<section class="slide" data-slide="35" data-name="race-4-solution">
 <!-- notes: Jerrick. Script: The fix: we don't drop the close, and we don't block the worker on it. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -6563,7 +6601,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="35" data-name="race-5-requeue">
+<section class="slide" data-slide="36" data-name="race-5-requeue">
 <!-- notes: Jerrick. Script: We move it to the back of the close queue and try again later. By then the open has usually been processed. A close that waits more than five minutes fails the trade, so nothing loops forever. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -6645,7 +6683,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="36" data-name="nfr-3-latency">
+<section class="slide" data-slide="37" data-name="nfr-3-latency">
 <!-- notes: Jerrick. Script: Third, processing latency: trades have to flow through without blockers. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Driven by our non-functional requirements</span>
@@ -6686,7 +6724,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="37" data-name="why-redis">
+<section class="slide" data-slide="38" data-name="why-redis">
 <!-- notes: Jerrick. Script: Why Redis for the queues? Our main motivation was to keep the number of distributed systems down, because every extra system is another thing a trade can wait on. Redis already held our feature cache and our live events. Adding Kafka or RabbitMQ would put a second system on every trade's path: another connection, another set of failures and retries, and a queue and a cache to keep in sync across two systems. Even starting or ending a campaign, where we reset the queues and the cache together with the database, would involve three systems instead of two. With one Redis, every trade depends on a single in-memory store, so there are fewer places for latency to come from.
 Q&A: If asked 'isn't it the same number of calls?': Roughly, yes. The difference is how many systems those calls go to. Each extra system brings its own latency spikes, failures and retries, and a slow trade then has two places it could be stuck. With one in-memory store, there is one. -->
 <header class="c-dd-heading ">
@@ -6758,7 +6796,7 @@ Q&A: If asked 'isn't it the same number of calls?': Roughly, yes. The difference
 </section>
 
 
-<section class="slide" data-slide="38" data-name="nfr-4-deployment">
+<section class="slide" data-slide="39" data-name="nfr-4-deployment">
 <!-- notes: Jerrick. Script: Finally, deployment: the whole system has to run on the sponsor's own hardware. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Driven by our non-functional requirements</span>
@@ -6799,7 +6837,7 @@ Q&A: If asked 'isn't it the same number of calls?': Roughly, yes. The difference
 </section>
 
 
-<section class="slide" data-slide="39" data-name="docker-local">
+<section class="slide" data-slide="40" data-name="docker-local">
 <!-- notes: Jerrick. Script: Everything runs in Docker containers on Catch22's own machine. Three reasons. Our sponsor already has the infrastructure, and the know-how to run it. Trading data is sensitive, so keeping it in their own database is simpler to manage. And there is no extra cost: no monthly cloud bill. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -7786,7 +7824,7 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
 
 <section class="slide" data-slide="63" data-name="qna">
 <!-- notes: SCRIPT (~10s): That's everything from us. Thank you. We're happy to take questions, and we can jump back to the architecture or the timeline if that helps. -->
-<!-- notes: 30 min Q&A. Jump with #19 (architecture) and #55 (timeline) in the URL. -->
+<!-- notes: 30 min Q&A. Jump with #20 (architecture) and #56 (timeline) in the URL. -->
 <div class="c-closing is-title-only">
   <h1 class="reveal">Thank you</h1>
   <div class="c-closing__card reveal">

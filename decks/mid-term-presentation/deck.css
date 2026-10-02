@@ -154,3 +154,21 @@
 .dropped-chart__key { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; margin: 18px 0 0; padding-top: 16px; border-top: 2px solid var(--chart-grid); font-size: 20px; color: var(--chart-ink); }
 .dropped-chart__key dt { font-weight: 600; }
 .dropped-chart__key dd { margin: 0; font-family: var(--font-mono); font-size: 19px; color: var(--chart-ink-muted); }
+
+/* Demo Campaigns (slide 17): short two-column lookup table, centred in the space under the
+   slide title, larger type so the campaign IDs read from the back of the room */
+.c-compare-table.is-lookup {
+  width: 1100px;
+  margin: auto;
+  font-size: 42px;
+}
+
+.c-compare-table.is-lookup th,
+.c-compare-table.is-lookup td {
+  padding: 30px 40px;
+  text-align: center;
+}
+
+.c-compare-table.is-lookup thead th {
+  font-size: 42px;
+}
