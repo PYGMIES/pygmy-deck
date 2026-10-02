@@ -2300,10 +2300,16 @@ body.overview .deck-viewport {
 }
 
 /* ---------- step description: soft accent panel, charcoal number ---------- */
-.c-arch-flow__step {
+.c-arch-flow__left {
   left: -24px;
   top: 392px;
   width: 342px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.c-arch-flow__step {
   display: flex;
   align-items: flex-start;
   gap: 14px;
@@ -2377,6 +2383,21 @@ body.overview .deck-viewport {
 
 .c-arch-flow__note li + li {
   margin-top: 2px;
+}
+
+/* ---------- optional second box under the step panel (param: below) ---------- */
+.c-arch-flow__extra {
+  padding: 12px 18px 14px;
+  border: 2px dashed color-mix(in srgb, var(--accent) 70%, transparent);
+  border-radius: var(--radius);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.c-arch-flow__extra:empty {
+  display: none;
 }
 
 /* ===== COMPONENT nfr-overview ===== */
@@ -6169,7 +6190,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="23" data-name="architecture-data-messaging">
 <!-- notes: James Z. Pillar 2, Data and Messaging: Postgres stores the trades; Redis holds the open and close queues, the campaign cache and pub/sub. -->
-<header class="c-slide-title ">
+<header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Project Cassandra Architecture</h1>
 </header>
@@ -6255,7 +6276,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="24" data-name="architecture-pipeline">
 <!-- notes: James Z. Pillar 3, Pipeline: the workers that process the queues. One worker today; the design scales out automatically. -->
-<header class="c-slide-title ">
+<header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Project Cassandra Architecture</h1>
 </header>
@@ -6341,7 +6362,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="25" data-name="architecture-services">
 <!-- notes: James Z. Pillar 4, Services: the Judge for inference and the market price service (Oanda for now, to be replaced by C22’s own API). -->
-<header class="c-slide-title ">
+<header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Project Cassandra Architecture</h1>
 </header>
@@ -6427,7 +6448,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="26" data-name="architecture">
 <!-- notes: James Z. Left to right by layer: ingestion → Redis queues → workers → Judge inference. Dashboard reads from pub/sub. Oanda is temporary. -->
-<header class="c-slide-title ">
+<header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Project Cassandra Architecture</h1>
 </header>
@@ -6513,7 +6534,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="27" data-name="open-flow-1-received">
 <!-- notes: James Z. Open Trade Flow, step 1 of 6: Open trade data received. Only the components used so far are shown; the solid arrow is this step's communication, faded arrows are earlier steps. -->
-<header class="c-slide-title is-static">
+<header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Open Trade Flow</h1>
 </header>
@@ -6598,9 +6619,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">1</span>
-    <p>Open trade data received</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">1</span>
+      <p>Open trade data received</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -6696,9 +6720,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">2</span>
-    <p>Data stored in DB and trade queued for processing</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">2</span>
+      <p>Data stored in DB and trade queued for processing</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -6794,9 +6821,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">3</span>
-    <p>Worker dequeues open trade to process</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">3</span>
+      <p>Worker dequeues open trade to process</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -6892,9 +6922,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">4</span>
-    <p>Worker calls Judge model to make a decision (using rolling &amp; open trade data)</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">4</span>
+      <p>Worker calls Judge model to make a decision (using rolling &amp; open trade data)</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -6990,9 +7023,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">5</span>
-    <p>Worker fetches market price after getting decision</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">5</span>
+      <p>Worker fetches market price after getting decision</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -7003,7 +7039,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="32" data-name="open-flow-6-store">
 <!-- notes: James Z. Open Trade Flow, step 6 of 6: Worker stores judge decision and market price by end of pipeline. Only the components used so far are shown; the solid arrow is this step's communication, faded arrows are earlier steps. -->
-<header class="c-slide-title ">
+<header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Open Trade Flow</h1>
 </header>
@@ -7088,9 +7124,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">6</span>
-    <p>Worker stores judge decision and market price by end of pipeline</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">6</span>
+      <p>Worker stores judge decision and market price by end of pipeline</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -7101,7 +7140,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="33" data-name="close-flow-1-received">
 <!-- notes: James Z. Close Trade Flow, step 1 of 6: Close trade data received, stored in DB and queued. Only the components used so far are shown; the solid arrow is this step's communication, faded arrows are earlier steps. -->
-<header class="c-slide-title is-static">
+<header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Close Trade Flow</h1>
 </header>
@@ -7186,9 +7225,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">1</span>
-    <p>Close trade data received, stored in DB and queued</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">1</span>
+      <p>Close trade data received, stored in DB and queued</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -7284,9 +7326,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">2</span>
-    <p>Worker dequeues close trade to process</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">2</span>
+      <p>Worker dequeues close trade to process</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -7382,9 +7427,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">3</span>
-    <p>Worker gets Judge’s decision from DB</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">3</span>
+      <p>Worker gets Judge’s decision from DB</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -7480,9 +7528,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">4</span>
-    <p>Worker fetches market price</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">4</span>
+      <p>Worker fetches market price</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -7578,9 +7629,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">5</span>
-    <p>Worker calculates fading trade, stores in DB and cache</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">5</span>
+      <p>Worker calculates fading trade, stores in DB and cache</p>
+    </div>
+    <div class="c-arch-flow__extra">Market price fetched at open and close are used to calculate this trade faded on behalf of C22</div>
   </div>
 
   <!-- optional small note beside the step box -->
@@ -7591,7 +7645,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="38" data-name="close-flow-6-publish">
 <!-- notes: James Z. Close Trade Flow, step 6 of 6: Worker fires close trade event to Dashboard through pub/sub channel. Only the components used so far are shown; the solid arrow is this step's communication, faded arrows are earlier steps. -->
-<header class="c-slide-title ">
+<header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal"></span>
   <h1 class="reveal">Close Trade Flow</h1>
 </header>
@@ -7676,9 +7730,12 @@ body.overview .deck-viewport {
   </div>
 
   <!-- What happens in this step -->
-  <div class="c-arch-flow__step">
-    <span class="c-arch-flow__num">6</span>
-    <p>Worker fires close trade event to Dashboard through pub/sub channel</p>
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">6</span>
+      <p>Worker fires close trade event to Dashboard through pub/sub channel</p>
+    </div>
+    <div class="c-arch-flow__extra"></div>
   </div>
 
   <!-- optional small note beside the step box -->
