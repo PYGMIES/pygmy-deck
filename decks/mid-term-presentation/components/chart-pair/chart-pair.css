@@ -1,0 +1,17 @@
+/* === COMPONENT (deck): chart-pair === two exported chart images side by side at one shared height,
+   spread across the full width, each keeping its own aspect ratio (nothing is cropped or stretched). */
+.c-chart-pair {
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 430px;
+}
+
+.c-chart-pair img {
+  height: 100%;
+  width: auto;
+  max-width: 50%;
+  border-radius: var(--radius);
+  background: var(--chart-bg);
+}
