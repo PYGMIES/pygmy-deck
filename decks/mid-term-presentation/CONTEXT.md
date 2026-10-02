@@ -5,7 +5,11 @@
 - **Audience:** Catch22 sponsors (Clement & Lee Yang) + faculty
 - **Density:** speaker-led
 - **Key focus:** impact and requirements met. Intro + problem recap gets the most time.
+<<<<<<< Updated upstream
 - **Status:** skeleton. Most content slides are done; the section-05 `design-decisions` slide still has TODOs or placeholders, and 44, 46, 48, 49, 51, 59 are drafts.
+=======
+- **Status:** skeleton. Slides 01–03, 05–07 (pain points 1–2), 09 (ladder is illustrative), 10–13, 15–17, 20, 27–30 and 35 carry real content; everything else has `@placeholder` boxes / `TODO:` text for each owner.
+>>>>>>> Stashed changes
 
 ## Outline (owners)
 | # | File | Slide | Owner | State |
@@ -22,6 +26,7 @@
 | 10 | `10-strategy-comparison` | We beat 2 of the 3 benchmarks: cumulative P&L, all strategies on one scale (`equity-chart`) | Joyce | done |
 | 11 | `11-business-value` | Research partnership value | Joyce | done |
 | 12 | `12-milestones` | Project Milestones: midterm vs final | Joyce | done |
+<<<<<<< Updated upstream
 | 13 | `13-section-demo` | ◆ 03 Live Demo | Jerrick | — |
 | 14 | `14-market-regimes` | How We Picked the Demo Data: 2×2 + how we measure | Joyce, JS | done |
 | 15 | `15-demo-data` | The Data Behind Our Choice (trades per slot, beta vs Gold) | Joyce, JS | done |
@@ -88,6 +93,42 @@ Chart PNGs in `assets/` are exported from notebook outputs in `reverse-trade-jud
 - Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 15 charts use rolling windows (p95 130 / p50 57); slide 16 uses fixed 30-min slots (p95 121.4 / p50 59.5).
 - Replace the slide 09 target staircase with measured results + CIs when available.
 - Confirm Phase 0 / Phase 1 gates passed → mark them on slide 55 (`project-timeline` gates).
+=======
+| 13 | `13-validation` | Methodological guardrails | Joyce | done |
+| 14 | `14-section-demo` | ◆ 03 Live Demo | Jerrick | — |
+| 15 | `15-market-regimes` | How We Picked the Demo Data: 2×2 + how we measure | Joyce, JS | done |
+| 16 | `16-demo-data` | The Data Behind Our Choice (trades per slot, beta vs Gold) | Joyce, JS | done |
+| 17 | `17-chosen-timeslots` | Chosen Timeslots: 3:30–4:00 typical·calm, 5:30–6:00 busy·volatile | Joyce, JS | done |
+| 18 | `18-live-trades` | Live trade page @10×, 2 screens | Jerrick | screenshots TODO |
+| 19 | `19-section-architecture` | ◆ 04 System Architecture | Jerrick, James Z | — |
+| 20 | `20-architecture` | Architecture diagram | James Z | done |
+| 21 | `21-hurdle-model` | What is the hurdle model? + workflow | Jerrick | TODO |
+| 22 | `22-limitations` | Limitations: scaling, decoupling | James Z | TODO |
+| 23 | `23-section-design-decisions` | ◆ 05 Key Design Decisions | Jerrick | — |
+| 24 | `24-design-decisions` | Key design decisions | Jerrick | TODO |
+| 25 | `25-section-journey` | ◆ 06 How We Got Here | BA | — |
+| 26 | `26-training-approach` | Approach to training | BA | TODO |
+| 27 | `27-data` | Where the Data Comes From: 54 campaigns + batch table (`panel-card`), feature count over time 21→26→45→26→18 (`column-chart`) | Yanting | done |
+| 28 | `28-features-dropped` | The 13 Features We Dropped: leakage (6) · fair but didn’t pay (7) (`feature-group` with verdict pills) | Yanting | done |
+| 29 | `29-outcome-features` | Why We Left Out Outcomes: 8 outcome features (`feature-group`) + with/without result −$4,242 vs +$1,593 (`ab-result`) | Yanting | done |
+| 30 | `30-feature-engineering` | The 18 Features We Kept: trade itself (6) · earlier today (8) · earlier days (4) (`feature-group`) | Yanting | done |
+| 31 | `31-behaviour-vs-luck` | Behaviour vs luck (SHAP) | Yanting | TODO |
+| 32 | `32-model-selection` | Models tried + selection metrics | Joyce, Isaiah | TODO |
+| 33 | `33-market-data` | Did market data help? | Joyce, Isaiah | TODO |
+| 34 | `34-section-pm` | ◆ 07 Project Management | Yanting | — |
+| 35 | `35-scrum` | Why Scrum over Waterfall | Yanting | TODO |
+| 36 | `36-timeline` | Project timeline (now = Midterm) | Yanting | done |
+| 37 | `37-retros` | What retros changed | Yanting | TODO |
+| 38 | `38-constraints` | Not random sample · 38 campaigns | TBD | done |
+| 39 | `39-whats-next` | Trade magnitude · real pipeline · auto-scaling | TBD | done |
+| 40 | `40-qna` | Questions | — | done |
+
+## Open items
+- Confirm who presents Constraints & What's Next (agenda says TBD).
+- Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 16 charts use rolling windows (p95 130 / p50 57); slide 17 uses fixed 30-min slots (p95 121.4 / p50 59.5).
+- Replace the slide 09 target ladder with measured results + CIs when available.
+- Confirm Phase 0 / Phase 1 gates passed → mark them on slide 36 (`project-timeline` gates).
+>>>>>>> Stashed changes
 - "BA" owner of section 05: confirm name.
 - Slide 32 caption reads "Immediate provide a response after enqueuing" (copied from Jerrick's image); fix the grammar if he agrees.
 - Slides 24–38 are a step-by-step build (sync, async, race condition): each slide repeats the previous diagram and only the new piece has `reveal`. Keep them in order when editing.
