@@ -1,0 +1,72 @@
+/* === COMPONENT: column-chart === simple vertical bars, value on top, label below.
+   Children: <li style="--v: 21"><b>21</b><span>30 Jul</span></li>; class="is-focus" on an li highlights it.
+   max = value of a full-height bar. Fills the remaining height of its container. */
+.c-column-chart {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 36px;
+  margin: 12px 0 44px; /* bottom room for the date labels */
+  padding: 0 12px;
+  list-style: none;
+  border-bottom: 2px solid var(--on-card-muted);
+}
+
+.c-column-chart li {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* the bar */
+.c-column-chart li::before {
+  content: "";
+  order: 2;
+  width: 100%;
+  height: calc(var(--v) / var(--max) * 80%);
+  border-radius: 6px 6px 0 0;
+  background: var(--on-card-muted);
+  opacity: 0.55;
+  transform-origin: bottom;
+  animation: c-column-grow 0.7s var(--ease-out) both;
+}
+
+.c-column-chart li.is-focus::before {
+  background: var(--accent-soft);
+  opacity: 1;
+}
+
+.c-column-chart b {
+  order: 1;
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1;
+}
+
+/* date label sits under the baseline */
+.c-column-chart span {
+  position: absolute;
+  top: calc(100% + 14px);
+  font-size: 20px;
+  white-space: nowrap;
+  color: var(--on-card-muted);
+}
+
+.c-column-chart li.is-focus span {
+  font-weight: 700;
+  color: var(--on-card);
+}
+
+@keyframes c-column-grow {
+  from { transform: scaleY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-column-chart li::before { animation: none; }
+}

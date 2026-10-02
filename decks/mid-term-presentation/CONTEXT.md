@@ -5,7 +5,7 @@
 - **Audience:** Catch22 sponsors (Clement & Lee Yang) + faculty
 - **Density:** speaker-led
 - **Key focus:** impact and requirements met. Intro + problem recap gets the most time.
-- **Status:** skeleton. Most content slides are done; the section-05 `design-decisions` slide still has TODOs or placeholders, and 44, 46, 48, 49, 51, 59 are drafts.
+- **Status:** skeleton. Most content slides are done; the section-05 `design-decisions` slide still has TODOs or placeholders, and 44, 46, 52, 53, 55, 63 are drafts.
 
 ## Outline (owners)
 | # | File | Slide | Owner | State |
@@ -55,39 +55,43 @@
 | 43 | `43-section-journey` | ◆ 06 How We Got Here | BA | — |
 | 44 | `44-hurdle-model` | What is the hurdle model? Definition + why it fits + 3 arms → gross EV → decision score (`hurdle-flow`) | Jerrick | draft |
 | 45 | `45-training-approach` | Approach to training: data, features, hurdle, evaluate | BA | draft |
-| 46 | `46-app-cv-layout` | Blocked CV layout: six expanding folds + locked test block (moved from appendix, was 68) | TBC | draft |
+| 46 | `46-app-cv-layout` | Blocked CV layout: six expanding folds + locked test block (moved from appendix) | TBC | draft |
 | 47 | `47-feature-engineering` | Feature engineering funnel: 28 columns → 26 features → 26 kept of 48 tested → 18 in the Judge (`funnel`) | Yanting | done (check numbers w/ Isaiah) |
-| 48 | `48-app-arms` | Moved from appendix (was 63) | TBC | draft |
-| 49 | `49-notebook-scatter` | $/campaign by notebook (07→15), one dot per variant, hover for what each notebook changed (`scatter-chart`) | BA | draft |
-| 50 | `50-behaviour-vs-luck` | Behaviour vs luck: SHAP share of attention, full 26 vs final 18 (`shap-bars`) | Yanting | done |
-| 51 | `51-magnitude` | Deep dive: 35× magnitude over direction + what we dropped | TBC | draft |
-| 52 | `52-section-pm` | ◆ 07 Project Management | Arin | — |
-| 53 | `53-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Arin | done |
-| 54 | `54-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
-| 55 | `55-timeline` | Project timeline (now = Midterm) | Arin | done |
-| 56 | `56-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, 205 story points completed (`retro-changes`) | Arin | done |
-| 57 | `57-constraints` | Constraints · Data & Model: 18 held-out campaigns, not a random sample, C22 rules (1 open trade, first come first served), ~6 months of data (correlated, not independent) | Arin | done (sourced from Linear) |
-| 59 | `59-edge-setting` | How Big a Test Do We Need?: minimum worthwhile edge per faded trade → $/month → campaigns to confirm; 18 test campaigns detect edges of ~$10+ | TBD | draft |
-| 60 | `60-whats-next` | Auto-retrainer · real pipeline · trade magnitude · auto-scaling · non-functional reqs · observability (6 cards, 3 + 3) | Arin | done |
-| 61 | `61-qna` | Questions | — | done |
-| 62 | `62-section-appendix` | ◆ A Appendix (after Q&A, for backup) | — | — |
-| 63–72 | `63-app-correlation` … `72-app-hyperparams` | Correlation matrix, learning curve + calibration, SHAP by feature, cost sweep, market data, tried and dropped, hurdle decomposition, feature arms, top-k, hyperparameters | — | draft |
+| 48 | `48-data` | Where the Data Comes From: 54 campaigns + batch table (`panel-card`), feature count over time 21→26→45→26→18 (`column-chart`) | Yanting | done |
+| 49 | `49-features-dropped` | The 13 Features We Dropped: leakage (6) · fair but didn’t pay (7) (`feature-group` with verdict pills) | Yanting | done |
+| 50 | `50-outcome-features` | Why We Left Out Outcomes: 8 outcome features (`feature-group`) + with/without result −$4,242 vs +$1,593 (`ab-result`) | Yanting | done |
+| 51 | `51-features-kept` | The 18 Features We Kept: trade itself (6) · earlier today (8) · earlier days (4) (`feature-group`) | Yanting | done |
+| 52 | `52-app-arms` | Moved from appendix | TBC | draft |
+| 53 | `53-notebook-scatter` | $/campaign by notebook (07→15), one dot per variant, hover for what each notebook changed (`scatter-chart`) | BA | draft |
+| 54 | `54-behaviour-vs-luck` | Behaviour vs luck: SHAP share of attention, full 26 vs final 18 (`shap-bars`) | Yanting | done |
+| 55 | `55-magnitude` | Deep dive: 35× magnitude over direction + what we dropped | TBC | draft |
+| 56 | `56-section-pm` | ◆ 07 Project Management | Arin | — |
+| 57 | `57-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Arin | done |
+| 58 | `58-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
+| 59 | `59-timeline` | Project timeline (now = Midterm) | Arin | done |
+| 60 | `60-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, 205 story points completed (`retro-changes`) | Arin | done |
+| 61 | `61-constraints` | Constraints · Data & Model: 18 held-out campaigns, not a random sample, C22 rules (1 open trade, first come first served), ~6 months of data (correlated, not independent) | Arin | done (sourced from Linear) |
+| 63 | `63-edge-setting` | How Big a Test Do We Need?: minimum worthwhile edge per faded trade → $/month → campaigns to confirm; 18 test campaigns detect edges of ~$10+ | TBD | draft |
+| 64 | `64-whats-next` | Auto-retrainer · real pipeline · trade magnitude · auto-scaling · non-functional reqs · observability (6 cards, 3 + 3) | Arin | done |
+| 65 | `65-qna` | Questions | — | done |
+| 66 | `66-section-appendix` | ◆ A Appendix (after Q&A, for backup) | — | — |
+| 67–76 | `67-app-correlation` … `76-app-hyperparams` | Correlation matrix, learning curve + calibration, SHAP by feature, cost sweep, market data, tried and dropped, hurdle decomposition, feature arms, top-k, hyperparameters | — | draft |
 
 Chart PNGs in `assets/` are exported from notebook outputs in `reverse-trade-judge/` (leak_worth, shap_*, auc_by_campaign_arm, hurdle_decomposition, correlation_matrix, learning_curve_calibration, cost_curve, model_vs_random, market_data_shap).
 
 ## Open items
-- Slide 51 (`magnitude`) and slide 49 (`notebook-scatter`) need an owner. Numbers on slides 45, 49 and 51 come from `reverse-trade-judge/summarised.md` and `Progress_summary/`.
-- Linear (PYG-103) shows 45 campaigns / 68,377 trades; the old constraints slide said 38 and now shows 18 held-out campaigns. Isaiah thinks it is 33–68 train (36) + 69–86 test (18) = 54. Confirm which is current, then align slides 57 and 59.
-- Slides 53–54 numbers come from PYG-92, 144, 185 and the SOW; re-check them if the model or the 18-feature freeze changes.
-- PM slides 53–56 are sourced from Linear (SOW, Sprint 7 retro board + minutes, cycle stats). Only the Sprint 7 retro is filled in; Calf/Juvenile retro docs are empty templates. Add later retros to slide 56 when written up.
-- Constraints & What's Next (slides 57–60) are presented by Arin; slide 59 owner TBD.
-- Slide 60 lists "Non-functional reqs" as a next step while slide 18 already presents the NFRs; decide whether the card stays.
+- Slide 55 (`magnitude`) and slide 53 (`notebook-scatter`) need an owner. Numbers on slides 45, 53 and 55 come from `reverse-trade-judge/summarised.md` and `Progress_summary/`.
+- Linear (PYG-103) shows 45 campaigns / 68,377 trades; the old constraints slide said 38 and now shows 18 held-out campaigns. Isaiah thinks it is 33–68 train (36) + 69–86 test (18) = 54. Confirm which is current, then align slides 61 and 63.
+- Slides 57–58 numbers come from PYG-92, 144, 185 and the SOW; re-check them if the model or the 18-feature freeze changes.
+- PM slides 57–60 are sourced from Linear (SOW, Sprint 7 retro board + minutes, cycle stats). Only the Sprint 7 retro is filled in; Calf/Juvenile retro docs are empty templates. Add later retros to slide 60 when written up.
+- Constraints & What's Next (slides 61–64) are presented by Arin; slide 63 owner TBD.
+- Slide 64 lists "Non-functional reqs" as a next step while slide 18 already presents the NFRs; decide whether the card stays.
 - Slide 44 (`hurdle-model`) sits in the "How We Got Here" section.
 - Slides 24–27 (sync, "if it was synchronous") follow the workflow slides 20–23 and lead into the async build at 30–33.
-- Slides 46 (`app-cv-layout`) and 48 (`app-arms`) were moved from the appendix into the main flow.
+- Slides 46 (`app-cv-layout`) and 52 (`app-arms`) were moved from the appendix into the main flow.
 - Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 15 charts use rolling windows (p95 130 / p50 57); slide 16 uses fixed 30-min slots (p95 121.4 / p50 59.5).
 - Replace the slide 09 target staircase with measured results + CIs when available.
-- Confirm Phase 0 / Phase 1 gates passed → mark them on slide 55 (`project-timeline` gates).
+- Confirm Phase 0 / Phase 1 gates passed → mark them on slide 59 (`project-timeline` gates).
 - "BA" owner of section 05: confirm name.
 - Slide 32 caption reads "Immediate provide a response after enqueuing" (copied from Jerrick's image); fix the grammar if he agrees.
 - Slides 24–38 are a step-by-step build (sync, async, race condition): each slide repeats the previous diagram and only the new piece has `reveal`. Keep them in order when editing.

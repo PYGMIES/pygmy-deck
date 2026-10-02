@@ -42,6 +42,13 @@
   color: inherit;
 }
 
+/* class="is-long-name": smaller name kept on one line, so the photo matches the other cards */
+.c-team-member.is-long-name h3 {
+  font-size: 48px;
+  line-height: calc(60px * var(--display-leading)); /* same line box as a 60px name */
+  white-space: nowrap;
+}
+
 .c-team-member.is-light {
   background: var(--bg-deep);
   color: var(--ink);

@@ -36,3 +36,7 @@ Layout components (flow, not fixed canvas):
 | ◻ `team-roster` | — | Row of `team-group`s, vertically centred. Slide 02. |
 | ◻ `team-group` | `label`, `size?` | Labelled cluster; `size` = member count so every card gets equal width. |
 | `team-member` | `initial`, `role`, `name` | Card: initial in a ring, role + name at bottom. `class="is-light"` for pale. |
+| ◻ `feature-group` | `count`, `title`, `note?`, `cols?` (1) | Charcoal card: big count, title, note, then `<li><strong>Plain name</strong><code>code_name</code></li>` children. `cols` = list columns; in a `card-grid` the card spans that many grid columns. Optional `<em>verdict</em>` in an li renders as a pill on the right; `foot?` adds a closing line under the list. Slides 49–51. |
+| `ab-result` | `title`, `a-label`, `a-value`, `b-label`, `b-value`, `caption?`, `body?`, `foot?`, `span?` (1) | Pale panel: title, two result tiles (A value in `--danger`, B tile accent-tinted), caption, body, foot. `span` = card-grid columns. Slide 50. |
+| ◻ `panel-card` | `title`, `count?`, `note?`, `span?` (1) | Charcoal card: optional big count, title, note, then free content. Styles plain `<table>` and `<p>` children; `class="is-ruled"` on a child adds a hairline above it. Slide 48. |
+| ◻ `column-chart` | `max`, `label?` | CSS bar chart filling its container: children `<li style="--v: 21"><b>21</b><span>30 Jul</span></li>`, `class="is-focus"` highlights a bar. Bars grow in (reduced-motion safe). Slide 48. |
