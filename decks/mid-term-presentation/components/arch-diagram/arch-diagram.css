@@ -250,3 +250,37 @@
 .c-arch__node.p2 small {
   color: var(--on-card);
 }
+
+/* --- timings (appendix latency slide) ---
+   .c-arch__ms: a small charcoal chip on a hop with its p50 and, below, p99. is-hot = the slow hop (accent). Passed in through the `timings` param. */
+.c-arch__ms {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 12px 6px;
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  transform: translate(-50%, -50%);
+}
+
+.c-arch__ms small {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--on-card-muted);
+}
+
+.c-arch__ms.is-hot {
+  background: var(--accent);
+  color: var(--card);
+}
+
+.c-arch__ms.is-hot small {
+  color: var(--card);
+}

@@ -9,7 +9,7 @@ Bespoke diagrams, absolutely positioned on fixed canvases. Edit coordinates in t
 | `bar-ladder` | 588px tall | Four ascending bars (fade everything < coin flip < C22 current < our Judge). Heights illustrative; optional `caption`. Slide 09. |
 | `equity-chart` | `takeaway`, `class?` | Inline-SVG cumulative P&L lines (fade everything, live rule, top 5%, random + 5–95% band) on white backing, plus takeaway. Data baked in by script; edit the SVG paths. Slide 10. |
 | `scatter-chart` | `takeaway`, `class?` | Inline-SVG scatter: $/campaign for every top-5% variant in NB07–15 (locked 69–77), one dot each, hover shows the notebook title + variant + CI. Data baked in from `reverse-trade-judge/results/pnl_by_notebook.csv`; titles from `summarised.md` §3. Hover via `core/runtime.js` `[data-hover-scatter]`. Slide 38. |
-| `arch-diagram` | 1728×800 | 4 layer lanes, nodes, accent-coloured data-flow wires. Slide 19. |
+| `arch-diagram` | 1728×800 | 4 layer lanes, nodes, accent-coloured data-flow wires. Optional `timings` param: raw HTML of `.c-arch__ms` chips (`is-hot` = accent) placed on hops, used on slide 81. |
 | `method-compare` | flow | Waterfall cascade lane vs Scrum 13-sprint lane (`is-done` / `is-now`), sponsor-feedback verdict per lane. Slide 49. |
 | `sprint-cycle` | flow | 5 sprint steps with chevrons, SVG return arrow Retro → Plan (path x-coords assume 1656px width), leads/squads/tools row. Slide 50. |
 | `retro-changes` | `kicker?`, `value`, `label`, `caption?` | Rows of noticed (pale) → changed (charcoal), plus accent outcome stat. Rows edited in the HTML. Slide 52. |
