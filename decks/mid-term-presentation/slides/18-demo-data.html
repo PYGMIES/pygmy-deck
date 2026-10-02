@@ -1,4 +1,4 @@
-<!-- notes: Joyce, ~21s. On the left, we counted trades in a rolling 30-minute window. Typical sits near p50, the median, and busy is p95 and above. On the right, we measured each slot’s beta against gold futures. One or less is calm, above one is volatile. → Applying both rules gives us our two timeslots. -->
+<!-- notes: Joyce + JS. The evidence behind the two lenses. Left: activity is trades in a rolling 30-minute window (p50 = typical, p95 = busy). Right: volatility is beta against Gold Futures per 30-minute slot. -->
 <!-- @slide-title kicker="Live Demo" text="The Data Behind Our Choice" -->
 <!-- @split cols="1fr 1fr" class="inset" -->
   <!-- @chart-card kicker="Activity" title="Trades per slot" src="assets/trades_per_slot.png" alt="Rolling 30-minute trade counts with p50 and p95 lines" takeaway="Typical ≈ p50<br>Busy = p95 and above" -->
