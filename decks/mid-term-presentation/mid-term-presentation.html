@@ -6675,7 +6675,8 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="37" data-name="why-redis">
-<!-- notes: Jerrick. Script: Why Redis? Our main motivation was to keep the system small and fast. Redis already holds our feature cache and live events. A separate broker like Kafka or RabbitMQ would put a second system on every trade's path: workers would talk to a broker and a cache over the network, and we'd have two systems to run and keep in sync. With one in-memory Redis on the same Docker network, queues, cache and live events live in one place. -->
+<!-- notes: Jerrick. Script: Why Redis for the queues? Our main motivation was to keep the number of distributed systems down, because every extra system is another thing a trade can wait on. Redis already held our feature cache and our live events. Adding Kafka or RabbitMQ would put a second system on every trade's path: another connection, another set of failures and retries, and a queue and a cache to keep in sync across two systems. Even starting or ending a campaign, where we reset the queues and the cache together with the database, would involve three systems instead of two. With one Redis, every trade depends on a single in-memory store, so there are fewer places for latency to come from.
+Q&A: If asked 'isn't it the same number of calls?': Roughly, yes. The difference is how many systems those calls go to. Each extra system brings its own latency spikes, failures and retries, and a slow trade then has two places it could be stuck. With one in-memory store, there is one. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
     <span class="c-dd-heading__kicker" data-morph="ddk-Design Decision 03">Design Decision 03</span>
@@ -6733,11 +6734,11 @@ body.overview .deck-viewport {
   <!-- The motivation: the slide's main point -->
   <div class="fk-card fk-card--dark reveal" style="left: 0; top: 510px; width: 840px; height: 170px;">
     <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M28 6L50 17 28 28 6 17z"/><path d="M6 28l22 11 22-11"/><path d="M6 39l22 11 22-11"/></svg>
-    <div><strong>Fewer distributed systems</strong><span>Queues, cache and live events in one store: nothing extra to run or keep in sync</span></div>
+    <div><strong>Fewer distributed systems</strong><span>One store for queues, cache and live events: nothing to keep in sync across systems</span></div>
   </div>
   <div class="fk-card fk-card--dark reveal" style="left: 888px; top: 510px; width: 840px; height: 170px;">
     <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M31 5L12 31h15l-3 20 20-27H29z"/></svg>
-    <div><strong>Less network latency</strong><span>Workers reach one in-memory store beside them, not a broker plus a cache</span></div>
+    <div><strong>Less network latency</strong><span>Each trade waits on one in-memory system, not a broker and a cache</span></div>
   </div>
 </div>
 
