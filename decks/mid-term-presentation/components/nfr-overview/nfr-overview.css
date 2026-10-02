@@ -3,7 +3,9 @@
    nfr-* cards; give the inactive ones class="is-dim" (50% opacity).
    Also holds the shared .c-nfr-card styles used by nfr-concurrency / -sequencing / -latency /
    -deployment, both here and in the dd-heading corner (class="is-corner", 0.84x). Each card
-   carries data-morph="nfr-<name>", so the runtime glides it between the grid and the corner. */
+   carries data-morph="nfr-<name>", so the runtime glides it between the grid and the corner.
+   SYNC: .c-nfr-card mirrors the shared req-card design on slide 18; change both together
+   (see the deck's CLAUDE.md). */
 .c-nfr-overview {
   flex: 1;
   min-height: 0;

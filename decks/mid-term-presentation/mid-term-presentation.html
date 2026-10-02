@@ -1669,7 +1669,9 @@ body.overview .deck-viewport {
 /* ===== COMPONENT req-card ===== */
 /* === COMPONENT: req-card === charcoal card: left-aligned title on top, then a flat icon beside one sentence. Every icon is the same fixed size, small enough not to crowd the sentence.
    Same padding on all four sides; the title + row block is centred vertically.
-   Cards grow to share the height of a flex column equally (flex: 1). */
+   Cards grow to share the height of a flex column equally (flex: 1).
+   SYNC: decks/mid-term-presentation mirrors this design in .c-nfr-card (components/nfr-overview/nfr-overview.css)
+   for the section-05 NFR cards; change both together (see that deck's CLAUDE.md). */
 .c-req-card {
   flex: 1;
   min-height: 0;
@@ -2240,7 +2242,9 @@ body.overview .deck-viewport {
    nfr-* cards; give the inactive ones class="is-dim" (50% opacity).
    Also holds the shared .c-nfr-card styles used by nfr-concurrency / -sequencing / -latency /
    -deployment, both here and in the dd-heading corner (class="is-corner", 0.84x). Each card
-   carries data-morph="nfr-<name>", so the runtime glides it between the grid and the corner. */
+   carries data-morph="nfr-<name>", so the runtime glides it between the grid and the corner.
+   SYNC: .c-nfr-card mirrors the shared req-card design on slide 18; change both together
+   (see the deck's CLAUDE.md). */
 .c-nfr-overview {
   flex: 1;
   min-height: 0;
@@ -2313,25 +2317,29 @@ body.overview .deck-viewport {
 }
 
 /* ===== COMPONENT nfr-concurrency ===== */
-/* === COMPONENT (deck): nfr-concurrency === one NFR card; styles are .c-nfr-card in nfr-overview.css. */
+/* === COMPONENT (deck): nfr-concurrency === one NFR card; styles are .c-nfr-card in nfr-overview.css.
+   SYNC: title, sentence and icon copy slide 18's "Concurrency & throughput" req-card; change both together. */
 .c-nfr-concurrency {
   flex: none;
 }
 
 /* ===== COMPONENT nfr-sequencing ===== */
-/* === COMPONENT (deck): nfr-sequencing === one NFR card; styles are .c-nfr-card in nfr-overview.css. */
+/* === COMPONENT (deck): nfr-sequencing === one NFR card; styles are .c-nfr-card in nfr-overview.css.
+   SYNC: title, sentence and icon copy slide 18's "Sequencing" req-card; change both together. */
 .c-nfr-sequencing {
   flex: none;
 }
 
 /* ===== COMPONENT nfr-latency ===== */
-/* === COMPONENT (deck): nfr-latency === one NFR card; styles are .c-nfr-card in nfr-overview.css. */
+/* === COMPONENT (deck): nfr-latency === one NFR card; styles are .c-nfr-card in nfr-overview.css.
+   SYNC: title, sentence and icon copy slide 18's "Processing latency" req-card; change both together. */
 .c-nfr-latency {
   flex: none;
 }
 
 /* ===== COMPONENT nfr-deployment ===== */
-/* === COMPONENT (deck): nfr-deployment === one NFR card; styles are .c-nfr-card in nfr-overview.css. */
+/* === COMPONENT (deck): nfr-deployment === one NFR card; styles are .c-nfr-card in nfr-overview.css.
+   Not on slide 18, but keep it consistent with the other NFR cards. */
 .c-nfr-deployment {
   flex: none;
 }
@@ -5348,6 +5356,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="18" data-name="nfrs">
 <!-- notes: James Z. Six requirements in two groups. Data integrity and safety: Data reliability (trade records are stored regardless of operating conditions, and every trade ends in an explicit success or failure); Auditability (all execution context, judge decisions and errors are recorded and can be traced to a root cause); Idempotency (duplicate, overlapping or retried requests are processed without double-counting outcomes; replayed payloads are recognised). Execution and performance: Processing latency (the ingestion API never blocks the caller; downstream processing handles trades swiftly); Concurrency and throughput (sustains up to hundreds of concurrent trades per minute, scalably); Sequencing (an open trade is processed before its close trade; a close that arrives early waits and is retried, see the race-condition slides). -->
+<!-- SYNC: these cards are repeated in section 05 (slides 24–39) as the nfr-concurrency, nfr-sequencing and nfr-latency components (text, icons) and .c-nfr-card in nfr-overview.css (design). Change them together; see this deck's CLAUDE.md. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
   <h1 class="reveal">Non-Functional Requirements</h1>

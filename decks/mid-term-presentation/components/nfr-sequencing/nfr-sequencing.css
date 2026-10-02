@@ -1,4 +1,5 @@
-/* === COMPONENT (deck): nfr-sequencing === one NFR card; styles are .c-nfr-card in nfr-overview.css. */
+/* === COMPONENT (deck): nfr-sequencing === one NFR card; styles are .c-nfr-card in nfr-overview.css.
+   SYNC: title, sentence and icon copy slide 18's "Sequencing" req-card; change both together. */
 .c-nfr-sequencing {
   flex: none;
 }
