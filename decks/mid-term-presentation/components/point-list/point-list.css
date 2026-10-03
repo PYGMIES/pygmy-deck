@@ -1,0 +1,51 @@
+/* === COMPONENT (deck): point-list === short heading with a hairline, then compact bullets
+   (children are <li>, use <strong> for the lead-in). */
+.c-point-list h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 8px;
+  border-bottom: var(--rule-w) solid var(--rule);
+  font-size: 36px;
+  line-height: 1.1;
+  color: var(--ink-accent);
+}
+
+.c-point-list h3 small {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-muted);
+}
+
+.c-point-list ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.c-point-list li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 24px;
+  line-height: 1.28;
+}
+
+.c-point-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--card);
+}
+
+.c-point-list li strong {
+  font-weight: 700;
+  color: var(--ink);
+}

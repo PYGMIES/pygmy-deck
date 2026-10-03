@@ -51,18 +51,25 @@
 
 .c-arch__wires .is-orange {
   color: var(--accent);
+  stroke: var(--accent); /* set on the line itself so the arrowhead (context-stroke) matches it */
 }
 
 .c-arch__wires .is-black {
   color: var(--ink);
+  stroke: var(--ink);
 }
 
 .c-arch__wires .is-red {
   color: var(--danger);
+  stroke: var(--danger);
 }
 
 .c-arch__io {
   color: var(--ink);
+}
+
+.c-arch__io path {
+  stroke: var(--ink);
 }
 
 .c-arch__group {
@@ -173,4 +180,107 @@
   text-align: center;
   color: var(--ink-muted);
   max-width: none;
+}
+
+/* is-nodes-only: components plus only the two outer arrows (traders → FastAPI, Dashboard → C22); hides every other flow arrow */
+.c-arch.is-nodes-only .c-arch__flow {
+  visibility: hidden;
+}
+
+/* --- pillar spotlight (slides 22-25) ---
+   is-numbered: a number badge before each pillar name. is-focus-N: every other pillar (lane, nodes, side notes) drops to 30%;
+   from pillar 2 on, the outer traders / C22 arrows and their labels fade too. is-no-notes hides the side notes. */
+.c-arch.is-numbered .c-arch__lane span::before {
+  content: attr(data-n);
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  padding-top: 2px;
+  vertical-align: middle;
+}
+
+.c-arch.is-numbered .c-arch__lane span {
+  letter-spacing: 0.08em;
+}
+
+.c-arch.is-focus-1 :is(.p2, .p3, .p4),
+.c-arch.is-focus-2 :is(.p1, .p3, .p4),
+.c-arch.is-focus-3 :is(.p1, .p2, .p4),
+.c-arch.is-focus-4 :is(.p1, .p2, .p3),
+.c-arch:is(.is-focus-2, .is-focus-3, .is-focus-4) :is(.c-arch__io, .c-arch__wire-label) {
+  opacity: 0.3;
+}
+
+.c-arch.is-no-notes .c-arch__foot {
+  visibility: hidden;
+}
+
+/* hide the side note of one pillar (slides 23-24) */
+.c-arch.is-no-note-3 .c-arch__foot.p3,
+.c-arch.is-no-note-4 .c-arch__foot.p4 {
+  visibility: hidden;
+}
+
+/* --- pillar colour ramp: component fills get darker left to right (Input/Output lightest, Judge darkest).
+   The Oanda / market price box keeps its own fill. Applies whatever the slide's focus or opacity. --- */
+.c-arch {
+  --tone-1: color-mix(in srgb, var(--card) 62%, var(--bg));
+  --tone-2: color-mix(in srgb, var(--card) 76%, var(--bg));
+  --tone-3: color-mix(in srgb, var(--card) 88%, var(--bg));
+  --tone-4: var(--card);
+}
+
+.c-arch__node.p1 { background: var(--tone-1); }
+.c-arch__node.p2 { background: var(--tone-2); }
+.c-arch__node.p3 { background: var(--tone-3); }
+.c-arch__node--judge { background: var(--tone-4); }
+
+/* small labels need full contrast on the two lightest fills */
+.c-arch__node.p1 small,
+.c-arch__node.p2 small {
+  color: var(--on-card);
+}
+
+/* --- timings (appendix latency slide) ---
+   .c-arch__ms: a small charcoal chip on a hop with its p50 and, below, p99. is-hot = the slow hop (accent). Passed in through the `timings` param. */
+.c-arch__ms {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 12px 6px;
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  transform: translate(-50%, -50%);
+}
+
+.c-arch__ms small {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--on-card-muted);
+}
+
+.c-arch__ms.is-hot {
+  background: var(--accent);
+  color: var(--card);
+}
+
+.c-arch__ms.is-hot small {
+  color: var(--card);
 }

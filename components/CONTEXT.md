@@ -22,6 +22,7 @@ Every component accepts an optional `class` param (added to its root). ◻ = blo
 | `quote` | `text`, `by?` | Pull quote with heavy opening mark. Pair with a dark slide. |
 | ◻ `compare-table` | — | Children are `<thead>`/`<tbody>`. Cell classes: `is-focus` (highlight column), `is-good` (↑), `is-bad` (muted). |
 | `image-frame` | `src`, `alt?`, `caption?`, `fit?` (cover) | Rounded image filling its column; `src="assets/…"` is inlined. |
+| `full-image` | `src`, `alt?` | Full-bleed 1920×1080 picture with no padding, for slides made elsewhere (e.g. Canva exports). Text inside the image can't follow the theme. |
 
 | ◻ `step-list` | — | Numbered vertical flow joined by a line; children are `<li>`, optional `<small>` = detail line. ≤6 steps. `class="is-compact"` = detail line per step, rows spaced to fill the column (use `split align="stretch"`); `<li class="is-group">` with a `c-step-list__band` + nested `<ol class="c-step-list__inner">` = framed group. Arrows: `<i class="c-step-list__arrow">` with `--arrow-from/-y/-len/-ang`. |
 | `note-card` | `kicker?`, `title`, `body` | Pale side note (e.g. kicker "Step 1"). Block: children are optional `<li>` tags; `foot` = line under tags. `is-compact` = 98px one-liner, `is-tall` = 190px with a 2–3 line body, `is-dark is-bullets` = charcoal bullet card. Stack in a `column` beside a `step-list`. |

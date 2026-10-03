@@ -1,0 +1,8 @@
+<!-- notes: BA. Our approach to training end to end. One model family, built to be audited: a LightGBM hurdle that scores P(fading wins) and the size of the gain and loss, then combines them as EV = p·E[gain] − (1−p)·E[loss]. Data: 45 one-day campaigns, 68,377 trades, 24 Feb to 12 Aug 2026, one instrument (XAUUSD), about 64 recurring traders. Locked test is campaigns 69–77. -->
+<!-- @slide-title kicker="How We Got Here" text="Our Approach to Training" -->
+<!-- @card-grid cols="4" class="inset" -->
+  <!-- @grid-card kicker="Step 01" title="Data" body="45 campaigns, 68,377 trades" -->
+  <!-- @grid-card kicker="Step 02" title="Features" body="26 point-in-time features" -->
+  <!-- @grid-card kicker="Step 03" title="Train" body="Hurdle: P(win) × gain − loss" -->
+  <!-- @grid-card kicker="Step 04" title="Validate" body="Locked test vs baselines and luck" -->
+<!-- @/card-grid -->
