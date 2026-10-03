@@ -187,7 +187,7 @@
   visibility: hidden;
 }
 
-/* --- pillar spotlight (slides 22-25) ---
+/* --- pillar spotlight (slides 24-27) ---
    is-numbered: a number badge before each pillar name. is-focus-N: every other pillar (lane, nodes, side notes) drops to 30%;
    from pillar 2 on, the outer traders / C22 arrows and their labels fade too. is-no-notes hides the side notes. */
 .c-arch.is-numbered .c-arch__lane span::before {
@@ -225,7 +225,7 @@
   visibility: hidden;
 }
 
-/* hide the side note of one pillar (slides 23-24) */
+/* hide the side note of one pillar (slides 25-26) */
 .c-arch.is-no-note-3 .c-arch__foot.p3,
 .c-arch.is-no-note-4 .c-arch__foot.p4 {
   visibility: hidden;
