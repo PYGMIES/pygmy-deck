@@ -1,5 +1,5 @@
 /* === COMPONENT (deck): nfr-concurrency === one NFR card; styles are .c-nfr-card in nfr-overview.css.
-   SYNC: title, sentence and icon copy slide 19's "Concurrency & throughput" req-card; change both together. */
+   SYNC: title, sentence and icon copy slide 18's "Concurrency & throughput" req-card; change both together. */
 .c-nfr-concurrency {
   flex: none;
 }

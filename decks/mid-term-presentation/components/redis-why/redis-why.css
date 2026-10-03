@@ -1,5 +1,5 @@
 /* === COMPONENT (deck): redis-why ===
-   Slide 38: a separate broker puts two systems on every trade's path (left) vs one in-memory
+   Slide 37: a separate broker puts two systems on every trade's path (left) vs one in-memory
    Redis for queues, cache and live events (right, highlighted); two dark cards state the
    motivation (fewer distributed systems, less network latency). 1728x680 canvas.
    Primitives come from flow-kit; place inside <!-- @flow-kit height="680px" -->. */
