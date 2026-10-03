@@ -1,0 +1,5 @@
+<!-- notes: Owner TBC. Train vs validation by boosting round, all training campaigns in each of blocks 3, 4 and 5; black line = early-stop point. Classifier: validation logloss bottoms near 0.683 after 22 to 54 trees and then drifts up while train keeps falling, so it stops early. Gain and loss regressors keep improving for thousands of trees (stops near 4,000 to 13,000, log axis). -->
+<!-- @slide-title kicker="Step 04: Validation" text="Train vs Validation by Trees" -->
+<!-- @column class="inset" -->
+  <!-- @chart-card kicker="Blocks 3–5 · black line = early stop" title="The classifier overfits fast; the regressors do not" src="assets/train_val_by_trees.png" alt="Train vs validation by number of trees for the classifier logloss and the gain and loss regressor L1" takeaway="Classifier stops after 22–54 trees; regressors keep improving for thousands" -->
+<!-- @/column -->

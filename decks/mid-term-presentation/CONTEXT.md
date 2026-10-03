@@ -69,43 +69,45 @@
 | 65 | `65-app-cv-layout` | Blocked CV layout: six expanding folds + locked test block (moved from appendix) | TBC | draft |
 | 66 | `66-app-arms` | Moved from appendix | TBC | draft |
 | 67 | `67-notebook-scatter` | $/campaign by notebook (07→15), one dot per variant, hover for what each notebook changed (`scatter-chart`) | BA | draft |
-| 68 | `68-magnitude` | Deep dive: 35× magnitude over direction + what we dropped | TBC | draft |
-| 69 | `69-section-pm` | ◆ 07 Project Management | Arin | — |
-| 70 | `70-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Arin | done |
-| 71 | `71-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
-| 72 | `72-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, 205 story points completed (`retro-changes`) | Arin | done |
-| 73 | `73-timeline` | Project timeline (now = Midterm) | Arin | done |
-| 74 | `74-milestones` | Project Milestones: midterm vs final (moved from 15) | Joyce | done |
-| 75 | `75-constraints` | Constraints · Data & Model: 18 held-out campaigns, not a random sample, C22 rules (1 open trade, first come first served), ~6 months of data (correlated, not independent) | Arin | done (sourced from Linear) |
-| 76 | `76-edge-setting` | How Big a Test Do We Need?: minimum worthwhile edge per faded trade → $/month → campaigns to confirm; 18 test campaigns detect edges of ~$10+ | TBD | draft |
-| 77 | `77-whats-next` | Auto-retrainer · real pipeline · trade magnitude · auto-scaling · non-functional reqs · observability (6 cards, 3 + 3) | Arin | done |
-| 78 | `78-qna` | Questions | — | done |
-| 79 | `79-section-appendix` | ◆ A Appendix (after Q&A, for backup) | — | — |
-| 80 | `80-app-latency-throughput` | Latency and throughput evidence: gold move-time by hour and adverse-check curve (two charts as exported), plus key latency and throughput points (`chart-pair`, `point-list`) | James Z | done |
-| 81 | `81-app-latency-budget` | Latency budget vs measured: what the 10c check needs (~100 ms, 1% / calm vs volatile / stricter reading / 1 s data limit) and our peak-run percentiles (decision, OANDA read) from `peak-790963676.csv` (`point-list`, `compare-table`) | James Z | done |
-| 82 | `82-app-latency-architecture` | Where the time goes: the architecture diagram with a p50/p99 chip on each hop from the peak run (`arch-diagram` with `timings`) | James Z | done |
-| 83 | `83-app-latency-tail` | The slow 10%: what slows the tail, what was ruled out, OANDA as the real problem (`point-list`, `label-card`) | James Z | done |
-| 84 | `84-workflow-campaign-start` | Workflow 1: Campaign Start (6-step flow, 2 arrowed notes, transaction callout) | James Z | done |
-| 85 | `85-workflow-open-trade` | Workflow 2: Open Trade (6-step flow, steps 3–6 framed as async, 2 arrowed notes + Key notes card) | James Z | done |
-| 86 | `86-workflow-close-trade` | Workflow 3: Close Trade (6-step flow, steps 3–6 framed as async, Key notes card) | James Z | done |
-| 87 | `87-workflow-campaign-end` | Workflow 4: Campaign End & Evaluation (5-step flow, Key notes card) | James Z | done |
-| 88–97 | `88-app-correlation` … `97-app-hyperparams` | Correlation matrix, learning curve + calibration, SHAP by feature, cost sweep, market data, tried and dropped, hurdle decomposition, feature arms, top-k, hyperparameters | — | draft |
-| 98–100 | `98-market-regimes`, `99-demo-data`, `100-chosen-timeslots` | Demo-data selection slides (moved from 17–19 to the end of the appendix): 2×2 + how we measure, trades per slot / beta vs Gold, chosen timeslots | Joyce, JS | done |
+| 68 | `68-train-val-campaigns` | Train vs validation by training campaigns (6→24): classifier AUC gap narrows, regressor L1 flat (`chart-card`, `train_val_by_campaigns.png`) | — | draft |
+| 69 | `69-train-val-trees` | Train vs validation by trees: classifier early-stops at 22–54 trees, regressors run thousands (`chart-card`, `train_val_by_trees.png`) | — | draft |
+| 70 | `70-magnitude` | Deep dive: 35× magnitude over direction + what we dropped | TBC | draft |
+| 71 | `71-section-pm` | ◆ 07 Project Management | Arin | — |
+| 72 | `72-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Arin | done |
+| 73 | `73-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
+| 74 | `74-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, 205 story points completed (`retro-changes`) | Arin | done |
+| 75 | `75-timeline` | Project timeline (now = Midterm) | Arin | done |
+| 76 | `76-milestones` | Project Milestones: midterm vs final (moved from 15) | Joyce | done |
+| 77 | `77-constraints` | Constraints · Data & Model: 18 held-out campaigns, not a random sample, C22 rules (1 open trade, first come first served), ~6 months of data (correlated, not independent) | Arin | done (sourced from Linear) |
+| 78 | `78-edge-setting` | How Big a Test Do We Need?: minimum worthwhile edge per faded trade → $/month → campaigns to confirm; 18 test campaigns detect edges of ~$10+ | TBD | draft |
+| 79 | `79-whats-next` | Auto-retrainer · real pipeline · trade magnitude · auto-scaling · non-functional reqs · observability (6 cards, 3 + 3) | Arin | done |
+| 80 | `80-qna` | Questions | — | done |
+| 81 | `81-section-appendix` | ◆ A Appendix (after Q&A, for backup) | — | — |
+| 82 | `82-app-latency-throughput` | Latency and throughput evidence: gold move-time by hour and adverse-check curve (two charts as exported), plus key latency and throughput points (`chart-pair`, `point-list`) | James Z | done |
+| 83 | `83-app-latency-budget` | Latency budget vs measured: what the 10c check needs (~100 ms, 1% / calm vs volatile / stricter reading / 1 s data limit) and our peak-run percentiles (decision, OANDA read) from `peak-790963676.csv` (`point-list`, `compare-table`) | James Z | done |
+| 84 | `84-app-latency-architecture` | Where the time goes: the architecture diagram with a p50/p99 chip on each hop from the peak run (`arch-diagram` with `timings`) | James Z | done |
+| 85 | `85-app-latency-tail` | The slow 10%: what slows the tail, what was ruled out, OANDA as the real problem (`point-list`, `label-card`) | James Z | done |
+| 86 | `86-workflow-campaign-start` | Workflow 1: Campaign Start (6-step flow, 2 arrowed notes, transaction callout) | James Z | done |
+| 87 | `87-workflow-open-trade` | Workflow 2: Open Trade (6-step flow, steps 3–6 framed as async, 2 arrowed notes + Key notes card) | James Z | done |
+| 88 | `88-workflow-close-trade` | Workflow 3: Close Trade (6-step flow, steps 3–6 framed as async, Key notes card) | James Z | done |
+| 89 | `89-workflow-campaign-end` | Workflow 4: Campaign End & Evaluation (5-step flow, Key notes card) | James Z | done |
+| 90–99 | `90-app-correlation` … `99-app-hyperparams` | Correlation matrix, learning curve + calibration, SHAP by feature, cost sweep, market data, tried and dropped, hurdle decomposition, feature arms, top-k, hyperparameters | — | draft |
+| 100–102 | `100-market-regimes`, `101-demo-data`, `102-chosen-timeslots` | Demo-data selection slides (moved from 17–19 to the end of the appendix): 2×2 + how we measure, trades per slot / beta vs Gold, chosen timeslots | Joyce, JS | done |
 
 Chart PNGs in `assets/` are exported from notebook outputs in `reverse-trade-judge/` (leak_worth, shap_*, auc_by_campaign_arm, hurdle_decomposition, correlation_matrix, learning_curve_calibration, cost_curve, model_vs_random, market_data_shap).
 
 ## Open items
-- Slide 68 (`magnitude`) and slide 67 (`notebook-scatter`) need an owner. Numbers on slides 59, 67 and 68 come from `reverse-trade-judge/summarised.md` and `Progress_summary/`.
-- Linear (PYG-103) shows 45 campaigns / 68,377 trades; the old constraints slide said 38 and now shows 18 held-out campaigns. Isaiah thinks it is 33–68 train (36) + 69–86 test (18) = 54. Confirm which is current, then align slides 74 and 76.
-- Slides 71–72 numbers come from PYG-92, 144, 185 and the SOW; re-check them if the model or the 18-feature freeze changes.
-- PM slides 71–74 are sourced from Linear (SOW, Sprint 7 retro board + minutes, cycle stats). Only the Sprint 7 retro is filled in; Calf/Juvenile retro docs are empty templates. Add later retros to slide 72 when written up.
-- Constraints & What's Next (slides 75–78) are presented by Arin; slide 77 owner TBD.
-- Slide 77 lists "Non-functional reqs" as a next step while slide 23 already presents the NFRs; decide whether the card stays.
+- Slide 70 (`magnitude`) and slide 67 (`notebook-scatter`) need an owner. Numbers on slides 59, 67 and 70 come from `reverse-trade-judge/summarised.md` and `Progress_summary/`.
+- Linear (PYG-103) shows 45 campaigns / 68,377 trades; the old constraints slide said 38 and now shows 18 held-out campaigns. Isaiah thinks it is 33–68 train (36) + 69–86 test (18) = 54. Confirm which is current, then align slides 76 and 78.
+- Slides 73–74 numbers come from PYG-92, 144, 185 and the SOW; re-check them if the model or the 18-feature freeze changes.
+- PM slides 73–76 are sourced from Linear (SOW, Sprint 7 retro board + minutes, cycle stats). Only the Sprint 7 retro is filled in; Calf/Juvenile retro docs are empty templates. Add later retros to slide 74 when written up.
+- Constraints & What's Next (slides 77–80) are presented by Arin; slide 79 owner TBD.
+- Slide 79 lists "Non-functional reqs" as a next step while slide 23 already presents the NFRs; decide whether the card stays.
 - Slide 58 (`hurdle-model`) sits in the "How We Got Here" section.
 - Slides 65 (`app-cv-layout`, after the feature slides) and 66 (`app-arms`) were moved from the appendix into the main flow.
-- Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 99 charts use rolling windows (p95 130 / p50 57); slide 100 uses fixed 30-min slots (p95 121.4 / p50 59.5). Slide 21 lists four demo campaigns (78–81, one per quadrant) while slides 98 and 100 tag only two quadrants as demo slots.
+- Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 101 charts use rolling windows (p95 130 / p50 57); slide 102 uses fixed 30-min slots (p95 121.4 / p50 59.5). Slide 21 lists four demo campaigns (78–81, one per quadrant) while slides 100 and 102 tag only two quadrants as demo slots.
 - Replace the slide 17 target staircase with measured results + CIs when available.
-- Confirm Phase 0 / Phase 1 gates passed → mark them on slide 73 (`project-timeline` gates).
+- Confirm Phase 0 / Phase 1 gates passed → mark them on slide 75 (`project-timeline` gates).
 - "BA" owner of section 05: confirm name.
 - Section 05 (41–56) is framed by the NFRs: the `nfr-overview` slide (42, 47, 53, 55) opens each group with that NFR at full opacity, and every content slide carries the same card top-right (`dd-heading`). Adjacent slides use match-and-move (`data-morph`, core/CONTEXT.md): the NFR card glides between the grid and the corner, trade tokens glide between queue and worker, and identical diagram pieces stay put. Builds (43–46, 48–52) repeat the previous diagram; only new pieces have `reveal`. Keep them in order when editing.
 - Find all TODOs: `grep -rn "@placeholder\|TODO" decks/mid-term-presentation/slides`
