@@ -72,10 +72,10 @@
 | 68 | `68-magnitude` | Deep dive: 35× magnitude over direction + what we dropped | TBC | draft |
 | 69 | `69-section-pm` | ◆ 07 Project Management | Arin | — |
 | 70 | `70-scrum` | Why Scrum over Waterfall: lane diagram (`method-compare`) + 3 reasons | Arin | done |
-| 71 | `71-timeline` | Project timeline (now = Midterm) | Arin | done |
-| 72 | `72-milestones` | Project Milestones: midterm vs final (moved from 15) | Joyce | done |
-| 73 | `73-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
-| 74 | `74-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, 205 story points completed (`retro-changes`) | Arin | done |
+| 71 | `71-sprint-cycle` | How We Run a Sprint: plan → build → sync → review → retro loop, leads/squads/tools (`sprint-cycle`) | Arin | done |
+| 72 | `72-retros` | What Our Retros Changed: Sprint 7 retro noticed → changed, 205 story points completed (`retro-changes`) | Arin | done |
+| 73 | `73-timeline` | Project timeline (now = Midterm) | Arin | done |
+| 74 | `74-milestones` | Project Milestones: midterm vs final (moved from 15) | Joyce | done |
 | 75 | `75-constraints` | Constraints · Data & Model: 18 held-out campaigns, not a random sample, C22 rules (1 open trade, first come first served), ~6 months of data (correlated, not independent) | Arin | done (sourced from Linear) |
 | 76 | `76-edge-setting` | How Big a Test Do We Need?: minimum worthwhile edge per faded trade → $/month → campaigns to confirm; 18 test campaigns detect edges of ~$10+ | TBD | draft |
 | 77 | `77-whats-next` | Auto-retrainer · real pipeline · trade magnitude · auto-scaling · non-functional reqs · observability (6 cards, 3 + 3) | Arin | done |
@@ -98,14 +98,14 @@ Chart PNGs in `assets/` are exported from notebook outputs in `reverse-trade-jud
 - Slide 68 (`magnitude`) and slide 67 (`notebook-scatter`) need an owner. Numbers on slides 59, 67 and 68 come from `reverse-trade-judge/summarised.md` and `Progress_summary/`.
 - Linear (PYG-103) shows 45 campaigns / 68,377 trades; the old constraints slide said 38 and now shows 18 held-out campaigns. Isaiah thinks it is 33–68 train (36) + 69–86 test (18) = 54. Confirm which is current, then align slides 74 and 76.
 - Slides 71–72 numbers come from PYG-92, 144, 185 and the SOW; re-check them if the model or the 18-feature freeze changes.
-- PM slides 71–74 are sourced from Linear (SOW, Sprint 7 retro board + minutes, cycle stats). Only the Sprint 7 retro is filled in; Calf/Juvenile retro docs are empty templates. Add later retros to slide 74 when written up.
+- PM slides 71–74 are sourced from Linear (SOW, Sprint 7 retro board + minutes, cycle stats). Only the Sprint 7 retro is filled in; Calf/Juvenile retro docs are empty templates. Add later retros to slide 72 when written up.
 - Constraints & What's Next (slides 75–78) are presented by Arin; slide 77 owner TBD.
 - Slide 77 lists "Non-functional reqs" as a next step while slide 23 already presents the NFRs; decide whether the card stays.
 - Slide 58 (`hurdle-model`) sits in the "How We Got Here" section.
 - Slides 65 (`app-cv-layout`, after the feature slides) and 66 (`app-arms`) were moved from the appendix into the main flow.
 - Confirm the demo replays both slots (Typical·Calm 3:30–4:00 and Busy·Volatile 5:30–6:00). Slide 99 charts use rolling windows (p95 130 / p50 57); slide 100 uses fixed 30-min slots (p95 121.4 / p50 59.5). Slide 21 lists four demo campaigns (78–81, one per quadrant) while slides 98 and 100 tag only two quadrants as demo slots.
 - Replace the slide 17 target staircase with measured results + CIs when available.
-- Confirm Phase 0 / Phase 1 gates passed → mark them on slide 71 (`project-timeline` gates).
+- Confirm Phase 0 / Phase 1 gates passed → mark them on slide 73 (`project-timeline` gates).
 - "BA" owner of section 05: confirm name.
 - Section 05 (41–56) is framed by the NFRs: the `nfr-overview` slide (42, 47, 53, 55) opens each group with that NFR at full opacity, and every content slide carries the same card top-right (`dd-heading`). Adjacent slides use match-and-move (`data-morph`, core/CONTEXT.md): the NFR card glides between the grid and the corner, trade tokens glide between queue and worker, and identical diagram pieces stay put. Builds (43–46, 48–52) repeat the previous diagram; only new pieces have `reveal`. Keep them in order when editing.
 - Find all TODOs: `grep -rn "@placeholder\|TODO" decks/mid-term-presentation/slides`
