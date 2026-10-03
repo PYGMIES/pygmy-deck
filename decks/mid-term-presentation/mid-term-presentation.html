@@ -873,8 +873,22 @@ body.overview .deck-viewport {
 }
 
 .c-agenda-item__owner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   font-size: 26px;
   color: var(--ink-accent);
+}
+
+/* owner names as pills: <span>Name</span> per person */
+.c-agenda-item__owner > span {
+  padding: 6px 22px;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 .c-agenda-item__mins {
@@ -5304,49 +5318,49 @@ body.overview .deck-viewport {
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">01</span>
   <h3>The Problem</h3>
-  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__owner"><span>Joyce</span></span>
   <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">02</span>
   <h3>Goals &amp; Impact</h3>
-  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__owner"><span>Joyce</span></span>
   <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">03</span>
   <h3>Live Demo</h3>
-  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__owner"><span>Jerrick</span></span>
   <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">04</span>
   <h3>System Architecture</h3>
-  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__owner"><span>Jamesz</span></span>
   <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">05</span>
   <h3>Key Design Decisions</h3>
-  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__owner"><span>Jerrick</span></span>
   <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">06</span>
   <h3>How We Got Here</h3>
-  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__owner"><span>Yan Ting</span><span>Isaiah</span></span>
   <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">07</span>
   <h3>Project Management</h3>
-  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__owner"><span>Arin</span></span>
   <span class="c-agenda-item__mins"></span>
 </li>
   <li class="c-agenda-item reveal ">
   <span class="c-agenda-item__num">08</span>
   <h3>Constraints &amp; What’s Next</h3>
-  <span class="c-agenda-item__owner"></span>
+  <span class="c-agenda-item__owner"><span>Isaiah</span></span>
   <span class="c-agenda-item__mins"></span>
 </li>
 

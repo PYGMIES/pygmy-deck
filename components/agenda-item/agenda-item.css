@@ -21,8 +21,22 @@
 }
 
 .c-agenda-item__owner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   font-size: 26px;
   color: var(--ink-accent);
+}
+
+/* owner names as pills: <span>Name</span> per person */
+.c-agenda-item__owner > span {
+  padding: 6px 22px;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--on-card);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 .c-agenda-item__mins {
