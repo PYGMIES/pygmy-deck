@@ -1,5 +1,5 @@
 /* === COMPONENT (deck): nfr-latency === one NFR card; styles are .c-nfr-card in nfr-overview.css.
-   SYNC: title, sentence and icon copy slide 21's "Processing latency" req-card; change both together. */
+   SYNC: title, sentence and icon copy slide 23's "Processing latency" req-card; change both together. */
 .c-nfr-latency {
   flex: none;
 }

@@ -2,7 +2,7 @@
    $ per campaign for every variant tried per notebook (one dot each), inline SVG on the
    white chart backing. Geometry lives in the viewBox (1728×640). Dots are stacked in a
    column per notebook; hover (core/runtime.js [data-hover-scatter]) shows what that
-   notebook changed. Slide 38. */
+   notebook changed. Slide 67. */
 .c-scatter-chart {
   display: flex;
   flex-direction: column;

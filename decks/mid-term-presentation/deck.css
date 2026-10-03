@@ -7,9 +7,9 @@
   align-content: center;
 }
 
-/* === WORKFLOW SLIDES 21-24 === */
+/* === WORKFLOW SLIDES 84-87 === */
 
-/* wide label-card: body runs left-aligned across the card (slide 80 callout) */
+/* wide label-card: body runs left-aligned across the card (slide 84 callout) */
 .c-label-card.is-wide p {
   max-width: none;
   text-align: left;
@@ -21,34 +21,34 @@
   min-height: 120px;
 }
 
-/* slide 80: drop the second note so the step-5 arrow meets the middle of its left edge */
+/* slide 84: drop the second note so the step-5 arrow meets the middle of its left edge */
 .c-note-card.is-offset {
   margin-top: 125px;
 }
 
-/* slide 81: the first of the two tall notes is pushed down so both sit at the bottom of the column */
+/* slide 85: the first of the two tall notes is pushed down so both sit at the bottom of the column */
 .c-note-card.is-start {
   margin-top: auto;
 }
 
-/* slide 81: connector line stops at the centre of the last circle */
+/* slide 85: connector line stops at the centre of the last circle */
 .c-step-list.is-compact {
   --line-end: 109px;
 }
 
-/* slide 82: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
+/* slide 86: no wrapped rows, so slightly larger gaps; connector stops at the last circle's centre */
 .c-step-list.is-compact.is-close {
   --step-gap: 27.2px;
   --line-end: 82px;
 }
 
-/* slide 83: five steps spread over the full height; connector stops at the last circle's centre */
+/* slide 87: five steps spread over the full height; connector stops at the last circle's centre */
 .c-step-list.is-compact.is-end {
   --step-gap: 90px;
   --line-end: 33px;
 }
 
-/* slide 21: tighter layout for the requirement cards: closer to the title, narrow gap between the two columns,
+/* slide 23: tighter layout for the requirement cards: closer to the title, narrow gap between the two columns,
    group headings centred and larger than the card titles */
 .c-split.is-tight {
   gap: 40px;
@@ -74,7 +74,7 @@
 /* Thank-you slide: title only, no info bar */
 .c-closing.is-title-only .c-closing__card { display: none; }
 
-/* How the Data was used (slide 59): taller cards, roomier description, larger campaign split table */
+/* How the Data was used (slide 60): taller cards, roomier description, larger campaign split table */
 .c-card-grid.is-data-use .c-panel-card { min-height: 660px; }
 .c-card-grid.is-data-use .c-panel-card__head p { line-height: 1.6; }
 .c-card-grid.is-data-use table { font-size: 34px; }
@@ -82,7 +82,7 @@
 .c-card-grid.is-data-use td { padding: 12px 0; }
 .c-card-grid.is-data-use td:last-child { font-size: 32px; }
 
-/* Before Deriving Features (slide 59): four feature-group cards in one row, compacted to fit the stage */
+/* Before Deriving Features (slide 61): four feature-group cards in one row, compacted to fit the stage */
 .c-card-grid.is-before-features { gap: 28px; }
 .c-card-grid.is-before-features .c-feature-group { gap: 20px; padding: 30px 30px 32px; }
 .c-card-grid.is-before-features .c-feature-group__head { padding-bottom: 18px; }
@@ -97,7 +97,7 @@
 .c-card-grid.is-before-features .c-feature-group__list span { font-size: 18px; line-height: 1.3; color: var(--on-card-muted); }
 .c-card-grid.is-before-features .c-feature-group__foot { padding-top: 18px; font-size: 22px; }
 
-/* Why We Left Out Outcomes (slide 61): outcome card left, SHAP bars right */
+/* Why We Left Out Outcomes (slide 63): outcome card left, SHAP bars right */
 .c-split.is-outcome-shap { gap: var(--gap-l); align-items: stretch; }
 .c-split.is-outcome-shap .c-feature-group { grid-column: auto; }
 .c-split.is-outcome-shap .c-column { justify-content: center; }
@@ -116,7 +116,7 @@
 .c-split.is-outcome-shap .c-shap-bars__legend li { font-size: 19px; padding-left: 34px; }
 .c-split.is-outcome-shap .c-shap-bars__legend li::before { width: 22px; height: 22px; }
 .c-split.is-outcome-shap .c-shap-bars figcaption { margin-top: 16px; font-size: 18px; }
-/* slide 59: taller cards, roomier spacing for readability */
+/* slide 61: taller cards, roomier spacing for readability */
 .c-card-grid.is-before-features .c-feature-group { min-height: 720px; gap: 30px; padding: 36px 34px 40px; }
 .c-card-grid.is-before-features .c-feature-group__head { padding-bottom: 26px; }
 .c-card-grid.is-before-features .c-feature-group h3 { margin-top: 18px; }
@@ -127,7 +127,7 @@
 .c-card-grid.is-before-features .c-feature-group__list code { font-size: 19px; line-height: 1.4; }
 .c-card-grid.is-before-features .c-feature-group__list span { font-size: 20px; line-height: 1.4; }
 
-/* The 13 Features We Dropped (slide 60): leakage card left, "didn't pay" card with a without→with chart right */
+/* The 13 Features We Dropped (slide 62): leakage card left, "didn't pay" card with a without→with chart right */
 .c-split.is-dropped { gap: var(--gap-l); align-items: stretch; }
 .c-split.is-dropped .c-feature-group { grid-column: auto; }
 .c-split.is-dropped .c-panel-card__head { display: grid; grid-template-columns: auto 1fr; column-gap: 24px; align-items: center; }
@@ -156,9 +156,27 @@
 .dropped-chart__key dt { font-weight: 600; }
 .dropped-chart__key dd { margin: 0; font-family: var(--font-mono); font-size: 19px; color: var(--chart-ink-muted); }
 
-/* is-static on a slide-title: no fade-up on arrival, so the title stays put while stepping through a build (slides 27-31, 33-37) */
+/* is-static on a slide-title: no fade-up on arrival, so the title stays put while stepping through a build (slides 25-28, 30-34, 36-40, 82) */
 .slide .c-slide-title.is-static .reveal {
   opacity: 1;
   transform: none;
   transition: none;
+}
+
+/* Demo Campaigns (slide 21): short two-column lookup table, centred in the space under the
+   slide title, larger type so the campaign IDs read from the back of the room */
+.c-compare-table.is-lookup {
+  width: 1100px;
+  margin: auto;
+  font-size: 42px;
+}
+
+.c-compare-table.is-lookup th,
+.c-compare-table.is-lookup td {
+  padding: 30px 40px;
+  text-align: center;
+}
+
+.c-compare-table.is-lookup thead th {
+  font-size: 42px;
 }

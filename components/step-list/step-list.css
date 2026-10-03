@@ -91,7 +91,7 @@
   top: 1px;
 }
 
-/* --- is-compact: steps with a detail line each, evenly spaced to fill the column height (slide 22) ---
+/* --- is-compact: steps with a detail line each, evenly spaced to fill the column height (mid-term-presentation workflow slides) ---
    One continuous line runs behind the circles; <li class="is-group"> wraps a band + nested
    <ol class="c-step-list__inner"> in a rounded frame whose sides start at the band's ends. */
 .c-step-list.is-compact {
