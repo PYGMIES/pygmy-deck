@@ -1,13 +1,166 @@
+/* === SMU SCIS LOOK === mimics the school slide template (Arial, navy on white,
+   gold header, yellow title bars, green section labels) */
+:root,
+[data-theme="light"] {
+  --font-display: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  --font-body: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  --display-weight: 700;
+  --display-tracking: 0;
+  --display-leading: 1.12;
+  --body-tracking: 0;
+  --bg: #ffffff;
+  --ink: #11175e;
+  --ink-accent: #11175e;
+  --ink-muted: #5b5f8a;
+  --rule: #dcdce6;
+  --chrome: #8a8a8a;
+  --card: #11175e;
+  --smu-gold: #c99d3a;
+  --smu-yellow: #f5c542;
+  --smu-green: #c5e0a5;
+}
+
+.slide {
+  letter-spacing: 0;
+}
+
+.slide em {
+  background: none;
+}
+
+/* tiny header line, top centre */
+.slide::before {
+  content: "Software Project Management \2013  IS212";
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--chrome);
+}
+
+.deck-progress { display: none; }
+
+.deck-counter {
+  right: 72px;
+  bottom: 40px;
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+/* cover: gold SMU header, centred navy title */
+.c-cover {
+  align-items: center;
+  text-align: center;
+  padding-top: 170px;
+}
+
+.c-cover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 216px;
+  background: url("assets/header.png") center / 100% 100% no-repeat;
+}
+
+.slide:has(.c-cover)::before { display: none; }
+
+.c-cover__top {
+  justify-content: center;
+  border: 0;
+  padding: 0;
+  font-size: 56px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.c-cover__title {
+  margin-top: 90px;
+  font-size: 128px;
+  line-height: 1.1;
+  max-width: none;
+}
+
+.c-cover__foot {
+  margin-top: auto;
+  justify-content: center;
+}
+
+.c-cover__foot p {
+  max-width: none;
+  font-size: 48px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.c-cover__block { display: none; }
+
+/* slide titles: flat yellow bar */
+.c-slide-title { margin-top: 24px; }
+
+.c-slide-title h1 {
+  font-size: 56px;
+  line-height: 1.1;
+  padding: 18px 32px;
+  background: var(--smu-yellow);
+}
+
+.c-slide-title__kicker { display: none; }
+
+/* section dividers: green label on white */
+.c-section-divider {
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.c-section-divider__text { text-align: center; }
+
+.c-section-divider h2 {
+  display: inline-block;
+  max-width: none;
+  padding: 14px 36px;
+  font-size: 72px;
+  line-height: 1.1;
+  color: var(--ink);
+  background: var(--smu-green);
+}
+
+.c-section-divider__num,
+.c-section-divider__presenter { display: none; }
+
+/* bullets: plain, no rules */
+.c-bullet-list li {
+  border: 0;
+  padding: 18px 0 18px 48px;
+}
+
+.c-bullet-list li:first-child { border: 0; }
+
+.c-bullet-list li::before {
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
 /* === DECK OVERRIDES === */
 
-/* slide 03: logo beside the board screenshot */
+/* slide 06: logo beside the board screenshot */
 .tool-logo {
   width: 220px;
   height: 220px;
   object-fit: contain;
 }
 
-/* slide 04: four logos joined by arrows */
+/* slide 07: four logos joined by arrows */
 .tool-flow {
   flex: 1;
   list-style: none;
@@ -51,7 +204,7 @@
   color: var(--ink-muted);
 }
 
-/* slides 10-13: one stroke icon per limitation */
+/* slides 13-16: one stroke icon per limitation */
 .break-icon {
   width: 260px;
   height: 260px;

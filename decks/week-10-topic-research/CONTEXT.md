@@ -11,19 +11,23 @@
 |---|------|------|------------|
 | 01 | `01-cover.html` | Title + team | cover |
 | 02 | `02-section-what.html` | Section: What is it? | section-divider |
-| 03 | `03-linear-board.html` | Linear board screenshot | slide-title, split, screen-frame |
-| 04 | `04-workflow.html` | Linear → Claude → GitHub → Linear flow | slide-title, deck `.tool-flow` |
-| 05 | `05-section-demo.html` | Section: Demo | section-divider |
-| 06 | `06-demo.html` | Demo | slide-title, placeholder |
-| 07 | `07-section-why.html` | Section: Why does it matter? | section-divider |
-| 08 | `08-why.html` | Why it matters | slide-title, placeholder |
-| 09 | `09-section-break.html` | Section: Where does it break? | section-divider |
-| 10 | `10-ticket-quality.html` | Output quality depends on the ticket | slide-title, split, bullet-list, deck `.break-icon` |
-| 11 | `11-no-memory.html` | No persistent memory | same |
-| 12 | `12-review-bottleneck.html` | Reviewing becomes the bottleneck | same |
-| 13 | `13-limited-environment.html` | Limited environment | same |
+| 03 | `03-problem.html` | Problem: laptop must stay open, no isolation | slide-title, bullet-list |
+| 04 | `04-docker-sandbox.html` | Docker sandbox: isolated but still tied to the laptop | slide-title, split, bullet-list, screen-frame |
+| 05 | `05-linear-agent.html` | Own agent via Linear OAuth gateway on Claude subscription | slide-title, split, bullet-list, screen-frame |
+| 06 | `06-linear-board.html` | Linear board screenshot | slide-title, split, screen-frame |
+| 07 | `07-workflow.html` | Linear → Claude → GitHub → Linear flow | slide-title, deck `.tool-flow` |
+| 08 | `08-section-demo.html` | Section: Demo | section-divider |
+| 09 | `09-demo.html` | Demo | slide-title, placeholder |
+| 10 | `10-section-why.html` | Section: Why does it matter? | section-divider |
+| 11 | `11-why.html` | Why it matters | slide-title, placeholder |
+| 12 | `12-section-break.html` | Section: Where does it break? | section-divider |
+| 13 | `13-ticket-quality.html` | Output quality depends on the ticket | slide-title, split, bullet-list, deck `.break-icon` |
+| 14 | `14-no-memory.html` | No persistent memory | same |
+| 15 | `15-review-bottleneck.html` | Reviewing becomes the bottleneck | same |
+| 16 | `16-limited-environment.html` | Limited environment | same |
 
 ## Notes / open items
 - Converted from the team's Canva slides. Logos and the board screenshot are cropped from those slides (low-res).
 - Slides 06 and 08 are placeholders: the Canva versions held filler text only.
 - No Q&A / thank-you slide yet.
+- Styled to mimic the SMU SCIS school template (Arial, navy #11175e, gold cover header, yellow title bars, green section labels); all overrides live at the top of `deck.css`. Cover kicker/subtitle copy was reworded to match (G9T6 on its own line).
