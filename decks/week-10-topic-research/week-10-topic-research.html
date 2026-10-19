@@ -907,6 +907,15 @@ body.overview .deck-viewport {
   color: var(--ink-muted);
 }
 
+/* ===== COMPONENT card-grid ===== */
+/* === COMPONENT: card-grid === equal-width grid of cards */
+.c-card-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+  gap: var(--gap-m);
+  align-items: stretch;
+}
+
 /* ===== DECK OVERRIDES ===== */
 /* === SMU SCIS LOOK === mimics the school slide template (Arial, navy on white,
    gold header, yellow title bars, green section labels) */
@@ -1125,6 +1134,83 @@ body.overview .deck-viewport {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
+/* bullet lists with an icon tile per point (slides 03-05) */
+.c-bullet-list.has-icons li {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 16px 0;
+}
+
+.c-bullet-list.has-icons li::before { display: none; }
+
+.li-icon {
+  flex: none;
+  width: 80px;
+  height: 80px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.li-icon svg {
+  width: 48px;
+  height: 48px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* slides 13-16: one tall card per limitation, big icon over text */
+.point-grid {
+  margin-right: var(--inset);
+  margin-top: 24px;
+  gap: 32px;
+}
+
+.point-card {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding: 44px 40px;
+  min-height: 560px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.point-icon {
+  width: 160px;
+  height: 160px;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.point-icon svg {
+  width: 140px;
+  height: 140px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.point-card p {
+  max-width: none;
+  font-size: 40px;
+  line-height: 1.25;
+  color: var(--on-card);
+}
+
+.point-grid[style*="--grid-cols: 4"] .point-card { padding: 40px 30px; }
+.point-grid[style*="--grid-cols: 4"] .point-card p { font-size: 30px; }
 </style>
 </head>
 <body>
@@ -1164,11 +1250,11 @@ body.overview .deck-viewport {
   <span class="c-slide-title__kicker reveal">What is it?</span>
   <h1 class="reveal">The Problem</h1>
 </header>
-<ul class="c-bullet-list inset">
+<ul class="c-bullet-list inset has-icons">
   
-  <li class="reveal">Long-running agents need your laptop to stay open</li>
-  <li class="reveal">Close the lid or drop Wi-Fi and the work stops</li>
-  <li class="reveal">Running on your own device gives the agent access to your files</li>
+  <li class="reveal"><span class="li-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="10" width="32" height="22" rx="2.5"/><path d="M3 38h42"/></svg></span><span>Long-running agents need your laptop to stay open</span></li>
+  <li class="reveal"><span class="li-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 19a26 26 0 0 1 36 0M12 26a17 17 0 0 1 24 0M18 33a8 8 0 0 1 12 0M24 40v.1M8 7l32 34"/></svg></span><span>Close the lid or drop Wi-Fi and the work stops</span></li>
+  <li class="reveal"><span class="li-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 12h13l5 5h18v21H6z"/></svg></span><span>Running on your own device gives the agent access to your files</span></li>
 
 </ul>
 <!-- notes: Open with the problem. If you code with AI you already know the laptop has to stay alive to use a Claude subscription. Second problem: you don't want to give Claude destructive access to your personal device. You want an isolated environment. -->
@@ -1182,10 +1268,10 @@ body.overview .deck-viewport {
 </header>
 <div class="c-split inset" style="--split-cols: 680px 1fr; --split-align: center;">
   
-  <ul class="c-bullet-list ">
+  <ul class="c-bullet-list has-icons">
   
-    <li class="reveal">Isolated environment: Claude only sees what you give it</li>
-    <li class="reveal">But it still stops when the laptop sleeps</li>
+    <li class="reveal"><span class="li-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5l15 6v11c0 10-6 17-15 21C15 39 9 32 9 22V11z"/><path d="M17 23l5 5 9-10"/></svg></span><span>Isolated environment: Claude only sees what you give it</span></li>
+    <li class="reveal"><span class="li-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M38 29A15 15 0 1 1 19 10a12 12 0 0 0 19 19z"/></svg></span><span>But it still stops when the laptop sleeps</span></li>
   
 </ul>
   <figure class="c-screen-frame reveal ">
@@ -1209,11 +1295,11 @@ body.overview .deck-viewport {
 </header>
 <div class="c-split inset" style="--split-cols: 680px 1fr; --split-align: center;">
   
-  <ul class="c-bullet-list ">
+  <ul class="c-bullet-list has-icons">
   
-    <li class="reveal">No extra SaaS subscription, no Claude API costs</li>
-    <li class="reveal">Your own agent runs on your Claude subscription, connected through Linear’s OAuth gateway</li>
-    <li class="reveal">Assign a ticket: it plans, builds, tests, verifies and updates the status</li>
+    <li class="reveal"><span class="li-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 13v22M29 18h-7a3.5 3.5 0 0 0 0 7h4a3.5 3.5 0 0 1 0 7h-8M8 8l32 32"/></svg></span><span>No extra SaaS subscription, no Claude API costs</span></li>
+    <li class="reveal"><span class="li-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M20 28l8-8M17 21l-4 4a6 6 0 0 0 8.5 8.5l4-4M31 27l4-4a6 6 0 0 0-8.5-8.5l-4 4"/></svg></span><span>Your own agent runs on your Claude subscription, connected through Linear’s OAuth gateway</span></li>
+    <li class="reveal"><span class="li-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 15l4 4 7-8M8 33l4 4 7-8M26 16h14M26 34h14"/></svg></span><span>Assign a ticket: it plans, builds, tests, verifies and updates the status</span></li>
   
 </ul>
   <figure class="c-screen-frame reveal ">
@@ -1332,16 +1418,11 @@ body.overview .deck-viewport {
   <span class="c-slide-title__kicker reveal">Where does it break?</span>
   <h1 class="reveal">Output Quality Depends<br>on the Ticket</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 320px; --split-align: center;">
+<div class="c-card-grid inset point-grid" style="--grid-cols: 3;">
   
-  <ul class="c-bullet-list ">
-  
-    <li class="reveal">The issue is the agent’s entire “prompt”</li>
-    <li class="reveal">A vague ticket will lead to a hallucination and guessing</li>
-    <li class="reveal">More time must be spent on writing more detailed tickets</li>
-  
-</ul>
-  <svg class="break-icon reveal" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 14h36v6a4 4 0 0 0 0 8v6H6v-6a4 4 0 0 0 0-8z"/><path d="M20.5 20.5a3.5 3.5 0 1 1 5 3.2c-1 .5-1.5 1.2-1.5 2.3v.5"/><path d="M24 30.2v.1"/></svg>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 6h18l8 8v28H12z"/><path d="M30 6v8h8M18 24h14M18 31h14"/></svg></span><p>The issue is the agent’s entire “prompt”</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M19 19a5 5 0 1 1 7 4.6c-1.4.7-2 1.6-2 3M24 33v.1"/></svg></span><p>A vague ticket will lead to a hallucination and guessing</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 13v11l7 4"/></svg></span><p>More time must be spent on writing more detailed tickets</p></div>
 
 </div>
 </section>
@@ -1352,17 +1433,12 @@ body.overview .deck-viewport {
   <span class="c-slide-title__kicker reveal">Where does it break?</span>
   <h1 class="reveal">No Persistent Memory</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 320px; --split-align: center;">
+<div class="c-card-grid inset point-grid" style="--grid-cols: 4;">
   
-  <ul class="c-bullet-list ">
-  
-    <li class="reveal">Each session starts fresh, with no memory of earlier sessions or conversations</li>
-    <li class="reveal">Has to rediscover the context from the branch and commit history</li>
-    <li class="reveal">Decisions made by the team outside of Linear will not be captured unless it is written down somewhere</li>
-    <li class="reveal">Long, multi-step work is more fragile than one small task</li>
-  
-</ul>
-  <svg class="break-icon reveal" viewBox="0 0 48 48" aria-hidden="true"><path d="M38 24a14 14 0 1 1-4.1-9.9"/><path d="M35 6v8.5h-8.5"/></svg>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M38 24a14 14 0 1 1-4.1-9.9"/><path d="M35 6v8.5h-8.5"/></svg></span><p>Each session starts fresh, with no memory of earlier sessions or conversations</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="14" cy="10" r="4"/><circle cx="14" cy="38" r="4"/><circle cx="34" cy="18" r="4"/><path d="M14 14v20M34 22c0 8-10 8-20 12"/></svg></span><p>Has to rediscover the context from the branch and commit history</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 10h34v22H22l-9 8v-8H7z"/><path d="M15 18h18M15 25h10"/></svg></span><p>Decisions made by the team outside of Linear will not be captured unless it is written down somewhere</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 40h9V30h9V20h9V10h9"/></svg></span><p>Long, multi-step work is more fragile than one small task</p></div>
 
 </div>
 </section>
@@ -1373,16 +1449,11 @@ body.overview .deck-viewport {
   <span class="c-slide-title__kicker reveal">Where does it break?</span>
   <h1 class="reveal">Reviewing Becomes<br>the Bottleneck</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 320px; --split-align: center;">
+<div class="c-card-grid inset point-grid" style="--grid-cols: 3;">
   
-  <ul class="c-bullet-list ">
-  
-    <li class="reveal">Every PR still needs to be reviewed by a human</li>
-    <li class="reveal">Delegating too much just shifts the workload instead of reducing it</li>
-    <li class="reveal">Code reviews need to be as rigorous as with any teammate</li>
-  
-</ul>
-  <svg class="break-icon reveal" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 6h20M14 42h20"/><path d="M16 6c0 10 16 12 16 18s-16 8-16 18"/><path d="M32 6c0 10-16 12-16 18s16 8 16 18"/></svg>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M3 24s8-13 21-13 21 13 21 13-8 13-21 13S3 24 3 24z"/><circle cx="24" cy="24" r="5"/></svg></span><p>Every PR still needs to be reviewed by a human</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 17h30M31 10l7 7-7 7M40 31H10M17 24l-7 7 7 7"/></svg></span><p>Delegating too much just shifts the workload instead of reducing it</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="M30 30l12 12M16 21l4 4 6-8"/></svg></span><p>Code reviews need to be as rigorous as with any teammate</p></div>
 
 </div>
 </section>
@@ -1393,16 +1464,11 @@ body.overview .deck-viewport {
   <span class="c-slide-title__kicker reveal">Where does it break?</span>
   <h1 class="reveal">Limited Environment</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 320px; --split-align: center;">
+<div class="c-card-grid inset point-grid" style="--grid-cols: 3;">
   
-  <ul class="c-bullet-list ">
-  
-    <li class="reveal">Without Docker or a database in its environment, it cannot run the app or a browser</li>
-    <li class="reveal">UI behaviour is verified purely by reading the code</li>
-    <li class="reveal">Still need humans to conduct manual tests</li>
-  
-</ul>
-  <svg class="break-icon reveal" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="13" width="30" height="22" rx="3"/><path d="M9 20h30M17 13v22M31 13v22"/><path d="M6 42 42 6"/></svg>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="12" rx="14" ry="6"/><path d="M10 12v24c0 3.3 6.3 6 14 6s14-2.7 14-6V12M10 24c0 3.3 6.3 6 14 6s14-2.7 14-6"/></svg></span><p>Without Docker or a database in its environment, it cannot run the app or a browser</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M16 14L6 24l10 10M32 14l10 10-10 10M27 8l-6 32"/></svg></span><p>UI behaviour is verified purely by reading the code</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="11" y="8" width="26" height="34" rx="3"/><path d="M18 8V5h12v3M17 22l3 3 6-7M17 34h14"/></svg></span><p>Still need humans to conduct manual tests</p></div>
 
 </div>
 </section>

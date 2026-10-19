@@ -215,3 +215,80 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
+/* bullet lists with an icon tile per point (slides 03-05) */
+.c-bullet-list.has-icons li {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 16px 0;
+}
+
+.c-bullet-list.has-icons li::before { display: none; }
+
+.li-icon {
+  flex: none;
+  width: 80px;
+  height: 80px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.li-icon svg {
+  width: 48px;
+  height: 48px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* slides 13-16: one tall card per limitation, big icon over text */
+.point-grid {
+  margin-right: var(--inset);
+  margin-top: 24px;
+  gap: 32px;
+}
+
+.point-card {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding: 44px 40px;
+  min-height: 560px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.point-icon {
+  width: 160px;
+  height: 160px;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.point-icon svg {
+  width: 140px;
+  height: 140px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.point-card p {
+  max-width: none;
+  font-size: 40px;
+  line-height: 1.25;
+  color: var(--on-card);
+}
+
+.point-grid[style*="--grid-cols: 4"] .point-card { padding: 40px 30px; }
+.point-grid[style*="--grid-cols: 4"] .point-card p { font-size: 30px; }

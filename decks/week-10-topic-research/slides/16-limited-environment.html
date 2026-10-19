@@ -1,9 +1,6 @@
 <!-- @slide-title kicker="Where does it break?" text="Limited Environment" -->
-<!-- @split cols="1fr 320px" align="center" class="inset" -->
-  <!-- @bullet-list -->
-    <li class="reveal">Without Docker or a database in its environment, it cannot run the app or a browser</li>
-    <li class="reveal">UI behaviour is verified purely by reading the code</li>
-    <li class="reveal">Still need humans to conduct manual tests</li>
-  <!-- @/bullet-list -->
-  <svg class="break-icon reveal" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="13" width="30" height="22" rx="3"/><path d="M9 20h30M17 13v22M31 13v22"/><path d="M6 42 42 6"/></svg>
-<!-- @/split -->
+<!-- @card-grid cols="3" class="inset point-grid" -->
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="12" rx="14" ry="6"/><path d="M10 12v24c0 3.3 6.3 6 14 6s14-2.7 14-6V12M10 24c0 3.3 6.3 6 14 6s14-2.7 14-6"/></svg></span><p>Without Docker or a database in its environment, it cannot run the app or a browser</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M16 14L6 24l10 10M32 14l10 10-10 10M27 8l-6 32"/></svg></span><p>UI behaviour is verified purely by reading the code</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="11" y="8" width="26" height="34" rx="3"/><path d="M18 8V5h12v3M17 22l3 3 6-7M17 34h14"/></svg></span><p>Still need humans to conduct manual tests</p></div>
+<!-- @/card-grid -->
