@@ -1,6 +1,6 @@
 <!-- @slide-title kicker="Where does it break?" text="Limited Environment" -->
 <!-- @card-grid cols="3" class="inset point-grid" -->
-    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="12" rx="14" ry="6"/><path d="M10 12v24c0 3.3 6.3 6 14 6s14-2.7 14-6V12M10 24c0 3.3 6.3 6 14 6s14-2.7 14-6"/></svg></span><p>Without Docker or a database in its environment, it cannot run the app or a browser</p></div>
-    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M16 14L6 24l10 10M32 14l10 10-10 10M27 8l-6 32"/></svg></span><p>UI behaviour is verified purely by reading the code</p></div>
-    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="11" y="8" width="26" height="34" rx="3"/><path d="M18 8V5h12v3M17 22l3 3 6-7M17 34h14"/></svg></span><p>Still need humans to conduct manual tests</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="12" rx="14" ry="6"/><path d="M10 12v24c0 3.3 6.3 6 14 6s14-2.7 14-6V12M10 24c0 3.3 6.3 6 14 6s14-2.7 14-6"/></svg></span><p>Our Railway setup has no Docker, so the agent cannot run the app or a database</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="14" width="36" height="22" rx="3"/><path d="M12 14V9h10v5M14 25h20M14 30h12"/></svg></span><p>On fly.io or AWS ECS, Docker-in-Docker lets the agent spin up your whole stack, database included</p></div>
+    <div class="point-card reveal"><span class="point-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="26" rx="3"/><path d="M6 17h36M17 42h14M24 35v7"/></svg></span><p>Add Playwright and it can check the UI itself and attach screenshots</p></div>
 <!-- @/card-grid -->

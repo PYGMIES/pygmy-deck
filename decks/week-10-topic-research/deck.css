@@ -292,3 +292,70 @@
 
 .point-grid[style*="--grid-cols: 4"] .point-card { padding: 40px 30px; }
 .point-grid[style*="--grid-cols: 4"] .point-card p { font-size: 30px; }
+
+/* Slide 03: user story card + acceptance criteria */
+.story-card {
+  padding: 28px 48px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+.story-tag {
+  margin: 0 0 12px;
+  font-size: 26px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.story-card .story-text {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  font-size: 46px;
+  line-height: 1.25;
+  color: var(--on-card);
+}
+.story-text b { font-weight: 700; }
+.ac-label {
+  margin: 24px 0 -24px 72px;
+  max-width: none;
+  font-size: 28px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ac-list li { padding: 0; }
+
+/* Slide 06: show the whole Linear screenshot instead of cropping it */
+.c-screen-frame:has(img.fit-shot) { height: auto; }
+.c-screen-frame__body img.fit-shot { flex: none; height: auto; object-fit: contain; }
+
+/* Slide 10: demo screenshot sized to fit under the title bar, centred */
+.c-screen-frame.demo-shot { width: 1180px; margin: 0 auto; }
+
+/* Slide 12: comparison table, left-aligned text cells */
+.cmp-table {
+  width: auto;
+  margin-right: var(--inset);
+  margin-top: 24px;
+  font-size: 32px;
+}
+.cmp-table th,
+.cmp-table td {
+  text-align: left;
+  vertical-align: middle;
+  padding: 20px 32px;
+}
+.cmp-table th:first-child,
+.cmp-table td:first-child {
+  width: 22%;
+  font-weight: 700;
+  color: var(--ink-accent);
+}
+.cmp-table thead th { font-size: 40px; }
+
+/* slide 18: shorter point-cards so they fit under the story card */
+.point-grid.conclusion-grid { margin-top: 32px; margin-right: 0; }
+.conclusion-grid .point-card { min-height: 0; gap: 20px; padding: 32px 36px; }
+.conclusion-grid .point-icon { width: 100px; height: 100px; }
+.conclusion-grid .point-icon svg { width: 90px; height: 90px; }
+.conclusion-grid .point-card p { font-size: 36px; }
