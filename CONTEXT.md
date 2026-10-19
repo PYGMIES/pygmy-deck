@@ -17,6 +17,7 @@ A repo for building presentation decks as code: numbered slide files + reusable 
 | `decks/sample` | demo | exercises all 16 components; slide 02 recreates the reference "Our Success Metrics" slide; figures are placeholders |
 
 | `decks/mid-term-presentation` | skeleton | Project Cassandra midterm, 5 Oct 2026; owners + TODOs in its CONTEXT.md |
+| `decks/week-10-topic-research` | draft | IS212 Week 10 sharing (G9T6); slides 06, 08 are placeholders |
 
 ## Open items
 - Real Garet font files (optional).

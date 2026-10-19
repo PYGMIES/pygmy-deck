@@ -1,0 +1,64 @@
+/* === DECK OVERRIDES === */
+
+/* slide 03: logo beside the board screenshot */
+.tool-logo {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+}
+
+/* slide 04: four logos joined by arrows */
+.tool-flow {
+  flex: 1;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  column-gap: 96px;
+  margin-right: var(--inset);
+}
+
+.tool-flow li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  text-align: center;
+}
+
+.tool-flow img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.tool-flow span {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  min-height: 2.1em;
+}
+
+.tool-flow li:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 100px;
+  right: -72px;
+  transform: translateY(-50%);
+  font-size: 64px;
+  color: var(--ink-muted);
+}
+
+/* slides 10-13: one stroke icon per limitation */
+.break-icon {
+  width: 260px;
+  height: 260px;
+  justify-self: center;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
