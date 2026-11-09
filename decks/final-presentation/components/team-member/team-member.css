@@ -1,0 +1,77 @@
+/* === COMPONENT: team-member === charcoal card: big initial top, role + name bottom.
+   class="is-light" for a pale card (used for the dev team).
+   photo="assets/x.png" swaps the initial for a photo (cover-cropped, focus = background-position; optional size="auto 220%" zooms in). */
+.c-team-member {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 36px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-team-member__initial {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  border: var(--rule-w) solid var(--on-card-muted);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 60px;
+  line-height: 1;
+  padding-top: 10px; /* optical centring for League Spartan caps */
+}
+
+.c-team-member__role {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-card-muted);
+}
+
+.c-team-member h3 {
+  font-size: 60px;
+  color: inherit;
+}
+
+/* class="is-long-name": smaller name kept on one line, so the photo matches the other cards */
+.c-team-member.is-long-name h3 {
+  font-size: 48px;
+  line-height: calc(60px * var(--display-leading)); /* same line box as a 60px name */
+  white-space: nowrap;
+}
+
+.c-team-member.is-light {
+  background: var(--bg-deep);
+  color: var(--ink);
+}
+
+.c-team-member.is-light .c-team-member__initial {
+  border-color: var(--ink);
+}
+
+.c-team-member.is-light .c-team-member__role {
+  color: var(--ink-muted);
+}
+
+/* photo variant: the photo fills the space the initial occupied */
+.c-team-member__photo { display: none; }
+
+.c-team-member.has-photo .c-team-member__initial { display: none; }
+
+.c-team-member.has-photo .c-team-member__photo {
+  display: block;
+  flex: 1;
+  min-height: 0;
+  margin-bottom: 28px;
+  border-radius: calc(var(--radius) - 8px);
+  background: var(--photo) var(--focus) / var(--size, cover) no-repeat;
+}

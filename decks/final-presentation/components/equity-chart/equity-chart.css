@@ -1,0 +1,89 @@
+/* === COMPONENT (deck): equity-chart ===
+   Cumulative P&L by campaign for each strategy, drawn as inline SVG on the
+   white chart backing. Geometry lives in the SVG viewBox (1728×640); series
+   colours come from --chart-* tokens. Slide 10. */
+.c-equity-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-height: 0;
+}
+
+.c-equity-chart__plot {
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--chart-bg);
+  padding: 8px 0 0;
+}
+
+.c-equity-chart__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.c-equity-chart__svg text { font-family: var(--font-body); }
+.c-equity-chart__svg .ec-tick { font-size: 22px; fill: var(--chart-ink-muted); }
+.c-equity-chart__svg .ec-newtxt { font-weight: 600; }
+.c-equity-chart__svg .ec-leg { font-size: 22px; font-weight: 600; fill: var(--chart-ink); }
+.c-equity-chart__svg .ec-end { font-size: 30px; font-weight: 700; }
+.c-equity-chart__svg .ec-grid { stroke: var(--chart-grid); stroke-width: 1.5; }
+.c-equity-chart__svg .ec-zero { stroke: var(--chart-ink-muted); stroke-width: 2; }
+.c-equity-chart__svg .ec-new { fill: var(--chart-new); }
+.c-equity-chart__svg .ec-band { fill: var(--chart-band); }
+.c-equity-chart__svg .ec-line { fill: none; stroke-width: 5; stroke-linejoin: round; }
+.c-equity-chart__svg .ec-dot { stroke: var(--chart-bg); stroke-width: 3; }
+
+.c-equity-chart__svg .ec-fade { stroke: var(--chart-fade); }
+.c-equity-chart__svg .ec-live { stroke: var(--chart-live); }
+.c-equity-chart__svg .ec-top  { stroke: var(--chart-model); }
+.c-equity-chart__svg .ec-rand { stroke: var(--chart-rand); }
+.c-equity-chart__svg .ec-dot.ec-fade, .c-equity-chart__svg text.ec-fade { fill: var(--chart-fade); }
+.c-equity-chart__svg .ec-dot.ec-live, .c-equity-chart__svg text.ec-live { fill: var(--chart-live); }
+.c-equity-chart__svg .ec-dot.ec-top,  .c-equity-chart__svg text.ec-top  { fill: var(--chart-model); }
+.c-equity-chart__svg .ec-dot.ec-rand, .c-equity-chart__svg text.ec-rand { fill: var(--chart-rand); }
+.c-equity-chart__svg text.ec-fade, .c-equity-chart__svg text.ec-live,
+.c-equity-chart__svg text.ec-top, .c-equity-chart__svg text.ec-rand { stroke: none; }
+
+.c-equity-chart__take {
+  padding-left: 24px;
+  border-left: 6px solid var(--accent);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  letter-spacing: var(--display-tracking);
+}
+
+/* Hover (wired by core/runtime.js [data-hover-chart]) */
+.c-equity-chart__svg .ec-hline { stroke: var(--chart-ink-muted); stroke-width: 2; pointer-events: none; }
+.c-equity-chart__svg .ec-hdot { stroke: var(--chart-bg); stroke-width: 3; pointer-events: none; }
+.c-equity-chart__svg .ec-hdot.ec-fade { fill: var(--chart-fade); }
+.c-equity-chart__svg .ec-hdot.ec-live { fill: var(--chart-live); }
+.c-equity-chart__svg .ec-hdot.ec-top  { fill: var(--chart-model); }
+.c-equity-chart__svg .ec-hdot.ec-rand { fill: var(--chart-rand); }
+
+.ec-tip {
+  position: absolute;
+  top: 70px;
+  min-width: 600px;
+  padding: 18px 22px;
+  border-radius: var(--radius-s);
+  background: var(--chart-bg);
+  border: 2px solid var(--chart-grid);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  color: var(--chart-ink);
+  font-size: 24px;
+  line-height: 1.35;
+  pointer-events: none;
+  z-index: 2;
+}
+.ec-tip[hidden] { display: none; }
+.ec-tip b { display: block; margin-bottom: 8px; font-size: 26px; font-weight: 700; }
+.ec-tip__row { display: flex; justify-content: space-between; gap: 32px; font-variant-numeric: tabular-nums; }
+.ec-tip__row.is-muted { color: var(--chart-ink-muted); }
+.ec-tip i { display: inline-block; width: 22px; height: 5px; margin-right: 12px; vertical-align: middle; border-radius: 3px; }
+.ec-tip i.ec-fade { background: var(--chart-fade); }
+.ec-tip i.ec-live { background: var(--chart-live); }
+.ec-tip i.ec-top  { background: var(--chart-model); }
+.ec-tip i.ec-rand { background: var(--chart-rand); }

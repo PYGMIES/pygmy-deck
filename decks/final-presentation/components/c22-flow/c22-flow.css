@@ -1,0 +1,100 @@
+/* === COMPONENT (deck): c22-flow ===
+   Catch22's workflow told through Sally (a challenge trader) and Alex (the
+   real-market trader she may be cloning): five steps left to right.
+   The step tagged --focus is the part this project owns.
+   is-step-N: the story is at step N; later steps are dimmed, step N is ringed. */
+.c-c22-flow {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  width: 1728px;
+  flex: none;
+  margin: auto 0;
+}
+
+.c-c22-flow__step {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.c-c22-flow__tag {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink-muted);
+}
+
+.c-c22-flow__box {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 28px;
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  color: var(--ink);
+  text-align: center;
+}
+
+.c-c22-flow__box h3 {
+  font-size: 60px;
+  color: inherit;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.c-c22-flow__sub {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  max-width: none;
+}
+
+.c-c22-flow__icon {
+  width: 120px;
+  height: 120px;
+  background: var(--ink);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.c-c22-flow__arrow {
+  flex: none;
+  width: 48px;
+  height: 40px;
+  margin-top: 48px;
+  fill: var(--ink-muted);
+  opacity: 0.5;
+}
+
+.c-c22-flow__step--focus .c-c22-flow__tag { color: var(--danger); }
+.c-c22-flow__step--focus .c-c22-flow__box {
+  background: var(--danger);
+  color: var(--bg);
+}
+
+.c-c22-flow__step--market .c-c22-flow__box {
+  background: var(--card);
+  color: var(--on-card);
+}
+
+/* story position: steps after N wait, step N is ringed */
+.c-c22-flow__step { transition: opacity 0.5s var(--ease-out); }
+.c-c22-flow__box { outline: 0 solid transparent; outline-offset: 6px; }
+
+.c-c22-flow.is-step-1 .c-c22-flow__step--s2, .c-c22-flow.is-step-1 .c-c22-flow__step--s3, .c-c22-flow.is-step-1 .c-c22-flow__step--s4, .c-c22-flow.is-step-1 .c-c22-flow__step--s5 { opacity: 0.22; }
+.c-c22-flow.is-step-2 .c-c22-flow__step--s3, .c-c22-flow.is-step-2 .c-c22-flow__step--s4, .c-c22-flow.is-step-2 .c-c22-flow__step--s5 { opacity: 0.22; }
+.c-c22-flow.is-step-3 .c-c22-flow__step--s4, .c-c22-flow.is-step-3 .c-c22-flow__step--s5 { opacity: 0.22; }
+.c-c22-flow.is-step-4 .c-c22-flow__step--s5 { opacity: 0.22; }
+.c-c22-flow.is-step-1 .c-c22-flow__step--s1 .c-c22-flow__box { outline: 6px solid var(--ink); }
+.c-c22-flow.is-step-2 .c-c22-flow__step--s2 .c-c22-flow__box { outline: 6px solid var(--ink); }
+.c-c22-flow.is-step-3 .c-c22-flow__step--s3 .c-c22-flow__box { outline: 6px solid var(--ink); }
+.c-c22-flow.is-step-4 .c-c22-flow__step--s4 .c-c22-flow__box { outline: 6px solid var(--ink); }
+.c-c22-flow.is-step-5 .c-c22-flow__step--s5 .c-c22-flow__box { outline: 6px solid var(--ink); }
+.c-c22-flow.is-step-5 .c-c22-flow__step--s5 .c-c22-flow__box { outline-color: var(--danger); }

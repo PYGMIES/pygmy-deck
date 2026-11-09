@@ -1,0 +1,15 @@
+<!-- notes: Jerrick. Judge v5 is a hurdle model with three arms. Each fills in one term of EV = p × E[gain] − (1 − p) × E[loss]. The classifier gives p (calibrated); the two Huber regressors give the dollar gain and loss. This is gross EV: the models train on gross = −profit. Direction only, fade or skip. amount only sets the cost: score = ev − 7.00 × amount, and we take the trade if it lands in the top 5% of the frozen pool distribution. Trade magnitude: TODO, to be covered later. -->
+<!-- @slide-title kicker="System Architecture" text="An ensemble of LightGBM models" -->
+<!-- @split cols="700px 1fr" class="inset" -->
+  <!-- @column -->
+    <!-- @section-heading title="In one sentence" subtitle="Three small models. Each fills in one term of the expected-value equation." -->
+    <!-- @section-heading title="Why it fits" -->
+    <!-- @bullet-list class="why-fits" -->
+      <li class="reveal"><strong>Tabular data</strong></li>
+      <li class="reveal"><strong>Small dataset</strong></li>
+      <li class="reveal"><strong>Built-in regularisation</strong></li>
+      <li class="reveal"><strong>Fast inference</strong></li>
+    <!-- @/bullet-list -->
+  <!-- @/column -->
+  <!-- @hurdle-flow -->
+<!-- @/split -->

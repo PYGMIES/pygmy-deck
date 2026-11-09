@@ -1,0 +1,11 @@
+/* === COMPONENT (deck): flow-x === danger-coloured cross centred on (x, y), 80×80. */
+.c-flow-x {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 -40px;
+  fill: none;
+  stroke: var(--danger);
+  stroke-width: 11;
+  stroke-linecap: round;
+}

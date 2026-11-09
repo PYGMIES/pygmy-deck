@@ -1,0 +1,92 @@
+<div class="c-arch-flow is-{{flow}} {{class|}}" style="--step: {{step}};">
+  <!-- Lanes -->
+  <div class="c-arch-flow__lane" style="left: 330px; width: 250px;"><span>Input/Output</span></div>
+  <div class="c-arch-flow__lane" style="left: 610px; width: 420px;"><span>Data &amp; Messaging</span></div>
+  <div class="c-arch-flow__lane" style="left: 1060px; width: 300px;"><span>Pipeline</span></div>
+  <div class="c-arch-flow__lane" style="left: 1390px; width: 338px;"><span>Services</span></div>
+
+  <!-- Wires: each path fades in at its step (--at); full opacity on that step, 50% afterwards -->
+  <svg class="c-arch-flow__wires" viewBox="0 0 1728 800" aria-hidden="true">
+    <defs>
+      <marker id="arch-flow-arrow-{{flow}}-{{step}}" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+        <path d="M2 2 L10.5 6 L2 10" fill="none" stroke="context-stroke" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <path class="w w-io a-in" d="M196 250 H350" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-fp" d="M560 232 L724 100" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-fo" d="M560 250 L648 283" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-fc" d="M560 262 L648 345" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-oq" d="M989 285 H1094" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-cq" d="M989 347 L1094 302" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-pw" d="M914 100 L1094 268" marker-start="url(#arch-flow-arrow-{{flow}}-{{step}})" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-jw" d="M1330 284 H1424" marker-start="url(#arch-flow-arrow-{{flow}}-{{step}})" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-cw" d="M990 470 L1100 322" marker-start="url(#arch-flow-arrow-{{flow}}-{{step}})" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-mw" d="M1328 318 L1434 430" marker-start="url(#arch-flow-arrow-{{flow}}-{{step}})" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-wps" d="M1136 342 L990 585" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w a-pd" d="M650 590 H560" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+    <path class="w w-io a-dc" d="M350 590 H196" marker-end="url(#arch-flow-arrow-{{flow}}-{{step}})"/>
+  </svg>
+
+  <!-- Actors -->
+  <div class="c-arch-flow__actor n-traders" style="top: 150px; left: -24px;">
+    <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="20" cy="12" r="8"/><circle cx="44" cy="12" r="8"/><path d="M4 44c0-10 7-18 16-18s16 8 16 18zM28 44c0-10 7-18 16-18s16 8 16 18z"/></svg>
+    <strong>Campaign Traders</strong>
+    <span>trading on C22’s platform</span>
+  </div>
+  <span class="c-arch-flow__wire-label n-traders" style="left: 213px; top: 190px; width: 120px;">{{label}}</span>
+
+  <div class="c-arch-flow__actor n-c22" style="top: 560px; left: -24px;">
+    <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="12" r="9"/><path d="M14 46c0-11 8-20 18-20s18 9 18 20z"/></svg>
+    <strong>C22</strong>
+    <span>Clement &amp; Lee Yang</span>
+  </div>
+  <span class="c-arch-flow__wire-label n-c22" style="left: 198px; top: 604px; width: 150px;">Trade<br>outcome</span>
+
+  <!-- I/O -->
+  <div class="c-arch-flow__node n-fastapi" style="left: 356px; top: 200px; width: 198px; height: 100px;">FastAPI<small>ingestion</small></div>
+  <div class="c-arch-flow__node n-dash" style="left: 356px; top: 540px; width: 198px; height: 100px;">Dashboard<small>visualisation</small></div>
+
+  <!-- Data & messaging -->
+  <div class="c-arch-flow__node n-postgres" style="left: 730px; top: 50px; width: 180px; height: 90px;">Postgres</div>
+  <div class="c-arch-flow__group n-redis" style="left: 632px; top: 190px; width: 376px; height: 460px;">
+    <span class="c-arch-flow__group-title">Redis</span>
+  </div>
+  <div class="c-arch-flow__node c-arch-flow__node--pill n-openq" style="left: 655px; top: 260px; width: 330px; height: 50px;">Open Trade Queue</div>
+  <div class="c-arch-flow__node c-arch-flow__node--pill n-closeq" style="left: 655px; top: 322px; width: 330px; height: 50px;">Close Trade Queue</div>
+  <div class="c-arch-flow__node c-arch-flow__node--pill n-cache" style="left: 655px; top: 440px; width: 330px; height: 60px;">Campaign Cache</div>
+  <div class="c-arch-flow__node c-arch-flow__node--pill n-pubsub" style="left: 655px; top: 560px; width: 330px; height: 60px;">Pub/Sub</div>
+
+  <!-- Pipeline -->
+  <div class="c-arch-flow__group n-workers" style="left: 1080px; top: 50px; width: 260px; height: 520px;">
+    <span class="c-arch-flow__group-title">Workers</span>
+  </div>
+  <div class="c-arch-flow__node c-arch-flow__node--dark n-workers" style="left: 1100px; top: 110px; width: 220px; height: 100px;">Worker #1</div>
+  <div class="c-arch-flow__node c-arch-flow__node--dark n-workers" style="left: 1100px; top: 236px; width: 220px; height: 100px;">Worker #2</div>
+  <span class="c-arch-flow__dots n-workers" style="left: 1100px; top: 344px;">···</span>
+  <div class="c-arch-flow__node c-arch-flow__node--dark n-workers" style="left: 1100px; top: 450px; width: 220px; height: 100px;">Worker #N</div>
+
+  <!-- Services -->
+  <div class="c-arch-flow__node c-arch-flow__node--dark c-arch-flow__node--judge n-judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
+  <div class="c-arch-flow__node n-market" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Market Price<br>Service</div>
+
+  <!-- Progress: six segments, the current one in accent -->
+  <div class="c-arch-flow__tracker">
+    <span class="c-arch-flow__tracker-label">Step <b>{{step}}</b> of 6</span>
+    <span class="c-arch-flow__tracker-bar">
+      <i style="--i: 1"></i><i style="--i: 2"></i><i style="--i: 3"></i><i style="--i: 4"></i><i style="--i: 5"></i><i style="--i: 6"></i>
+    </span>
+    <span class="c-arch-flow__end">{{end|}}</span>
+  </div>
+
+  <!-- What happens in this step -->
+  <div class="c-arch-flow__left">
+    <div class="c-arch-flow__step">
+      <span class="c-arch-flow__num">{{step}}</span>
+      <p>{{text}}</p>
+    </div>
+    <div class="c-arch-flow__extra">{{below|}}</div>
+  </div>
+
+  <!-- optional small note beside the step box -->
+  <div class="c-arch-flow__note">{{note|}}</div>
+</div>

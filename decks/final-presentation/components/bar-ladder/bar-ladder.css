@@ -1,0 +1,65 @@
+/* === COMPONENT (deck): bar-ladder ===
+   Four ascending bars: the ordering our Judge has to achieve. Heights are
+   illustrative, not data, so say so in the caption. */
+.c-bar-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 588px;
+  min-height: 0;
+}
+
+.c-bar-ladder__bars {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-s);
+  align-items: end;
+  border-bottom: 4px solid var(--ink);
+}
+
+.c-bar-ladder__col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  position: relative;
+}
+
+.c-bar-ladder__col i {
+  display: block;
+  height: var(--h);
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+  background: var(--ink-muted);
+  opacity: var(--o, 1);
+}
+
+.c-bar-ladder__col.is-ours i {
+  background: var(--accent);
+}
+
+.c-bar-ladder__col span {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding-top: 14px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+  color: var(--ink-accent);
+}
+
+.c-bar-ladder__col.is-ours span {
+  color: var(--ink);
+}
+
+.c-bar-ladder figcaption {
+  margin-top: 72px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}

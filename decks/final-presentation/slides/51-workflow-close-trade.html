@@ -1,0 +1,24 @@
+<!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the close is queued, a worker runs steps 3-6. Key notes: the Redis rolling metrics update even if the simulated close fails (e.g. the market price fetch). They are updated with a read-check-write retry pattern instead of locks. Reverse-trading PnL streams to the dashboard the moment each trade closes. -->
+<!-- @slide-title kicker="System Architecture" text="Workflow 3: Close Trade" -->
+<!-- @split cols="1fr 720px" align="stretch" class="inset" -->
+  <!-- @step-list class="is-compact is-close" -->
+    <li class="reveal">Close trade arrives<small>Trader closes an existing position</small></li>
+    <li class="reveal">Store trade in Postgres, queue it<small>Picked up by workers to run the close-trade pipeline</small></li>
+    <li class="reveal is-group">
+      <div class="c-step-list__band">Async · close trade pipeline run by worker</div>
+      <ol class="c-step-list__inner">
+        <li>Update running stats in Redis<small>Campaign and trader stats, for subsequent inferences</small></li>
+        <li>Fetch market price at close time</li>
+        <li>Calculate simulated profit/loss<small>Based on the Judge's decision</small></li>
+        <li>Update campaign's live totals<small>Published to the dashboard</small></li>
+      </ol>
+    </li>
+  <!-- @/step-list -->
+  <!-- @column -->
+    <!-- @note-card title="Key notes" class="is-dark is-bullets" -->
+      <li>Rolling metrics update in Redis cache even if the system fails to simulate a close position</li>
+      <li>Rolling metrics are updated safely with a read-check-write retry pattern, not locks</li>
+      <li>Live reverse trading PnL are streamed to the dashboard the moment each trade closes</li>
+    <!-- @/note-card -->
+  <!-- @/column -->
+<!-- @/split -->

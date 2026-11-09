@@ -1,0 +1,85 @@
+/* === COMPONENT: title-cover === stacked title + "for <client>" left, illustration
+   right, course code bottom-left and "Presented by" block bottom-right */
+.c-title-cover {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.c-title-cover__main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 640px;
+  align-items: center;
+  gap: var(--gap-l);
+  min-height: 0;
+  padding-left: 40px;
+}
+
+.c-title-cover h1 {
+  font-size: var(--fs-hero);
+  line-height: 0.8;
+}
+
+.c-title-cover__for {
+  display: flex;
+  align-items: baseline;
+  gap: 28px;
+  margin-top: 72px;
+  max-width: none;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  color: var(--ink);
+}
+
+.c-title-cover__for span {
+  font-size: 60px;
+}
+
+.c-title-cover__for strong {
+  font-size: 120px;
+  line-height: 1;
+}
+
+.c-title-cover__art {
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  mix-blend-mode: multiply; /* drop the PNG's white background onto the canvas */
+}
+
+.c-title-cover__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--gap-l);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.c-title-cover__course {
+  font-size: 28px;
+}
+
+.c-title-cover__by {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+  text-align: right;
+}
+
+.c-title-cover__by h2 {
+  font-size: 48px;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+.c-title-cover__by span {
+  font-size: 28px;
+  word-spacing: 0.15em;
+}

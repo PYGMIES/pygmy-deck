@@ -1,0 +1,15 @@
+<!-- notes: Appendix. Levers we tried and dropped, with the measured result. Market context: 18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005 (CI −0.0018 to +0.0025); 14 Yahoo macro features B+C −$23.5k to −$47.6k; NB14 flips negative on all three learners. SL/TP channel: even the leaked flag buys only +0.006. Hyperparameters: 50 Optuna trials +0.0028 CV AUC. -->
+<!-- @slide-title kicker="Appendix" text="Tried and Dropped" -->
+<!-- @column class="inset" -->
+  <!-- @compare-table -->
+    <thead><tr><th>Lever</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Market context</td><td class="is-bad">Rejected 4×</td></tr>
+      <tr><td>Stop / target channel</td><td class="is-bad">+0.006 AUC at best</td></tr>
+      <tr><td>Hyperparameter tuning</td><td class="is-bad">+0.0028 CV AUC</td></tr>
+      <tr><td>Tuned GBDT vs logistic</td><td class="is-bad">+0.002 AUC</td></tr>
+      <tr><td>More training campaigns</td><td class="is-bad">Flat learning curve</td></tr>
+      <tr><td>Same-day trade-context block</td><td class="is-bad">−$7,571 at top 5%</td></tr>
+    </tbody>
+  <!-- @/compare-table -->
+<!-- @/column -->

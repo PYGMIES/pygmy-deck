@@ -1,0 +1,21 @@
+<!-- notes: Yanting. How the data was used: 54 campaigns from C22. Each trade row has the trader's side, amount, open and close prices, and open and close times. Campaigns 33–68 are the training set, 69–77 the testing set, and 78–86 will be used as an additional test set. Feature count by version, v1 to v5: 21, 26, 45 (two feature sets combined), 26, then 18, keeping only what held up on unseen days. -->
+<!-- @slide-title kicker="Step 01: Data" text="How the Data was used" -->
+<!-- @card-grid cols="2" class="inset is-data-use" -->
+  <!-- @panel-card count="54" title="Campaigns from C22" note="Every customer trade is a row of 28 fields with information on trader's side, amount, open and close prices, and open and close times" -->
+    <table class="is-ruled">
+      <tr><th>Campaigns</th></tr>
+      <tr><td>33–68</td><td>Training set</td></tr>
+      <tr><td>69–77</td><td>Testing set</td></tr>
+      <tr><td>78–86</td><td>Additional test set</td></tr>
+    </table>
+  <!-- @/panel-card -->
+  <!-- @panel-card title="How the feature count changed" -->
+    <!-- @funnel class="is-in-card" -->
+      <div class="c-funnel__row reveal"><span class="c-funnel__label">v1</span><div class="c-funnel__bar" style="--w: 47%"><b>21</b></div></div>
+      <div class="c-funnel__row reveal"><span class="c-funnel__label">v2</span><div class="c-funnel__bar" style="--w: 58%"><b>26</b></div></div>
+      <div class="c-funnel__row reveal"><span class="c-funnel__label">v3</span><div class="c-funnel__bar" style="--w: 100%"><b>45</b></div></div>
+      <div class="c-funnel__row reveal"><span class="c-funnel__label">v4</span><div class="c-funnel__bar" style="--w: 58%"><b>26</b></div></div>
+      <div class="c-funnel__row reveal is-final"><span class="c-funnel__label">v5</span><div class="c-funnel__bar" style="--w: 40%"><b>18</b></div><span class="c-funnel__caption">Our final feature set, frozen for judge model</span></div>
+    <!-- @/funnel -->
+  <!-- @/panel-card -->
+<!-- @/card-grid -->

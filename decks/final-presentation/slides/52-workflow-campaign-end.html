@@ -1,0 +1,23 @@
+<!-- notes: James Z. Five steps, top to bottom. The /end call is idempotent: a second request for an already ended campaign does nothing and does not rerun the flow. Open trades are force-failed so the evaluation only uses completed trades. The same completed trades are scored three ways: Judge-led reverse, reverse all trades, coin-flip-led reverse. -->
+<!-- @slide-title kicker="System Architecture" text="Workflow 4: Campaign End &amp; Evaluation" -->
+<!-- @split cols="1fr 720px" align="stretch" class="inset" -->
+  <!-- @step-list class="is-compact is-end" -->
+    <li class="reveal">Campaign end trigger received<small>Via API call to /end</small></li>
+    <li class="reveal">Campaign marked completed in Postgres</li>
+    <li class="reveal">Any trade still open is force-failed</li>
+    <li class="reveal">Aggregate values for 3 strategies<small>On completed trades: Judge, Reverse-all, Coin-flip</small></li>
+    <li class="reveal">Store results, clear campaign cache</li>
+  <!-- @/step-list -->
+  <!-- @column -->
+    <!-- @note-card title="Key notes" class="is-dark is-bullets" -->
+      <li><strong>Idempotent closing:</strong> duplicated requests to end an already ended campaign is nullified and does not rerun the flow</li>
+      <li><strong>Final PnL evaluation:</strong> the following strategies are used on the same trade data and compared:
+        <ul class="c-note-card__sub">
+          <li>Judge decision-led reverse</li>
+          <li>Reverse all trades</li>
+          <li>Coin flip-led reverse</li>
+        </ul>
+      </li>
+    <!-- @/note-card -->
+  <!-- @/column -->
+<!-- @/split -->

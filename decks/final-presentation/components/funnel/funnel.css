@@ -1,0 +1,117 @@
+/* === COMPONENT (deck): funnel ===
+   Stacked bars that narrow top to bottom, each with a one-line "what we did".
+   Bar width is --w per row (illustrative, not proportional to the count).
+   Rows live in the slide as raw .c-funnel__row blocks. */
+.c-funnel {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.c-funnel__row {
+  display: grid;
+  grid-template-columns: 880px 1fr;
+  gap: var(--gap-l);
+  align-items: center;
+}
+
+.c-funnel__bar {
+  width: var(--w, 100%);
+  justify-self: center;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-s);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-funnel__bar b {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+}
+
+.c-funnel__bar span {
+  font-size: var(--fs-small);
+  line-height: 1.2;
+  color: var(--on-card-muted);
+  text-align: left;
+}
+
+.c-funnel__row.is-final .c-funnel__bar {
+  outline: 6px solid var(--accent);
+  outline-offset: -6px;
+}
+
+.c-funnel__row.is-final .c-funnel__bar b {
+  color: var(--accent);
+}
+
+.c-funnel__row p {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: 1.25;
+}
+
+.c-funnel__row p strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--display-tracking);
+  color: var(--ink-accent);
+  margin-bottom: 4px;
+}
+
+/* is-in-card: compact funnel inside a charcoal card (panel-card). Rows = version label + centred bar,
+   lighter bars so they read on --card; .is-final bar uses the soft accent. */
+.c-funnel.is-in-card {
+  flex: 1;
+  justify-content: center;
+  gap: 16px;
+}
+
+.c-funnel.is-in-card .c-funnel__row {
+  grid-template-columns: 64px 1fr;
+  gap: var(--gap-s);
+}
+
+.c-funnel.is-in-card .c-funnel__label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  color: var(--on-card-muted);
+}
+
+.c-funnel.is-in-card .c-funnel__bar {
+  height: 74px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--on-card-muted) 45%, transparent);
+}
+
+.c-funnel.is-in-card .c-funnel__bar b { font-size: 44px; }
+
+.c-funnel.is-in-card .is-final .c-funnel__label { color: var(--on-card); }
+
+.c-funnel.is-in-card .is-final .c-funnel__bar {
+  outline: none;
+  background: var(--accent-soft);
+  color: var(--card);
+}
+
+.c-funnel.is-in-card .is-final .c-funnel__bar b { color: var(--card); }
+
+/* caption under a bar (e.g. the final row), centred on the bar column */
+.c-funnel.is-in-card .c-funnel__caption {
+  grid-column: 2;
+  margin-top: -6px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--accent-soft);
+}

@@ -1,0 +1,38 @@
+/* === COMPONENT (deck): flow-heading ===
+   Title + optional sub-line + coloured tag (Problem / Solution / Asynchronous).
+   Deliberately NOT .reveal: it stays still between build steps so only the new
+   piece of the diagram animates. */
+.c-flow-heading {
+  flex: none;
+}
+
+.c-flow-heading h1 {
+  font-size: var(--fs-title);
+  line-height: 1;
+}
+
+.c-flow-heading p {
+  max-width: none;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: 1;
+}
+
+.c-flow-heading__sub {
+  margin-top: 22px;
+  font-size: var(--fs-h3);
+}
+
+.c-flow-heading__tag {
+  margin-top: 18px;
+  font-size: var(--fs-h3);
+}
+
+.c-flow-heading__tag--good {
+  color: var(--success);
+}
+
+.c-flow-heading__tag--bad {
+  color: var(--danger);
+}

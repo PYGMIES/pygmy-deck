@@ -1,0 +1,21 @@
+/* === COMPONENT (deck): flow-note ===
+   Centred caption at stage coordinates (x, y = top-left, w = width).
+   tone: ink | danger | good. */
+.c-flow-note {
+  position: absolute;
+  max-width: none;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.c-flow-note--danger {
+  color: var(--danger);
+}
+
+.c-flow-note--good {
+  color: var(--success);
+}

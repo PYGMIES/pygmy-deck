@@ -1,0 +1,131 @@
+/* === COMPONENT (deck): shap-bars ===
+   Two 100% stacked bars of mean |SHAP| share by feature bucket, with a
+   "remove outcome features" step between. Segment widths are --w (percent).
+   Numbers come from Notebook 12 §4; edit them in the HTML. */
+.c-shap-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+
+.c-shap-bars__row h4 {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--display-tracking);
+  color: var(--ink-accent);
+}
+
+.c-shap-bars__row h4 span {
+  font-family: var(--font-body);
+  font-weight: var(--body-weight);
+  font-size: var(--fs-small);
+  letter-spacing: var(--body-tracking);
+  color: var(--ink-muted);
+  margin-left: 12px;
+}
+
+.c-shap-bars__bar {
+  display: flex;
+  gap: 6px;
+  height: 120px;
+}
+
+.c-shap-bars__bar i {
+  flex: var(--w) 1 0;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-s);
+  font-style: normal;
+}
+
+.c-shap-bars__bar b {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+}
+
+/* too narrow for a label inside: sit it above the segment */
+.c-shap-bars__bar em {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  font-style: normal;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+  background: none;
+  padding: 0;
+}
+
+.is-outcome   { background: var(--accent); color: var(--ink); }
+.is-behaviour { background: var(--card); color: var(--on-card); }
+.is-ticket    { background: var(--ink-muted); color: var(--on-card); }
+.is-counter   { background: var(--rule); }
+
+.c-shap-bars__step {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-s);
+  height: 84px;
+  padding-left: 12px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+
+.c-shap-bars__step::before {
+  content: "↓";
+  font-size: 44px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.c-shap-bars__step span {
+  font-size: var(--fs-body);
+  color: var(--ink);
+}
+
+.c-shap-bars__legend {
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-s);
+}
+
+.c-shap-bars__legend li {
+  background: none;
+  color: var(--ink-muted);
+  font-size: var(--fs-small);
+  line-height: 1.25;
+  padding-left: 40px;
+  position: relative;
+}
+
+.c-shap-bars__legend li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: inherit;
+}
+
+.c-shap-bars__legend .is-outcome::before   { background: var(--accent); }
+.c-shap-bars__legend .is-behaviour::before { background: var(--card); }
+.c-shap-bars__legend .is-ticket::before    { background: var(--ink-muted); }
+.c-shap-bars__legend .is-counter::before   { background: var(--rule); }
+
+.c-shap-bars figcaption {
+  margin-top: 20px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}

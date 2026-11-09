@@ -1,0 +1,108 @@
+/* === COMPONENT: trader-pile === 100 dots = 100% of trades.
+   Sally (top 10% of traders) holds 55 dots; the other nine each hold 5.
+   Same dot size everywhere, so pile area is proportional to trades. No own animation: uses .reveal. */
+.c-trader-pile {
+  --dot: 40px;
+  --dot-gap: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 96px;
+  row-gap: 44px;
+  align-items: center;
+}
+
+.c-trader-pile__dots {
+  display: grid;
+  gap: var(--dot-gap);
+}
+
+.c-trader-pile__dots i,
+.c-trader-pile__key i {
+  display: block;
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+}
+
+.c-trader-pile__dots--hero {
+  grid-template-columns: repeat(11, var(--dot));
+}
+
+.c-trader-pile__dots--small {
+  grid-template-columns: repeat(5, var(--dot));
+}
+
+/* Sally: accent dots on a soft accent panel */
+.c-trader-pile__hero {
+  margin: 0;
+  padding: 40px 44px 36px;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.c-trader-pile__hero .c-trader-pile__dots i { background: var(--accent); }
+
+.c-trader-pile__hero figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: var(--rule-w) solid var(--rule);
+}
+
+.c-trader-pile__hero figcaption b {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: 1;
+}
+
+.c-trader-pile__hero figcaption span {
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+
+.c-trader-pile__hero figcaption .c-trader-pile__share { font-weight: 700; color: var(--ink-accent); }
+
+/* The other nine: charcoal dots, 3 x 3 */
+.c-trader-pile__rest {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: space-between;
+  row-gap: 40px;
+}
+
+.c-trader-pile__pile { margin: 0; }
+
+.c-trader-pile__pile .c-trader-pile__dots i { background: var(--card); }
+
+.c-trader-pile__pile figcaption {
+  margin-top: 12px;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+/* Key + headline stat across the bottom */
+.c-trader-pile p.c-trader-pile__key {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+  max-width: none;
+}
+
+.c-trader-pile__key strong { color: var(--ink); }
+
+.c-trader-pile__key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.c-trader-pile__key i { --dot: 22px; background: var(--card); flex: none; }

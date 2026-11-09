@@ -1,0 +1,51 @@
+<figure class="c-scatter-chart reveal {{class|}}">
+  <div class="c-scatter-chart__plot" data-hover-scatter='{"w":1728,"h":640,"p":[{"x":260.0,"y":308.1,"t":"NB 07 · v3 tuning · 26 features frozen","d":"Tuned the model, froze the 26-feature shortlist","v":"v3 frozen (26 feat)","u":"−$393","ci":""},{"x":480.0,"y":409.7,"t":"NB 08 · v4 · retrained on 45 campaigns","d":"Retrained on 45 campaigns, gross-profit target","v":"v4 frozen (26 feat)","u":"−$747","ci":""},{"x":689.0,"y":320.8,"t":"NB 11 · Ensemble + stop-price classifier","d":"Added predicted stop-price usage. Null result","v":"ensemble clean","u":"−$437","ci":""},{"x":711.0,"y":327.1,"t":"NB 11 · Ensemble + stop-price classifier","d":"Added predicted stop-price usage. Null result","v":"ensemble + p_sl","u":"−$459","ci":""},{"x":887.0,"y":245.8,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"full","u":"−$177","ci":""},{"x":909.0,"y":156.5,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"no_outcome (control)","u":"+$134","ci":""},{"x":931.0,"y":328.4,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"behaviour only","u":"−$464","ci":""},{"x":953.0,"y":118.5,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"ticket only","u":"+$266","ci":""},{"x":1096.0,"y":487.7,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"+ same-day block","u":"−$1,018","ci":"−$2,608 to +$571"},{"x":1118.0,"y":291.4,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"+ Joyce history","u":"−$335","ci":"−$944 to +$274"},{"x":1140.0,"y":354.3,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"all 48","u":"−$554","ci":"−$1,148 to +$40"},{"x":1162.0,"y":254.4,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"45 no_outcome","u":"−$206","ci":"−$1,402 to +$989"},{"x":1184.0,"y":153.7,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"45 behaviour","u":"+$144","ci":"−$587 to +$874"},{"x":1285.0,"y":225.9,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"cat:crowd5","u":"−$108","ci":"−$1,297 to +$1,082"},{"x":1303.8,"y":319.9,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"cat:mkt4","u":"−$434","ci":"−$1,597 to +$728"},{"x":1322.5,"y":430.5,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"cat:no_outcome","u":"−$819","ci":"−$2,289 to +$651"},{"x":1341.2,"y":272.8,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"lgbm:crowd5","u":"−$271","ci":"−$1,190 to +$648"},{"x":1360.0,"y":307.3,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"lgbm:mkt4","u":"−$391","ci":"−$1,888 to +$1,107"},{"x":1378.8,"y":156.5,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"lgbm:no_outcome","u":"+$134","ci":"−$1,340 to +$1,607"},{"x":1397.5,"y":316.6,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"xgb:crowd5","u":"−$423","ci":"−$1,293 to +$447"},{"x":1416.2,"y":336.8,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"xgb:mkt4","u":"−$493","ci":"−$1,647 to +$660"},{"x":1435.0,"y":269.6,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"xgb:no_outcome","u":"−$259","ci":"−$1,375 to +$856"},{"x":1505.0,"y":354.2,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"clf_off","u":"−$554","ci":"−$1,697 to +$590"},{"x":1526.4,"y":156.5,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"full","u":"+$134","ci":"−$1,340 to +$1,607"},{"x":1547.9,"y":466.1,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"gain_lin","u":"−$943","ci":"−$2,020 to +$134"},{"x":1569.3,"y":218.6,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"gain_off","u":"−$82","ci":"−$464 to +$300"},{"x":1590.7,"y":235.8,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"loss_lin","u":"−$142","ci":"−$1,202 to +$918"},{"x":1612.1,"y":222.2,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"loss_off","u":"−$95","ci":"−$1,045 to +$856"},{"x":1633.6,"y":388.2,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"regs_lin","u":"−$672","ci":"−$1,460 to +$116"},{"x":1655.0,"y":125.8,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"regs_off","u":"+$241","ci":"−$479 to +$960"}]}'>
+    <svg class="c-scatter-chart__svg" viewBox="0 0 1728 640" role="img" aria-label="Profit per campaign for each variant tried in notebooks 7 to 15">
+    <line class="sc-grid" x1="150" x2="1690" y1="540.0" y2="540.0"/><text class="sc-tick" x="134" y="548.0" text-anchor="end">−$1,200</text>
+    <line class="sc-grid" x1="150" x2="1690" y1="425.0" y2="425.0"/><text class="sc-tick" x="134" y="433.0" text-anchor="end">−$800</text>
+    <line class="sc-grid" x1="150" x2="1690" y1="310.0" y2="310.0"/><text class="sc-tick" x="134" y="318.0" text-anchor="end">−$400</text>
+    <line class="sc-zero" x1="150" x2="1690" y1="195.0" y2="195.0"/><text class="sc-tick" x="134" y="203.0" text-anchor="end">$0</text>
+    <line class="sc-grid" x1="150" x2="1690" y1="80.0" y2="80.0"/><text class="sc-tick" x="134" y="88.0" text-anchor="end">+$400</text>
+    <text class="sc-tick sc-nb" x="260.0" y="584" text-anchor="middle">NB 07</text>
+    <text class="sc-tick sc-nb" x="480.0" y="584" text-anchor="middle">NB 08</text>
+    <text class="sc-tick sc-nb" x="700.0" y="584" text-anchor="middle">NB 11</text>
+    <text class="sc-tick sc-nb" x="920.0" y="584" text-anchor="middle">NB 12</text>
+    <text class="sc-tick sc-nb" x="1140.0" y="584" text-anchor="middle">NB 13</text>
+    <text class="sc-tick sc-nb" x="1360.0" y="584" text-anchor="middle">NB 14</text>
+    <text class="sc-tick sc-nb" x="1580.0" y="584" text-anchor="middle">NB 15</text>
+    <text class="sc-axis" x="150" y="50">$ per campaign, top 5% of trades, locked campaigns 69–77</text>
+    <circle class="sc-dot sc-neg" cx="260.0" cy="308.1" r="10"/>
+    <circle class="sc-dot sc-neg" cx="480.0" cy="409.7" r="10"/>
+    <circle class="sc-dot sc-neg" cx="689.0" cy="320.8" r="10"/>
+    <circle class="sc-dot sc-neg" cx="711.0" cy="327.1" r="10"/>
+    <circle class="sc-dot sc-neg" cx="887.0" cy="245.8" r="10"/>
+    <circle class="sc-dot sc-pos" cx="909.0" cy="156.5" r="10"/>
+    <circle class="sc-dot sc-neg" cx="931.0" cy="328.4" r="10"/>
+    <circle class="sc-dot sc-pos" cx="953.0" cy="118.5" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1096.0" cy="487.7" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1118.0" cy="291.4" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1140.0" cy="354.3" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1162.0" cy="254.4" r="10"/>
+    <circle class="sc-dot sc-pos" cx="1184.0" cy="153.7" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1285.0" cy="225.9" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1303.8" cy="319.9" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1322.5" cy="430.5" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1341.2" cy="272.8" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1360.0" cy="307.3" r="10"/>
+    <circle class="sc-dot sc-pos" cx="1378.8" cy="156.5" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1397.5" cy="316.6" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1416.2" cy="336.8" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1435.0" cy="269.6" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1505.0" cy="354.2" r="10"/>
+    <circle class="sc-dot sc-pos" cx="1526.4" cy="156.5" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1547.9" cy="466.1" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1569.3" cy="218.6" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1590.7" cy="235.8" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1612.1" cy="222.2" r="10"/>
+    <circle class="sc-dot sc-neg" cx="1633.6" cy="388.2" r="10"/>
+    <circle class="sc-dot sc-pos" cx="1655.0" cy="125.8" r="10"/>
+    <circle class="sc-dot sc-pos" cx="1330" cy="43" r="10"/><text class="sc-leg" x="1348" y="51">Above $0</text><circle class="sc-dot sc-neg" cx="1500" cy="43" r="10"/><text class="sc-leg" x="1518" y="51">At or below $0</text>
+    </svg>
+  </div>
+  <figcaption class="c-scatter-chart__take">{{takeaway}}</figcaption>
+</figure>

@@ -1,0 +1,9 @@
+<!-- notes: Appendix. Per-feature mean |SHAP|. Solid bars: full 26-feature model. Faded bars: no_outcome model. Colours are feature groups. Take outcome history away and prior_sl_use_rate and sec_since_last_close take over. -->
+<!-- @slide-title kicker="Appendix" text="SHAP by Feature" -->
+<!-- @split cols="1fr 640px" class="inset" -->
+  <!-- @image-frame src="assets/shap_by_feature.png" alt="Mean absolute SHAP per feature for the full model and the no-outcome model" fit="contain" -->
+  <!-- @column -->
+    <!-- @section-heading title="Full model" subtitle="prior_win_rate alone carries 0.16 mean |SHAP|, then prior_sl_use_rate and current_streak" -->
+    <!-- @section-heading title="Without outcome history" subtitle="prior_sl_use_rate takes over, so the model falls back on how traders behave" -->
+  <!-- @/column -->
+<!-- @/split -->

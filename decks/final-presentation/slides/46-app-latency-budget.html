@@ -1,0 +1,21 @@
+<!-- notes: Appendix. Follows the latency and throughput evidence slide. Left: what the historical data says about the 10c adverse-price check. It only works if the time from client fill to desk order stays around 100 ms; at 1 s roughly 30% of trades already fail it. That is why the 10c latency limit is the requirement that matters, not concurrency: 6 trades/min is the busiest period anywhere in the data. Keeping failures at 1% needs about 15-30 ms. In a calm minute (p10 volatility) 5% failures allows about 0.7 s, but in the most volatile 1% of minutes (news spikes) it is about 3 ms and most trades fail whatever the system does. These numbers assume the check compares prices once, when the desk places its order; if a move to +10c at any point before that counts, the limits roughly halve. There is no data finer than one second, so sub-second figures were scaled down from 1-10 minute measurements and cross-checked against the second-stamped fills. Below 1 s the real market moves slower than the scaling predicts, so the budget is on the cautious side. Right: our own peak run (peak-790963676.csv): 102 trades through the pipeline, 99 completed and 3 marked slipped (OANDA's price moved between the cached candle and the pipeline's read). The clock starts when the API receives the trade, so the time from the client's fill to reaching us is not included. Received to decision published is 31 ms at the median, 88 ms at p90, 228 ms at p99. Received to OANDA price read is 558 ms at the median and 951 ms at p99. About 10% of trades are over 100 ms. The median is fine; the slow tail is on the Slow 10% slide. If the desk order has to wait for the OANDA price check, almost every trade misses the budget. Bursts of 4-5 trades did not slow anything noticeably. -->
+<!-- @slide-title kicker="Appendix · Non-functional requirements" text="Latency Budget vs Measured" -->
+<!-- @split cols="1fr 1fr" -->
+  <!-- @point-list title="What the data says" note="10c adverse-price check" -->
+    <li><strong>Under ~100 ms:</strong> the check only works if fill → desk order is this fast. At 1 s, ~30% of trades already fail.</li>
+    <li><strong>Strict budget:</strong> ≤1% failing needs ~15–30 ms.</li>
+    <li><strong>Calm vs volatile:</strong> 5% failing allows ~0.7 s in a calm minute, ~3 ms in the most volatile 1% (news spikes).</li>
+    <li><strong>Stricter reading:</strong> if any move to +10c before the order counts, limits roughly halve.</li>
+    <li><strong>Data limit:</strong> nothing finer than 1 s, so sub-second is scaled. The real market is slower there, so these limits are cautious.</li>
+  <!-- @/point-list -->
+  <!-- @column gap="16px" -->
+    <!-- @section-heading title="Our peak run" subtitle="Milliseconds from API receipt. 102 trades: 99 completed, 3 slipped. About 10% pass 100 ms; the desk order waits on OANDA." -->
+    <!-- @compare-table -->
+      <thead><tr><th></th><th>p50</th><th>p90</th><th>p99</th><th>Max</th></tr></thead>
+      <tbody>
+        <tr><td>Decision</td><td class="is-focus">31</td><td>88</td><td>228</td><td>241</td></tr>
+        <tr><td>OANDA read</td><td class="is-focus">558</td><td>746</td><td>951</td><td>1,850</td></tr>
+      </tbody>
+    <!-- @/compare-table -->
+  <!-- @/column -->
+<!-- @/split -->

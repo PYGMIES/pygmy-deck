@@ -1,0 +1,15 @@
+<!-- notes: Appendix. Evidence behind the latency and throughput requirements on the NFR slide. Left chart: the median time for gold to move $0.10 against the desk is 0.6-0.85 s over a typical minute, and it varies by hour (UTC); it is about 0.3 s in the 13-14 UTC London/New York overlap. Right chart: the share of trades that fail the $0.10 adverse-price check grows with end-to-end latency (client fill to desk order); keeping failures at 5% needs about 50-90 ms. Throughput, all 84,456 trades Feb-Sep: the busiest minute had 19 trades and the busiest second 5, from 5 different accounts; the median gap between trades is 24 s. Even at the busiest second with 1 s latency about 5 trades are judged at once, so sizing for bursts of 5-10 simultaneous trades is plenty. Only 2% of trades close within 5 s. -->
+<!-- @slide-title kicker="Appendix · Non-functional requirements" text="Latency and Throughput" -->
+<!-- @chart-pair a="assets/latency-gold-move-by-hour.jpg" a-alt="Bar chart: median time in milliseconds for gold to move 0.10 dollars against the desk, by hour of day in UTC. The slowest hours are 4 and 20 UTC, the fastest are 13 and 14 UTC." b="assets/latency-adverse-check-curve.jpg" b-alt="Line chart: percentage of trades failing the 0.10 dollar adverse-price check against end-to-end latency on a log scale from 10 milliseconds to 60 seconds, for a final check at decision time and a worst case. The 5 percent line is crossed at about 50 to 90 milliseconds." -->
+<!-- @split cols="1fr 1fr" -->
+  <!-- @point-list title="Latency" note="how fast gold moves" -->
+    <li><strong>Median move time:</strong> 0.6–0.85 s, about 0.3 s in the 13–14 UTC London/New York overlap.</li>
+    <li><strong>Typical minute:</strong> a $2.15 range, about 21× the 10c threshold.</li>
+    <li><strong>Latency budget:</strong> ≤5% of trades fail the check at ~50–90 ms; ≤10% at ~100–170 ms; ≤25% at ~0.4–0.6 s.</li>
+  <!-- @/point-list -->
+  <!-- @point-list title="Throughput" note="84,456 trades, Feb–Sep" -->
+    <li><strong>Peak:</strong> 5.9 trades/min (14 Aug, 09:30–10:00).</li>
+    <li><strong>Bursts:</strong> busiest minute 19 trades; busiest second 5, from 5 accounts. Median gap between trades is 24 s.</li>
+    <li><strong>Build for:</strong> bursts of 5–10 simultaneous trades. Only 2% of trades close within 5 s.</li>
+  <!-- @/point-list -->
+<!-- @/split -->

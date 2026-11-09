@@ -1,0 +1,37 @@
+<!-- notes: Appendix. Final hyperparameters of the v5 judge (judge_v5_gross_18, 18 no_outcome features). Source: scripts/target_ablation.py BASE, CLF_PARAMS, REG_PARAMS. One LightGBM parameter set shared by all three models; the classifier uses binary loss, the gain and loss regressors use huber. Early stopping 100 rounds; final refit at the median best iteration across the six folds: classifier 44 trees, gain 6,392, loss 6,412. Isotonic calibration on leave-one-fold-out predictions. -->
+<!-- @slide-title kicker="Appendix" text="Judge v5 Hyperparameters" -->
+<!-- @split cols="1fr 1fr 1fr" class="inset" -->
+  <!-- @column -->
+    <!-- @section-heading title="Tree shape" subtitle="Shared by all three models" -->
+    <!-- @compare-table -->
+      <tbody>
+        <tr><td>max_depth</td><td>4</td></tr>
+        <tr><td>num_leaves</td><td>15</td></tr>
+        <tr><td>min_child_samples</td><td>47</td></tr>
+        <tr><td>learning_rate</td><td>0.0707</td></tr>
+      </tbody>
+    <!-- @/compare-table -->
+  <!-- @/column -->
+  <!-- @column -->
+    <!-- @section-heading title="Sampling" subtitle="Shared; includes L1/L2 penalties" -->
+    <!-- @compare-table -->
+      <tbody>
+        <tr><td>subsample</td><td>0.752</td></tr>
+        <tr><td>colsample_bytree</td><td>0.638</td></tr>
+        <tr><td>reg_lambda</td><td>4.125</td></tr>
+        <tr><td>reg_alpha</td><td>2.812</td></tr>
+      </tbody>
+    <!-- @/compare-table -->
+  <!-- @/column -->
+  <!-- @column -->
+    <!-- @section-heading title="Per model" subtitle="Early stop 100 rounds, refit at median best" -->
+    <!-- @compare-table -->
+      <thead><tr><th></th><th>Loss</th><th>Trees</th></tr></thead>
+      <tbody>
+        <tr><td>Win?</td><td>binary</td><td>44</td></tr>
+        <tr><td>Gain</td><td>huber</td><td>6,392</td></tr>
+        <tr><td>Loss</td><td>huber</td><td>6,412</td></tr>
+      </tbody>
+    <!-- @/compare-table -->
+  <!-- @/column -->
+<!-- @/split -->

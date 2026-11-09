@@ -1,0 +1,16 @@
+<!-- notes: Appendix. Why the slowest 10% of decisions are slow, from the peak run of 102 trades. Three steps cause the tail. The Judge call: median 10 ms for network and client, 32 ms at p90, 87 ms at p99; judge.client_setup alone is 80 ms at p99 because a new HTTP client (and its TLS setup) is built on every call, so a shared client would remove most of it. Counting earlier closed trades: one query with a bad tail, 2 ms median but 107 ms at p99, worth an EXPLAIN and probably a missing index. Storing the open trade: two commits, 8 ms median and 31 ms at p99, which could be one. What turned out not to be the problem: queue wait is about 0.5 ms (p99 1.5 ms); every Redis step is under 1 ms at the median; the judge model itself takes about 3 ms; bursts of 5 did not slow anything down. An earlier suspicion that open trades would sit behind a one-second wait was wrong; with 15 workers one is always free, and the 645 ms seen in the smoke run was a cold start. The real problem is OANDA, on both open and close. Clock note: the containers' clocks differ from the Mac's, so we measure from when the API receives the trade; a --host-clock switch changes it back to the seed's send time. -->
+<!-- @slide-title kicker="Appendix · Non-functional requirements" text="The Slow 10%" -->
+<!-- @split cols="1fr 1fr" -->
+  <!-- @point-list title="What slows the tail" note="p50 → p99" -->
+    <li><strong>Judge call:</strong> 10 → 87 ms. A new HTTP client is built every call (80 ms at p99). Share one.</li>
+    <li><strong>Counting closed trades:</strong> 2 → 107 ms. One DB query with a bad tail. Check with EXPLAIN, likely a missing index.</li>
+    <li><strong>Storing the open trade:</strong> 8 → 31 ms. Two commits where one would do.</li>
+  <!-- @/point-list -->
+  <!-- @point-list title="Not the problem" note="ruled out" -->
+    <li><strong>Queue wait:</strong> 0.5 ms (p99 1.5 ms). With 15 workers, one is always free.</li>
+    <li><strong>Redis steps:</strong> under 1 ms at the median.</li>
+    <li><strong>Judge model:</strong> about 3 ms.</li>
+    <li><strong>Bursts of 5:</strong> no slowdown.</li>
+  <!-- @/point-list -->
+<!-- @/split -->
+<!-- @label-card title="The real problem<br>is OANDA" body="If the desk order waits for the ~558 ms price read, about 100% of trades miss the budget." -->

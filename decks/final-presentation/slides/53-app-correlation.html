@@ -1,0 +1,9 @@
+<!-- notes: Appendix. Pearson correlation of the point-in-time features with each other and with the two targets (last two rows and columns). Leaked stop and target fields are already removed. -->
+<!-- @slide-title kicker="Appendix" text="Feature Correlations" -->
+<!-- @split cols="1fr 640px" class="inset" -->
+  <!-- @image-frame src="assets/correlation_matrix.png" alt="Pearson correlation matrix of point-in-time features and both targets" fit="contain" -->
+  <!-- @column -->
+    <!-- @section-heading title="Against the target" subtitle="No feature correlates above 0.19 with whether fading wins" -->
+    <!-- @section-heading title="Among themselves" subtitle="Time-of-day and cumulative-profit features move together, so we read importance with SHAP, not raw correlation" -->
+  <!-- @/column -->
+<!-- @/split -->

@@ -1,0 +1,27 @@
+<!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the trade is queued, a worker runs steps 3-6. Step 4: 18 features built live from the trade plus the cached history, then the Judge decides. Step 5: Oanda is a stand-in for C22's market data; slippage is the gap between the trader's entry price and ours. Key notes: in production, market data is polled or read from C22 directly and no response is sent. C22's slippage threshold is 0.10; we adjusted it for the demo because of the historical data. -->
+<!-- @slide-title kicker="System Architecture" text="Workflow 2: Open Trade" -->
+<!-- @split cols="1fr 720px" align="stretch" class="inset" -->
+  <!-- @step-list class="is-compact" -->
+    <li class="reveal">Trade arrives<small>Trader opens a new position</small></li>
+    <li class="reveal">Store trade in Postgres, queue it<small>Picked up by workers running the open-trade pipeline</small></li>
+    <li class="reveal is-group">
+      <div class="c-step-list__band">Async · open trade pipeline run by worker</div>
+      <ol class="c-step-list__inner">
+        <li>Read cached trader history from Redis</li>
+        <li>Build 18 features, call the Judge<small>Inference returns a decision from the features</small></li>
+        <li>Fetch market price, check slippage<i class="c-step-list__arrow" style="--arrow-from: 735px; --arrow-y: 33px; --arrow-len: 196px; --arrow-ang: -32.1deg"></i><i class="c-step-list__arrow" style="--arrow-from: 735px; --arrow-y: 33px; --arrow-len: 197px; --arrow-ang: 32.6deg"></i></li>
+        <li>Record the simulated reverse position<small>Market price + Judge decision, stored for reverse profit calculation</small></li>
+      </ol>
+    </li>
+  <!-- @/step-list -->
+  <!-- @column gap="20px" -->
+    <!-- @note-card title="Key notes" class="is-dark is-bullets" -->
+      <li>Market data will be polled or read from C22 directly, with no response sent.</li>
+      <li>Slippage threshold is 0.10 as set by C22, adjusted for this demo because of historical data.</li>
+    <!-- @/note-card -->
+    <!-- @note-card title="Market price" body="Currently using the Oanda API as a placeholder; will integrate with C22" class="is-tall is-start" -->
+    <!-- @/note-card -->
+    <!-- @note-card title="Slippage threshold" body="Max allowed difference in market price between when the trader opened their position and when we open ours" class="is-tall" -->
+    <!-- @/note-card -->
+  <!-- @/column -->
+<!-- @/split -->
