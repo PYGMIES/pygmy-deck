@@ -316,17 +316,23 @@ body.overview .deck-viewport {
   pointer-events: none;
 }
 
+.deck-overview.is-sorting .ov-cell {
+  cursor: grabbing;
+  transform: none; /* no hover lift while cells are shifting */
+}
+
+/* the dragged slide's slot: a dashed landing placeholder with a faint thumbnail */
 .ov-cell.is-dragging {
-  opacity: 0.35;
+  border: 3px dashed var(--accent, #d9922e);
+  background: var(--accent-soft, transparent);
 }
 
-/* insertion bar in the gap: an outer shadow isn't clipped by the cell's overflow */
-.ov-cell.drop-before {
-  box-shadow: -17px 0 0 -11px var(--accent, #d9922e);
+.ov-cell.is-dragging .ov-frame {
+  opacity: 0.22;
 }
 
-.ov-cell.drop-after {
-  box-shadow: 17px 0 0 -11px var(--accent, #d9922e);
+.ov-cell.is-dragging .ov-num {
+  background: var(--accent, #d9922e);
 }
 
 .ov-status {

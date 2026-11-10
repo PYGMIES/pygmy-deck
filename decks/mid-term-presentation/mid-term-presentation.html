@@ -328,17 +328,23 @@ body.overview .deck-viewport {
   pointer-events: none;
 }
 
+.deck-overview.is-sorting .ov-cell {
+  cursor: grabbing;
+  transform: none; /* no hover lift while cells are shifting */
+}
+
+/* the dragged slide's slot: a dashed landing placeholder with a faint thumbnail */
 .ov-cell.is-dragging {
-  opacity: 0.35;
+  border: 3px dashed var(--accent, #d9922e);
+  background: var(--accent-soft, transparent);
 }
 
-/* insertion bar in the gap: an outer shadow isn't clipped by the cell's overflow */
-.ov-cell.drop-before {
-  box-shadow: -17px 0 0 -11px var(--accent, #d9922e);
+.ov-cell.is-dragging .ov-frame {
+  opacity: 0.22;
 }
 
-.ov-cell.drop-after {
-  box-shadow: 17px 0 0 -11px var(--accent, #d9922e);
+.ov-cell.is-dragging .ov-num {
+  background: var(--accent, #d9922e);
 }
 
 .ov-status {
@@ -11056,56 +11062,91 @@ Be upfront that the final 18 is -0.035 held-out AUC vs full, but it was the only
     setStatus("Drag a slide to reorder · saves to slides/");
     ovCells.forEach((cell) => (cell.draggable = true));
 
+    /* Live preview: the dragged cell moves into its would-be slot as you drag (shown as a dashed
+       placeholder), neighbours glide aside (FLIP) and numbers update, so the grid shows the final
+       order before the drop. Dropping outside the grid or Esc slides everything back. */
+    const SHIFT_MS = 240;
     let dragCell = null;
-    let dropAt = null;
-    const clearMarks = () =>
-      ovCells.forEach((c) => c.classList.remove("drop-before", "drop-after"));
+    let startOrder = null;
+    let dropped = false;
+    let settleUntil = 0;
+
+    const cellsNow = () => Array.from(overview.querySelectorAll(".ov-cell"));
+    const renumber = () =>
+      cellsNow().forEach((c, i) => {
+        c.querySelector(".ov-num").textContent = String(i + 1).padStart(2, "0");
+      });
+
+    /* move cells in the DOM, then animate each from its old box to its new one */
+    function shift(mutate) {
+      const cells = cellsNow();
+      const first = new Map(cells.map((c) => [c, c.getBoundingClientRect()]));
+      mutate();
+      renumber();
+      if (reduceMotion.matches) return;
+      settleUntil = performance.now() + SHIFT_MS;
+      cells.forEach((c) => {
+        const a = first.get(c);
+        const b = c.getBoundingClientRect();
+        const dx = a.left - b.left;
+        const dy = a.top - b.top;
+        if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+        c.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], {
+          duration: SHIFT_MS,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        });
+      });
+    }
 
     overview.addEventListener("dragstart", (e) => {
       const cell = e.target instanceof Element && e.target.closest(".ov-cell");
       if (!cell || reordering) return e.preventDefault();
       dragCell = cell;
-      dropAt = null;
-      cell.classList.add("is-dragging");
+      startOrder = cellsNow();
+      dropped = false;
       e.dataTransfer.effectAllowed = "move";
       e.dataTransfer.setData("text/plain", cell.dataset.slide);
+      /* style the slot after the browser has snapshotted the drag image */
+      requestAnimationFrame(() => {
+        if (!dragCell) return;
+        overview.classList.add("is-sorting");
+        dragCell.classList.add("is-dragging");
+      });
     });
 
     overview.addEventListener("dragover", (e) => {
       if (!dragCell) return;
       e.preventDefault();
       e.dataTransfer.dropEffect = "move";
-      const cell = e.target instanceof Element && e.target.closest(".ov-cell");
-      if (!cell) return; /* over a gap: keep the last marker */
-      clearMarks();
-      if (cell === dragCell) {
-        dropAt = null;
-        return;
-      }
-      const r = cell.getBoundingClientRect();
-      const after = e.clientX > r.left + r.width / 2;
-      cell.classList.add(after ? "drop-after" : "drop-before");
-      dropAt = { cell, after };
+      if (performance.now() < settleUntil) return; /* let the last shift land before the next */
+      const target = e.target instanceof Element && e.target.closest(".ov-cell");
+      if (!target || target === dragCell) return;
+      /* entering a later cell puts the dragged one after it, an earlier cell before it,
+         so the slot always lands under the pointer and doesn't flip back and forth */
+      const cells = cellsNow();
+      const after = cells.indexOf(target) > cells.indexOf(dragCell);
+      shift(() => overview.insertBefore(dragCell, after ? target.nextSibling : target));
     });
 
     overview.addEventListener("drop", (e) => {
       e.preventDefault();
-      if (!dragCell || !dropAt) return;
-      const before = orderOf();
-      overview.insertBefore(dragCell, dropAt.after ? dropAt.cell.nextSibling : dropAt.cell);
+      if (!dragCell) return;
+      dropped = true;
       const order = orderOf();
-      if (order.join() === before.join()) return;
-      overview.querySelectorAll(".ov-cell .ov-num").forEach((num, i) => {
-        num.textContent = String(i + 1).padStart(2, "0");
-      });
+      if (order.join() === startOrder.map((c) => c.dataset.slide).join()) return;
       saveOrder(order, order.indexOf(slides[current].dataset.slide));
     });
 
     overview.addEventListener("dragend", () => {
-      if (dragCell) dragCell.classList.remove("is-dragging");
-      clearMarks();
+      if (!dragCell) return;
+      if (!dropped) {
+        const original = startOrder;
+        shift(() => original.forEach((c) => overview.insertBefore(c, ovStatus)));
+      }
+      overview.classList.remove("is-sorting");
+      dragCell.classList.remove("is-dragging");
       dragCell = null;
-      dropAt = null;
+      startOrder = null;
     });
   }
 
