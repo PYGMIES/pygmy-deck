@@ -375,6 +375,18 @@ body.overview .deck-viewport {
   display: none;
 }
 
+/* a dragged group folds into this one slot: show how many slides land here */
+.ov-cell.is-dragging[data-count]::after {
+  display: block;
+  content: attr(data-count);
+  width: auto;
+  height: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font: 700 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+}
+
 /* drag image for several slides: a stacked card with a count, rendered off-screen */
 .ov-drag-ghost {
   position: fixed;
@@ -2088,12 +2100,20 @@ body.overview .deck-viewport {
     let settleUntil = 0;
 
     const cellsNow = () => Array.from(overview.querySelectorAll(".ov-cell"));
-    const renumber = () =>
-      cellsNow().forEach((c, i) => {
-        c.querySelector(".ov-num").textContent = String(i + 1).padStart(2, "0");
+    const pad = (n) => String(n).padStart(2, "0");
+    /* while a group is folded into one slot, that slot shows the range it will fill
+       (e.g. 06–09) and the slides after it count past the whole group */
+    const renumber = () => {
+      let n = 1;
+      cellsNow().forEach((c) => {
+        const span = c === dragCell && group.length > 1 ? group.length : 1;
+        c.querySelector(".ov-num").textContent = span > 1 ? `${pad(n)}–${pad(n + span - 1)}` : pad(n);
+        n += span;
       });
+    };
 
-    /* move cells in the DOM, then animate each from its old box to its new one */
+    /* move cells in the DOM, then animate each from its old box to its new one;
+       cells that (re)appear fade in */
     function shift(mutate) {
       const cells = cellsNow();
       const first = new Map(cells.map((c) => [c, c.getBoundingClientRect()]));
@@ -2101,15 +2121,20 @@ body.overview .deck-viewport {
       renumber();
       if (reduceMotion.matches) return;
       settleUntil = performance.now() + SHIFT_MS;
-      cells.forEach((c) => {
+      const ease = "cubic-bezier(0.22, 1, 0.36, 1)";
+      cellsNow().forEach((c) => {
         const a = first.get(c);
+        if (!a) {
+          c.animate([{ opacity: 0 }, { opacity: 1 }], { duration: SHIFT_MS, easing: ease });
+          return;
+        }
         const b = c.getBoundingClientRect();
         const dx = a.left - b.left;
         const dy = a.top - b.top;
         if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
         c.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], {
           duration: SHIFT_MS,
-          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          easing: ease,
         });
       });
     }
@@ -2147,26 +2172,15 @@ body.overview .deck-viewport {
         const r = cell.getBoundingClientRect();
         e.dataTransfer.setDragImage(groupGhost(cell, group.length), e.clientX - r.left, e.clientY - r.top);
       }
-      /* style the slots (and gather the group around the dragged slide) after the browser has
-         snapshotted the drag image */
+      /* after the browser has snapshotted the drag image: the dragged slide becomes the one
+         landing slot; for a group, the other selected slides fold away into it */
       requestAnimationFrame(() => {
         if (!dragCell) return;
         overview.classList.add("is-sorting");
-        group.forEach((c) => c.classList.add("is-dragging"));
+        dragCell.classList.add("is-dragging");
         if (group.length > 1) {
-          const at = group.indexOf(dragCell);
-          shift(() => {
-            let ref = dragCell;
-            for (let i = at - 1; i >= 0; i--) {
-              overview.insertBefore(group[i], ref);
-              ref = group[i];
-            }
-            ref = dragCell;
-            for (let i = at + 1; i < group.length; i++) {
-              overview.insertBefore(group[i], ref.nextSibling);
-              ref = group[i];
-            }
-          });
+          dragCell.dataset.count = `${group.length} slides`;
+          shift(() => group.forEach((c) => c !== dragCell && c.remove()));
         }
       });
     });
@@ -2182,14 +2196,17 @@ body.overview .deck-viewport {
          always lands under the pointer and doesn't flip back and forth */
       const cells = cellsNow();
       const after = cells.indexOf(target) > cells.indexOf(dragCell);
-      const ref = after ? target.nextSibling : target;
-      shift(() => group.forEach((c) => overview.insertBefore(c, ref)));
+      shift(() => overview.insertBefore(dragCell, after ? target.nextSibling : target));
     });
 
     overview.addEventListener("drop", (e) => {
       e.preventDefault();
       if (!dragCell) return;
       dropped = true;
+      /* unfold the group at the slot, in deck order */
+      const at = group.indexOf(dragCell);
+      group.slice(0, at).forEach((c) => overview.insertBefore(c, dragCell));
+      group.slice(at + 1).reverse().forEach((c) => overview.insertBefore(c, dragCell.nextSibling));
       const order = orderOf();
       if (order.join() === startOrder.map((c) => c.dataset.slide).join()) return;
       saveOrder(order, order.indexOf(slides[current].dataset.slide), group.length);
@@ -2202,10 +2219,12 @@ body.overview .deck-viewport {
         shift(() => original.forEach((c) => overview.insertBefore(c, ovStatus)));
       }
       overview.classList.remove("is-sorting");
-      group.forEach((c) => c.classList.remove("is-dragging"));
+      dragCell.classList.remove("is-dragging");
+      delete dragCell.dataset.count;
       dragCell = null;
       startOrder = null;
       group = [];
+      renumber();
     });
   }
 

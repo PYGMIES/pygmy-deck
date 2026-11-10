@@ -363,6 +363,18 @@ body.overview .deck-viewport {
   display: none;
 }
 
+/* a dragged group folds into this one slot: show how many slides land here */
+.ov-cell.is-dragging[data-count]::after {
+  display: block;
+  content: attr(data-count);
+  width: auto;
+  height: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font: 700 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+}
+
 /* drag image for several slides: a stacked card with a count, rendered off-screen */
 .ov-drag-ghost {
   position: fixed;
