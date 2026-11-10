@@ -27,7 +27,7 @@
 
 .fk-lane__label {
   z-index: 2;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -81,7 +81,7 @@
   margin-top: 8px;
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   line-height: 1.2;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -157,7 +157,7 @@
   border-radius: var(--radius-s);
   background: var(--card);
   color: var(--on-card);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 600;
   white-space: nowrap;
 }
@@ -219,7 +219,7 @@
   z-index: 4;
   white-space: nowrap;
   font-style: italic;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 600;
   line-height: 1.2;
   color: var(--ink);
@@ -247,7 +247,7 @@
 .c-flow-kit .fk-note {
   z-index: 2;
   max-width: none;
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   line-height: 1.3;
   color: var(--ink-muted);
 }
@@ -286,7 +286,7 @@
 .fk-card span {
   display: block;
   margin-top: 8px;
-  font-size: 21px;
+  font-size: max(21px, var(--fs-min, 0px));
   line-height: 1.25;
   color: var(--ink-muted);
 }

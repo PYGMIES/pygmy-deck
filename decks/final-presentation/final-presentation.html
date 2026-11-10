@@ -957,7 +957,7 @@ body.overview .deck-viewport {
 .c-team-member__role {
   display: block;
   margin-bottom: 16px;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1524,9 +1524,9 @@ body.overview .deck-viewport {
 }
 
 .c-equity-chart__svg text { font-family: var(--font-body); }
-.c-equity-chart__svg .ec-tick { font-size: 22px; fill: var(--chart-ink-muted); }
+.c-equity-chart__svg .ec-tick { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); fill: var(--chart-ink-muted); }
 .c-equity-chart__svg .ec-newtxt { font-weight: 600; }
-.c-equity-chart__svg .ec-leg { font-size: 22px; font-weight: 600; fill: var(--chart-ink); }
+.c-equity-chart__svg .ec-leg { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); font-weight: 600; fill: var(--chart-ink); }
 .c-equity-chart__svg .ec-end { font-size: 30px; font-weight: 700; }
 .c-equity-chart__svg .ec-grid { stroke: var(--chart-grid); stroke-width: 1.5; }
 .c-equity-chart__svg .ec-zero { stroke: var(--chart-ink-muted); stroke-width: 2; }
@@ -1574,7 +1574,7 @@ body.overview .deck-viewport {
   border: 2px solid var(--chart-grid);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
   color: var(--chart-ink);
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.35;
   pointer-events: none;
   z-index: 2;
@@ -1663,9 +1663,9 @@ body.overview .deck-viewport {
   right: 0;
   bottom: 26px;
   text-align: center;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-muted);
 }
@@ -1747,9 +1747,8 @@ body.overview .deck-viewport {
   margin-top: 6px;
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 18px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: max(18px, var(--fs-min, 0px));
+  letter-spacing: 0.02em;
   color: var(--on-card-muted);
 }
 
@@ -1797,7 +1796,7 @@ body.overview .deck-viewport {
 }
 
 .c-arch__actor span {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   color: var(--ink-muted);
 }
 
@@ -1805,14 +1804,14 @@ body.overview .deck-viewport {
   white-space: nowrap;
   text-align: center;
   font-style: italic;
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 600;
   line-height: 1.2;
 }
 
 .c-arch .c-arch__foot {
   z-index: 2;
-  font-size: 19px;
+  font-size: max(19px, var(--fs-min, 0px));
   line-height: 1.3;
   text-align: center;
   color: var(--ink-muted);
@@ -1838,7 +1837,7 @@ body.overview .deck-viewport {
   background: var(--card);
   color: var(--on-card);
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: max(19px, var(--fs-min, 0px));
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1;
@@ -1899,7 +1898,7 @@ body.overview .deck-viewport {
   border-radius: 12px;
   background: var(--card);
   color: var(--on-card);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 700;
   line-height: 1.1;
   white-space: nowrap;
@@ -1908,7 +1907,7 @@ body.overview .deck-viewport {
 }
 
 .c-arch__ms small {
-  font-size: 16px;
+  font-size: max(16px, var(--fs-min, 0px));
   font-weight: 500;
   color: var(--on-card-muted);
 }
@@ -2306,7 +2305,7 @@ body.overview .deck-viewport {
 }
 
 .c-hurdle small {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2456,7 +2455,7 @@ body.overview .deck-viewport {
 .c-panel-card th {
   padding-bottom: 8px;
   text-align: left;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 600;
   color: var(--on-card-muted);
 }
@@ -2468,7 +2467,7 @@ body.overview .deck-viewport {
 
 .c-panel-card td:first-child { font-weight: 700; }
 
-.c-panel-card td:last-child { color: var(--on-card-muted); font-size: 24px; }
+.c-panel-card td:last-child { color: var(--on-card-muted); font-size: max(24px, var(--fs-min, 0px)); }
 
 .c-panel-card__body p {
   font-size: var(--fs-small);
@@ -2593,7 +2592,7 @@ body.overview .deck-viewport {
   grid-column: 2;
   margin-top: -6px;
   text-align: center;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 600;
   color: var(--accent-soft);
 }
@@ -2669,7 +2668,7 @@ body.overview .deck-viewport {
   grid-template-columns: 300px 1fr 280px;
   gap: 48px;
   align-items: center;
-  padding: 24px 44px;
+  padding: 20px 44px;
   border-radius: var(--radius);
   background: var(--bg-deep);
 }
@@ -2684,13 +2683,13 @@ body.overview .deck-viewport {
 
 .c-method__head p {
   margin-top: 10px;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   line-height: 1.25;
   color: var(--ink-muted);
 }
 
 .c-method__verdict {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -2728,7 +2727,7 @@ body.overview .deck-viewport {
   padding: 13px 0 10px;
   border-radius: var(--radius-s);
   background: var(--rule);
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 700;
   text-align: center;
   color: var(--ink-muted);
@@ -2739,7 +2738,7 @@ body.overview .deck-viewport {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 34px;
+  gap: 46px; /* room for the Midterm tag under sprint 4 */
 }
 
 .c-method__sprints {
@@ -2784,7 +2783,7 @@ body.overview .deck-viewport {
   margin-top: 8px;
   transform: translateX(-50%);
   font-family: var(--font-body);
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2795,7 +2794,7 @@ body.overview .deck-viewport {
 .c-method .c-method__loop {
   max-width: none;
   text-align: center;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   color: var(--ink-muted);
 }
 
@@ -2927,7 +2926,7 @@ body.overview .deck-viewport {
 
 .c-cycle__steps p {
   margin-top: 14px;
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.3;
   max-width: none;
   color: var(--on-card-muted);
@@ -2973,7 +2972,7 @@ body.overview .deck-viewport {
   transform: translate(-50%, 50%);
   padding: 0 22px;
   background: var(--bg);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 700;
   white-space: nowrap;
   max-width: none;
@@ -2991,7 +2990,7 @@ body.overview .deck-viewport {
   padding: 26px 32px;
   border-radius: var(--radius);
   background: var(--bg-deep);
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.6;
   color: var(--ink-muted);
 }
@@ -2999,7 +2998,7 @@ body.overview .deck-viewport {
 .c-cycle__team span {
   display: block;
   margin-bottom: 6px;
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3036,7 +3035,7 @@ body.overview .deck-viewport {
 
 .c-retro__labels span,
 .c-retro__result span {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3114,7 +3113,7 @@ body.overview .deck-viewport {
 
 .c-retro .c-retro__result p {
   margin-top: 14px;
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.35;
   color: var(--ink-muted);
 }
@@ -3129,21 +3128,22 @@ body.overview .deck-viewport {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 14px;
+  margin-top: -26px; /* pull up under the slide title: 26px text needs the room */
 }
 
 .c-timeline__panel {
   position: relative;
-  padding: 26px 56px 24px;
+  padding: 40px 56px 16px;
   border-radius: var(--radius);
   background: var(--bg-deep);
 }
 
 .c-timeline__kicker {
   position: absolute;
-  top: 20px;
+  top: 12px;
   left: 28px;
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3153,7 +3153,7 @@ body.overview .deck-viewport {
 /* --- deliverables track --- */
 .c-timeline__track {
   position: relative;
-  height: 220px;
+  height: 206px;
 }
 
 .c-timeline__line,
@@ -3192,7 +3192,7 @@ body.overview .deck-viewport {
 }
 
 .c-timeline__ms {
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   line-height: 1.2;
   text-align: center;
   color: var(--ink-muted);
@@ -3250,17 +3250,21 @@ body.overview .deck-viewport {
 }
 
 /* --- phases --- */
+.c-timeline__panel--phases {
+  padding-top: 62px;
+}
+
 .c-timeline__months {
   position: relative;
-  height: 26px;
-  margin-bottom: 10px;
+  height: 32px;
+  margin-bottom: 6px;
 }
 
 .c-timeline__months span {
   position: absolute;
   left: calc(var(--d) / var(--span) * 100%);
   transform: translateX(-50%);
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -3269,7 +3273,7 @@ body.overview .deck-viewport {
 
 .c-timeline__phases {
   position: relative;
-  height: 188px;
+  height: 208px;
 }
 
 .c-timeline__phase {
@@ -3315,7 +3319,7 @@ body.overview .deck-viewport {
   top: 108px;
   left: 0;
   right: 0;
-  font-size: 19px;
+  font-size: max(19px, var(--fs-min, 0px));
   line-height: 1.25;
   text-align: center;
   color: var(--ink-muted);
@@ -3337,6 +3341,12 @@ body.overview .deck-viewport {
   display: none;
 }
 
+/* the last phase is narrow: let its note run wider than the bar */
+.c-timeline__phase:last-child small {
+  left: -30px;
+  right: -40px;
+}
+
 /* --- gates --- */
 .c-timeline__gates {
   display: grid;
@@ -3345,10 +3355,10 @@ body.overview .deck-viewport {
 }
 
 .c-timeline__gate {
-  padding: 20px 26px;
+  padding: 14px 24px;
   border-radius: var(--radius-s);
   background: var(--bg-deep);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   line-height: 1.25;
   color: var(--ink-muted);
 }
@@ -3373,7 +3383,7 @@ body.overview .deck-viewport {
 }
 
 .c-timeline .c-timeline__foot {
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-style: italic;
   color: var(--ink-muted);
   max-width: none;
@@ -3502,7 +3512,7 @@ body.overview .deck-viewport {
 
 .c-point-list h3 small {
   font-family: var(--font-body);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--ink-muted);
@@ -3519,7 +3529,7 @@ body.overview .deck-viewport {
 .c-point-list li {
   position: relative;
   padding-left: 26px;
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.28;
 }
 
@@ -3735,6 +3745,14 @@ body.overview .deck-viewport {
 /* ===== DECK OVERRIDES ===== */
 /* === DECK OVERRIDES === */
 
+/* Minimum text size: nothing below 26px (13pt at the 1920x1080 stage).
+   Components write small sizes as max(Npx, var(--fs-min, 0px)), so decks that
+   don't set --fs-min keep their old sizes. */
+:root {
+  --fs-min: 26px;
+  --fs-small: 26px;
+}
+
 /* Short card row: centre it in the space under the slide title (slide 67) */
 .c-card-grid.is-centered {
   flex: 1;
@@ -3813,7 +3831,7 @@ body.overview .deck-viewport {
 .c-card-grid.is-data-use .c-panel-card { min-height: 660px; }
 .c-card-grid.is-data-use .c-panel-card__head p { line-height: 1.6; }
 .c-card-grid.is-data-use table { font-size: 34px; }
-.c-card-grid.is-data-use th { font-size: 24px; padding-bottom: 12px; }
+.c-card-grid.is-data-use th { font-size: max(24px, var(--fs-min, 0px)); padding-bottom: 12px; }
 .c-card-grid.is-data-use td { padding: 12px 0; }
 .c-card-grid.is-data-use td:last-child { font-size: 32px; }
 
@@ -3824,13 +3842,13 @@ body.overview .deck-viewport {
 .c-card-grid.is-before-features .c-feature-group__count { font-size: 68px; }
 .c-card-grid.is-before-features .c-feature-group__count sub { font-size: 0.5em; line-height: 0; }
 .c-card-grid.is-before-features .c-feature-group h3 { font-size: 34px; }
-.c-card-grid.is-before-features .c-feature-group__head p { font-size: 21px; line-height: 1.35; }
+.c-card-grid.is-before-features .c-feature-group__head p { font-size: max(21px, var(--fs-min, 0px)); line-height: 1.35; }
 .c-card-grid.is-before-features .c-feature-group__list { gap: 18px; }
 .c-card-grid.is-before-features .c-feature-group__list li { row-gap: 4px; }
-.c-card-grid.is-before-features .c-feature-group__list strong { font-size: 23px; }
-.c-card-grid.is-before-features .c-feature-group__list code { font-size: 17px; }
-.c-card-grid.is-before-features .c-feature-group__list span { font-size: 18px; line-height: 1.3; color: var(--on-card-muted); }
-.c-card-grid.is-before-features .c-feature-group__foot { padding-top: 18px; font-size: 22px; }
+.c-card-grid.is-before-features .c-feature-group__list strong { font-size: max(23px, var(--fs-min, 0px)); }
+.c-card-grid.is-before-features .c-feature-group__list code { font-size: max(17px, var(--fs-min, 0px)); }
+.c-card-grid.is-before-features .c-feature-group__list span { font-size: max(18px, var(--fs-min, 0px)); line-height: 1.3; color: var(--on-card-muted); }
+.c-card-grid.is-before-features .c-feature-group__foot { padding-top: 18px; font-size: max(22px, var(--fs-min, 0px)); }
 
 /* Why We Left Out Outcomes (slide 63): outcome card left, SHAP bars right */
 .c-split.is-outcome-shap { gap: var(--gap-l); align-items: stretch; }
@@ -3838,29 +3856,29 @@ body.overview .deck-viewport {
 .c-split.is-outcome-shap .c-column { justify-content: center; }
 .c-split.is-outcome-shap .c-column { gap: 28px; }
 .c-split.is-outcome-shap .c-section-heading h2 { font-size: 52px; }
-.c-split.is-outcome-shap .c-section-heading p { font-size: 24px; line-height: 1.35; }
+.c-split.is-outcome-shap .c-section-heading p { font-size: max(24px, var(--fs-min, 0px)); line-height: 1.35; }
 .c-split.is-outcome-shap .c-shap-bars__row h4 { font-size: 34px; margin-bottom: 10px; }
-.c-split.is-outcome-shap .c-shap-bars__row h4 span { font-size: 20px; }
+.c-split.is-outcome-shap .c-shap-bars__row h4 span { font-size: max(20px, var(--fs-min, 0px)); }
 .c-split.is-outcome-shap .c-shap-bars__bar { height: 84px; }
 .c-split.is-outcome-shap .c-shap-bars__bar b { font-size: 40px; }
-.c-split.is-outcome-shap .c-shap-bars__bar em { font-size: 18px; }
+.c-split.is-outcome-shap .c-shap-bars__bar em { font-size: max(18px, var(--fs-min, 0px)); }
 .c-split.is-outcome-shap .c-shap-bars__step { height: 60px; }
 .c-split.is-outcome-shap .c-shap-bars__step::before { font-size: 32px; }
-.c-split.is-outcome-shap .c-shap-bars__step span { font-size: 24px; }
+.c-split.is-outcome-shap .c-shap-bars__step span { font-size: max(24px, var(--fs-min, 0px)); }
 .c-split.is-outcome-shap .c-shap-bars__legend { grid-template-columns: repeat(2, 1fr); gap: 14px 24px; margin-top: 26px; }
-.c-split.is-outcome-shap .c-shap-bars__legend li { font-size: 19px; padding-left: 34px; }
+.c-split.is-outcome-shap .c-shap-bars__legend li { font-size: max(19px, var(--fs-min, 0px)); padding-left: 34px; }
 .c-split.is-outcome-shap .c-shap-bars__legend li::before { width: 22px; height: 22px; }
-.c-split.is-outcome-shap .c-shap-bars figcaption { margin-top: 16px; font-size: 18px; }
+.c-split.is-outcome-shap .c-shap-bars figcaption { margin-top: 16px; font-size: max(18px, var(--fs-min, 0px)); }
 /* slide 61: taller cards, roomier spacing for readability */
 .c-card-grid.is-before-features .c-feature-group { min-height: 720px; gap: 30px; padding: 36px 34px 40px; }
 .c-card-grid.is-before-features .c-feature-group__head { padding-bottom: 26px; }
 .c-card-grid.is-before-features .c-feature-group h3 { margin-top: 18px; }
-.c-card-grid.is-before-features .c-feature-group__head p { font-size: 23px; line-height: 1.45; margin-top: 12px; }
+.c-card-grid.is-before-features .c-feature-group__head p { font-size: max(23px, var(--fs-min, 0px)); line-height: 1.45; margin-top: 12px; }
 .c-card-grid.is-before-features .c-feature-group__list { gap: 32px; }
 .c-card-grid.is-before-features .c-feature-group__list li { row-gap: 8px; }
 .c-card-grid.is-before-features .c-feature-group__list strong { font-size: 26px; }
-.c-card-grid.is-before-features .c-feature-group__list code { font-size: 19px; line-height: 1.4; }
-.c-card-grid.is-before-features .c-feature-group__list span { font-size: 20px; line-height: 1.4; }
+.c-card-grid.is-before-features .c-feature-group__list code { font-size: max(19px, var(--fs-min, 0px)); line-height: 1.4; }
+.c-card-grid.is-before-features .c-feature-group__list span { font-size: max(20px, var(--fs-min, 0px)); line-height: 1.4; }
 
 /* The 13 Features We Dropped (slide 62): leakage card left, "didn't pay" card with a without→with chart right */
 .c-split.is-dropped { gap: var(--gap-l); align-items: stretch; }
@@ -3869,27 +3887,27 @@ body.overview .deck-viewport {
 .c-split.is-dropped .c-panel-card__count { grid-row: span 2; margin: 0; }
 .c-split.is-dropped .c-panel-card__head p { margin-top: 6px; }
 .c-split.is-dropped .c-panel-card__body { justify-content: space-between; }
-.c-split.is-dropped .c-panel-card__body p code { font-family: var(--font-mono); font-size: 20px; color: var(--on-card-muted); }
+.c-split.is-dropped .c-panel-card__body p code { font-family: var(--font-mono); font-size: max(20px, var(--fs-min, 0px)); color: var(--on-card-muted); }
 
 .dropped-chart { margin: 0; padding: 16px 28px 22px; border-radius: var(--radius-s); background: var(--chart-bg); }
 .dropped-chart svg { display: block; width: 100%; height: auto; font-family: var(--font-body); }
-.dropped-chart .legend text { font-size: 22px; fill: var(--chart-ink); }
+.dropped-chart .legend text { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink); }
 .dropped-chart .grid { stroke: var(--chart-grid); stroke-width: 2; }
 .dropped-chart .zero { stroke: var(--chart-ink-muted); stroke-width: 2; stroke-dasharray: 6 6; }
-.dropped-chart .tick { font-size: 20px; fill: var(--chart-ink-muted); text-anchor: middle; }
-.dropped-chart .tick.is-small { font-size: 17px; }
-.dropped-chart .row { font-size: 24px; font-weight: 600; fill: var(--chart-ink); text-anchor: end; }
-.dropped-chart .val { font-size: 22px; fill: var(--chart-ink-muted); text-anchor: middle; }
+.dropped-chart .tick { font-size: max(20px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); text-anchor: middle; }
+.dropped-chart .tick.is-small { font-size: max(17px, var(--fs-min, 0px)); }
+.dropped-chart .row { font-size: max(24px, var(--fs-min, 0px)); font-weight: 600; fill: var(--chart-ink); text-anchor: end; }
+.dropped-chart .val { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); text-anchor: middle; }
 .dropped-chart .val.is-strong { font-size: 26px; font-weight: 700; fill: var(--chart-ink); }
-.dropped-chart .val.is-diff { font-size: 22px; font-weight: 700; fill: var(--danger); }
+.dropped-chart .val.is-diff { font-size: max(22px, var(--fs-min, 0px)); font-weight: 700; fill: var(--danger); }
 .dropped-chart .move { stroke: var(--danger); stroke-width: 4; }
 .dropped-chart .is-with, .dropped-chart .is-with-fill { fill: var(--danger); }
 .dropped-chart .is-without { fill: var(--chart-rand); }
 .dropped-chart circle { stroke: var(--chart-bg); stroke-width: 3; }
 .c-card-grid.is-before-features .c-feature-group__head sub { line-height: 0; }
-.dropped-chart__key { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; margin: 18px 0 0; padding-top: 16px; border-top: 2px solid var(--chart-grid); font-size: 20px; color: var(--chart-ink); }
+.dropped-chart__key { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; margin: 18px 0 0; padding-top: 16px; border-top: 2px solid var(--chart-grid); font-size: max(20px, var(--fs-min, 0px)); color: var(--chart-ink); }
 .dropped-chart__key dt { font-weight: 600; }
-.dropped-chart__key dd { margin: 0; font-family: var(--font-mono); font-size: 19px; color: var(--chart-ink-muted); }
+.dropped-chart__key dd { margin: 0; font-family: var(--font-mono); font-size: max(19px, var(--fs-min, 0px)); color: var(--chart-ink-muted); }
 
 /* is-static on a slide-title: no fade-up on arrival, so the title stays put while stepping through a build (slides 25-28, 30-34, 36-40, 82) */
 .slide .c-slide-title.is-static .reveal {
@@ -3915,6 +3933,22 @@ body.overview .deck-viewport {
 .c-compare-table.is-lookup thead th {
   font-size: 42px;
 }
+
+/* Minimum text size for shared components used by this deck (shared files stay untouched) */
+.c-agenda-item__owner > span { font-size: max(24px, var(--fs-min)); }
+.c-note-card p { font-size: max(24px, var(--fs-min)); }
+.c-note-card__tags li { font-size: max(22px, var(--fs-min)); }
+.c-note-card.is-compact p { font-size: max(22px, var(--fs-min)); }
+.c-note-card.is-bullets .c-note-card__tags li { font-size: max(24px, var(--fs-min)); }
+.c-note-card.is-tall p { font-size: max(24px, var(--fs-min)); }
+.c-placeholder__tag { font-size: max(20px, var(--fs-min)); }
+.c-quadrant-cell p { font-size: max(24px, var(--fs-min)); }
+.c-quadrant-cell__tag { font-size: max(20px, var(--fs-min)); }
+.c-quadrant__y,
+.c-quadrant__x { font-size: max(20px, var(--fs-min)); }
+.c-screen-frame__bar span { font-size: max(20px, var(--fs-min)); }
+.c-step-list.is-compact li small { font-size: max(22px, var(--fs-min)); }
+.c-step-list__band { font-size: max(22px, var(--fs-min)); }
 </style>
 </head>
 <body>
@@ -4326,19 +4360,19 @@ body.overview .deck-viewport {
     <rect class="ec-new" x="804.0" y="92" width="682.0" height="484"/>
     <text class="ec-tick ec-newtxt" x="814.0" y="118">new data (78–86) →</text>
     <line class="ec-grid" x1="130" x2="1478" y1="576.0" y2="576.0"/>
-    <text class="ec-tick" x="116" y="584.0" text-anchor="end">−$50,000</text>
+    <text class="ec-tick" x="116" y="584.0" text-anchor="end">−$50k</text>
     <line class="ec-grid" x1="130" x2="1478" y1="495.3" y2="495.3"/>
-    <text class="ec-tick" x="116" y="503.3" text-anchor="end">−$40,000</text>
+    <text class="ec-tick" x="116" y="503.3" text-anchor="end">−$40k</text>
     <line class="ec-grid" x1="130" x2="1478" y1="414.7" y2="414.7"/>
-    <text class="ec-tick" x="116" y="422.7" text-anchor="end">−$30,000</text>
+    <text class="ec-tick" x="116" y="422.7" text-anchor="end">−$30k</text>
     <line class="ec-grid" x1="130" x2="1478" y1="334.0" y2="334.0"/>
-    <text class="ec-tick" x="116" y="342.0" text-anchor="end">−$20,000</text>
+    <text class="ec-tick" x="116" y="342.0" text-anchor="end">−$20k</text>
     <line class="ec-grid" x1="130" x2="1478" y1="253.3" y2="253.3"/>
-    <text class="ec-tick" x="116" y="261.3" text-anchor="end">−$10,000</text>
+    <text class="ec-tick" x="116" y="261.3" text-anchor="end">−$10k</text>
     <line class="ec-zero" x1="130" x2="1478" y1="172.7" y2="172.7"/>
     <text class="ec-tick" x="116" y="180.7" text-anchor="end">$0</text>
     <line class="ec-grid" x1="130" x2="1478" y1="92.0" y2="92.0"/>
-    <text class="ec-tick" x="116" y="100.0" text-anchor="end">+$10,000</text>
+    <text class="ec-tick" x="116" y="100.0" text-anchor="end">+$10k</text>
     <text class="ec-tick" x="130.0" y="620" text-anchor="middle">69</text>
     <text class="ec-tick" x="209.3" y="620" text-anchor="middle">70</text>
     <text class="ec-tick" x="288.6" y="620" text-anchor="middle">71</text>
@@ -4370,14 +4404,14 @@ body.overview .deck-viewport {
     <text class="ec-end ec-live" x="1500" y="249.6">−$970</text>
     <circle class="ec-dot ec-fade" cx="1478.0" cy="268.7" r="8"/>
     <text class="ec-end ec-fade" x="1500" y="283.6">−$11,905</text>
-    <line class="ec-line ec-fade"  x1="30" x2="74" y1="34" y2="34"/>
-    <text class="ec-leg" x="88" y="43">Fade everything</text>
-    <line class="ec-line ec-live"  x1="299.0" x2="343.0" y1="34" y2="34"/>
-    <text class="ec-leg" x="357.0" y="43">Pool threshold (live)</text>
-    <line class="ec-line ec-top"  x1="643.5999999999999" x2="687.5999999999999" y1="34" y2="34"/>
-    <text class="ec-leg" x="701.5999999999999" y="43">Top 5% (report card)</text>
-    <line class="ec-line ec-rand" stroke-dasharray="4 0" x1="975.5999999999999" x2="1019.5999999999999" y1="34" y2="34"/>
-    <text class="ec-leg" x="1033.6" y="43">Random, same count (avg)</text>
+    <line class="ec-line ec-fade" x1="30.0" x2="74.0" y1="34" y2="34"/>
+    <text class="ec-leg" x="88.0" y="43">Fade everything</text>
+    <line class="ec-line ec-live" x1="367.1" x2="411.1" y1="34" y2="34"/>
+    <text class="ec-leg" x="425.1" y="43">Pool threshold (live)</text>
+    <line class="ec-line ec-top" x1="759.5" x2="803.5" y1="34" y2="34"/>
+    <text class="ec-leg" x="817.5" y="43">Top 5% (report card)</text>
+    <line class="ec-line ec-rand" stroke-dasharray="4 0" x1="1153.2" x2="1197.2" y1="34" y2="34"/>
+    <text class="ec-leg" x="1211.2" y="43">Random, same count (avg)</text>
     </svg>
   </div>
   <figcaption class="c-equity-chart__take">Fade everything ends at −$11,905.<br>Our top 5% ends at +$12, close to zero.</figcaption>
@@ -4540,14 +4574,14 @@ body.overview .deck-viewport {
     <strong>Campaign Traders</strong>
     <span>trading on C22’s platform</span>
   </div>
-  <span class="c-arch__wire-label" style="left: 213px; top: 212px; width: 120px;">Trade data</span>
+  <span class="c-arch__wire-label" style="left: 186px; top: 208px; width: 164px;">Trade data</span>
 
   <div class="c-arch__actor" style="top: 520px; left: -24px;">
     <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="12" r="9"/><path d="M14 46c0-11 8-20 18-20s18 9 18 20z"/></svg>
     <strong>C22</strong>
     <span>Clement &amp; Lee Yang</span>
   </div>
-  <span class="c-arch__wire-label" style="left: 198px; top: 604px; width: 150px;">Reverse trade<br>performance</span>
+  <span class="c-arch__wire-label" style="left: 158px; top: 522px; width: 192px;">Reverse trade<br>performance</span>
 
   <!-- I/O -->
   <div class="p1 c-arch__node" style="left: 356px; top: 200px; width: 198px; height: 100px;">FastAPI<small>ingestion</small></div>
@@ -4571,7 +4605,7 @@ body.overview .deck-viewport {
   <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 236px; width: 220px; height: 100px;">Worker #2</div>
   <span class="p3 c-arch__dots" style="left: 1100px; top: 344px;">···</span>
   <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 450px; width: 220px; height: 100px;">Worker #N</div>
-  <p class="p3 c-arch__foot" style="left: 1070px; top: 600px; width: 280px;">Currently operates with one worker, to be automatically scalable</p>
+  <p class="p3 c-arch__foot" style="left: 1070px; top: 582px; width: 280px;">Currently operates with one worker, to be automatically scalable</p>
 
   <!-- Services -->
   <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
@@ -5137,7 +5171,7 @@ body.overview .deck-viewport {
     </div>
   </section>
 
-  <section class="c-timeline__panel reveal">
+  <section class="c-timeline__panel c-timeline__panel--phases reveal">
     <span class="c-timeline__kicker">Phases</span>
     <div class="c-timeline__months">
       <span style="--d: 14;">Jun</span><span style="--d: 45;">Jul</span><span style="--d: 76;">Aug</span>
@@ -5411,14 +5445,14 @@ body.overview .deck-viewport {
     <strong>Campaign Traders</strong>
     <span>trading on C22’s platform</span>
   </div>
-  <span class="c-arch__wire-label" style="left: 213px; top: 212px; width: 120px;">Trade data</span>
+  <span class="c-arch__wire-label" style="left: 186px; top: 208px; width: 164px;">Trade data</span>
 
   <div class="c-arch__actor" style="top: 520px; left: -24px;">
     <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="12" r="9"/><path d="M14 46c0-11 8-20 18-20s18 9 18 20z"/></svg>
     <strong>C22</strong>
     <span>Clement &amp; Lee Yang</span>
   </div>
-  <span class="c-arch__wire-label" style="left: 198px; top: 604px; width: 150px;">Reverse trade<br>performance</span>
+  <span class="c-arch__wire-label" style="left: 158px; top: 522px; width: 192px;">Reverse trade<br>performance</span>
 
   <!-- I/O -->
   <div class="p1 c-arch__node" style="left: 356px; top: 200px; width: 198px; height: 100px;">FastAPI<small>ingestion</small></div>
@@ -5442,14 +5476,14 @@ body.overview .deck-viewport {
   <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 236px; width: 220px; height: 100px;">Worker #2</div>
   <span class="p3 c-arch__dots" style="left: 1100px; top: 344px;">···</span>
   <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 450px; width: 220px; height: 100px;">Worker #N</div>
-  <p class="p3 c-arch__foot" style="left: 1070px; top: 600px; width: 280px;">Currently operates with one worker, to be automatically scalable</p>
+  <p class="p3 c-arch__foot" style="left: 1070px; top: 582px; width: 280px;">Currently operates with one worker, to be automatically scalable</p>
 
   <!-- Services -->
   <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
   <div class="p4 c-arch__node" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Oanda Market<br>Price Service</div>
   <p class="p4 c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22’s own platform API</p>
 
-  <span class='c-arch__ms' style='left:268px;top:285px'>13 ms<small>p99 48 ms</small></span><span class='c-arch__ms' style='left:610px;top:150px'>6 ms<small>p99 27 ms</small></span><span class='c-arch__ms' style='left:585px;top:368px'>1 ms<small>p99 7 ms</small></span><span class='c-arch__ms' style='left:1041px;top:243px'>0.5 ms<small>p99 1.5 ms</small></span><span class='c-arch__ms is-hot' style='left:985px;top:135px'>5 ms<small>p99 119 ms</small></span><span class='c-arch__ms' style='left:1040px;top:395px'>0.7 ms<small>p99 10 ms</small></span><span class='c-arch__ms' style='left:1030px;top:525px'>0.3 ms<small>p99 0.7 ms</small></span><span class='c-arch__ms is-hot' style='left:1377px;top:236px'>14 ms<small>p99 98 ms</small></span><span class='c-arch__ms is-hot' style='left:1383px;top:380px'>509 ms<small>p99 907 ms</small></span><p class='c-arch__foot' style='left:700px;top:-40px;width:1028px;text-align:right'>p50 of 102 open trades, p99 beneath. The clock starts when the API receives the trade.</p>
+  <span class='c-arch__ms' style='left:268px;top:285px'>13 ms<small>p99 48</small></span><span class='c-arch__ms' style='left:610px;top:150px'>6 ms<small>p99 27</small></span><span class='c-arch__ms' style='left:585px;top:368px'>1 ms<small>p99 7</small></span><span class='c-arch__ms' style='left:1041px;top:243px'>0.5 ms<small>p99 1.5</small></span><span class='c-arch__ms is-hot' style='left:985px;top:135px'>5 ms<small>p99 119</small></span><span class='c-arch__ms' style='left:1040px;top:395px'>0.7 ms<small>p99 10</small></span><span class='c-arch__ms' style='left:1030px;top:525px'>0.3 ms<small>p99 0.7</small></span><span class='c-arch__ms is-hot' style='left:1377px;top:236px'>14 ms<small>p99 98</small></span><span class='c-arch__ms is-hot' style='left:1383px;top:380px'>509 ms<small>p99 907</small></span><p class='c-arch__foot' style='left:300px;top:-40px;width:1428px;text-align:right'>p50 of 102 open trades, p99 beneath. The clock starts when the API receives the trade.</p>
 </div>
 </section>
 

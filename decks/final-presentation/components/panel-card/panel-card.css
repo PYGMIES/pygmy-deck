@@ -59,7 +59,7 @@
 .c-panel-card th {
   padding-bottom: 8px;
   text-align: left;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 600;
   color: var(--on-card-muted);
 }
@@ -71,7 +71,7 @@
 
 .c-panel-card td:first-child { font-weight: 700; }
 
-.c-panel-card td:last-child { color: var(--on-card-muted); font-size: 24px; }
+.c-panel-card td:last-child { color: var(--on-card-muted); font-size: max(24px, var(--fs-min, 0px)); }
 
 .c-panel-card__body p {
   font-size: var(--fs-small);

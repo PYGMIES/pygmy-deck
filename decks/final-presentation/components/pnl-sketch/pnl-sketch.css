@@ -22,7 +22,7 @@
 
 .c-pnl-sketch__svg { display: block; width: 100%; height: auto; }
 .c-pnl-sketch__svg text { font-family: var(--font-body); }
-.c-pnl-sketch__svg .ps-lbl { font-size: 22px; font-weight: 600; }
+.c-pnl-sketch__svg .ps-lbl { font-size: max(22px, var(--fs-min, 0px)); font-weight: 600; }
 .c-pnl-sketch__svg .ps-muted { fill: var(--chart-ink-muted); }
 .c-pnl-sketch__svg .ps-axis { stroke: var(--chart-ink); stroke-width: 3; stroke-linecap: round; }
 .c-pnl-sketch__svg .ps-line { fill: none; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }

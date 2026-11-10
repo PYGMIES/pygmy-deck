@@ -13,7 +13,7 @@
 
 .c-point-list h3 small {
   font-family: var(--font-body);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--ink-muted);
@@ -30,7 +30,7 @@
 .c-point-list li {
   position: relative;
   padding-left: 26px;
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.28;
 }
 
