@@ -24,10 +24,10 @@
 }
 
 .c-scatter-chart__svg text { font-family: var(--font-body); }
-.c-scatter-chart__svg .sc-tick { font-size: 22px; fill: var(--chart-ink-muted); }
-.c-scatter-chart__svg .sc-nb { font-size: 24px; font-weight: 600; fill: var(--chart-ink); }
-.c-scatter-chart__svg .sc-axis { font-size: 22px; fill: var(--chart-ink-muted); }
-.c-scatter-chart__svg .sc-leg { font-size: 22px; font-weight: 600; fill: var(--chart-ink); }
+.c-scatter-chart__svg .sc-tick { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); }
+.c-scatter-chart__svg .sc-nb { font-size: max(24px, var(--fs-min, 0px)); font-weight: 600; fill: var(--chart-ink); }
+.c-scatter-chart__svg .sc-axis { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); }
+.c-scatter-chart__svg .sc-leg { font-size: max(22px, var(--fs-min, 0px)); font-weight: 600; fill: var(--chart-ink); }
 .c-scatter-chart__svg .sc-grid { stroke: var(--chart-grid); stroke-width: 1.5; }
 .c-scatter-chart__svg .sc-zero { stroke: var(--chart-ink-muted); stroke-width: 2; }
 .c-scatter-chart__svg .sc-dot { stroke: var(--chart-bg); stroke-width: 3; }
@@ -56,7 +56,7 @@
   border: 2px solid var(--chart-grid);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
   color: var(--chart-ink);
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.35;
   pointer-events: none;
   z-index: 2;

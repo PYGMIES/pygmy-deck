@@ -26,9 +26,9 @@
   right: 0;
   bottom: 26px;
   text-align: center;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-muted);
 }
@@ -110,9 +110,8 @@
   margin-top: 6px;
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 18px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: max(18px, var(--fs-min, 0px));
+  letter-spacing: 0.02em;
   color: var(--on-card-muted);
 }
 
@@ -160,7 +159,7 @@
 }
 
 .c-arch__actor span {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   color: var(--ink-muted);
 }
 
@@ -168,14 +167,14 @@
   white-space: nowrap;
   text-align: center;
   font-style: italic;
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 600;
   line-height: 1.2;
 }
 
 .c-arch .c-arch__foot {
   z-index: 2;
-  font-size: 19px;
+  font-size: max(19px, var(--fs-min, 0px));
   line-height: 1.3;
   text-align: center;
   color: var(--ink-muted);
@@ -201,7 +200,7 @@
   background: var(--card);
   color: var(--on-card);
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: max(19px, var(--fs-min, 0px));
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1;
@@ -262,7 +261,7 @@
   border-radius: 12px;
   background: var(--card);
   color: var(--on-card);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 700;
   line-height: 1.1;
   white-space: nowrap;
@@ -271,7 +270,7 @@
 }
 
 .c-arch__ms small {
-  font-size: 16px;
+  font-size: max(16px, var(--fs-min, 0px));
   font-weight: 500;
   color: var(--on-card-muted);
 }
@@ -283,4 +282,18 @@
 
 .c-arch__ms.is-hot small {
   color: var(--card);
+}
+
+/* Slide 48 (is-timed) is a dense latency diagram: it keeps its original, smaller text, so the deck's 26px floor does not apply here */
+.c-arch.is-timed {
+  --fs-min: 0px;
+}
+
+.c-arch.is-timed .c-arch__lane span {
+  letter-spacing: 0.14em;
+}
+
+.c-arch.is-timed .c-arch__node small {
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }

@@ -35,7 +35,7 @@
 .c-ab-result__tile.is-b { background: var(--accent-soft); }
 
 .c-ab-result__label {
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -56,7 +56,7 @@
 
 .c-ab-result .c-ab-result__caption {
   margin-top: 14px;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   max-width: none;
   color: var(--ink-muted);
 }

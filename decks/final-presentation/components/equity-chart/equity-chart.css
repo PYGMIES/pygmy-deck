@@ -23,9 +23,9 @@
 }
 
 .c-equity-chart__svg text { font-family: var(--font-body); }
-.c-equity-chart__svg .ec-tick { font-size: 22px; fill: var(--chart-ink-muted); }
+.c-equity-chart__svg .ec-tick { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); fill: var(--chart-ink-muted); }
 .c-equity-chart__svg .ec-newtxt { font-weight: 600; }
-.c-equity-chart__svg .ec-leg { font-size: 22px; font-weight: 600; fill: var(--chart-ink); }
+.c-equity-chart__svg .ec-leg { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); font-weight: 600; fill: var(--chart-ink); }
 .c-equity-chart__svg .ec-end { font-size: 30px; font-weight: 700; }
 .c-equity-chart__svg .ec-grid { stroke: var(--chart-grid); stroke-width: 1.5; }
 .c-equity-chart__svg .ec-zero { stroke: var(--chart-ink-muted); stroke-width: 2; }
@@ -73,7 +73,7 @@
   border: 2px solid var(--chart-grid);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
   color: var(--chart-ink);
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.35;
   pointer-events: none;
   z-index: 2;

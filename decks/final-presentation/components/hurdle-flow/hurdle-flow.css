@@ -9,7 +9,7 @@
 }
 
 .c-hurdle small {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;

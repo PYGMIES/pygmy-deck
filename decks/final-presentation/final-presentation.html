@@ -957,7 +957,7 @@ body.overview .deck-viewport {
 .c-team-member__role {
   display: block;
   margin-bottom: 16px;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1524,9 +1524,9 @@ body.overview .deck-viewport {
 }
 
 .c-equity-chart__svg text { font-family: var(--font-body); }
-.c-equity-chart__svg .ec-tick { font-size: 22px; fill: var(--chart-ink-muted); }
+.c-equity-chart__svg .ec-tick { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); fill: var(--chart-ink-muted); }
 .c-equity-chart__svg .ec-newtxt { font-weight: 600; }
-.c-equity-chart__svg .ec-leg { font-size: 22px; font-weight: 600; fill: var(--chart-ink); }
+.c-equity-chart__svg .ec-leg { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); font-weight: 600; fill: var(--chart-ink); }
 .c-equity-chart__svg .ec-end { font-size: 30px; font-weight: 700; }
 .c-equity-chart__svg .ec-grid { stroke: var(--chart-grid); stroke-width: 1.5; }
 .c-equity-chart__svg .ec-zero { stroke: var(--chart-ink-muted); stroke-width: 2; }
@@ -1574,7 +1574,7 @@ body.overview .deck-viewport {
   border: 2px solid var(--chart-grid);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
   color: var(--chart-ink);
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.35;
   pointer-events: none;
   z-index: 2;
@@ -1663,9 +1663,9 @@ body.overview .deck-viewport {
   right: 0;
   bottom: 26px;
   text-align: center;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-muted);
 }
@@ -1747,9 +1747,8 @@ body.overview .deck-viewport {
   margin-top: 6px;
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 18px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: max(18px, var(--fs-min, 0px));
+  letter-spacing: 0.02em;
   color: var(--on-card-muted);
 }
 
@@ -1797,7 +1796,7 @@ body.overview .deck-viewport {
 }
 
 .c-arch__actor span {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   color: var(--ink-muted);
 }
 
@@ -1805,14 +1804,14 @@ body.overview .deck-viewport {
   white-space: nowrap;
   text-align: center;
   font-style: italic;
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 600;
   line-height: 1.2;
 }
 
 .c-arch .c-arch__foot {
   z-index: 2;
-  font-size: 19px;
+  font-size: max(19px, var(--fs-min, 0px));
   line-height: 1.3;
   text-align: center;
   color: var(--ink-muted);
@@ -1838,7 +1837,7 @@ body.overview .deck-viewport {
   background: var(--card);
   color: var(--on-card);
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: max(19px, var(--fs-min, 0px));
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1;
@@ -1899,7 +1898,7 @@ body.overview .deck-viewport {
   border-radius: 12px;
   background: var(--card);
   color: var(--on-card);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 700;
   line-height: 1.1;
   white-space: nowrap;
@@ -1908,7 +1907,7 @@ body.overview .deck-viewport {
 }
 
 .c-arch__ms small {
-  font-size: 16px;
+  font-size: max(16px, var(--fs-min, 0px));
   font-weight: 500;
   color: var(--on-card-muted);
 }
@@ -1920,6 +1919,20 @@ body.overview .deck-viewport {
 
 .c-arch__ms.is-hot small {
   color: var(--card);
+}
+
+/* Slide 48 (is-timed) is a dense latency diagram: it keeps its original, smaller text, so the deck's 26px floor does not apply here */
+.c-arch.is-timed {
+  --fs-min: 0px;
+}
+
+.c-arch.is-timed .c-arch__lane span {
+  letter-spacing: 0.14em;
+}
+
+.c-arch.is-timed .c-arch__node small {
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 /* ===== COMPONENT step-list ===== */
@@ -2306,7 +2319,7 @@ body.overview .deck-viewport {
 }
 
 .c-hurdle small {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2456,7 +2469,7 @@ body.overview .deck-viewport {
 .c-panel-card th {
   padding-bottom: 8px;
   text-align: left;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 600;
   color: var(--on-card-muted);
 }
@@ -2468,7 +2481,7 @@ body.overview .deck-viewport {
 
 .c-panel-card td:first-child { font-weight: 700; }
 
-.c-panel-card td:last-child { color: var(--on-card-muted); font-size: 24px; }
+.c-panel-card td:last-child { color: var(--on-card-muted); font-size: max(24px, var(--fs-min, 0px)); }
 
 .c-panel-card__body p {
   font-size: var(--fs-small);
@@ -2593,7 +2606,7 @@ body.overview .deck-viewport {
   grid-column: 2;
   margin-top: -6px;
   text-align: center;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 600;
   color: var(--accent-soft);
 }
@@ -2669,7 +2682,7 @@ body.overview .deck-viewport {
   grid-template-columns: 300px 1fr 280px;
   gap: 48px;
   align-items: center;
-  padding: 24px 44px;
+  padding: 20px 44px;
   border-radius: var(--radius);
   background: var(--bg-deep);
 }
@@ -2684,13 +2697,13 @@ body.overview .deck-viewport {
 
 .c-method__head p {
   margin-top: 10px;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   line-height: 1.25;
   color: var(--ink-muted);
 }
 
 .c-method__verdict {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -2728,7 +2741,7 @@ body.overview .deck-viewport {
   padding: 13px 0 10px;
   border-radius: var(--radius-s);
   background: var(--rule);
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 700;
   text-align: center;
   color: var(--ink-muted);
@@ -2739,7 +2752,7 @@ body.overview .deck-viewport {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 34px;
+  gap: 46px; /* room for the Midterm tag under sprint 4 */
 }
 
 .c-method__sprints {
@@ -2784,7 +2797,7 @@ body.overview .deck-viewport {
   margin-top: 8px;
   transform: translateX(-50%);
   font-family: var(--font-body);
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2795,7 +2808,7 @@ body.overview .deck-viewport {
 .c-method .c-method__loop {
   max-width: none;
   text-align: center;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   color: var(--ink-muted);
 }
 
@@ -2927,7 +2940,7 @@ body.overview .deck-viewport {
 
 .c-cycle__steps p {
   margin-top: 14px;
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.3;
   max-width: none;
   color: var(--on-card-muted);
@@ -2973,7 +2986,7 @@ body.overview .deck-viewport {
   transform: translate(-50%, 50%);
   padding: 0 22px;
   background: var(--bg);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 700;
   white-space: nowrap;
   max-width: none;
@@ -2991,7 +3004,7 @@ body.overview .deck-viewport {
   padding: 26px 32px;
   border-radius: var(--radius);
   background: var(--bg-deep);
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.6;
   color: var(--ink-muted);
 }
@@ -2999,7 +3012,7 @@ body.overview .deck-viewport {
 .c-cycle__team span {
   display: block;
   margin-bottom: 6px;
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3036,7 +3049,7 @@ body.overview .deck-viewport {
 
 .c-retro__labels span,
 .c-retro__result span {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3114,7 +3127,7 @@ body.overview .deck-viewport {
 
 .c-retro .c-retro__result p {
   margin-top: 14px;
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.35;
   color: var(--ink-muted);
 }
@@ -3129,21 +3142,22 @@ body.overview .deck-viewport {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 14px;
+  margin-top: -26px; /* pull up under the slide title: 26px text needs the room */
 }
 
 .c-timeline__panel {
   position: relative;
-  padding: 26px 56px 24px;
+  padding: 40px 56px 16px;
   border-radius: var(--radius);
   background: var(--bg-deep);
 }
 
 .c-timeline__kicker {
   position: absolute;
-  top: 20px;
+  top: 12px;
   left: 28px;
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3153,7 +3167,7 @@ body.overview .deck-viewport {
 /* --- deliverables track --- */
 .c-timeline__track {
   position: relative;
-  height: 220px;
+  height: 206px;
 }
 
 .c-timeline__line,
@@ -3192,7 +3206,7 @@ body.overview .deck-viewport {
 }
 
 .c-timeline__ms {
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   line-height: 1.2;
   text-align: center;
   color: var(--ink-muted);
@@ -3250,17 +3264,21 @@ body.overview .deck-viewport {
 }
 
 /* --- phases --- */
+.c-timeline__panel--phases {
+  padding-top: 62px;
+}
+
 .c-timeline__months {
   position: relative;
-  height: 26px;
-  margin-bottom: 10px;
+  height: 32px;
+  margin-bottom: 6px;
 }
 
 .c-timeline__months span {
   position: absolute;
   left: calc(var(--d) / var(--span) * 100%);
   transform: translateX(-50%);
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -3269,7 +3287,7 @@ body.overview .deck-viewport {
 
 .c-timeline__phases {
   position: relative;
-  height: 188px;
+  height: 208px;
 }
 
 .c-timeline__phase {
@@ -3315,7 +3333,7 @@ body.overview .deck-viewport {
   top: 108px;
   left: 0;
   right: 0;
-  font-size: 19px;
+  font-size: max(19px, var(--fs-min, 0px));
   line-height: 1.25;
   text-align: center;
   color: var(--ink-muted);
@@ -3337,6 +3355,12 @@ body.overview .deck-viewport {
   display: none;
 }
 
+/* the last phase is narrow: let its note run wider than the bar */
+.c-timeline__phase:last-child small {
+  left: -30px;
+  right: -40px;
+}
+
 /* --- gates --- */
 .c-timeline__gates {
   display: grid;
@@ -3345,10 +3369,10 @@ body.overview .deck-viewport {
 }
 
 .c-timeline__gate {
-  padding: 20px 26px;
+  padding: 14px 24px;
   border-radius: var(--radius-s);
   background: var(--bg-deep);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   line-height: 1.25;
   color: var(--ink-muted);
 }
@@ -3373,7 +3397,7 @@ body.overview .deck-viewport {
 }
 
 .c-timeline .c-timeline__foot {
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-style: italic;
   color: var(--ink-muted);
   max-width: none;
@@ -3502,7 +3526,7 @@ body.overview .deck-viewport {
 
 .c-point-list h3 small {
   font-family: var(--font-body);
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--ink-muted);
@@ -3519,7 +3543,7 @@ body.overview .deck-viewport {
 .c-point-list li {
   position: relative;
   padding-left: 26px;
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.28;
 }
 
@@ -3735,6 +3759,14 @@ body.overview .deck-viewport {
 /* ===== DECK OVERRIDES ===== */
 /* === DECK OVERRIDES === */
 
+/* Minimum text size: nothing below 26px (13pt at the 1920x1080 stage).
+   Components write small sizes as max(Npx, var(--fs-min, 0px)), so decks that
+   don't set --fs-min keep their old sizes. */
+:root {
+  --fs-min: 26px;
+  --fs-small: 26px;
+}
+
 /* Short card row: centre it in the space under the slide title (slide 67) */
 .c-card-grid.is-centered {
   flex: 1;
@@ -3813,7 +3845,7 @@ body.overview .deck-viewport {
 .c-card-grid.is-data-use .c-panel-card { min-height: 660px; }
 .c-card-grid.is-data-use .c-panel-card__head p { line-height: 1.6; }
 .c-card-grid.is-data-use table { font-size: 34px; }
-.c-card-grid.is-data-use th { font-size: 24px; padding-bottom: 12px; }
+.c-card-grid.is-data-use th { font-size: max(24px, var(--fs-min, 0px)); padding-bottom: 12px; }
 .c-card-grid.is-data-use td { padding: 12px 0; }
 .c-card-grid.is-data-use td:last-child { font-size: 32px; }
 
@@ -3824,13 +3856,13 @@ body.overview .deck-viewport {
 .c-card-grid.is-before-features .c-feature-group__count { font-size: 68px; }
 .c-card-grid.is-before-features .c-feature-group__count sub { font-size: 0.5em; line-height: 0; }
 .c-card-grid.is-before-features .c-feature-group h3 { font-size: 34px; }
-.c-card-grid.is-before-features .c-feature-group__head p { font-size: 21px; line-height: 1.35; }
+.c-card-grid.is-before-features .c-feature-group__head p { font-size: max(21px, var(--fs-min, 0px)); line-height: 1.35; }
 .c-card-grid.is-before-features .c-feature-group__list { gap: 18px; }
 .c-card-grid.is-before-features .c-feature-group__list li { row-gap: 4px; }
-.c-card-grid.is-before-features .c-feature-group__list strong { font-size: 23px; }
-.c-card-grid.is-before-features .c-feature-group__list code { font-size: 17px; }
-.c-card-grid.is-before-features .c-feature-group__list span { font-size: 18px; line-height: 1.3; color: var(--on-card-muted); }
-.c-card-grid.is-before-features .c-feature-group__foot { padding-top: 18px; font-size: 22px; }
+.c-card-grid.is-before-features .c-feature-group__list strong { font-size: max(23px, var(--fs-min, 0px)); }
+.c-card-grid.is-before-features .c-feature-group__list code { font-size: max(17px, var(--fs-min, 0px)); }
+.c-card-grid.is-before-features .c-feature-group__list span { font-size: max(18px, var(--fs-min, 0px)); line-height: 1.3; color: var(--on-card-muted); }
+.c-card-grid.is-before-features .c-feature-group__foot { padding-top: 18px; font-size: max(22px, var(--fs-min, 0px)); }
 
 /* Why We Left Out Outcomes (slide 63): outcome card left, SHAP bars right */
 .c-split.is-outcome-shap { gap: var(--gap-l); align-items: stretch; }
@@ -3838,29 +3870,29 @@ body.overview .deck-viewport {
 .c-split.is-outcome-shap .c-column { justify-content: center; }
 .c-split.is-outcome-shap .c-column { gap: 28px; }
 .c-split.is-outcome-shap .c-section-heading h2 { font-size: 52px; }
-.c-split.is-outcome-shap .c-section-heading p { font-size: 24px; line-height: 1.35; }
+.c-split.is-outcome-shap .c-section-heading p { font-size: max(24px, var(--fs-min, 0px)); line-height: 1.35; }
 .c-split.is-outcome-shap .c-shap-bars__row h4 { font-size: 34px; margin-bottom: 10px; }
-.c-split.is-outcome-shap .c-shap-bars__row h4 span { font-size: 20px; }
+.c-split.is-outcome-shap .c-shap-bars__row h4 span { font-size: max(20px, var(--fs-min, 0px)); }
 .c-split.is-outcome-shap .c-shap-bars__bar { height: 84px; }
 .c-split.is-outcome-shap .c-shap-bars__bar b { font-size: 40px; }
-.c-split.is-outcome-shap .c-shap-bars__bar em { font-size: 18px; }
+.c-split.is-outcome-shap .c-shap-bars__bar em { font-size: max(18px, var(--fs-min, 0px)); }
 .c-split.is-outcome-shap .c-shap-bars__step { height: 60px; }
 .c-split.is-outcome-shap .c-shap-bars__step::before { font-size: 32px; }
-.c-split.is-outcome-shap .c-shap-bars__step span { font-size: 24px; }
+.c-split.is-outcome-shap .c-shap-bars__step span { font-size: max(24px, var(--fs-min, 0px)); }
 .c-split.is-outcome-shap .c-shap-bars__legend { grid-template-columns: repeat(2, 1fr); gap: 14px 24px; margin-top: 26px; }
-.c-split.is-outcome-shap .c-shap-bars__legend li { font-size: 19px; padding-left: 34px; }
+.c-split.is-outcome-shap .c-shap-bars__legend li { font-size: max(19px, var(--fs-min, 0px)); padding-left: 34px; }
 .c-split.is-outcome-shap .c-shap-bars__legend li::before { width: 22px; height: 22px; }
-.c-split.is-outcome-shap .c-shap-bars figcaption { margin-top: 16px; font-size: 18px; }
+.c-split.is-outcome-shap .c-shap-bars figcaption { margin-top: 16px; font-size: max(18px, var(--fs-min, 0px)); }
 /* slide 61: taller cards, roomier spacing for readability */
 .c-card-grid.is-before-features .c-feature-group { min-height: 720px; gap: 30px; padding: 36px 34px 40px; }
 .c-card-grid.is-before-features .c-feature-group__head { padding-bottom: 26px; }
 .c-card-grid.is-before-features .c-feature-group h3 { margin-top: 18px; }
-.c-card-grid.is-before-features .c-feature-group__head p { font-size: 23px; line-height: 1.45; margin-top: 12px; }
+.c-card-grid.is-before-features .c-feature-group__head p { font-size: max(23px, var(--fs-min, 0px)); line-height: 1.45; margin-top: 12px; }
 .c-card-grid.is-before-features .c-feature-group__list { gap: 32px; }
 .c-card-grid.is-before-features .c-feature-group__list li { row-gap: 8px; }
 .c-card-grid.is-before-features .c-feature-group__list strong { font-size: 26px; }
-.c-card-grid.is-before-features .c-feature-group__list code { font-size: 19px; line-height: 1.4; }
-.c-card-grid.is-before-features .c-feature-group__list span { font-size: 20px; line-height: 1.4; }
+.c-card-grid.is-before-features .c-feature-group__list code { font-size: max(19px, var(--fs-min, 0px)); line-height: 1.4; }
+.c-card-grid.is-before-features .c-feature-group__list span { font-size: max(20px, var(--fs-min, 0px)); line-height: 1.4; }
 
 /* The 13 Features We Dropped (slide 62): leakage card left, "didn't pay" card with a without→with chart right */
 .c-split.is-dropped { gap: var(--gap-l); align-items: stretch; }
@@ -3869,27 +3901,27 @@ body.overview .deck-viewport {
 .c-split.is-dropped .c-panel-card__count { grid-row: span 2; margin: 0; }
 .c-split.is-dropped .c-panel-card__head p { margin-top: 6px; }
 .c-split.is-dropped .c-panel-card__body { justify-content: space-between; }
-.c-split.is-dropped .c-panel-card__body p code { font-family: var(--font-mono); font-size: 20px; color: var(--on-card-muted); }
+.c-split.is-dropped .c-panel-card__body p code { font-family: var(--font-mono); font-size: max(20px, var(--fs-min, 0px)); color: var(--on-card-muted); }
 
 .dropped-chart { margin: 0; padding: 16px 28px 22px; border-radius: var(--radius-s); background: var(--chart-bg); }
 .dropped-chart svg { display: block; width: 100%; height: auto; font-family: var(--font-body); }
-.dropped-chart .legend text { font-size: 22px; fill: var(--chart-ink); }
+.dropped-chart .legend text { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink); }
 .dropped-chart .grid { stroke: var(--chart-grid); stroke-width: 2; }
 .dropped-chart .zero { stroke: var(--chart-ink-muted); stroke-width: 2; stroke-dasharray: 6 6; }
-.dropped-chart .tick { font-size: 20px; fill: var(--chart-ink-muted); text-anchor: middle; }
-.dropped-chart .tick.is-small { font-size: 17px; }
-.dropped-chart .row { font-size: 24px; font-weight: 600; fill: var(--chart-ink); text-anchor: end; }
-.dropped-chart .val { font-size: 22px; fill: var(--chart-ink-muted); text-anchor: middle; }
+.dropped-chart .tick { font-size: max(20px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); text-anchor: middle; }
+.dropped-chart .tick.is-small { font-size: max(17px, var(--fs-min, 0px)); }
+.dropped-chart .row { font-size: max(24px, var(--fs-min, 0px)); font-weight: 600; fill: var(--chart-ink); text-anchor: end; }
+.dropped-chart .val { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); text-anchor: middle; }
 .dropped-chart .val.is-strong { font-size: 26px; font-weight: 700; fill: var(--chart-ink); }
-.dropped-chart .val.is-diff { font-size: 22px; font-weight: 700; fill: var(--danger); }
+.dropped-chart .val.is-diff { font-size: max(22px, var(--fs-min, 0px)); font-weight: 700; fill: var(--danger); }
 .dropped-chart .move { stroke: var(--danger); stroke-width: 4; }
 .dropped-chart .is-with, .dropped-chart .is-with-fill { fill: var(--danger); }
 .dropped-chart .is-without { fill: var(--chart-rand); }
 .dropped-chart circle { stroke: var(--chart-bg); stroke-width: 3; }
 .c-card-grid.is-before-features .c-feature-group__head sub { line-height: 0; }
-.dropped-chart__key { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; margin: 18px 0 0; padding-top: 16px; border-top: 2px solid var(--chart-grid); font-size: 20px; color: var(--chart-ink); }
+.dropped-chart__key { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; margin: 18px 0 0; padding-top: 16px; border-top: 2px solid var(--chart-grid); font-size: max(20px, var(--fs-min, 0px)); color: var(--chart-ink); }
 .dropped-chart__key dt { font-weight: 600; }
-.dropped-chart__key dd { margin: 0; font-family: var(--font-mono); font-size: 19px; color: var(--chart-ink-muted); }
+.dropped-chart__key dd { margin: 0; font-family: var(--font-mono); font-size: max(19px, var(--fs-min, 0px)); color: var(--chart-ink-muted); }
 
 /* is-static on a slide-title: no fade-up on arrival, so the title stays put while stepping through a build (slides 25-28, 30-34, 36-40, 82) */
 .slide .c-slide-title.is-static .reveal {
@@ -3914,6 +3946,42 @@ body.overview .deck-viewport {
 
 .c-compare-table.is-lookup thead th {
   font-size: 42px;
+}
+
+/* Minimum text size for shared components used by this deck (shared files stay untouched) */
+.c-agenda-item__owner > span { font-size: max(24px, var(--fs-min)); }
+.c-note-card p { font-size: max(24px, var(--fs-min)); }
+.c-note-card__tags li { font-size: max(22px, var(--fs-min)); }
+.c-note-card.is-compact p { font-size: max(22px, var(--fs-min)); }
+.c-note-card.is-bullets .c-note-card__tags li { font-size: max(24px, var(--fs-min)); }
+.c-note-card.is-tall p { font-size: max(24px, var(--fs-min)); }
+.c-placeholder__tag { font-size: max(20px, var(--fs-min)); }
+.c-quadrant-cell p { font-size: max(24px, var(--fs-min)); }
+.c-quadrant-cell__tag { font-size: max(20px, var(--fs-min)); }
+.c-quadrant__y,
+.c-quadrant__x { font-size: max(20px, var(--fs-min)); }
+.c-screen-frame__bar span { font-size: max(20px, var(--fs-min)); }
+.c-step-list.is-compact li small { font-size: max(22px, var(--fs-min)); }
+.c-step-list__band { font-size: max(22px, var(--fs-min)); }
+
+/* Workflow slides 51-52: the group box fills its column and the gap to the notes is tighter, so step text and the band label stay on one line */
+.c-split.is-workflow {
+  gap: 40px;
+}
+
+.is-workflow .c-step-list.is-compact li.is-group {
+  width: calc(100% + 27px);
+}
+
+/* the narrower notes column makes the tall notes wrap to four lines: let them grow instead of crowding their edges */
+.is-workflow .c-column {
+  gap: 16px;
+}
+
+.is-workflow .c-note-card.is-tall {
+  height: auto;
+  min-height: 190px;
+  padding: 14px 32px;
 }
 </style>
 </head>
@@ -4326,19 +4394,19 @@ body.overview .deck-viewport {
     <rect class="ec-new" x="804.0" y="92" width="682.0" height="484"/>
     <text class="ec-tick ec-newtxt" x="814.0" y="118">new data (78–86) →</text>
     <line class="ec-grid" x1="130" x2="1478" y1="576.0" y2="576.0"/>
-    <text class="ec-tick" x="116" y="584.0" text-anchor="end">−$50,000</text>
+    <text class="ec-tick" x="116" y="584.0" text-anchor="end">−$50k</text>
     <line class="ec-grid" x1="130" x2="1478" y1="495.3" y2="495.3"/>
-    <text class="ec-tick" x="116" y="503.3" text-anchor="end">−$40,000</text>
+    <text class="ec-tick" x="116" y="503.3" text-anchor="end">−$40k</text>
     <line class="ec-grid" x1="130" x2="1478" y1="414.7" y2="414.7"/>
-    <text class="ec-tick" x="116" y="422.7" text-anchor="end">−$30,000</text>
+    <text class="ec-tick" x="116" y="422.7" text-anchor="end">−$30k</text>
     <line class="ec-grid" x1="130" x2="1478" y1="334.0" y2="334.0"/>
-    <text class="ec-tick" x="116" y="342.0" text-anchor="end">−$20,000</text>
+    <text class="ec-tick" x="116" y="342.0" text-anchor="end">−$20k</text>
     <line class="ec-grid" x1="130" x2="1478" y1="253.3" y2="253.3"/>
-    <text class="ec-tick" x="116" y="261.3" text-anchor="end">−$10,000</text>
+    <text class="ec-tick" x="116" y="261.3" text-anchor="end">−$10k</text>
     <line class="ec-zero" x1="130" x2="1478" y1="172.7" y2="172.7"/>
     <text class="ec-tick" x="116" y="180.7" text-anchor="end">$0</text>
     <line class="ec-grid" x1="130" x2="1478" y1="92.0" y2="92.0"/>
-    <text class="ec-tick" x="116" y="100.0" text-anchor="end">+$10,000</text>
+    <text class="ec-tick" x="116" y="100.0" text-anchor="end">+$10k</text>
     <text class="ec-tick" x="130.0" y="620" text-anchor="middle">69</text>
     <text class="ec-tick" x="209.3" y="620" text-anchor="middle">70</text>
     <text class="ec-tick" x="288.6" y="620" text-anchor="middle">71</text>
@@ -4370,14 +4438,14 @@ body.overview .deck-viewport {
     <text class="ec-end ec-live" x="1500" y="249.6">−$970</text>
     <circle class="ec-dot ec-fade" cx="1478.0" cy="268.7" r="8"/>
     <text class="ec-end ec-fade" x="1500" y="283.6">−$11,905</text>
-    <line class="ec-line ec-fade"  x1="30" x2="74" y1="34" y2="34"/>
-    <text class="ec-leg" x="88" y="43">Fade everything</text>
-    <line class="ec-line ec-live"  x1="299.0" x2="343.0" y1="34" y2="34"/>
-    <text class="ec-leg" x="357.0" y="43">Pool threshold (live)</text>
-    <line class="ec-line ec-top"  x1="643.5999999999999" x2="687.5999999999999" y1="34" y2="34"/>
-    <text class="ec-leg" x="701.5999999999999" y="43">Top 5% (report card)</text>
-    <line class="ec-line ec-rand" stroke-dasharray="4 0" x1="975.5999999999999" x2="1019.5999999999999" y1="34" y2="34"/>
-    <text class="ec-leg" x="1033.6" y="43">Random, same count (avg)</text>
+    <line class="ec-line ec-fade" x1="30.0" x2="74.0" y1="34" y2="34"/>
+    <text class="ec-leg" x="88.0" y="43">Fade everything</text>
+    <line class="ec-line ec-live" x1="367.1" x2="411.1" y1="34" y2="34"/>
+    <text class="ec-leg" x="425.1" y="43">Pool threshold (live)</text>
+    <line class="ec-line ec-top" x1="759.5" x2="803.5" y1="34" y2="34"/>
+    <text class="ec-leg" x="817.5" y="43">Top 5% (report card)</text>
+    <line class="ec-line ec-rand" stroke-dasharray="4 0" x1="1153.2" x2="1197.2" y1="34" y2="34"/>
+    <text class="ec-leg" x="1211.2" y="43">Random, same count (avg)</text>
     </svg>
   </div>
   <figcaption class="c-equity-chart__take">Fade everything ends at −$11,905.<br>Our top 5% ends at +$12, close to zero.</figcaption>
@@ -4450,7 +4518,39 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="15" data-name="section-architecture">
+<section class="slide" data-slide="15" data-name="added-value">
+<!-- notes: TODO owner. Beyond the Judge, C22 can run this system without us. It scales: C22 wants to go from 500 to 2,000 users per campaign, and a simple command adds workers when a campaign gets busy. It's recoverable: a week of daily backups of data and models, and one command restores them. And adding past campaigns used to mean running a script. Now it's one click on the dashboard. Bad rows are skipped and reported. → How the system fits together. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Added value</span>
+  <h1 class="reveal">What C22 Gets Beyond the Judge</h1>
+</header>
+<header class="c-section-heading reveal inset">
+  <h2>A system C22 can run without us</h2>
+  <p></p>
+</header>
+<div class="c-card-grid inset" style="--grid-cols: 3;">
+  
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">Room to grow</span>
+  <h3>Grows with the platform</h3>
+  <p>Built for C22’s 500 → 2,000 users goal. Busy campaign? Add workers with a simple command.</p>
+</article>
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">Less risk</span>
+  <h3>Mistakes are recoverable</h3>
+  <p>A week of daily backups of data and models. One command restores them.</p>
+</article>
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">Less manual work</span>
+  <h3>One click, no script</h3>
+  <p>Past campaigns used to need a script. Now it’s a dashboard button. Bad rows are skipped and reported.</p>
+</article>
+
+</div>
+</section>
+
+
+<section class="slide" data-slide="16" data-name="section-architecture">
 <!-- notes: Recap of the architecture, then the new retrainer. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">03</span>
@@ -4463,7 +4563,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="16" data-name="architecture">
+<section class="slide" data-slide="17" data-name="architecture">
 <!-- notes: James Z. Left to right by layer: ingestion → Redis queues → workers → Judge inference. Dashboard reads from pub/sub. Oanda is temporary. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal"></span>
@@ -4508,14 +4608,14 @@ body.overview .deck-viewport {
     <strong>Campaign Traders</strong>
     <span>trading on C22’s platform</span>
   </div>
-  <span class="c-arch__wire-label" style="left: 213px; top: 212px; width: 120px;">Trade data</span>
+  <span class="c-arch__wire-label" style="left: 186px; top: 208px; width: 164px;">Trade data</span>
 
   <div class="c-arch__actor" style="top: 520px; left: -24px;">
     <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="12" r="9"/><path d="M14 46c0-11 8-20 18-20s18 9 18 20z"/></svg>
     <strong>C22</strong>
     <span>Clement &amp; Lee Yang</span>
   </div>
-  <span class="c-arch__wire-label" style="left: 198px; top: 604px; width: 150px;">Reverse trade<br>performance</span>
+  <span class="c-arch__wire-label" style="left: 158px; top: 522px; width: 192px;">Reverse trade<br>performance</span>
 
   <!-- I/O -->
   <div class="p1 c-arch__node" style="left: 356px; top: 200px; width: 198px; height: 100px;">FastAPI<small>ingestion</small></div>
@@ -4539,7 +4639,7 @@ body.overview .deck-viewport {
   <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 236px; width: 220px; height: 100px;">Worker #2</div>
   <span class="p3 c-arch__dots" style="left: 1100px; top: 344px;">···</span>
   <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 450px; width: 220px; height: 100px;">Worker #N</div>
-  <p class="p3 c-arch__foot" style="left: 1070px; top: 600px; width: 280px;">Currently operates with one worker, to be automatically scalable</p>
+  <p class="p3 c-arch__foot" style="left: 1070px; top: 582px; width: 280px;">Currently operates with one worker, to be automatically scalable</p>
 
   <!-- Services -->
   <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
@@ -4551,7 +4651,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="17" data-name="section-retrainer">
+<section class="slide" data-slide="18" data-name="section-retrainer">
 <!-- notes: The main new piece of work since the mid-term. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">04</span>
@@ -4564,7 +4664,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="18" data-name="retrainer-flow">
+<section class="slide" data-slide="19" data-name="retrainer-flow">
 <!-- notes: Walk the five steps. Source: project-cassandra src/cassandra/pipelines (trigger_retraining, start_training_run, process_training_run, poll_training_runs, grade_challengers, promote_model) and doc/client/RETRAINING_CONTRACT.md. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
@@ -4610,7 +4710,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="19" data-name="retrainer-trigger-split">
+<section class="slide" data-slide="20" data-name="retrainer-trigger-split">
 <!-- notes: TODO. Refs: doc/client/RETRAINING_CONTRACT.md. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
@@ -4624,7 +4724,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="20" data-name="retrainer-train-grade">
+<section class="slide" data-slide="21" data-name="retrainer-train-grade">
 <!-- notes: TODO. Refs: EVALUATOR_RULES.md. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
@@ -4638,7 +4738,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="21" data-name="retrainer-promote">
+<section class="slide" data-slide="22" data-name="retrainer-promote">
 <!-- notes: TODO. Refs: promote_model.py docstring. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
@@ -4652,7 +4752,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="22" data-name="dd-retrainer-1">
+<section class="slide" data-slide="23" data-name="dd-retrainer-1">
 <!-- notes: TODO. Candidate from RETRAINING_CONTRACT.md section 8. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Key design decision · Auto-retrainer</span>
@@ -4666,7 +4766,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="23" data-name="dd-retrainer-2">
+<section class="slide" data-slide="24" data-name="dd-retrainer-2">
 <!-- notes: TODO. Candidate from EVALUATOR.md. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Key design decision · Auto-retrainer</span>
@@ -4680,7 +4780,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="24" data-name="dd-retrainer-3">
+<section class="slide" data-slide="25" data-name="dd-retrainer-3">
 <!-- notes: TODO. Candidates from ARCHITECTURE.md and RETRAINING_CONTRACT.md. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Key design decision · Auto-retrainer</span>
@@ -4694,7 +4794,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="25" data-name="section-explanation">
+<section class="slide" data-slide="26" data-name="section-explanation">
 <!-- notes: Our answer to the mid-term feedback. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">05</span>
@@ -4707,7 +4807,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="26" data-name="explanation-how">
+<section class="slide" data-slide="27" data-name="explanation-how">
 <!-- notes: TODO. Spec: docs/superpowers/specs/2026-10-10-judge-v5-2-0-explanation-design.md. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Explanations</span>
@@ -4721,7 +4821,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="27" data-name="explanation-example">
+<section class="slide" data-slide="28" data-name="explanation-example">
 <!-- notes: TODO. Example line is from the spec; replace with a real trade. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Explanations</span>
@@ -4735,7 +4835,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="28" data-name="dd-explanation-1">
+<section class="slide" data-slide="29" data-name="dd-explanation-1">
 <!-- notes: TODO. Spec section 8. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Key design decision · Explanations</span>
@@ -4749,7 +4849,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="29" data-name="dd-explanation-2">
+<section class="slide" data-slide="30" data-name="dd-explanation-2">
 <!-- notes: TODO. Spec sections 6, 9, 11. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Key design decision · Explanations</span>
@@ -4763,7 +4863,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="30" data-name="section-training">
+<section class="slide" data-slide="31" data-name="section-training">
 <!-- notes: Quick recap of the model; detail is in the appendix. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">06</span>
@@ -4776,7 +4876,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="31" data-name="hurdle-model">
+<section class="slide" data-slide="32" data-name="hurdle-model">
 <!-- notes: Jerrick. Judge v5 is a hurdle model with three arms. Each fills in one term of EV = p × E[gain] − (1 − p) × E[loss]. The classifier gives p (calibrated); the two Huber regressors give the dollar gain and loss. This is gross EV: the models train on gross = −profit. Direction only, fade or skip. amount only sets the cost: score = ev − 7.00 × amount, and we take the trade if it lands in the top 5% of the frozen pool distribution. Trade magnitude: TODO, to be covered later. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -4839,7 +4939,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="32" data-name="data">
+<section class="slide" data-slide="33" data-name="data">
 <!-- notes: Yanting. How the data was used: 54 campaigns from C22. Each trade row has the trader's side, amount, open and close prices, and open and close times. Campaigns 33–68 are the training set, 69–77 the testing set, and 78–86 will be used as an additional test set. Feature count by version, v1 to v5: 21, 26, 45 (two feature sets combined), 26, then 18, keeping only what held up on unseen days. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Step 01: Data</span>
@@ -4889,7 +4989,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="33" data-name="magnitude">
+<section class="slide" data-slide="34" data-name="magnitude">
 <!-- notes: Owner TBC. Deep dive 4: where the signal lives. Giving the model a perfect classifier adds +$351 per campaign; perfect gain and loss regressors add +$12,417, 35 times more. So the money is in how big the win or loss is, not only in calling the direction. Right: what we tried and dropped. Market context was rejected four times (18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005; 14 macro features B+C −$23.5k to −$47.6k; NB14 negative on all three learners). Tuned GBDT beats logistic by +0.002 AUC. Learning curves are flat. A same-day trade-context block added +0.0016 AUC but lost $7,571 at top 5%, so money vetoed it. The full decomposition chart is in the appendix. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Step 04: Validation</span>
@@ -4925,7 +5025,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="34" data-name="section-pm">
+<section class="slide" data-slide="35" data-name="section-pm">
 <!-- notes: SCRIPT (~15s, Arin): Last section: how we ran the work as a team. In short: two-week sprints, a retro at the end of every one, and a plan that changes when the results tell us to. I'll cover why we chose Scrum, how a sprint runs, where we are on the timeline, what our retros changed, and what limits the project. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">07</span>
@@ -4938,7 +5038,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="35" data-name="scrum">
+<section class="slide" data-slide="36" data-name="scrum">
 <!-- notes: SCRIPT (~45s, Arin): We ran this project as Scrum, not Waterfall. Waterfall means locking the requirements first, building, and showing the sponsor the result at the end. That couldn't work for us, for three reasons. One: the scope wasn't fixed. Our own Statement of Work left the latency target, the confidence cut-off and the dashboard scope as to be determined. Two: this is research. We can't schedule a model result, so each sprint's scores decided what we tried next. After Sprint 7, for example, the models were only slightly better than random, so we moved on to CatBoost. Three: sponsor inputs arrived mid-project, like the crowding data and TradeLocker access, so we built against stand-ins first. So we ran two-week sprints with a review and a retro each time. Today is the end of Sprint 9. -->
 <!-- notes: Sources: SOW section 3 (TBD items) and the change-request clause; Sprint 7 retro minutes (CatBoost, only slightly better than random); Linear cycle 9 ends 5 Oct. Check: sprint numbering matches what you say aloud. -->
 <header class="c-slide-title ">
@@ -5011,7 +5111,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="36" data-name="sprint-cycle">
+<section class="slide" data-slide="37" data-name="sprint-cycle">
 <!-- notes: SCRIPT (~45s, Arin): Every two weeks we run the same loop. One, plan: we review the stories beforehand, then split into two breakouts, BA for the model and PD for the system, so each squad estimates its own work. Two, build: stand-ups are async in Slack, and nobody has more than one or two tasks in progress. Three, sync: we send Clement short updates two to three times a week. Four, review: we show the sponsor what's done and reshape the backlog. Five, retro: start, stop, continue, and every action gets an owner. Those actions feed straight into the next sprint's plan, which is the arrow along the bottom. Isaiah is our Product Owner, Yan Ting is our Scrum Master, and the work lives in Linear, Slack and Zoom. -->
 <!-- notes: Sources: Linear meeting minutes 27 Aug; Sprint 7 retro minutes. Check: squad membership (BA: Isaiah, Joyce, Yan Ting; PD: Arin, Jamesz, Jerrick) and the 2-3x a week update rhythm with the team. -->
 <header class="c-slide-title ">
@@ -5042,7 +5142,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="37" data-name="retros">
+<section class="slide" data-slide="38" data-name="retros">
 <!-- notes: SCRIPT (~50s, Arin): At the end of every sprint we run a retro, start, stop, continue. This is the one from Sprint 7, and three things stood out. Each got an owner. One: user stories were vague, so people built different things. Now we review stories before planning, and BA and PD plan in separate breakouts. Two: too much was in progress and work got left to the last minute. Now it's at most one or two tasks in progress, and one change per branch. Three: updates were patchy. We added a 7 pm Slack stand-up reminder, and Clement now gets updates two to three times a week. We also kept what worked: async stand-ups and user-centric stories. Since then we've completed 205 story points. -->
 <!-- notes: Source: Linear Sprint 7 retro doc (board + minutes); 205 story points completed. The board also had: start using tech specs, break tasks down further, stop stacking features without merging. -->
 <header class="c-slide-title ">
@@ -5080,7 +5180,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="38" data-name="timeline">
+<section class="slide" data-slide="39" data-name="timeline">
 <!-- notes: SCRIPT (~40s, Arin): Here's where that puts us on the timeline. The project runs in phases. Phase 0 was scoping in early June. Phase 1 built the baselines: EDA, a scorer and three frozen baselines. Phase 2, which wraps up today, is the Judge and the solution infrastructure. Each phase ends at a gate. Phase 0: logging live and the ID join confirmed. Phase 1: the three baselines frozen before any training. Today is the midpoint gate: does the Judge beat the rules-based system? [Say the gate result here.] From tomorrow, Phase 3 starts: live paper trading, run daily to build a track record, up to the final gate on 13 November. Handover to Catch22 follows in the last two weeks of November. -->
 <!-- notes: Check before presenting: confirm Phase 0 and Phase 1 gates actually passed, and state the midpoint-gate result in the bracketed line. Dates come from the timeline component (Phase 3: 6 Oct to 16 Nov, handover 17 to 30 Nov). -->
 <header class="c-slide-title ">
@@ -5105,7 +5205,7 @@ body.overview .deck-viewport {
     </div>
   </section>
 
-  <section class="c-timeline__panel reveal">
+  <section class="c-timeline__panel c-timeline__panel--phases reveal">
     <span class="c-timeline__kicker">Phases</span>
     <div class="c-timeline__months">
       <span style="--d: 14;">Jun</span><span style="--d: 45;">Jul</span><span style="--d: 76;">Aug</span>
@@ -5130,7 +5230,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="39" data-name="milestones">
+<section class="slide" data-slide="40" data-name="milestones">
 <!-- notes: For midterm we’re delivering the Reverse Trade Judge and an analytics dashboard for model performance. For the final we’ll add paper trading and automated retraining. → Now let’s see how this works in our live demo. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal"></span>
@@ -5195,7 +5295,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="40" data-name="section-handover">
+<section class="slide" data-slide="41" data-name="section-handover">
 <!-- notes: What C22 gets and what is left to do. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">08</span>
@@ -5208,7 +5308,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="41" data-name="handover-receives">
+<section class="slide" data-slide="42" data-name="handover-receives">
 <!-- notes: TODO. Fill from the project-cassandra README and doc/. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Handover</span>
@@ -5222,7 +5322,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="42" data-name="handover-next">
+<section class="slide" data-slide="43" data-name="handover-next">
 <!-- notes: TODO. Gaps seen in code review, confirm before presenting. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Handover</span>
@@ -5236,7 +5336,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="43" data-name="qna">
+<section class="slide" data-slide="44" data-name="qna">
 <!-- notes: SCRIPT (~10s): That's everything from us. Thank you. We're happy to take questions, and we can jump back to the architecture or the timeline if that helps. -->
 <!-- notes: 30 min Q&A. Jump with #28 (architecture) and #71 (timeline) in the URL. -->
 <div class="c-closing is-title-only">
@@ -5249,7 +5349,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="44" data-name="section-appendix">
+<section class="slide" data-slide="45" data-name="section-appendix">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">A</span>
   <div class="c-section-divider__text">
@@ -5261,7 +5361,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="45" data-name="app-latency-throughput">
+<section class="slide" data-slide="46" data-name="app-latency-throughput">
 <!-- notes: Appendix. Evidence behind the latency and throughput requirements on the NFR slide. Left chart: the median time for gold to move $0.10 against the desk is 0.6-0.85 s over a typical minute, and it varies by hour (UTC); it is about 0.3 s in the 13-14 UTC London/New York overlap. Right chart: the share of trades that fail the $0.10 adverse-price check grows with end-to-end latency (client fill to desk order); keeping failures at 5% needs about 50-90 ms. Throughput, all 84,456 trades Feb-Sep: the busiest minute had 19 trades and the busiest second 5, from 5 different accounts; the median gap between trades is 24 s. Even at the busiest second with 1 s latency about 5 trades are judged at once, so sizing for bursts of 5-10 simultaneous trades is plenty. Only 2% of trades close within 5 s. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -5294,7 +5394,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="46" data-name="app-latency-budget">
+<section class="slide" data-slide="47" data-name="app-latency-budget">
 <!-- notes: Appendix. Follows the latency and throughput evidence slide. Left: what the historical data says about the 10c adverse-price check. It only works if the time from client fill to desk order stays around 100 ms; at 1 s roughly 30% of trades already fail it. That is why the 10c latency limit is the requirement that matters, not concurrency: 6 trades/min is the busiest period anywhere in the data. Keeping failures at 1% needs about 15-30 ms. In a calm minute (p10 volatility) 5% failures allows about 0.7 s, but in the most volatile 1% of minutes (news spikes) it is about 3 ms and most trades fail whatever the system does. These numbers assume the check compares prices once, when the desk places its order; if a move to +10c at any point before that counts, the limits roughly halve. There is no data finer than one second, so sub-second figures were scaled down from 1-10 minute measurements and cross-checked against the second-stamped fills. Below 1 s the real market moves slower than the scaling predicts, so the budget is on the cautious side. Right: our own peak run (peak-790963676.csv): 102 trades through the pipeline, 99 completed and 3 marked slipped (OANDA's price moved between the cached candle and the pipeline's read). The clock starts when the API receives the trade, so the time from the client's fill to reaching us is not included. Received to decision published is 31 ms at the median, 88 ms at p90, 228 ms at p99. Received to OANDA price read is 558 ms at the median and 951 ms at p99. About 10% of trades are over 100 ms. The median is fine; the slow tail is on the Slow 10% slide. If the desk order has to wait for the OANDA price check, almost every trade misses the budget. Bursts of 4-5 trades did not slow anything noticeably. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -5334,7 +5434,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="47" data-name="app-latency-architecture">
+<section class="slide" data-slide="48" data-name="app-latency-architecture">
 <!-- notes: Appendix. Where the time goes for an open trade, measured in a peak run of 102 trades (peak-790963676.csv). Each chip is the median time of that hop, with the 99th percentile beneath. The clock starts when the API receives the trade; the client round trip (13 ms median) is measured separately and is not part of the 31 ms to a published decision. API to Postgres is the campaign lookup plus storing the open trade. Queue wait is about half a millisecond. The worker's Postgres chip is counting earlier closed trades (2 ms median, 108 ms at p99) plus storing the prediction (3 ms). The Judge call is 14 ms median, of which the model itself is about 3 ms; the rest is network and a new HTTP client built per call. The Oanda price read dominates everything else at about 0.5 s and is the step that decides whether the order meets the latency budget. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -5379,14 +5479,14 @@ body.overview .deck-viewport {
     <strong>Campaign Traders</strong>
     <span>trading on C22’s platform</span>
   </div>
-  <span class="c-arch__wire-label" style="left: 213px; top: 212px; width: 120px;">Trade data</span>
+  <span class="c-arch__wire-label" style="left: 186px; top: 208px; width: 164px;">Trade data</span>
 
   <div class="c-arch__actor" style="top: 520px; left: -24px;">
     <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="12" r="9"/><path d="M14 46c0-11 8-20 18-20s18 9 18 20z"/></svg>
     <strong>C22</strong>
     <span>Clement &amp; Lee Yang</span>
   </div>
-  <span class="c-arch__wire-label" style="left: 198px; top: 604px; width: 150px;">Reverse trade<br>performance</span>
+  <span class="c-arch__wire-label" style="left: 158px; top: 522px; width: 192px;">Reverse trade<br>performance</span>
 
   <!-- I/O -->
   <div class="p1 c-arch__node" style="left: 356px; top: 200px; width: 198px; height: 100px;">FastAPI<small>ingestion</small></div>
@@ -5410,7 +5510,7 @@ body.overview .deck-viewport {
   <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 236px; width: 220px; height: 100px;">Worker #2</div>
   <span class="p3 c-arch__dots" style="left: 1100px; top: 344px;">···</span>
   <div class="p3 c-arch__node c-arch__node--dark" style="left: 1100px; top: 450px; width: 220px; height: 100px;">Worker #N</div>
-  <p class="p3 c-arch__foot" style="left: 1070px; top: 600px; width: 280px;">Currently operates with one worker, to be automatically scalable</p>
+  <p class="p3 c-arch__foot" style="left: 1070px; top: 582px; width: 280px;">Currently operates with one worker, to be automatically scalable</p>
 
   <!-- Services -->
   <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1430px; top: 232px; width: 258px; height: 100px;">Judge<small>inference</small></div>
@@ -5422,7 +5522,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="48" data-name="app-latency-tail">
+<section class="slide" data-slide="49" data-name="app-latency-tail">
 <!-- notes: Appendix. Why the slowest 10% of decisions are slow, from the peak run of 102 trades. Three steps cause the tail. The Judge call: median 10 ms for network and client, 32 ms at p90, 87 ms at p99; judge.client_setup alone is 80 ms at p99 because a new HTTP client (and its TLS setup) is built on every call, so a shared client would remove most of it. Counting earlier closed trades: one query with a bad tail, 2 ms median but 107 ms at p99, worth an EXPLAIN and probably a missing index. Storing the open trade: two commits, 8 ms median and 31 ms at p99, which could be one. What turned out not to be the problem: queue wait is about 0.5 ms (p99 1.5 ms); every Redis step is under 1 ms at the median; the judge model itself takes about 3 ms; bursts of 5 did not slow anything down. An earlier suspicion that open trades would sit behind a one-second wait was wrong; with 15 workers one is always free, and the 645 ms seen in the smoke run was a cold start. The real problem is OANDA, on both open and close. Clock note: the containers' clocks differ from the Mac's, so we measure from when the API receives the trade; a --host-clock switch changes it back to the seed's send time. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -5456,7 +5556,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="49" data-name="workflow-campaign-start">
+<section class="slide" data-slide="50" data-name="workflow-campaign-start">
 <!-- notes: James Z. Walk the six steps top to bottom. Pause on step 1 (reference price) and step 5 (six history features; a new trader gets zeros/nulls, not an error). Land the callout: one transaction, so a failed Redis write rolls everything back. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -5509,13 +5609,13 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="50" data-name="workflow-open-trade">
+<section class="slide" data-slide="51" data-name="workflow-open-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the trade is queued, a worker runs steps 3-6. Step 4: 18 features built live from the trade plus the cached history, then the Judge decides. Step 5: Oanda is a stand-in for C22's market data; slippage is the gap between the trader's entry price and ours. Key notes: in production, market data is polled or read from C22 directly and no response is sent. C22's slippage threshold is 0.10; we adjusted it for the demo because of the historical data. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
   <h1 class="reveal">Workflow 2: Open Trade</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 720px; --split-align: stretch;">
+<div class="c-split inset is-workflow" style="--split-cols: 1fr 550px; --split-align: stretch;">
   
   <ol class="c-step-list is-compact">
   
@@ -5526,7 +5626,7 @@ body.overview .deck-viewport {
       <ol class="c-step-list__inner">
         <li>Read cached trader history from Redis</li>
         <li>Build 18 features, call the Judge<small>Inference returns a decision from the features</small></li>
-        <li>Fetch market price, check slippage<i class="c-step-list__arrow" style="--arrow-from: 735px; --arrow-y: 33px; --arrow-len: 196px; --arrow-ang: -32.1deg"></i><i class="c-step-list__arrow" style="--arrow-from: 735px; --arrow-y: 33px; --arrow-len: 197px; --arrow-ang: 32.6deg"></i></li>
+        <li>Fetch market price, check slippage<i class="c-step-list__arrow" style="--arrow-from: 735px; --arrow-y: 33px; --arrow-len: 352px; --arrow-ang: -18.4deg"></i><i class="c-step-list__arrow" style="--arrow-from: 735px; --arrow-y: 33px; --arrow-len: 348px; --arrow-ang: 16.5deg"></i></li>
         <li>Record the simulated reverse position<small>Market price + Judge decision, stored for reverse profit calculation</small></li>
       </ol>
     </li>
@@ -5567,13 +5667,13 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="51" data-name="workflow-close-trade">
+<section class="slide" data-slide="52" data-name="workflow-close-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the close is queued, a worker runs steps 3-6. Key notes: the Redis rolling metrics update even if the simulated close fails (e.g. the market price fetch). They are updated with a read-check-write retry pattern instead of locks. Reverse-trading PnL streams to the dashboard the moment each trade closes. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
   <h1 class="reveal">Workflow 3: Close Trade</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 720px; --split-align: stretch;">
+<div class="c-split inset is-workflow" style="--split-cols: 1fr 700px; --split-align: stretch;">
   
   <ol class="c-step-list is-compact is-close">
   
@@ -5610,7 +5710,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="52" data-name="workflow-campaign-end">
+<section class="slide" data-slide="53" data-name="workflow-campaign-end">
 <!-- notes: James Z. Five steps, top to bottom. The /end call is idempotent: a second request for an already ended campaign does nothing and does not rerun the flow. Open trades are force-failed so the evaluation only uses completed trades. The same completed trades are scored three ways: Judge-led reverse, reverse all trades, coin-flip-led reverse. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -5652,7 +5752,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="53" data-name="app-correlation">
+<section class="slide" data-slide="54" data-name="app-correlation">
 <!-- notes: Appendix. Pearson correlation of the point-in-time features with each other and with the two targets (last two rows and columns). Leaked stop and target fields are already removed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5681,7 +5781,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="54" data-name="app-learning-calibration">
+<section class="slide" data-slide="55" data-name="app-learning-calibration">
 <!-- notes: Appendix. Left: validation AUC against training campaigns on the gross target is flat (correlation −0.383), so more campaigns do not help yet. Right: calibration fitted on out-of-fold predictions only; isotonic moves Brier 0.2384 to 0.2380. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5700,7 +5800,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="55" data-name="app-shap-features">
+<section class="slide" data-slide="56" data-name="app-shap-features">
 <!-- notes: Appendix. Per-feature mean |SHAP|. Solid bars: full 26-feature model. Faded bars: no_outcome model. Colours are feature groups. Take outcome history away and prior_sl_use_rate and sec_since_last_close take over. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5729,7 +5829,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="56" data-name="app-cost-curve">
+<section class="slide" data-slide="57" data-name="app-cost-curve">
 <!-- notes: Appendix. The reversing cost is a constant $7 per lot, which is what flips the sign of fade-everything. Sweeping the assumed cost from $0 to $7, the model's rule sits between the 13.5th and 22.9th percentile of random selection at the same exposure at every level. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5748,7 +5848,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="57" data-name="app-market-data">
+<section class="slide" data-slide="58" data-name="app-market-data">
 <!-- notes: Appendix. Market-data features on the no_outcome arm, across three learners. Share of mean |SHAP| divided by a uniform share, so 1.0 means indifferent. AUC says neutral-to-better, dollars say worse in all eight arms. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5767,7 +5867,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="58" data-name="app-dropped">
+<section class="slide" data-slide="59" data-name="app-dropped">
 <!-- notes: Appendix. Levers we tried and dropped, with the measured result. Market context: 18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005 (CI −0.0018 to +0.0025); 14 Yahoo macro features B+C −$23.5k to −$47.6k; NB14 flips negative on all three learners. SL/TP channel: even the leaked flag buys only +0.006. Hyperparameters: 50 Optuna trials +0.0028 CV AUC. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5793,7 +5893,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="59" data-name="app-decomposition">
+<section class="slide" data-slide="60" data-name="app-decomposition">
 <!-- notes: Appendix. Value of perfecting each part of the hurdle model, in dollars per campaign at the top-5% readout. As fitted: classifier +687, gain arm +216, loss arm +229. Perfected ceilings: classifier +13,146, gain arm +24,663, loss arm +10,050. Marginal question: perfect classifier given perfect regressors adds +351; perfect gain and loss regressors given a perfect classifier add +12,417, 35 times more. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5812,7 +5912,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="60" data-name="app-feature-arms">
+<section class="slide" data-slide="61" data-name="app-feature-arms">
 <!-- notes: Appendix. The 26 features in four buckets (ticket, behaviour, outcome, counter) and which feature set (arm) keeps which. Sets are nested, so the filled region only shrinks left to right and the outcome block disappears first: full 26, no_outcome 18, behaviour_only 14, ticket_only 6. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5841,7 +5941,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="61" data-name="app-topk">
+<section class="slide" data-slide="62" data-name="app-topk">
 <!-- notes: Appendix. Top-k ranking quality: each arm fades the same fraction of every campaign, so exposure is identical and only the picks differ. Realised reverseProfit in $000 against random at matched exposure. The full model, which sees outcome history, sits below random at every fraction (e.g. −$23.1k vs −$14.2k at 50%). The other arms hover around random. All lines are negative at most fractions: this is a ranking check, not a profit claim. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5860,7 +5960,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="62" data-name="app-hyperparams">
+<section class="slide" data-slide="63" data-name="app-hyperparams">
 <!-- notes: Appendix. Final hyperparameters of the v5 judge (judge_v5_gross_18, 18 no_outcome features). Source: scripts/target_ablation.py BASE, CLF_PARAMS, REG_PARAMS. One LightGBM parameter set shared by all three models; the classifier uses binary loss, the gain and loss regressors use huber. Early stopping 100 rounds; final refit at the median best iteration across the six folds: classifier 44 trees, gain 6,392, loss 6,412. Isotonic calibration on leave-one-fold-out predictions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5927,7 +6027,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="63" data-name="market-regimes">
+<section class="slide" data-slide="64" data-name="market-regimes">
 <!-- notes: To avoid cherry-picking an easy window, we used two lenses. Activity is the number of trades per slot. Volatility is beta against gold futures. That gives four market conditions, and we picked two opposite corners. → Here’s the data behind those labels. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -5988,7 +6088,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="64" data-name="demo-data">
+<section class="slide" data-slide="65" data-name="demo-data">
 <!-- notes: On the left, we counted trades in a rolling 30-minute window. Typical sits near p50, the median, and busy is p95 and above. On the right, we measured each slot’s beta against gold futures. One or less is calm, above one is volatile. → Applying both rules gives us our two timeslots. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -6013,7 +6113,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="65" data-name="chosen-timeslots">
+<section class="slide" data-slide="66" data-name="chosen-timeslots">
 <!-- notes: Our typical, calm slot is 3:30 to 4:00, and our busy, volatile slot is 5:30 to 6:00. Together they test the Judge in both an ordinary and a stressful market. → With that, I’ll hand over to Jerrick to start the demo. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>

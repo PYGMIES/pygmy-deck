@@ -23,7 +23,7 @@
 
 .c-retro__labels span,
 .c-retro__result span {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -101,7 +101,7 @@
 
 .c-retro .c-retro__result p {
   margin-top: 14px;
-  font-size: 24px;
+  font-size: max(24px, var(--fs-min, 0px));
   line-height: 1.35;
   color: var(--ink-muted);
 }

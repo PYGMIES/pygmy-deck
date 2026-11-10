@@ -12,7 +12,7 @@
   grid-template-columns: 300px 1fr 280px;
   gap: 48px;
   align-items: center;
-  padding: 24px 44px;
+  padding: 20px 44px;
   border-radius: var(--radius);
   background: var(--bg-deep);
 }
@@ -27,13 +27,13 @@
 
 .c-method__head p {
   margin-top: 10px;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   line-height: 1.25;
   color: var(--ink-muted);
 }
 
 .c-method__verdict {
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -71,7 +71,7 @@
   padding: 13px 0 10px;
   border-radius: var(--radius-s);
   background: var(--rule);
-  font-size: 20px;
+  font-size: max(20px, var(--fs-min, 0px));
   font-weight: 700;
   text-align: center;
   color: var(--ink-muted);
@@ -82,7 +82,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 34px;
+  gap: 46px; /* room for the Midterm tag under sprint 4 */
 }
 
 .c-method__sprints {
@@ -127,7 +127,7 @@
   margin-top: 8px;
   transform: translateX(-50%);
   font-family: var(--font-body);
-  font-size: 18px;
+  font-size: max(18px, var(--fs-min, 0px));
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -138,6 +138,6 @@
 .c-method .c-method__loop {
   max-width: none;
   text-align: center;
-  font-size: 22px;
+  font-size: max(22px, var(--fs-min, 0px));
   color: var(--ink-muted);
 }
