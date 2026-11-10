@@ -236,6 +236,7 @@
       }
     }
     if (document.body.classList.contains("overview")) {
+      if (e.key === "Escape" && clearSelection()) return; /* first Esc clears a selection */
       if (e.key === "Escape" || e.key === "o" || e.key === "O") toggleOverview(false);
       return;
     }
@@ -473,7 +474,7 @@
     clearTimeout(messageTimer);
     if (document.body.classList.contains("overview") && ovStatus) {
       setStatus(text, isError);
-      messageTimer = setTimeout(() => setStatus(OV_HINT), 3000);
+      messageTimer = setTimeout(() => setStatus(ovHint()), 3000);
       return;
     }
     if (!toast) {
@@ -546,7 +547,46 @@
   let overview = null;
   let ovCells = [];
   let ovStatus = null;
-  const OV_HINT = `Drag a slide to reorder · ${MOD}Z to undo`;
+  const OV_HINT = `Drag to reorder · Shift+click to select several · ${MOD}Z to undo`;
+
+  /* Multi-select (serve mode): Shift+click selects a range from the anchor (or the current
+     slide), ⌘/Ctrl+click toggles one slide, Esc clears. Dragging a selected slide moves them all. */
+  const selected = new Set();
+  let anchor = null;
+
+  const ovHint = () =>
+    selected.size
+      ? `${selected.size} slide${selected.size > 1 ? "s" : ""} selected · drag to move · Esc to clear`
+      : OV_HINT;
+
+  function paintSelection() {
+    ovCells.forEach((c) => c.classList.toggle("is-selected", selected.has(c)));
+    if (ovStatus && !reordering) setStatus(ovHint());
+  }
+
+  function select(cell, mode) {
+    const cells = Array.from(overview.querySelectorAll(".ov-cell"));
+    if (mode === "toggle") {
+      if (selected.has(cell)) selected.delete(cell);
+      else selected.add(cell);
+      anchor = cell;
+    } else {
+      const from = anchor || ovCells[current];
+      const [a, b] = [cells.indexOf(from), cells.indexOf(cell)].sort((x, y) => x - y);
+      selected.clear();
+      cells.slice(a, b + 1).forEach((c) => selected.add(c));
+      anchor = from;
+    }
+    paintSelection();
+  }
+
+  function clearSelection() {
+    const had = selected.size > 0;
+    selected.clear();
+    anchor = null;
+    if (overview) paintSelection();
+    return had;
+  }
 
   function buildOverview() {
     overview = document.createElement("div");
@@ -569,7 +609,12 @@
       num.textContent = String(i + 1).padStart(2, "0");
       cell.appendChild(num);
 
-      cell.addEventListener("click", () => {
+      cell.addEventListener("click", (e) => {
+        if (SERVE && (e.shiftKey || e.metaKey || e.ctrlKey)) {
+          e.preventDefault();
+          select(cell, e.shiftKey ? "range" : "toggle");
+          return;
+        }
         go(i);
         toggleOverview(false);
       });
@@ -588,7 +633,7 @@
     ovStatus.className = "ov-status";
     ovStatus.setAttribute("role", "status");
     overview.appendChild(ovStatus);
-    setStatus(OV_HINT);
+    setStatus(ovHint());
     ovCells.forEach((cell) => (cell.draggable = true));
 
     /* Live preview: the dragged cell moves into its would-be slot as you drag (shown as a dashed
@@ -627,19 +672,60 @@
       });
     }
 
+    /* Several slides: a stacked drag image with a count badge (off-screen, removed after the
+       browser snapshots it). */
+    function groupGhost(cell, count) {
+      const ghost = document.createElement("div");
+      ghost.className = "ov-drag-ghost";
+      const card = cell.cloneNode(true);
+      card.classList.remove("is-selected", "is-current");
+      const badge = document.createElement("span");
+      badge.className = "ov-ghost-count";
+      badge.textContent = `${count} slides`;
+      ghost.append(card, badge);
+      document.body.appendChild(ghost);
+      setTimeout(() => ghost.remove(), 0);
+      return ghost;
+    }
+
+    let group = [];
+
     overview.addEventListener("dragstart", (e) => {
       const cell = e.target instanceof Element && e.target.closest(".ov-cell");
       if (!cell || reordering) return e.preventDefault();
       dragCell = cell;
       startOrder = cellsNow();
       dropped = false;
+      /* a selected slide drags the whole selection (in deck order); any other drags alone */
+      group = selected.has(cell) && selected.size > 1 ? startOrder.filter((c) => selected.has(c)) : [cell];
+      if (!selected.has(cell)) clearSelection();
       e.dataTransfer.effectAllowed = "move";
-      e.dataTransfer.setData("text/plain", cell.dataset.slide);
-      /* style the slot after the browser has snapshotted the drag image */
+      e.dataTransfer.setData("text/plain", group.map((c) => c.dataset.slide).join(","));
+      if (group.length > 1) {
+        const r = cell.getBoundingClientRect();
+        e.dataTransfer.setDragImage(groupGhost(cell, group.length), e.clientX - r.left, e.clientY - r.top);
+      }
+      /* style the slots (and gather the group around the dragged slide) after the browser has
+         snapshotted the drag image */
       requestAnimationFrame(() => {
         if (!dragCell) return;
         overview.classList.add("is-sorting");
-        dragCell.classList.add("is-dragging");
+        group.forEach((c) => c.classList.add("is-dragging"));
+        if (group.length > 1) {
+          const at = group.indexOf(dragCell);
+          shift(() => {
+            let ref = dragCell;
+            for (let i = at - 1; i >= 0; i--) {
+              overview.insertBefore(group[i], ref);
+              ref = group[i];
+            }
+            ref = dragCell;
+            for (let i = at + 1; i < group.length; i++) {
+              overview.insertBefore(group[i], ref.nextSibling);
+              ref = group[i];
+            }
+          });
+        }
       });
     });
 
@@ -649,12 +735,13 @@
       e.dataTransfer.dropEffect = "move";
       if (performance.now() < settleUntil) return; /* let the last shift land before the next */
       const target = e.target instanceof Element && e.target.closest(".ov-cell");
-      if (!target || target === dragCell) return;
-      /* entering a later cell puts the dragged one after it, an earlier cell before it,
-         so the slot always lands under the pointer and doesn't flip back and forth */
+      if (!target || group.includes(target)) return;
+      /* entering a later cell puts the block after it, an earlier cell before it, so the block
+         always lands under the pointer and doesn't flip back and forth */
       const cells = cellsNow();
       const after = cells.indexOf(target) > cells.indexOf(dragCell);
-      shift(() => overview.insertBefore(dragCell, after ? target.nextSibling : target));
+      const ref = after ? target.nextSibling : target;
+      shift(() => group.forEach((c) => overview.insertBefore(c, ref)));
     });
 
     overview.addEventListener("drop", (e) => {
@@ -663,7 +750,7 @@
       dropped = true;
       const order = orderOf();
       if (order.join() === startOrder.map((c) => c.dataset.slide).join()) return;
-      saveOrder(order, order.indexOf(slides[current].dataset.slide));
+      saveOrder(order, order.indexOf(slides[current].dataset.slide), group.length);
     });
 
     overview.addEventListener("dragend", () => {
@@ -673,9 +760,10 @@
         shift(() => original.forEach((c) => overview.insertBefore(c, ovStatus)));
       }
       overview.classList.remove("is-sorting");
-      dragCell.classList.remove("is-dragging");
+      group.forEach((c) => c.classList.remove("is-dragging"));
       dragCell = null;
       startOrder = null;
+      group = [];
     });
   }
 
@@ -687,13 +775,14 @@
     ovStatus.classList.toggle("is-error", isError);
   }
 
-  async function saveOrder(order, newIndex) {
+  async function saveOrder(order, newIndex, count = 1) {
     reordering = true;
     overview.classList.add("is-saving");
     setStatus("Saving new order…");
     try {
       await postJSON("/__reorder", { version: SERVE.version, order });
-      reloadAt(Math.max(0, newIndex), true, `Slide moved · ${MOD}Z to undo`);
+      const what = count > 1 ? `${count} slides moved` : "Slide moved";
+      reloadAt(Math.max(0, newIndex), true, `${what} · ${MOD}Z to undo`);
     } catch (err) {
       setStatus(`Couldn't save: ${err.message}. Reloading…`, true);
       setTimeout(() => reloadAt(current, true), 2500);
@@ -707,6 +796,7 @@
 
   function toggleOverview(on) {
     if (on && !overview) buildOverview();
+    if (!on) clearSelection();
     document.body.classList.toggle("overview", on);
     if (on) {
       syncOverview();

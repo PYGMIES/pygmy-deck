@@ -321,10 +321,74 @@ body.overview .deck-viewport {
   transform: none; /* no hover lift while cells are shifting */
 }
 
+.deck-overview.can-reorder .ov-cell {
+  user-select: none; /* Shift+click selects slides, not text */
+}
+
+/* browsers freeze :hover during a drag; don't leave a stale outline on a neighbour */
+.deck-overview.is-sorting .ov-cell:not(.is-current):not(.is-dragging):not(.is-selected) {
+  border-color: var(--rule, #888);
+}
+
+/* multi-select: accent ring outside the border (not clipped by overflow) + check badge */
+.ov-cell.is-selected {
+  border-color: var(--accent, #d9922e);
+  box-shadow: 0 0 0 3px var(--accent, #d9922e);
+}
+
+.ov-cell.is-selected::after {
+  content: "✓";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font: 700 14px/1 var(--font-body);
+  color: var(--on-card, #fff);
+  background: var(--accent, #d9922e);
+}
+
 /* the dragged slide's slot: a dashed landing placeholder with a faint thumbnail */
 .ov-cell.is-dragging {
   border: 3px dashed var(--accent, #d9922e);
   background: var(--accent-soft, transparent);
+  box-shadow: none;
+}
+
+.ov-cell.is-dragging::after {
+  display: none;
+}
+
+/* drag image for several slides: a stacked card with a count, rendered off-screen */
+.ov-drag-ghost {
+  position: fixed;
+  top: -1000px;
+  left: 0;
+  width: 320px;
+  height: 190px;
+  pointer-events: none;
+}
+
+.ov-drag-ghost .ov-cell {
+  transform: none;
+  box-shadow: 7px 7px 0 -1px var(--bg, #eee), 7px 7px 0 1px var(--rule, #888),
+    14px 14px 0 -1px var(--bg, #eee), 14px 14px 0 1px var(--rule, #888);
+}
+
+.ov-ghost-count {
+  position: absolute;
+  top: 8px;
+  right: 22px;
+  font: 700 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--on-card, #fff);
+  background: var(--accent, #d9922e);
+  padding: 6px 10px;
+  border-radius: 999px;
 }
 
 .ov-cell.is-dragging .ov-frame {
