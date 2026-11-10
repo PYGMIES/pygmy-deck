@@ -299,7 +299,168 @@ body.overview .deck-viewport {
   cursor: pointer;
   padding: 0;
   appearance: none;
-  transition: border-color 0.15s var(--ease-out), transform 0.15s var(--ease-out);
+  transition: border-color 0.15s var(--ease-out), transform 0.15s var(--ease-out),
+    box-shadow 0.15s var(--ease-out), opacity 0.15s var(--ease-out);
+}
+
+/* --- drag-to-reorder (only with `build.py --serve`) --- */
+.deck-overview.can-reorder {
+  padding-bottom: 104px; /* room for the status pill */
+}
+
+.deck-overview.can-reorder .ov-cell {
+  cursor: grab;
+}
+
+.deck-overview.is-saving .ov-cell {
+  pointer-events: none;
+}
+
+.deck-overview.is-sorting .ov-cell {
+  cursor: grabbing;
+  transform: none; /* no hover lift while cells are shifting */
+}
+
+.deck-overview.can-reorder .ov-cell {
+  user-select: none; /* Shift+click selects slides, not text */
+}
+
+/* browsers freeze :hover during a drag; don't leave a stale outline on a neighbour */
+.deck-overview.is-sorting .ov-cell:not(.is-current):not(.is-dragging):not(.is-selected) {
+  border-color: var(--rule, #888);
+}
+
+/* multi-select: accent ring outside the border (not clipped by overflow) + check badge */
+.ov-cell.is-selected {
+  border-color: var(--accent, #d9922e);
+  box-shadow: 0 0 0 3px var(--accent, #d9922e);
+}
+
+.ov-cell.is-selected::after {
+  content: "✓";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font: 700 14px/1 var(--font-body);
+  color: var(--on-card, #fff);
+  background: var(--accent, #d9922e);
+}
+
+/* the dragged slide's slot: a dashed landing placeholder with a faint thumbnail */
+.ov-cell.is-dragging {
+  border: 3px dashed var(--accent, #d9922e);
+  background: var(--accent-soft, transparent);
+  box-shadow: none;
+}
+
+.ov-cell.is-dragging::after {
+  display: none;
+}
+
+/* a dragged group folds into this one slot: show how many slides land here */
+.ov-cell.is-dragging[data-count]::after {
+  display: block;
+  content: attr(data-count);
+  width: auto;
+  height: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font: 700 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+}
+
+/* drag image for several slides: a stacked card with a count, rendered off-screen */
+.ov-drag-ghost {
+  position: fixed;
+  top: -1000px;
+  left: 0;
+  width: 320px;
+  height: 190px;
+  pointer-events: none;
+}
+
+.ov-drag-ghost .ov-cell {
+  transform: none;
+  box-shadow: 7px 7px 0 -1px var(--bg, #eee), 7px 7px 0 1px var(--rule, #888),
+    14px 14px 0 -1px var(--bg, #eee), 14px 14px 0 1px var(--rule, #888);
+}
+
+.ov-ghost-count {
+  position: absolute;
+  top: 8px;
+  right: 22px;
+  font: 700 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--on-card, #fff);
+  background: var(--accent, #d9922e);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.ov-cell.is-dragging .ov-frame {
+  opacity: 0.22;
+}
+
+.ov-cell.is-dragging .ov-num {
+  background: var(--accent, #d9922e);
+}
+
+.ov-status {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 2;
+  font: 600 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--on-card, #fff);
+  background: var(--card, #000);
+  padding: 11px 18px;
+  border-radius: 999px;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  line-height: 1.35;
+  pointer-events: none;
+}
+
+.ov-status.is-error {
+  background: var(--danger, #b3302b);
+}
+
+/* undo / redo feedback outside the overview (serve mode) */
+.deck-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 300;
+  transform: translate(-50%, 12px);
+  font: 600 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--on-card, #fff);
+  background: var(--card, #000);
+  padding: 11px 18px;
+  border-radius: 999px;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  line-height: 1.35;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.deck-toast.is-shown {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.deck-toast.is-error {
+  background: var(--danger, #b3302b);
 }
 
 .ov-cell:hover,
@@ -360,6 +521,7 @@ body.overview .deck-viewport {
   .deck-progress,
   .deck-overview,
   .deck-notes,
+  .deck-toast,
   .ov-cell {
     transition: none !important;
     animation: none !important;
@@ -413,6 +575,7 @@ body.overview .deck-viewport {
   .edit-toggle,
   .notes-toggle,
   .deck-notes,
+  .deck-toast,
   .deck-overview {
     display: none;
   }

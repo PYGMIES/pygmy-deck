@@ -311,7 +311,168 @@ body.overview .deck-viewport {
   cursor: pointer;
   padding: 0;
   appearance: none;
-  transition: border-color 0.15s var(--ease-out), transform 0.15s var(--ease-out);
+  transition: border-color 0.15s var(--ease-out), transform 0.15s var(--ease-out),
+    box-shadow 0.15s var(--ease-out), opacity 0.15s var(--ease-out);
+}
+
+/* --- drag-to-reorder (only with `build.py --serve`) --- */
+.deck-overview.can-reorder {
+  padding-bottom: 104px; /* room for the status pill */
+}
+
+.deck-overview.can-reorder .ov-cell {
+  cursor: grab;
+}
+
+.deck-overview.is-saving .ov-cell {
+  pointer-events: none;
+}
+
+.deck-overview.is-sorting .ov-cell {
+  cursor: grabbing;
+  transform: none; /* no hover lift while cells are shifting */
+}
+
+.deck-overview.can-reorder .ov-cell {
+  user-select: none; /* Shift+click selects slides, not text */
+}
+
+/* browsers freeze :hover during a drag; don't leave a stale outline on a neighbour */
+.deck-overview.is-sorting .ov-cell:not(.is-current):not(.is-dragging):not(.is-selected) {
+  border-color: var(--rule, #888);
+}
+
+/* multi-select: accent ring outside the border (not clipped by overflow) + check badge */
+.ov-cell.is-selected {
+  border-color: var(--accent, #d9922e);
+  box-shadow: 0 0 0 3px var(--accent, #d9922e);
+}
+
+.ov-cell.is-selected::after {
+  content: "✓";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font: 700 14px/1 var(--font-body);
+  color: var(--on-card, #fff);
+  background: var(--accent, #d9922e);
+}
+
+/* the dragged slide's slot: a dashed landing placeholder with a faint thumbnail */
+.ov-cell.is-dragging {
+  border: 3px dashed var(--accent, #d9922e);
+  background: var(--accent-soft, transparent);
+  box-shadow: none;
+}
+
+.ov-cell.is-dragging::after {
+  display: none;
+}
+
+/* a dragged group folds into this one slot: show how many slides land here */
+.ov-cell.is-dragging[data-count]::after {
+  display: block;
+  content: attr(data-count);
+  width: auto;
+  height: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font: 700 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+}
+
+/* drag image for several slides: a stacked card with a count, rendered off-screen */
+.ov-drag-ghost {
+  position: fixed;
+  top: -1000px;
+  left: 0;
+  width: 320px;
+  height: 190px;
+  pointer-events: none;
+}
+
+.ov-drag-ghost .ov-cell {
+  transform: none;
+  box-shadow: 7px 7px 0 -1px var(--bg, #eee), 7px 7px 0 1px var(--rule, #888),
+    14px 14px 0 -1px var(--bg, #eee), 14px 14px 0 1px var(--rule, #888);
+}
+
+.ov-ghost-count {
+  position: absolute;
+  top: 8px;
+  right: 22px;
+  font: 700 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--on-card, #fff);
+  background: var(--accent, #d9922e);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.ov-cell.is-dragging .ov-frame {
+  opacity: 0.22;
+}
+
+.ov-cell.is-dragging .ov-num {
+  background: var(--accent, #d9922e);
+}
+
+.ov-status {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 2;
+  font: 600 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--on-card, #fff);
+  background: var(--card, #000);
+  padding: 11px 18px;
+  border-radius: 999px;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  line-height: 1.35;
+  pointer-events: none;
+}
+
+.ov-status.is-error {
+  background: var(--danger, #b3302b);
+}
+
+/* undo / redo feedback outside the overview (serve mode) */
+.deck-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 300;
+  transform: translate(-50%, 12px);
+  font: 600 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--on-card, #fff);
+  background: var(--card, #000);
+  padding: 11px 18px;
+  border-radius: 999px;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  line-height: 1.35;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.deck-toast.is-shown {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.deck-toast.is-error {
+  background: var(--danger, #b3302b);
 }
 
 .ov-cell:hover,
@@ -372,6 +533,7 @@ body.overview .deck-viewport {
   .deck-progress,
   .deck-overview,
   .deck-notes,
+  .deck-toast,
   .ov-cell {
     transition: none !important;
     animation: none !important;
@@ -425,6 +587,7 @@ body.overview .deck-viewport {
   .edit-toggle,
   .notes-toggle,
   .deck-notes,
+  .deck-toast,
   .deck-overview {
     display: none;
   }
@@ -6132,7 +6295,18 @@ body.overview .deck-viewport {
       }
       return;
     }
+    /* undo / redo slide reorders (serve mode). Edit mode returned above, so text undo stays native. */
+    if (SERVE && (e.metaKey || e.ctrlKey) && !e.altKey) {
+      const k = e.key.toLowerCase();
+      const redo = (k === "z" && e.shiftKey) || (k === "y" && e.ctrlKey && !e.metaKey);
+      if (k === "z" || redo) {
+        e.preventDefault();
+        stepHistory(redo ? "redo" : "undo");
+        return;
+      }
+    }
     if (document.body.classList.contains("overview")) {
+      if (e.key === "Escape" && clearSelection()) return; /* first Esc clears a selection */
       if (e.key === "Escape" || e.key === "o" || e.key === "O") toggleOverview(false);
       return;
     }
@@ -6326,9 +6500,14 @@ body.overview .deck-viewport {
     slides.forEach((s) => s.classList.remove("active"));
     const notesOpen = document.body.classList.contains("notes-open");
     toggleNotes(false);
-    const chrome = [toggleBtn, notesBtn, notesPanel];
+    const chrome = [toggleBtn, notesBtn, notesPanel, toast].filter(Boolean);
     chrome.forEach((el) => el.remove());
+    const serveHook = document.getElementById("pygmy-serve");
+    const hookParent = serveHook && serveHook.parentNode;
+    const hookNext = serveHook && serveHook.nextSibling;
+    if (serveHook) serveHook.remove(); /* a saved copy must not think it's served */
     const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    if (serveHook) hookParent.insertBefore(serveHook, hookNext);
     chrome.forEach((el) => document.body.appendChild(el));
     toggleNotes(notesOpen);
     go(current);
@@ -6340,9 +6519,144 @@ body.overview .deck-viewport {
     URL.revokeObjectURL(a.href);
   }
 
+  /* === SERVE MODE === `build.py <deck> --serve` injects window.PYGMY_SERVE (never present in
+     the committed file). Adds live reload on rebuild and drag-to-reorder in the overview. */
+  const SERVE = window.PYGMY_SERVE || null;
+  const REOPEN_KEY = "pygmy-deck-reopen-overview";
+  const FLASH_KEY = "pygmy-deck-flash";
+  const MOD = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘" : "Ctrl+";
+  const REDO_KEYS = MOD === "⌘" ? "⌘⇧Z" : "Ctrl+Y";
+  let reordering = false;
+
+  function reloadAt(index, reopenOverview, flash) {
+    try {
+      if (reopenOverview) sessionStorage.setItem(REOPEN_KEY, "1");
+      if (flash) sessionStorage.setItem(FLASH_KEY, flash);
+    } catch (_) { /* storage blocked: reload still works, overview just stays closed */ }
+    history.replaceState(null, "", `#${index + 1}`);
+    location.reload();
+  }
+
+  /* Short message: in the overview's status pill when it's open, else a toast. */
+  let toast = null;
+  let messageTimer = null;
+  function showMessage(text, isError = false) {
+    clearTimeout(messageTimer);
+    if (document.body.classList.contains("overview") && ovStatus) {
+      setStatus(text, isError);
+      messageTimer = setTimeout(() => setStatus(ovHint()), 3000);
+      return;
+    }
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.className = "deck-toast";
+      toast.setAttribute("role", "status");
+      document.body.appendChild(toast);
+    }
+    toast.textContent = text;
+    toast.classList.toggle("is-error", isError);
+    toast.classList.add("is-shown");
+    messageTimer = setTimeout(() => toast.classList.remove("is-shown"), 3000);
+  }
+
+  /* POST JSON to the serve-mode server; a non-JSON reply means it predates this page's runtime */
+  async function postJSON(path, data) {
+    const res = await fetch(path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    let out;
+    try {
+      out = await res.json();
+    } catch (_) {
+      throw new Error("The deck server is out of date. Stop it (Ctrl+C) and run make finals again.");
+    }
+    if (!res.ok || !out.ok) throw new Error(out.error || res.statusText);
+    return out;
+  }
+
+  /* ⌘Z / Ctrl+Z undoes the last reorder, ⌘⇧Z / Ctrl+Y redoes it. History is kept by the server. */
+  async function stepHistory(action) {
+    if (reordering) return;
+    reordering = true;
+    try {
+      const out = await postJSON("/__history", { action, current: slides[current].dataset.slide });
+      if (!out.moved) {
+        reordering = false;
+        showMessage(out.message);
+        return;
+      }
+      const flash = action === "undo"
+        ? `Reorder undone${out.can_redo ? ` · ${REDO_KEYS} to redo` : ""}`
+        : `Reorder redone${out.can_undo ? ` · ${MOD}Z to undo` : ""}`;
+      reloadAt(out.index == null ? current : out.index, document.body.classList.contains("overview"), flash);
+    } catch (err) {
+      reordering = false;
+      showMessage(err.message, true);
+    }
+  }
+
+  if (SERVE) {
+    let polling = false;
+    setInterval(async () => {
+      /* never reload under an in-progress inline edit or note */
+      if (polling || reordering || document.body.classList.contains("editing")) return;
+      if (document.activeElement && document.activeElement.classList.contains("deck-notes__text")) return;
+      polling = true;
+      try {
+        const res = await fetch("/__version", { cache: "no-store" });
+        const { version } = await res.json();
+        if (version !== SERVE.version) reloadAt(current, document.body.classList.contains("overview"));
+      } catch (_) { /* server stopped: keep presenting the loaded page */ }
+      polling = false;
+    }, 1000);
+  }
+
   /* === OVERVIEW === O toggles a grid of every slide; click/Enter a thumbnail to jump */
   let overview = null;
   let ovCells = [];
+  let ovStatus = null;
+  const OV_HINT = `Drag to reorder · Shift+click to select several · ${MOD}Z to undo`;
+
+  /* Multi-select (serve mode): Shift+click selects a range from the anchor (or the current
+     slide), ⌘/Ctrl+click toggles one slide, Esc clears. Dragging a selected slide moves them all. */
+  const selected = new Set();
+  let anchor = null;
+
+  const ovHint = () =>
+    selected.size
+      ? `${selected.size} slide${selected.size > 1 ? "s" : ""} selected · drag to move · Esc to clear`
+      : OV_HINT;
+
+  function paintSelection() {
+    ovCells.forEach((c) => c.classList.toggle("is-selected", selected.has(c)));
+    if (ovStatus && !reordering) setStatus(ovHint());
+  }
+
+  function select(cell, mode) {
+    const cells = Array.from(overview.querySelectorAll(".ov-cell"));
+    if (mode === "toggle") {
+      if (selected.has(cell)) selected.delete(cell);
+      else selected.add(cell);
+      anchor = cell;
+    } else {
+      const from = anchor || ovCells[current];
+      const [a, b] = [cells.indexOf(from), cells.indexOf(cell)].sort((x, y) => x - y);
+      selected.clear();
+      cells.slice(a, b + 1).forEach((c) => selected.add(c));
+      anchor = from;
+    }
+    paintSelection();
+  }
+
+  function clearSelection() {
+    const had = selected.size > 0;
+    selected.clear();
+    anchor = null;
+    if (overview) paintSelection();
+    return had;
+  }
 
   function buildOverview() {
     overview = document.createElement("div");
@@ -6351,6 +6665,7 @@ body.overview .deck-viewport {
       const cell = document.createElement("button");
       cell.type = "button";
       cell.className = "ov-cell";
+      cell.dataset.slide = slide.dataset.slide || "";
       const name = slide.dataset.name || "";
       cell.setAttribute("aria-label", `Go to slide ${i + 1}${name ? ": " + name : ""}`);
 
@@ -6364,7 +6679,12 @@ body.overview .deck-viewport {
       num.textContent = String(i + 1).padStart(2, "0");
       cell.appendChild(num);
 
-      cell.addEventListener("click", () => {
+      cell.addEventListener("click", (e) => {
+        if (SERVE && (e.shiftKey || e.metaKey || e.ctrlKey)) {
+          e.preventDefault();
+          select(cell, e.shiftKey ? "range" : "toggle");
+          return;
+        }
         go(i);
         toggleOverview(false);
       });
@@ -6372,6 +6692,178 @@ body.overview .deck-viewport {
     });
     ovCells.forEach((cell) => overview.appendChild(cell));
     document.body.appendChild(overview);
+    if (SERVE) enableReorder();
+  }
+
+  /* Drag a thumbnail between two others; the drop renames slides/NN-name.html on the server,
+     which rebuilds, and the page reloads with the overview open. */
+  function enableReorder() {
+    overview.classList.add("can-reorder");
+    ovStatus = document.createElement("div");
+    ovStatus.className = "ov-status";
+    ovStatus.setAttribute("role", "status");
+    overview.appendChild(ovStatus);
+    setStatus(ovHint());
+    ovCells.forEach((cell) => (cell.draggable = true));
+
+    /* Live preview: the dragged cell moves into its would-be slot as you drag (shown as a dashed
+       placeholder), neighbours glide aside (FLIP) and numbers update, so the grid shows the final
+       order before the drop. Dropping outside the grid or Esc slides everything back. */
+    const SHIFT_MS = 240;
+    let dragCell = null;
+    let startOrder = null;
+    let dropped = false;
+    let settleUntil = 0;
+
+    const cellsNow = () => Array.from(overview.querySelectorAll(".ov-cell"));
+    const pad = (n) => String(n).padStart(2, "0");
+    /* while a group is folded into one slot, that slot shows the range it will fill
+       (e.g. 06–09) and the slides after it count past the whole group */
+    const renumber = () => {
+      let n = 1;
+      cellsNow().forEach((c) => {
+        const span = c === dragCell && group.length > 1 ? group.length : 1;
+        c.querySelector(".ov-num").textContent = span > 1 ? `${pad(n)}–${pad(n + span - 1)}` : pad(n);
+        n += span;
+      });
+    };
+
+    /* move cells in the DOM, then animate each from its old box to its new one;
+       cells that (re)appear fade in */
+    function shift(mutate) {
+      const cells = cellsNow();
+      const first = new Map(cells.map((c) => [c, c.getBoundingClientRect()]));
+      mutate();
+      renumber();
+      if (reduceMotion.matches) return;
+      settleUntil = performance.now() + SHIFT_MS;
+      const ease = "cubic-bezier(0.22, 1, 0.36, 1)";
+      cellsNow().forEach((c) => {
+        const a = first.get(c);
+        if (!a) {
+          c.animate([{ opacity: 0 }, { opacity: 1 }], { duration: SHIFT_MS, easing: ease });
+          return;
+        }
+        const b = c.getBoundingClientRect();
+        const dx = a.left - b.left;
+        const dy = a.top - b.top;
+        if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+        c.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], {
+          duration: SHIFT_MS,
+          easing: ease,
+        });
+      });
+    }
+
+    /* Several slides: a stacked drag image with a count badge (off-screen, removed after the
+       browser snapshots it). */
+    function groupGhost(cell, count) {
+      const ghost = document.createElement("div");
+      ghost.className = "ov-drag-ghost";
+      const card = cell.cloneNode(true);
+      card.classList.remove("is-selected", "is-current");
+      const badge = document.createElement("span");
+      badge.className = "ov-ghost-count";
+      badge.textContent = `${count} slides`;
+      ghost.append(card, badge);
+      document.body.appendChild(ghost);
+      setTimeout(() => ghost.remove(), 0);
+      return ghost;
+    }
+
+    let group = [];
+
+    overview.addEventListener("dragstart", (e) => {
+      const cell = e.target instanceof Element && e.target.closest(".ov-cell");
+      if (!cell || reordering) return e.preventDefault();
+      dragCell = cell;
+      startOrder = cellsNow();
+      dropped = false;
+      /* a selected slide drags the whole selection (in deck order); any other drags alone */
+      group = selected.has(cell) && selected.size > 1 ? startOrder.filter((c) => selected.has(c)) : [cell];
+      if (!selected.has(cell)) clearSelection();
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", group.map((c) => c.dataset.slide).join(","));
+      if (group.length > 1) {
+        const r = cell.getBoundingClientRect();
+        e.dataTransfer.setDragImage(groupGhost(cell, group.length), e.clientX - r.left, e.clientY - r.top);
+      }
+      /* after the browser has snapshotted the drag image: the dragged slide becomes the one
+         landing slot; for a group, the other selected slides fold away into it */
+      requestAnimationFrame(() => {
+        if (!dragCell) return;
+        overview.classList.add("is-sorting");
+        dragCell.classList.add("is-dragging");
+        if (group.length > 1) {
+          dragCell.dataset.count = `${group.length} slides`;
+          shift(() => group.forEach((c) => c !== dragCell && c.remove()));
+        }
+      });
+    });
+
+    overview.addEventListener("dragover", (e) => {
+      if (!dragCell) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+      if (performance.now() < settleUntil) return; /* let the last shift land before the next */
+      const target = e.target instanceof Element && e.target.closest(".ov-cell");
+      if (!target || group.includes(target)) return;
+      /* entering a later cell puts the block after it, an earlier cell before it, so the block
+         always lands under the pointer and doesn't flip back and forth */
+      const cells = cellsNow();
+      const after = cells.indexOf(target) > cells.indexOf(dragCell);
+      shift(() => overview.insertBefore(dragCell, after ? target.nextSibling : target));
+    });
+
+    overview.addEventListener("drop", (e) => {
+      e.preventDefault();
+      if (!dragCell) return;
+      dropped = true;
+      /* unfold the group at the slot, in deck order */
+      const at = group.indexOf(dragCell);
+      group.slice(0, at).forEach((c) => overview.insertBefore(c, dragCell));
+      group.slice(at + 1).reverse().forEach((c) => overview.insertBefore(c, dragCell.nextSibling));
+      const order = orderOf();
+      if (order.join() === startOrder.map((c) => c.dataset.slide).join()) return;
+      saveOrder(order, order.indexOf(slides[current].dataset.slide), group.length);
+    });
+
+    overview.addEventListener("dragend", () => {
+      if (!dragCell) return;
+      if (!dropped) {
+        const original = startOrder;
+        shift(() => original.forEach((c) => overview.insertBefore(c, ovStatus)));
+      }
+      overview.classList.remove("is-sorting");
+      dragCell.classList.remove("is-dragging");
+      delete dragCell.dataset.count;
+      dragCell = null;
+      startOrder = null;
+      group = [];
+      renumber();
+    });
+  }
+
+  const orderOf = () => Array.from(overview.querySelectorAll(".ov-cell"), (c) => c.dataset.slide);
+
+  function setStatus(text, isError = false) {
+    if (!ovStatus) return;
+    ovStatus.textContent = text;
+    ovStatus.classList.toggle("is-error", isError);
+  }
+
+  async function saveOrder(order, newIndex, count = 1) {
+    reordering = true;
+    overview.classList.add("is-saving");
+    setStatus("Saving new order…");
+    try {
+      await postJSON("/__reorder", { version: SERVE.version, order });
+      const what = count > 1 ? `${count} slides moved` : "Slide moved";
+      reloadAt(Math.max(0, newIndex), true, `${what} · ${MOD}Z to undo`);
+    } catch (err) {
+      setStatus(`Couldn't save: ${err.message}. Reloading…`, true);
+      setTimeout(() => reloadAt(current, true), 2500);
+    }
   }
 
   function syncOverview() {
@@ -6381,6 +6873,7 @@ body.overview .deck-viewport {
 
   function toggleOverview(on) {
     if (on && !overview) buildOverview();
+    if (!on) clearSelection();
     document.body.classList.toggle("overview", on);
     if (on) {
       syncOverview();
@@ -6479,6 +6972,17 @@ body.overview .deck-viewport {
   slides[0].classList.add("active");
   go(fromHash());
   booted = true;
+  try {
+    if (SERVE && sessionStorage.getItem(REOPEN_KEY)) {
+      sessionStorage.removeItem(REOPEN_KEY);
+      toggleOverview(true);
+    }
+    const flash = SERVE && sessionStorage.getItem(FLASH_KEY);
+    if (flash) {
+      sessionStorage.removeItem(FLASH_KEY);
+      showMessage(flash);
+    }
+  } catch (_) { /* storage blocked: start on the slide, overview closed */ }
 })();
 </script>
 </body>

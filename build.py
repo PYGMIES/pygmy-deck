@@ -5,6 +5,8 @@ Usage:
     python3 build.py                 build every deck in decks/ (except _template)
     python3 build.py <deck>          build decks/<deck> -> decks/<deck>/<deck>.html
     python3 build.py <deck> --watch  rebuild on any change
+    python3 build.py <deck> --serve  host on localhost: live reload + drag-to-reorder
+                                     in overview (O); --port=N picks the port (8000)
     python3 build.py new <deck>      scaffold decks/<deck> from decks/_template
 
 Slides are decks/<deck>/slides/NN-name.html, ordered by NN. Components are
@@ -26,6 +28,7 @@ import base64
 import html
 import json
 import mimetypes
+import os
 import re
 import shutil
 import sys
@@ -322,9 +325,258 @@ def watch(deck: str) -> None:
                 print(f"✗ {e}")
 
 
+# === SERVE ================================================================
+# `--serve` hosts one deck on localhost, rebuilds on save (the page reloads
+# itself) and accepts a new slide order from overview mode (O, then drag).
+# Reordering renames slides/NN-name.html so the files carry the new order.
+
+def reorder_slides(deck_dir: Path, order: list[str]) -> list[tuple[str, str]]:
+    """Renumber slide files to follow `order` (a permutation of the current
+    data-slide numbers). Returns [(old_name, new_name)] for files that moved."""
+    slides = collect_slides(deck_dir)
+    by_num = {num: path for num, _, path in slides}
+    if sorted(order) != sorted(by_num):
+        raise BuildError("reorder: the order doesn't match the slides on disk (reload and try again)")
+    width = max(2, len(str(len(order))))
+    plan = []
+    for i, num in enumerate(order, start=1):
+        src = by_num[num]
+        name = SLIDE_FILE.match(src.name).group(2)
+        dst = src.with_name(f"{str(i).zfill(width)}-{name}.html")
+        if dst.name != src.name:
+            plan.append((src.name, dst.name))
+    return apply_renames(deck_dir / "slides", plan)
+
+
+def apply_renames(slides_dir: Path, renames: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    """Rename files in slides_dir as a set: [(old_name, new_name)]. Checks every
+    source exists and no target would overwrite a file outside the set."""
+    plan = [(slides_dir / a, slides_dir / b) for a, b in renames]
+    sources = {src for src, _ in plan}
+    for src, dst in plan:
+        if not src.is_file():
+            raise BuildError(f"slides/{src.name} is missing (renamed or deleted since?)")
+        if dst.exists() and dst not in sources:
+            raise BuildError(f"slides/{dst.name} already exists")
+    # Two phases through temporary names so 03→04 and 04→03 never collide.
+    temps, placed = [], []
+    try:
+        for src, dst in plan:
+            tmp = src.with_name(f".reorder-{dst.name}")
+            src.rename(tmp)
+            temps.append((src, tmp))
+        for (_, tmp), (_, dst) in zip(temps, plan):
+            tmp.rename(dst)
+            placed.append((tmp, dst))
+    except OSError as e:
+        # best-effort rollback, in reverse: final names → temp names → originals
+        for tmp, dst in reversed(placed):
+            dst.rename(tmp)
+        for src, tmp in reversed(temps):
+            tmp.rename(src)
+        raise BuildError(f"rename failed, files restored: {e}") from e
+    return renames
+
+
+class DeckServer:
+    def __init__(self, deck: str):
+        import threading
+
+        self.deck = deck
+        self.deck_dir = DECKS / deck
+        self.lock = threading.Lock()
+        self.version = 0
+        self.error: str | None = None
+        self.before = snapshot(deck)
+        # Reorder history for ⌘Z / ⌘⇧Z: each entry is the [(old, new)] renames of one drop.
+        # Lives only as long as the server does.
+        self.undo_stack: list[list[tuple[str, str]]] = []
+        self.redo_stack: list[list[tuple[str, str]]] = []
+
+    def rebuild(self) -> None:
+        try:
+            build(self.deck)
+            self.error = None
+        except BuildError as e:
+            self.error = str(e)
+            print(f"✗ {e}")
+        self.before = snapshot(self.deck)
+        self.version += 1
+
+    def watch_loop(self, port: int) -> None:
+        me = Path(__file__)
+        born = me.stat().st_mtime
+        while True:
+            time.sleep(0.5)
+            with self.lock:
+                if me.stat().st_mtime != born:
+                    # build.py itself changed: restart on the same port so the open page keeps
+                    # working and never talks to a server older than its runtime.
+                    print("↻ build.py changed, restarting the server (reorder undo history resets)", flush=True)
+                    os.environ["PYGMY_SERVE_RESTART_PORT"] = str(port)
+                    os.execv(sys.executable, [sys.executable, str(me), *sys.argv[1:]])
+                if snapshot(self.deck) != self.before:
+                    self.rebuild()
+
+    def page(self) -> bytes:
+        if self.error:
+            body = f"<pre style='font:16px monospace;padding:2em'>build failed:\n\n{html.escape(self.error)}</pre>"
+            doc = f"<!DOCTYPE html><title>build failed</title>{body}"
+        else:
+            doc = deck_output(self.deck).read_text(encoding="utf-8")
+        hook = f'<script id="pygmy-serve">window.PYGMY_SERVE = {{ version: {self.version} }};</script>'
+        return doc.replace("<head>", "<head>\n" + hook, 1).encode("utf-8")
+
+    def reorder(self, payload: dict) -> dict:
+        with self.lock:
+            if payload.get("version") != self.version:
+                raise BuildError("the deck changed since this page loaded (reload and try again)")
+            order = payload.get("order")
+            if not isinstance(order, list) or not all(isinstance(n, str) for n in order):
+                raise BuildError("reorder: expected a list of slide numbers")
+            moved = reorder_slides(self.deck_dir, order)
+            for old, new in moved:
+                print(f"  ↳ {old} → {new}")
+            if moved:
+                self.undo_stack.append(moved)
+                self.redo_stack.clear()
+                print(f"  reordered {len(moved)} slide file(s); update decks/{self.deck}/CONTEXT.md if it lists slide numbers")
+                self.rebuild()
+            return {"ok": True, "moved": len(moved), "version": self.version}
+
+    def step_history(self, payload: dict) -> dict:
+        """Undo or redo one reorder. `current` (a data-slide number) is the slide the page
+        is showing; the reply says where that same file sits afterwards."""
+        action = payload.get("action")
+        if action not in ("undo", "redo"):
+            raise BuildError("history: action must be undo or redo")
+        with self.lock:
+            stack, other = (
+                (self.undo_stack, self.redo_stack) if action == "undo" else (self.redo_stack, self.undo_stack)
+            )
+            if not stack:
+                return {"ok": True, "moved": 0, "message": f"Nothing to {action}"}
+            entry = stack[-1]
+            renames = [(new, old) for old, new in entry] if action == "undo" else entry
+            files = {num: path.name for num, _, path in collect_slides(self.deck_dir)}
+            shown = files.get(str(payload.get("current", "")))
+            try:
+                apply_renames(self.deck_dir / "slides", renames)
+            except BuildError as e:
+                self.undo_stack.clear()
+                self.redo_stack.clear()
+                print(f"✗ {action} refused, history cleared: {e}")
+                raise BuildError(f"Can't {action}: slide files were renamed by hand. Undo history cleared.") from e
+            stack.pop()
+            other.append(entry)
+            for a, b in renames:
+                print(f"  {action} ↳ {a} → {b}")
+            self.rebuild()
+            shown = dict(renames).get(shown, shown)
+            names = [path.name for _, _, path in collect_slides(self.deck_dir)]
+            return {
+                "ok": True,
+                "moved": len(renames),
+                "index": names.index(shown) if shown in names else None,
+                "can_undo": bool(self.undo_stack),
+                "can_redo": bool(self.redo_stack),
+            }
+
+
+def serve(deck: str, port: int) -> None:
+    import threading
+    import webbrowser
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+    state = DeckServer(deck)
+
+    class Handler(BaseHTTPRequestHandler):
+        def send(self, code: int, body: bytes, ctype: str) -> None:
+            self.send_response(code)
+            self.send_header("Content-Type", ctype)
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+
+        def send_json(self, code: int, data: dict) -> None:
+            self.send(code, json.dumps(data).encode("utf-8"), "application/json")
+
+        def do_GET(self) -> None:
+            path = self.path.split("?", 1)[0]
+            if path in ("/", "/index.html", f"/{deck}.html"):
+                self.send(200, state.page(), "text/html; charset=utf-8")
+            elif path == "/__version":
+                self.send_json(200, {"version": state.version})
+            else:
+                self.send(404, b"not found", "text/plain")
+
+        def do_POST(self) -> None:
+            routes = {"/__reorder": state.reorder, "/__history": state.step_history}
+            if self.path not in routes:
+                return self.send(404, b"not found", "text/plain")
+            # JSON-only + same-origin: a page on another site can't trigger renames.
+            origin = self.headers.get("Origin")
+            if self.headers.get("Content-Type", "").split(";")[0] != "application/json" or (
+                origin and origin != f"http://{self.headers.get('Host')}"
+            ):
+                return self.send_json(403, {"ok": False, "error": "forbidden"})
+            try:
+                length = int(self.headers.get("Content-Length") or 0)
+                payload = json.loads(self.rfile.read(length) or b"{}")
+                self.send_json(200, routes[self.path](payload))
+            except (BuildError, ValueError) as e:
+                self.send_json(409, {"ok": False, "error": str(e)})
+
+        def log_message(self, *_args) -> None:  # keep the terminal for build output
+            pass
+
+    def taken(p: int) -> bool:
+        """Something already answers on this port (IPv4 or IPv6, e.g. Docker on *:8000)."""
+        import socket
+
+        for host in ("127.0.0.1", "::1"):
+            try:
+                with socket.create_connection((host, p), timeout=0.2):
+                    return True
+            except OSError:
+                pass
+        return False
+
+    restart_port = os.environ.pop("PYGMY_SERVE_RESTART_PORT", None)
+    candidates = [int(restart_port)] if restart_port else range(port, port + 20)
+    httpd = None
+    for p in candidates:
+        if not restart_port and taken(p):
+            continue
+        for attempt in range(20):  # on restart, the old socket may take a moment to free up
+            try:
+                httpd = ThreadingHTTPServer(("127.0.0.1", p), Handler)
+                break
+            except OSError:
+                if not restart_port:
+                    break
+                time.sleep(0.1)
+        if httpd:
+            break
+    if httpd is None:
+        raise BuildError(f"no free port in {port}-{port + 19}")
+    url = f"http://127.0.0.1:{httpd.server_port}/"
+    threading.Thread(target=state.watch_loop, args=(httpd.server_port,), daemon=True).start()
+    print(f"serving decks/{deck} at {url} (Ctrl+C to stop)", flush=True)
+    print("  rebuilds on save · press O in the deck, then drag thumbnails to reorder slides", flush=True)
+    if not restart_port:
+        webbrowser.open(url)
+    try:
+        httpd.serve_forever()
+    finally:
+        httpd.server_close()
+
+
 def main(argv: list[str]) -> int:
     args = [a for a in argv if not a.startswith("--")]
-    flags = {a for a in argv if a.startswith("--")}
+    flags = {a.split("=", 1)[0] for a in argv if a.startswith("--")}
+    port = next((int(a.split("=", 1)[1]) for a in argv if a.startswith("--port=")), 8000)
     try:
         if args[:1] == ["new"]:
             if len(args) != 2:
@@ -336,7 +588,11 @@ def main(argv: list[str]) -> int:
             raise BuildError("no decks found in decks/")
         for d in decks:
             build(d)
-        if "--watch" in flags:
+        if "--serve" in flags:
+            if len(decks) != 1:
+                raise BuildError("--serve takes exactly one deck")
+            serve(decks[0], port)
+        elif "--watch" in flags:
             if len(decks) != 1:
                 raise BuildError("--watch takes exactly one deck")
             watch(decks[0])
