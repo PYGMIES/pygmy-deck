@@ -22,7 +22,7 @@
 | 09 | Our positioning | new | done |
 | 10-13 | Goals and impact | mid-term 16-19 | ported, not yet reframed around "improves over time"; slide 11 staircase is still illustrative |
 | 14 | Mid-term feedback | new | placeholder for the feedback quote |
-| 15 | Where we added value | new | done; speaker notes need an owner |
+| 15 | What C22 gets beyond the Judge (added value: room to grow, less risk, less manual work) | new | done; speaker notes need an owner |
 | 16-17 | System architecture | mid-term 28 | ported; no Trainer lane yet |
 | 18-25 | Auto-retrainer: flow, 3 detail slides, 3 key design decisions | new | 19 done; 20-25 placeholders |
 | 26-30 | Explanations: how it works, example, 2 key design decisions | new | placeholders |
