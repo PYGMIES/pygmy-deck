@@ -22,14 +22,15 @@
 | 09 | Our positioning | new | done |
 | 10-13 | Goals and impact | mid-term 16-19 | ported, not yet reframed around "improves over time"; slide 11 staircase is still illustrative |
 | 14 | Mid-term feedback | new | placeholder for the feedback quote |
-| 15-16 | System architecture | mid-term 28 | ported; no Trainer lane yet |
-| 17-24 | Auto-retrainer: flow, 3 detail slides, 3 key design decisions | new | 18 done; 19-24 placeholders |
-| 25-29 | Explanations: how it works, example, 2 key design decisions | new | placeholders |
-| 30-33 | Model training recap | mid-term 58, 60, 70 | ported |
-| 34-39 | Project management | mid-term 71-76 | ported |
-| 40-42 | Handover | new | placeholders |
-| 43 | Q&A | mid-term 80 | ported |
-| 44-65 | Appendix | mid-term 81-102 | ported unchanged |
+| 15 | Where we added value | new | done; speaker notes need an owner |
+| 16-17 | System architecture | mid-term 28 | ported; no Trainer lane yet |
+| 18-25 | Auto-retrainer: flow, 3 detail slides, 3 key design decisions | new | 19 done; 20-25 placeholders |
+| 26-30 | Explanations: how it works, example, 2 key design decisions | new | placeholders |
+| 31-34 | Model training recap | mid-term 58, 60, 70 | ported |
+| 35-40 | Project management | mid-term 71-76 | ported |
+| 41-43 | Handover | new | placeholders |
+| 44 | Q&A | mid-term 80 | ported |
+| 45-66 | Appendix | mid-term 81-102 | ported unchanged |
 
 ## Open items
 - Find every placeholder: `grep -rn "@placeholder" decks/final-presentation/slides`
