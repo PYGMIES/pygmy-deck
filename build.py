@@ -28,6 +28,7 @@ import base64
 import html
 import json
 import mimetypes
+import os
 import re
 import shutil
 import sys
@@ -402,10 +403,18 @@ class DeckServer:
         self.before = snapshot(self.deck)
         self.version += 1
 
-    def watch_loop(self) -> None:
+    def watch_loop(self, port: int) -> None:
+        me = Path(__file__)
+        born = me.stat().st_mtime
         while True:
             time.sleep(0.5)
             with self.lock:
+                if me.stat().st_mtime != born:
+                    # build.py itself changed: restart on the same port so the open page keeps
+                    # working and never talks to a server older than its runtime.
+                    print("↻ build.py changed, restarting the server (reorder undo history resets)", flush=True)
+                    os.environ["PYGMY_SERVE_RESTART_PORT"] = str(port)
+                    os.execv(sys.executable, [sys.executable, str(me), *sys.argv[1:]])
                 if snapshot(self.deck) != self.before:
                     self.rebuild()
 
@@ -522,20 +531,42 @@ def serve(deck: str, port: int) -> None:
         def log_message(self, *_args) -> None:  # keep the terminal for build output
             pass
 
+    def taken(p: int) -> bool:
+        """Something already answers on this port (IPv4 or IPv6, e.g. Docker on *:8000)."""
+        import socket
+
+        for host in ("127.0.0.1", "::1"):
+            try:
+                with socket.create_connection((host, p), timeout=0.2):
+                    return True
+            except OSError:
+                pass
+        return False
+
+    restart_port = os.environ.pop("PYGMY_SERVE_RESTART_PORT", None)
+    candidates = [int(restart_port)] if restart_port else range(port, port + 20)
     httpd = None
-    for p in range(port, port + 20):
-        try:
-            httpd = ThreadingHTTPServer(("127.0.0.1", p), Handler)
-            break
-        except OSError:
+    for p in candidates:
+        if not restart_port and taken(p):
             continue
+        for attempt in range(20):  # on restart, the old socket may take a moment to free up
+            try:
+                httpd = ThreadingHTTPServer(("127.0.0.1", p), Handler)
+                break
+            except OSError:
+                if not restart_port:
+                    break
+                time.sleep(0.1)
+        if httpd:
+            break
     if httpd is None:
         raise BuildError(f"no free port in {port}-{port + 19}")
     url = f"http://127.0.0.1:{httpd.server_port}/"
-    threading.Thread(target=state.watch_loop, daemon=True).start()
-    print(f"serving decks/{deck} at {url} (Ctrl+C to stop)")
-    print("  rebuilds on save · press O in the deck, then drag thumbnails to reorder slides")
-    webbrowser.open(url)
+    threading.Thread(target=state.watch_loop, args=(httpd.server_port,), daemon=True).start()
+    print(f"serving decks/{deck} at {url} (Ctrl+C to stop)", flush=True)
+    print("  rebuilds on save · press O in the deck, then drag thumbnails to reorder slides", flush=True)
+    if not restart_port:
+        webbrowser.open(url)
     try:
         httpd.serve_forever()
     finally:

@@ -6482,18 +6482,29 @@ body.overview .deck-viewport {
     messageTimer = setTimeout(() => toast.classList.remove("is-shown"), 3000);
   }
 
+  /* POST JSON to the serve-mode server; a non-JSON reply means it predates this page's runtime */
+  async function postJSON(path, data) {
+    const res = await fetch(path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    let out;
+    try {
+      out = await res.json();
+    } catch (_) {
+      throw new Error("The deck server is out of date. Stop it (Ctrl+C) and run make finals again.");
+    }
+    if (!res.ok || !out.ok) throw new Error(out.error || res.statusText);
+    return out;
+  }
+
   /* ⌘Z / Ctrl+Z undoes the last reorder, ⌘⇧Z / Ctrl+Y redoes it. History is kept by the server. */
   async function stepHistory(action) {
     if (reordering) return;
     reordering = true;
     try {
-      const res = await fetch("/__history", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action, current: slides[current].dataset.slide }),
-      });
-      const out = await res.json();
-      if (!res.ok || !out.ok) throw new Error(out.error || res.statusText);
+      const out = await postJSON("/__history", { action, current: slides[current].dataset.slide });
       if (!out.moved) {
         reordering = false;
         showMessage(out.message);
@@ -6675,13 +6686,7 @@ body.overview .deck-viewport {
     overview.classList.add("is-saving");
     setStatus("Saving new order…");
     try {
-      const res = await fetch("/__reorder", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ version: SERVE.version, order }),
-      });
-      const out = await res.json();
-      if (!res.ok || !out.ok) throw new Error(out.error || res.statusText);
+      await postJSON("/__reorder", { version: SERVE.version, order });
       reloadAt(Math.max(0, newIndex), true, `Slide moved · ${MOD}Z to undo`);
     } catch (err) {
       setStatus(`Couldn't save: ${err.message}. Reloading…`, true);
