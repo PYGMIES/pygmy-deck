@@ -204,3 +204,23 @@
 .c-screen-frame__bar span { font-size: max(20px, var(--fs-min)); }
 .c-step-list.is-compact li small { font-size: max(22px, var(--fs-min)); }
 .c-step-list__band { font-size: max(22px, var(--fs-min)); }
+
+/* Workflow slides 51-52: the group box fills its column and the gap to the notes is tighter, so step text and the band label stay on one line */
+.c-split.is-workflow {
+  gap: 40px;
+}
+
+.is-workflow .c-step-list.is-compact li.is-group {
+  width: calc(100% + 27px);
+}
+
+/* the narrower notes column makes the tall notes wrap to four lines: let them grow instead of crowding their edges */
+.is-workflow .c-column {
+  gap: 16px;
+}
+
+.is-workflow .c-note-card.is-tall {
+  height: auto;
+  min-height: 190px;
+  padding: 14px 32px;
+}

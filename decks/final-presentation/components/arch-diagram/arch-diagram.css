@@ -283,3 +283,17 @@
 .c-arch__ms.is-hot small {
   color: var(--card);
 }
+
+/* Slide 48 (is-timed) is a dense latency diagram: it keeps its original, smaller text, so the deck's 26px floor does not apply here */
+.c-arch.is-timed {
+  --fs-min: 0px;
+}
+
+.c-arch.is-timed .c-arch__lane span {
+  letter-spacing: 0.14em;
+}
+
+.c-arch.is-timed .c-arch__node small {
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

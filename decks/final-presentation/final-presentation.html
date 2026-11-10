@@ -1921,6 +1921,20 @@ body.overview .deck-viewport {
   color: var(--card);
 }
 
+/* Slide 48 (is-timed) is a dense latency diagram: it keeps its original, smaller text, so the deck's 26px floor does not apply here */
+.c-arch.is-timed {
+  --fs-min: 0px;
+}
+
+.c-arch.is-timed .c-arch__lane span {
+  letter-spacing: 0.14em;
+}
+
+.c-arch.is-timed .c-arch__node small {
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 /* ===== COMPONENT step-list ===== */
 /* === COMPONENT: step-list === numbered vertical flow joined by a line; children are <li> (add class="reveal" to stagger).
    Optional <small> inside an li = one-line detail under the step. */
@@ -3949,6 +3963,26 @@ body.overview .deck-viewport {
 .c-screen-frame__bar span { font-size: max(20px, var(--fs-min)); }
 .c-step-list.is-compact li small { font-size: max(22px, var(--fs-min)); }
 .c-step-list__band { font-size: max(22px, var(--fs-min)); }
+
+/* Workflow slides 51-52: the group box fills its column and the gap to the notes is tighter, so step text and the band label stay on one line */
+.c-split.is-workflow {
+  gap: 40px;
+}
+
+.is-workflow .c-step-list.is-compact li.is-group {
+  width: calc(100% + 27px);
+}
+
+/* the narrower notes column makes the tall notes wrap to four lines: let them grow instead of crowding their edges */
+.is-workflow .c-column {
+  gap: 16px;
+}
+
+.is-workflow .c-note-card.is-tall {
+  height: auto;
+  min-height: 190px;
+  padding: 14px 32px;
+}
 </style>
 </head>
 <body>
@@ -5483,7 +5517,7 @@ body.overview .deck-viewport {
   <div class="p4 c-arch__node" style="left: 1430px; top: 420px; width: 258px; height: 110px;">Oanda Market<br>Price Service</div>
   <p class="p4 c-arch__foot" style="left: 1400px; top: 548px; width: 318px;">*External and temporary: to be replaced with C22’s own platform API</p>
 
-  <span class='c-arch__ms' style='left:268px;top:285px'>13 ms<small>p99 48</small></span><span class='c-arch__ms' style='left:610px;top:150px'>6 ms<small>p99 27</small></span><span class='c-arch__ms' style='left:585px;top:368px'>1 ms<small>p99 7</small></span><span class='c-arch__ms' style='left:1041px;top:243px'>0.5 ms<small>p99 1.5</small></span><span class='c-arch__ms is-hot' style='left:985px;top:135px'>5 ms<small>p99 119</small></span><span class='c-arch__ms' style='left:1040px;top:395px'>0.7 ms<small>p99 10</small></span><span class='c-arch__ms' style='left:1030px;top:525px'>0.3 ms<small>p99 0.7</small></span><span class='c-arch__ms is-hot' style='left:1377px;top:236px'>14 ms<small>p99 98</small></span><span class='c-arch__ms is-hot' style='left:1383px;top:380px'>509 ms<small>p99 907</small></span><p class='c-arch__foot' style='left:300px;top:-40px;width:1428px;text-align:right'>p50 of 102 open trades, p99 beneath. The clock starts when the API receives the trade.</p>
+  <span class='c-arch__ms' style='left:268px;top:285px'>13 ms<small>p99 48 ms</small></span><span class='c-arch__ms' style='left:610px;top:150px'>6 ms<small>p99 27 ms</small></span><span class='c-arch__ms' style='left:585px;top:368px'>1 ms<small>p99 7 ms</small></span><span class='c-arch__ms' style='left:1041px;top:243px'>0.5 ms<small>p99 1.5 ms</small></span><span class='c-arch__ms is-hot' style='left:985px;top:135px'>5 ms<small>p99 119 ms</small></span><span class='c-arch__ms' style='left:1040px;top:395px'>0.7 ms<small>p99 10 ms</small></span><span class='c-arch__ms' style='left:1030px;top:525px'>0.3 ms<small>p99 0.7 ms</small></span><span class='c-arch__ms is-hot' style='left:1377px;top:236px'>14 ms<small>p99 98 ms</small></span><span class='c-arch__ms is-hot' style='left:1383px;top:380px'>509 ms<small>p99 907 ms</small></span><p class='c-arch__foot' style='left:700px;top:-40px;width:1028px;text-align:right'>p50 of 102 open trades, p99 beneath. The clock starts when the API receives the trade.</p>
 </div>
 </section>
 
@@ -5581,7 +5615,7 @@ body.overview .deck-viewport {
   <span class="c-slide-title__kicker reveal">System Architecture</span>
   <h1 class="reveal">Workflow 2: Open Trade</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 720px; --split-align: stretch;">
+<div class="c-split inset is-workflow" style="--split-cols: 1fr 550px; --split-align: stretch;">
   
   <ol class="c-step-list is-compact">
   
@@ -5592,7 +5626,7 @@ body.overview .deck-viewport {
       <ol class="c-step-list__inner">
         <li>Read cached trader history from Redis</li>
         <li>Build 18 features, call the Judge<small>Inference returns a decision from the features</small></li>
-        <li>Fetch market price, check slippage<i class="c-step-list__arrow" style="--arrow-from: 735px; --arrow-y: 33px; --arrow-len: 196px; --arrow-ang: -32.1deg"></i><i class="c-step-list__arrow" style="--arrow-from: 735px; --arrow-y: 33px; --arrow-len: 197px; --arrow-ang: 32.6deg"></i></li>
+        <li>Fetch market price, check slippage<i class="c-step-list__arrow" style="--arrow-from: 735px; --arrow-y: 33px; --arrow-len: 352px; --arrow-ang: -18.4deg"></i><i class="c-step-list__arrow" style="--arrow-from: 735px; --arrow-y: 33px; --arrow-len: 348px; --arrow-ang: 16.5deg"></i></li>
         <li>Record the simulated reverse position<small>Market price + Judge decision, stored for reverse profit calculation</small></li>
       </ol>
     </li>
@@ -5639,7 +5673,7 @@ body.overview .deck-viewport {
   <span class="c-slide-title__kicker reveal">System Architecture</span>
   <h1 class="reveal">Workflow 3: Close Trade</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 720px; --split-align: stretch;">
+<div class="c-split inset is-workflow" style="--split-cols: 1fr 700px; --split-align: stretch;">
   
   <ol class="c-step-list is-compact is-close">
   
