@@ -347,11 +347,43 @@ body.overview .deck-viewport {
   background: var(--card, #000);
   padding: 11px 18px;
   border-radius: 999px;
-  white-space: nowrap;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  line-height: 1.35;
   pointer-events: none;
 }
 
 .ov-status.is-error {
+  background: var(--danger, #b3302b);
+}
+
+/* undo / redo feedback outside the overview (serve mode) */
+.deck-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 300;
+  transform: translate(-50%, 12px);
+  font: 600 13px/1 var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--on-card, #fff);
+  background: var(--card, #000);
+  padding: 11px 18px;
+  border-radius: 999px;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  line-height: 1.35;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.deck-toast.is-shown {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.deck-toast.is-error {
   background: var(--danger, #b3302b);
 }
 
@@ -413,6 +445,7 @@ body.overview .deck-viewport {
   .deck-progress,
   .deck-overview,
   .deck-notes,
+  .deck-toast,
   .ov-cell {
     transition: none !important;
     animation: none !important;
@@ -466,6 +499,7 @@ body.overview .deck-viewport {
   .edit-toggle,
   .notes-toggle,
   .deck-notes,
+  .deck-toast,
   .deck-overview {
     display: none;
   }

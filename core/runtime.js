@@ -225,6 +225,16 @@
       }
       return;
     }
+    /* undo / redo slide reorders (serve mode). Edit mode returned above, so text undo stays native. */
+    if (SERVE && (e.metaKey || e.ctrlKey) && !e.altKey) {
+      const k = e.key.toLowerCase();
+      const redo = (k === "z" && e.shiftKey) || (k === "y" && e.ctrlKey && !e.metaKey);
+      if (k === "z" || redo) {
+        e.preventDefault();
+        stepHistory(redo ? "redo" : "undo");
+        return;
+      }
+    }
     if (document.body.classList.contains("overview")) {
       if (e.key === "Escape" || e.key === "o" || e.key === "O") toggleOverview(false);
       return;
@@ -419,7 +429,7 @@
     slides.forEach((s) => s.classList.remove("active"));
     const notesOpen = document.body.classList.contains("notes-open");
     toggleNotes(false);
-    const chrome = [toggleBtn, notesBtn, notesPanel];
+    const chrome = [toggleBtn, notesBtn, notesPanel, toast].filter(Boolean);
     chrome.forEach((el) => el.remove());
     const serveHook = document.getElementById("pygmy-serve");
     const hookParent = serveHook && serveHook.parentNode;
@@ -442,14 +452,67 @@
      the committed file). Adds live reload on rebuild and drag-to-reorder in the overview. */
   const SERVE = window.PYGMY_SERVE || null;
   const REOPEN_KEY = "pygmy-deck-reopen-overview";
+  const FLASH_KEY = "pygmy-deck-flash";
+  const MOD = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘" : "Ctrl+";
+  const REDO_KEYS = MOD === "⌘" ? "⌘⇧Z" : "Ctrl+Y";
   let reordering = false;
 
-  function reloadAt(index, reopenOverview) {
+  function reloadAt(index, reopenOverview, flash) {
     try {
       if (reopenOverview) sessionStorage.setItem(REOPEN_KEY, "1");
+      if (flash) sessionStorage.setItem(FLASH_KEY, flash);
     } catch (_) { /* storage blocked: reload still works, overview just stays closed */ }
     history.replaceState(null, "", `#${index + 1}`);
     location.reload();
+  }
+
+  /* Short message: in the overview's status pill when it's open, else a toast. */
+  let toast = null;
+  let messageTimer = null;
+  function showMessage(text, isError = false) {
+    clearTimeout(messageTimer);
+    if (document.body.classList.contains("overview") && ovStatus) {
+      setStatus(text, isError);
+      messageTimer = setTimeout(() => setStatus(OV_HINT), 3000);
+      return;
+    }
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.className = "deck-toast";
+      toast.setAttribute("role", "status");
+      document.body.appendChild(toast);
+    }
+    toast.textContent = text;
+    toast.classList.toggle("is-error", isError);
+    toast.classList.add("is-shown");
+    messageTimer = setTimeout(() => toast.classList.remove("is-shown"), 3000);
+  }
+
+  /* ⌘Z / Ctrl+Z undoes the last reorder, ⌘⇧Z / Ctrl+Y redoes it. History is kept by the server. */
+  async function stepHistory(action) {
+    if (reordering) return;
+    reordering = true;
+    try {
+      const res = await fetch("/__history", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action, current: slides[current].dataset.slide }),
+      });
+      const out = await res.json();
+      if (!res.ok || !out.ok) throw new Error(out.error || res.statusText);
+      if (!out.moved) {
+        reordering = false;
+        showMessage(out.message);
+        return;
+      }
+      const flash = action === "undo"
+        ? `Reorder undone${out.can_redo ? ` · ${REDO_KEYS} to redo` : ""}`
+        : `Reorder redone${out.can_undo ? ` · ${MOD}Z to undo` : ""}`;
+      reloadAt(out.index == null ? current : out.index, document.body.classList.contains("overview"), flash);
+    } catch (err) {
+      reordering = false;
+      showMessage(err.message, true);
+    }
   }
 
   if (SERVE) {
@@ -472,6 +535,7 @@
   let overview = null;
   let ovCells = [];
   let ovStatus = null;
+  const OV_HINT = `Drag a slide to reorder · ${MOD}Z to undo`;
 
   function buildOverview() {
     overview = document.createElement("div");
@@ -513,7 +577,7 @@
     ovStatus.className = "ov-status";
     ovStatus.setAttribute("role", "status");
     overview.appendChild(ovStatus);
-    setStatus("Drag a slide to reorder · saves to slides/");
+    setStatus(OV_HINT);
     ovCells.forEach((cell) => (cell.draggable = true));
 
     /* Live preview: the dragged cell moves into its would-be slot as you drag (shown as a dashed
@@ -624,7 +688,7 @@
       });
       const out = await res.json();
       if (!res.ok || !out.ok) throw new Error(out.error || res.statusText);
-      reloadAt(Math.max(0, newIndex), true);
+      reloadAt(Math.max(0, newIndex), true, `Slide moved · ${MOD}Z to undo`);
     } catch (err) {
       setStatus(`Couldn't save: ${err.message}. Reloading…`, true);
       setTimeout(() => reloadAt(current, true), 2500);
@@ -740,6 +804,11 @@
     if (SERVE && sessionStorage.getItem(REOPEN_KEY)) {
       sessionStorage.removeItem(REOPEN_KEY);
       toggleOverview(true);
+    }
+    const flash = SERVE && sessionStorage.getItem(FLASH_KEY);
+    if (flash) {
+      sessionStorage.removeItem(FLASH_KEY);
+      showMessage(flash);
     }
   } catch (_) { /* storage blocked: start on the slide, overview closed */ }
 })();

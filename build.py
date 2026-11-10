@@ -343,7 +343,20 @@ def reorder_slides(deck_dir: Path, order: list[str]) -> list[tuple[str, str]]:
         name = SLIDE_FILE.match(src.name).group(2)
         dst = src.with_name(f"{str(i).zfill(width)}-{name}.html")
         if dst.name != src.name:
-            plan.append((src, dst))
+            plan.append((src.name, dst.name))
+    return apply_renames(deck_dir / "slides", plan)
+
+
+def apply_renames(slides_dir: Path, renames: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    """Rename files in slides_dir as a set: [(old_name, new_name)]. Checks every
+    source exists and no target would overwrite a file outside the set."""
+    plan = [(slides_dir / a, slides_dir / b) for a, b in renames]
+    sources = {src for src, _ in plan}
+    for src, dst in plan:
+        if not src.is_file():
+            raise BuildError(f"slides/{src.name} is missing (renamed or deleted since?)")
+        if dst.exists() and dst not in sources:
+            raise BuildError(f"slides/{dst.name} already exists")
     # Two phases through temporary names so 03→04 and 04→03 never collide.
     temps, placed = [], []
     try:
@@ -360,8 +373,8 @@ def reorder_slides(deck_dir: Path, order: list[str]) -> list[tuple[str, str]]:
             dst.rename(tmp)
         for src, tmp in reversed(temps):
             tmp.rename(src)
-        raise BuildError(f"reorder failed, files restored: {e}") from e
-    return [(src.name, dst.name) for src, dst in plan]
+        raise BuildError(f"rename failed, files restored: {e}") from e
+    return renames
 
 
 class DeckServer:
@@ -374,6 +387,10 @@ class DeckServer:
         self.version = 0
         self.error: str | None = None
         self.before = snapshot(deck)
+        # Reorder history for ⌘Z / ⌘⇧Z: each entry is the [(old, new)] renames of one drop.
+        # Lives only as long as the server does.
+        self.undo_stack: list[list[tuple[str, str]]] = []
+        self.redo_stack: list[list[tuple[str, str]]] = []
 
     def rebuild(self) -> None:
         try:
@@ -412,9 +429,49 @@ class DeckServer:
             for old, new in moved:
                 print(f"  ↳ {old} → {new}")
             if moved:
+                self.undo_stack.append(moved)
+                self.redo_stack.clear()
                 print(f"  reordered {len(moved)} slide file(s); update decks/{self.deck}/CONTEXT.md if it lists slide numbers")
                 self.rebuild()
             return {"ok": True, "moved": len(moved), "version": self.version}
+
+    def step_history(self, payload: dict) -> dict:
+        """Undo or redo one reorder. `current` (a data-slide number) is the slide the page
+        is showing; the reply says where that same file sits afterwards."""
+        action = payload.get("action")
+        if action not in ("undo", "redo"):
+            raise BuildError("history: action must be undo or redo")
+        with self.lock:
+            stack, other = (
+                (self.undo_stack, self.redo_stack) if action == "undo" else (self.redo_stack, self.undo_stack)
+            )
+            if not stack:
+                return {"ok": True, "moved": 0, "message": f"Nothing to {action}"}
+            entry = stack[-1]
+            renames = [(new, old) for old, new in entry] if action == "undo" else entry
+            files = {num: path.name for num, _, path in collect_slides(self.deck_dir)}
+            shown = files.get(str(payload.get("current", "")))
+            try:
+                apply_renames(self.deck_dir / "slides", renames)
+            except BuildError as e:
+                self.undo_stack.clear()
+                self.redo_stack.clear()
+                print(f"✗ {action} refused, history cleared: {e}")
+                raise BuildError(f"Can't {action}: slide files were renamed by hand. Undo history cleared.") from e
+            stack.pop()
+            other.append(entry)
+            for a, b in renames:
+                print(f"  {action} ↳ {a} → {b}")
+            self.rebuild()
+            shown = dict(renames).get(shown, shown)
+            names = [path.name for _, _, path in collect_slides(self.deck_dir)]
+            return {
+                "ok": True,
+                "moved": len(renames),
+                "index": names.index(shown) if shown in names else None,
+                "can_undo": bool(self.undo_stack),
+                "can_redo": bool(self.redo_stack),
+            }
 
 
 def serve(deck: str, port: int) -> None:
@@ -446,7 +503,8 @@ def serve(deck: str, port: int) -> None:
                 self.send(404, b"not found", "text/plain")
 
         def do_POST(self) -> None:
-            if self.path != "/__reorder":
+            routes = {"/__reorder": state.reorder, "/__history": state.step_history}
+            if self.path not in routes:
                 return self.send(404, b"not found", "text/plain")
             # JSON-only + same-origin: a page on another site can't trigger renames.
             origin = self.headers.get("Origin")
@@ -457,7 +515,7 @@ def serve(deck: str, port: int) -> None:
             try:
                 length = int(self.headers.get("Content-Length") or 0)
                 payload = json.loads(self.rfile.read(length) or b"{}")
-                self.send_json(200, state.reorder(payload))
+                self.send_json(200, routes[self.path](payload))
             except (BuildError, ValueError) as e:
                 self.send_json(409, {"ok": False, "error": str(e)})
 

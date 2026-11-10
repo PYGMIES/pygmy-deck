@@ -17,6 +17,7 @@
 | click a thumbnail / Enter (in overview) | jump to that slide, close overview |
 | Esc or O (in overview) | close overview |
 | drag a thumbnail (in overview, `--serve` only) | reorder slides: renames `slides/NN-name.html`, rebuilds, reloads with the overview open |
+| ⌘Z / Ctrl+Z, ⌘⇧Z / Ctrl+Y (`--serve` only, anywhere except edit mode / notes box) | undo / redo the last slide reorder |
 
 Note: inline edits save a copy of the **built** file only; they do not flow back into `slides/`. Port wanted edits back into the source before rebuilding.
 
@@ -30,6 +31,7 @@ Note: inline edits save a copy of the **built** file only; they do not flow back
 `python3 build.py <deck> --serve` (or `make finals` / `make midterm` / `make serve DECK=<deck>`) hosts the deck on `127.0.0.1:8000` (next free port; `--port=N` to change) and opens it. The server injects `<script id="pygmy-serve">window.PYGMY_SERVE = { version }</script>` into the page it serves; the committed `<deck>.html` never contains it, so opening the file directly behaves exactly as before (no drag, no polling).
 - **Live reload**: the page polls `/__version` every second and reloads (keeping `#N` and an open overview) after a rebuild. It waits while edit mode is on or the notes box has focus.
 - **Reorder**: in the overview, thumbnails are draggable. While dragging, the grid previews the result live: the dragged slide's slot (dashed accent placeholder) moves under the pointer, neighbours glide aside (FLIP, 240 ms, skipped under `prefers-reduced-motion`) and numbers update. Dropping outside the grid or Esc slides everything back. A drop POSTs `{version, order: [data-slide…]}` to `/__reorder`. The server renumbers the files 01…NN in that order (two-phase rename via `.reorder-*` temp names, rollback on error), rebuilds, and the page reloads at the moved current slide with the overview reopened. A stale `version` is refused (409) and the page reloads.
+- **Undo / redo**: the server keeps each drop's `[(old, new)]` renames on an in-memory stack (lost when the server stops). ⌘Z / Ctrl+Z POSTs `{action: "undo", current}` to `/__history`, which renames back and rebuilds; ⌘⇧Z / Ctrl+Y redoes; a new drop clears redo. The page reloads on the same slide file it was showing, with a toast (or the overview pill) saying what happened. If a file in the entry was renamed or a target name taken by hand, it refuses and clears the history. Edit mode and the notes box keep the browser's own text undo.
 - Renumbering does **not** touch a deck's `CONTEXT.md` slide table or any "see slide N" text; the server prints a reminder.
 - Edit-mode save (Ctrl/Cmd+S) strips the serve hook from the downloaded copy.
 

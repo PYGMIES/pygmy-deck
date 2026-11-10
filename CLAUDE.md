@@ -10,6 +10,7 @@ python3 build.py <deck>           # build decks/<deck> → decks/<deck>/<deck>.h
 python3 build.py <deck> --watch   # rebuild on save
 python3 build.py <deck> --serve   # localhost + live reload; O → drag thumbnails to reorder slides
 make finals                       # = --serve for final-presentation (also: make midterm, make serve DECK=<deck>)
+                                  # in serve mode ⌘Z / ⌘⇧Z undo / redo a reorder
 python3 build.py new <deck>       # scaffold from decks/_template
 open decks/<deck>/<deck>.html
 ```
