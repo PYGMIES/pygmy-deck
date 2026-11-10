@@ -421,7 +421,12 @@
     toggleNotes(false);
     const chrome = [toggleBtn, notesBtn, notesPanel];
     chrome.forEach((el) => el.remove());
+    const serveHook = document.getElementById("pygmy-serve");
+    const hookParent = serveHook && serveHook.parentNode;
+    const hookNext = serveHook && serveHook.nextSibling;
+    if (serveHook) serveHook.remove(); /* a saved copy must not think it's served */
     const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    if (serveHook) hookParent.insertBefore(serveHook, hookNext);
     chrome.forEach((el) => document.body.appendChild(el));
     toggleNotes(notesOpen);
     go(current);
@@ -433,9 +438,40 @@
     URL.revokeObjectURL(a.href);
   }
 
+  /* === SERVE MODE === `build.py <deck> --serve` injects window.PYGMY_SERVE (never present in
+     the committed file). Adds live reload on rebuild and drag-to-reorder in the overview. */
+  const SERVE = window.PYGMY_SERVE || null;
+  const REOPEN_KEY = "pygmy-deck-reopen-overview";
+  let reordering = false;
+
+  function reloadAt(index, reopenOverview) {
+    try {
+      if (reopenOverview) sessionStorage.setItem(REOPEN_KEY, "1");
+    } catch (_) { /* storage blocked: reload still works, overview just stays closed */ }
+    history.replaceState(null, "", `#${index + 1}`);
+    location.reload();
+  }
+
+  if (SERVE) {
+    let polling = false;
+    setInterval(async () => {
+      /* never reload under an in-progress inline edit or note */
+      if (polling || reordering || document.body.classList.contains("editing")) return;
+      if (document.activeElement && document.activeElement.classList.contains("deck-notes__text")) return;
+      polling = true;
+      try {
+        const res = await fetch("/__version", { cache: "no-store" });
+        const { version } = await res.json();
+        if (version !== SERVE.version) reloadAt(current, document.body.classList.contains("overview"));
+      } catch (_) { /* server stopped: keep presenting the loaded page */ }
+      polling = false;
+    }, 1000);
+  }
+
   /* === OVERVIEW === O toggles a grid of every slide; click/Enter a thumbnail to jump */
   let overview = null;
   let ovCells = [];
+  let ovStatus = null;
 
   function buildOverview() {
     overview = document.createElement("div");
@@ -444,6 +480,7 @@
       const cell = document.createElement("button");
       cell.type = "button";
       cell.className = "ov-cell";
+      cell.dataset.slide = slide.dataset.slide || "";
       const name = slide.dataset.name || "";
       cell.setAttribute("aria-label", `Go to slide ${i + 1}${name ? ": " + name : ""}`);
 
@@ -465,6 +502,98 @@
     });
     ovCells.forEach((cell) => overview.appendChild(cell));
     document.body.appendChild(overview);
+    if (SERVE) enableReorder();
+  }
+
+  /* Drag a thumbnail between two others; the drop renames slides/NN-name.html on the server,
+     which rebuilds, and the page reloads with the overview open. */
+  function enableReorder() {
+    overview.classList.add("can-reorder");
+    ovStatus = document.createElement("div");
+    ovStatus.className = "ov-status";
+    ovStatus.setAttribute("role", "status");
+    overview.appendChild(ovStatus);
+    setStatus("Drag a slide to reorder · saves to slides/");
+    ovCells.forEach((cell) => (cell.draggable = true));
+
+    let dragCell = null;
+    let dropAt = null;
+    const clearMarks = () =>
+      ovCells.forEach((c) => c.classList.remove("drop-before", "drop-after"));
+
+    overview.addEventListener("dragstart", (e) => {
+      const cell = e.target instanceof Element && e.target.closest(".ov-cell");
+      if (!cell || reordering) return e.preventDefault();
+      dragCell = cell;
+      dropAt = null;
+      cell.classList.add("is-dragging");
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", cell.dataset.slide);
+    });
+
+    overview.addEventListener("dragover", (e) => {
+      if (!dragCell) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+      const cell = e.target instanceof Element && e.target.closest(".ov-cell");
+      if (!cell) return; /* over a gap: keep the last marker */
+      clearMarks();
+      if (cell === dragCell) {
+        dropAt = null;
+        return;
+      }
+      const r = cell.getBoundingClientRect();
+      const after = e.clientX > r.left + r.width / 2;
+      cell.classList.add(after ? "drop-after" : "drop-before");
+      dropAt = { cell, after };
+    });
+
+    overview.addEventListener("drop", (e) => {
+      e.preventDefault();
+      if (!dragCell || !dropAt) return;
+      const before = orderOf();
+      overview.insertBefore(dragCell, dropAt.after ? dropAt.cell.nextSibling : dropAt.cell);
+      const order = orderOf();
+      if (order.join() === before.join()) return;
+      overview.querySelectorAll(".ov-cell .ov-num").forEach((num, i) => {
+        num.textContent = String(i + 1).padStart(2, "0");
+      });
+      saveOrder(order, order.indexOf(slides[current].dataset.slide));
+    });
+
+    overview.addEventListener("dragend", () => {
+      if (dragCell) dragCell.classList.remove("is-dragging");
+      clearMarks();
+      dragCell = null;
+      dropAt = null;
+    });
+  }
+
+  const orderOf = () => Array.from(overview.querySelectorAll(".ov-cell"), (c) => c.dataset.slide);
+
+  function setStatus(text, isError = false) {
+    if (!ovStatus) return;
+    ovStatus.textContent = text;
+    ovStatus.classList.toggle("is-error", isError);
+  }
+
+  async function saveOrder(order, newIndex) {
+    reordering = true;
+    overview.classList.add("is-saving");
+    setStatus("Saving new order…");
+    try {
+      const res = await fetch("/__reorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ version: SERVE.version, order }),
+      });
+      const out = await res.json();
+      if (!res.ok || !out.ok) throw new Error(out.error || res.statusText);
+      reloadAt(Math.max(0, newIndex), true);
+    } catch (err) {
+      setStatus(`Couldn't save: ${err.message}. Reloading…`, true);
+      setTimeout(() => reloadAt(current, true), 2500);
+    }
   }
 
   function syncOverview() {
@@ -572,4 +701,10 @@
   slides[0].classList.add("active");
   go(fromHash());
   booted = true;
+  try {
+    if (SERVE && sessionStorage.getItem(REOPEN_KEY)) {
+      sessionStorage.removeItem(REOPEN_KEY);
+      toggleOverview(true);
+    }
+  } catch (_) { /* storage blocked: start on the slide, overview closed */ }
 })();

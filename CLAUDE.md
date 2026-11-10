@@ -8,6 +8,8 @@ HTML slide decks built from folders of numbered slide files and reusable compone
 python3 build.py                  # build every deck
 python3 build.py <deck>           # build decks/<deck> → decks/<deck>/<deck>.html
 python3 build.py <deck> --watch   # rebuild on save
+python3 build.py <deck> --serve   # localhost + live reload; O → drag thumbnails to reorder slides
+make finals                       # = --serve for final-presentation (also: make midterm, make serve DECK=<deck>)
 python3 build.py new <deck>       # scaffold from decks/_template
 open decks/<deck>/<deck>.html
 ```
