@@ -5328,15 +5328,29 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="43" data-name="handover-receives">
-<!-- notes: TODO. Fill from the project-cassandra README and doc/. -->
+<!-- notes: SCRIPT (~30s): C22 gets the whole system, not just a model. It runs on one computer in Docker: the Judge, the Trainer, the API and workers, and the dashboard. It comes loaded with the current champion and 43 campaigns of history, and backs itself up every day. And there are guides for each kind of user, from running a campaign to changing the code. → What is left. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Handover</span>
   <h1 class="reveal">What C22 Receives</h1>
 </header>
-<div class="c-placeholder reveal inset" style="--ph-height: 520px;">
-  <span class="c-placeholder__tag">To do</span>
-  <p>TODO: the repo, services (API, Judge, trainer), dashboard, docs (RETRAINING_CONTRACT, EVALUATOR, DEVELOPER_GUIDE), the current champion model and how to run it.</p>
-  <span class="c-placeholder__owner">Owner: TBC</span>
+<div class="c-card-grid inset" style="--grid-cols: 3;">
+  
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">The system</span>
+  <h3>Runs on one computer</h3>
+  <p>Judge, Trainer, API, workers and dashboard, all in Docker. One command starts it.</p>
+</article>
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">The data</span>
+  <h3>Ready on day one</h3>
+  <p>The champion Judge, plus 43 campaigns and 65,092 trades. Daily backups, kept for a week.</p>
+</article>
+  <article class="c-grid-card reveal ">
+  <span class="c-grid-card__kicker">The docs</span>
+  <h3>Guides for every role</h3>
+  <p>Operator guides, the retraining contract, evaluator rules and a developer guide.</p>
+</article>
+
 </div>
 </section>
 
