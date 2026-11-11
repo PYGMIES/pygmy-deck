@@ -1,0 +1,5 @@
+<!-- notes: Owner TBC. Train vs validation score as the training window grows from the 6 to the 24 most recent campaigns (mean of 3 blocks, band = min/max, score at the early-stopped model). Classifier: train AUC falls 0.66 to 0.62 while validation creeps up 0.565 to 0.575, so the gap narrows but stays about 0.05. Gain and loss regressors: validation L1 is flat (about 45 and 41.3) regardless of window. -->
+<!-- @slide-title kicker="Step 04: Validation" text="Train vs Validation by Campaigns" -->
+<!-- @column class="inset" -->
+  <!-- @chart-card kicker="Mean of 3 blocks · band = min/max" title="More campaigns shrink the gap, not the error" src="assets/train_val_by_campaigns.png" alt="Train vs validation by number of training campaigns for the classifier AUC and the gain and loss regressor L1" takeaway="Classifier gap narrows (AUC 0.66 → 0.62 train, 0.565 → 0.575 val); regressor L1 stays flat" -->
+<!-- @/column -->
