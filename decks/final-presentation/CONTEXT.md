@@ -23,14 +23,15 @@
 | 10-13 | Goals and impact | mid-term 16-19 | ported, not yet reframed around "improves over time"; slide 11 staircase is still illustrative |
 | 14 | Mid-term feedback | new | placeholder for the feedback quote |
 | 15 | What C22 gets beyond the Judge (added value: room to grow, less risk, less manual work) | new | done; speaker notes need an owner |
-| 16-17 | System architecture | mid-term 28 | ported; no Trainer lane yet |
-| 18-25 | Auto-retrainer: flow, 3 detail slides, 3 key design decisions | new | 19 done; 20-25 placeholders |
-| 26-30 | Explanations: how it works, example, 2 key design decisions | new | placeholders |
-| 31-34 | Model training recap | mid-term 58, 60, 70 | ported |
-| 35-40 | Project management | mid-term 71-76 | ported |
-| 41-43 | Handover | new | placeholders |
-| 44 | Q&A | mid-term 80 | ported |
-| 45-66 | Appendix | mid-term 81-102 | ported unchanged |
+| 16 | Demo divider (content TBD) | new | divider only |
+| 17-18 | System architecture | mid-term 28 | ported; no Trainer lane yet |
+| 19-26 | Auto-retrainer: flow, 3 detail slides, 3 key design decisions | new | 20 done; 21-26 placeholders |
+| 27-31 | Explanations: how it works, example, 2 key design decisions | new | placeholders |
+| 32-35 | Model training recap | mid-term 58, 60, 70 | ported |
+| 36-41 | Project management | mid-term 71-76 | ported |
+| 42-44 | Handover | new | placeholders |
+| 45 | Q&A | mid-term 80 | ported |
+| 46-67 | Appendix | mid-term 81-102 | ported unchanged |
 
 ## Open items
 - Find every placeholder: `grep -rn "@placeholder" decks/final-presentation/slides`
