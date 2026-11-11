@@ -224,3 +224,17 @@
   min-height: 190px;
   padding: 14px 32px;
 }
+
+/* The 18 Features We Kept (slide 30): three feature-group cards, compacted to fit the stage at the 26px floor.
+   Long code names wrap instead of clipping. */
+.c-card-grid.is-features-kept { grid-template-columns: 1.1fr 1.7fr 1.1fr; gap: 28px; }
+.c-card-grid.is-features-kept .c-feature-group { grid-column: auto; gap: 18px; padding: 28px 28px 30px; }
+.c-card-grid.is-features-kept .c-feature-group__head { padding-bottom: 16px; }
+.c-card-grid.is-features-kept .c-feature-group__count { font-size: 64px; }
+.c-card-grid.is-features-kept .c-feature-group h3 { font-size: 34px; margin-top: 10px; }
+.c-card-grid.is-features-kept .c-feature-group__head p { line-height: 1.25; margin-top: 8px; }
+.c-card-grid.is-features-kept .c-feature-group__list { gap: 14px 28px; }
+.c-card-grid.is-features-kept .c-feature-group__list li { row-gap: 2px; }
+.c-card-grid.is-features-kept .c-feature-group__list strong { font-size: max(26px, var(--fs-min, 0px)); }
+.c-card-grid.is-features-kept .c-feature-group__list code { line-height: 1.15; }
+.c-card-grid.is-features-kept .c-feature-group__list li { align-items: start; }

@@ -8,7 +8,7 @@
 
 ## Sources for the new content
 - Auto-retrainer: `project-cassandra/src/cassandra/pipelines/`, `doc/client/RETRAINING_CONTRACT.md`, `EVALUATOR_RULES.md`.
-- Explanations: `project-cassandra/reverse-trade-judge` (`scripts/build_judge_v5_gross.py`, `scripts/explain_templates.py`, spec `docs/superpowers/specs/2026-10-10-judge-v5-2-0-explanation-design.md`). Deterministic (TreeSHAP + templates), not an LLM. Not yet wired into the retrainer or serving backend.
+- Explanations: `project-cassandra/reverse-trade-judge` (`scripts/build_judge_v5_gross.py`, `scripts/explain_templates.py`, spec `docs/superpowers/specs/2026-10-10-judge-v5-2-0-explanation-design.md`). Deterministic (TreeSHAP + templates), not an LLM.
 - Trader pile: `reverse-trade-judge/results/trader_concentration_summary.json`. Top 10% of traders (389 of 3,884) place **54.7% of trades** (by trade count, not volume). The names after Sally and Alex and Jon (Mei, Raj, Ben, Lena, Omar, Kai, Zoe) are illustrative. Rename in `components/trader-pile/trader-pile.html`.
 
 ## Outline
@@ -26,16 +26,16 @@
 | 16 | Demo divider (content TBD) | new | divider only |
 | 17-18 | System architecture | mid-term 28 | ported; no Trainer lane yet |
 | 19-26 | Auto-retrainer: flow, 3 detail slides, 3 key design decisions | new | 20 done; 21-26 placeholders |
-| 27-31 | Explanations: how it works, example, 2 key design decisions | new | placeholders |
-| 32-35 | Model training recap | mid-term 58, 60, 70 | ported |
-| 36-41 | Project management | mid-term 71-76 | ported |
-| 42-44 | Handover | new | placeholders |
-| 45 | Q&A | mid-term 80 | ported |
-| 46-67 | Appendix | mid-term 81-102 | ported unchanged |
+| 27-35 | Model training: divider (27), hurdle model (28), data (29), 18 features kept (30), cross-validation layout (31), feature-set ablation (32), what each notebook tried (33), train vs validation by campaigns (34) and by trees (35) | mid-term 58, 60, 64-69 | ported; slide 30 compacted in `deck.css` (`is-features-kept`) for the 26px floor. The old "Where the Signal Lives" slide was removed (the decomposition is still in the appendix) |
+| 36-40 | Explanations: divider (36), how it works (37), fade vs no-fade example (38), merits: readable by anyone (39), post-campaign themes (40) | new | done; examples from the trader-concentration doc (locked block). Speaker-note owners TBC |
+| 41-46 | Project management | mid-term 71-76 | ported |
+| 47-49 | Handover | new | placeholders |
+| 50 | Q&A | mid-term 80 | ported |
+| 51-72 | Appendix | mid-term 81-102 | ported unchanged |
 
 ## Open items
 - Find every placeholder: `grep -rn "@placeholder" decks/final-presentation/slides`
 - Slide numbers inside ported speaker notes and the Q&A note ("#28", "#71") still use mid-term numbers.
-- Mid-term open items carry over: campaign counts (54 vs 45 vs 38) and the PM numbers on slides 36-39.
+- Mid-term open items carry over: campaign counts (54 vs 45 vs 38) and the PM numbers on slides 41-44.
 - Slides 10-13 copy and the agenda owners are not rewritten.
 - Mid-term slides 77-79 (constraints, edge-setting, what's next) were left out; handover replaces "what's next".
