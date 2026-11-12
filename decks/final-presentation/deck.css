@@ -533,3 +533,18 @@
   font-size: var(--fs-min);
   color: var(--ink-muted);
 }
+
+/* slide 47: chat screenshot at its natural aspect ratio, lifted off the canvas */
+.c-image-frame.is-shot {
+  height: auto;
+}
+
+.c-image-frame.is-shot img {
+  flex: none;
+  height: auto;
+  box-shadow: 0 18px 40px color-mix(in srgb, var(--ink) 22%, transparent);
+}
+
+.c-image-frame.is-shot figcaption:empty {
+  display: none;
+}
