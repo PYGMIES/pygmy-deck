@@ -4179,6 +4179,11 @@ body.overview .deck-viewport {
   white-space: nowrap;
 }
 
+/* a row without a tag shows no empty pill */
+.c-spec-row code:empty {
+  display: none;
+}
+
 /* ===== COMPONENT step-card ===== */
 /* === COMPONENT (deck): step-card ===
    Charcoal card: circled number left + accent icon right, then title and body.
@@ -8737,25 +8742,25 @@ body.overview .deck-viewport {
   <i class="c-spec-row__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zNiA0IDEwIDM4aDIwbC00IDIyIDI4LTM2SDM0eiIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
   <h3>API</h3>
   <p>Trade ingestion, paper trading and campaign endpoints</p>
-  <code>:8000</code>
+  <code></code>
 </li>
   <li class="c-spec-row reveal ">
   <i class="c-spec-row__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjgiIHk9IjkiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNCIgcng9IjMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDM4IDE2KSIvPjxwYXRoIGQ9Ik0zMyAyMSAxMCA0NCIvPjxwYXRoIGQ9Ik04IDU3aDMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i>
   <h3>Judge</h3>
   <p>Scores each trade FADE or SKIP</p>
-  <code>:8001</code>
+  <code></code>
 </li>
   <li class="c-spec-row reveal ">
   <i class="c-spec-row__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMTYiIHk9IjE2IiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHJ4PSI0Ii8+PGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iNiIvPjxwYXRoIGQ9Ik0yNCA1djExTTQwIDV2MTFNMjQgNDh2MTFNNDAgNDh2MTFNNSAyNGgxMU01IDQwaDExTTQ4IDI0aDExTTQ4IDQwaDExIi8+PC9zdmc+Cg==);" aria-hidden="true"></i>
   <h3>Trainer</h3>
   <p>Trains a challenger and grades it against the champion</p>
-  <code>:8002</code>
+  <code></code>
 </li>
   <li class="c-spec-row reveal ">
   <i class="c-spec-row__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iNSIgeT0iOSIgd2lkdGg9IjU0IiBoZWlnaHQ9IjM4IiByeD0iNCIvPjxwYXRoIGQ9Ik0xOCA0MFYyOE0zMCA0MFYyME00MiA0MFYzMCIvPjxwYXRoIGQ9Ik0yMiA1N2gyMCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
   <h3>Dashboard</h3>
   <p>Campaign, Judge performance, live trades, model evaluation</p>
-  <code>:3000</code>
+  <code></code>
 </li>
   <li class="c-spec-row reveal ">
   <i class="c-spec-row__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zMiA2IDQgMjBsMjggMTQgMjgtMTR6Ii8+PHBhdGggZD0iTTQgMzJsMjggMTQgMjgtMTRNNCA0NGwyOCAxNCAyOC0xNCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>

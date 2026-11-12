@@ -44,3 +44,8 @@
   color: var(--on-card);
   white-space: nowrap;
 }
+
+/* a row without a tag shows no empty pill */
+.c-spec-row code:empty {
+  display: none;
+}
