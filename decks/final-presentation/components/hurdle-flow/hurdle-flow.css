@@ -43,8 +43,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  padding: 24px 16px;
+  gap: 10px;
+  padding: 18px 16px;
   border-radius: var(--radius);
   background: var(--card);
   color: var(--on-card);
@@ -52,7 +52,7 @@
 }
 
 .c-hurdle__arm strong {
-  font-size: 64px;
+  font-size: 56px;
 }
 
 .c-hurdle__arm span,
@@ -79,7 +79,7 @@
   flex: none;
   align-self: center;
   width: 0;
-  height: 52px;
+  height: 40px;
   border-left: 3.5px solid var(--accent);
   position: relative;
 }

@@ -62,7 +62,7 @@
   z-index: 2;
 }
 .sc-tip[hidden] { display: none; }
-.sc-tip b { display: block; font-size: 26px; font-weight: 700; }
+.sc-tip b { display: block; font-size: max(26px, var(--fs-min, 0px)); font-weight: 700; }
 .sc-tip__desc { margin-bottom: 10px; color: var(--chart-ink-muted); }
 .sc-tip__row { display: flex; justify-content: space-between; gap: 32px; font-variant-numeric: tabular-nums; }
 .sc-tip__row.is-muted { color: var(--chart-ink-muted); }

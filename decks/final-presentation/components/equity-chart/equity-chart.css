@@ -79,7 +79,7 @@
   z-index: 2;
 }
 .ec-tip[hidden] { display: none; }
-.ec-tip b { display: block; margin-bottom: 8px; font-size: 26px; font-weight: 700; }
+.ec-tip b { display: block; margin-bottom: 8px; font-size: max(26px, var(--fs-min, 0px)); font-weight: 700; }
 .ec-tip__row { display: flex; justify-content: space-between; gap: 32px; font-variant-numeric: tabular-nums; }
 .ec-tip__row.is-muted { color: var(--chart-ink-muted); }
 .ec-tip i { display: inline-block; width: 22px; height: 5px; margin-right: 12px; vertical-align: middle; border-radius: 3px; }

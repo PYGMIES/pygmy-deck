@@ -57,7 +57,7 @@
   font-family: var(--font-body);
   font-style: normal;
   font-weight: 700;
-  font-size: 26px;
+  font-size: max(26px, var(--fs-min, 0px));
   letter-spacing: 0;
   color: var(--chart-ink);
   background: var(--token-grey);

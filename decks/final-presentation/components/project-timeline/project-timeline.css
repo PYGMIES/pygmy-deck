@@ -81,7 +81,7 @@
   display: block;
   font-family: var(--font-display);
   font-weight: var(--display-weight);
-  font-size: 27px;
+  font-size: max(27px, var(--fs-min, 0px));
   letter-spacing: -0.01em;
   color: var(--ink);
 }
@@ -182,14 +182,14 @@
   font-style: normal;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 26px;
+  font-size: max(26px, var(--fs-min, 0px));
   padding-top: 3px;
 }
 
 .c-timeline__phase span {
   font-family: var(--font-display);
   font-weight: var(--display-weight);
-  font-size: 26px;
+  font-size: max(26px, var(--fs-min, 0px));
   white-space: nowrap;
 }
 
@@ -247,7 +247,7 @@
   margin-bottom: 6px;
   font-family: var(--font-display);
   font-weight: var(--display-weight);
-  font-size: 28px;
+  font-size: max(28px, var(--fs-min, 0px));
   color: var(--ink);
 }
 
