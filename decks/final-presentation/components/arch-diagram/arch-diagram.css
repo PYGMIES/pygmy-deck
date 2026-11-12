@@ -297,3 +297,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+
+/* Auto-retrainer box above the Judge: only on slides that opt in with has-retrainer (slide 18) */
+.c-arch:not(.has-retrainer) .c-arch__retrainer { display: none; }
+.c-arch__node--dark.c-arch__retrainer { background: var(--tone-4); }

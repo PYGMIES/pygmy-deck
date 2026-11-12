@@ -24,14 +24,21 @@
 | 14 | Mid-term feedback | new | placeholder for the feedback quote |
 | 15 | What C22 gets beyond the Judge (added value: room to grow, less risk, less manual work) | new | done; speaker notes need an owner |
 | 16 | Demo divider (content TBD) | new | divider only |
-| 17-18 | System architecture | mid-term 28 | ported; no Trainer lane yet |
-| 19-26 | Auto-retrainer: flow, 3 detail slides, 3 key design decisions | new | 20 done; 21-26 placeholders |
-| 27-35 | Model training: divider (27), hurdle model (28), data (29), 18 features kept (30), cross-validation layout (31), feature-set ablation (32), what each notebook tried (33), train vs validation by campaigns (34) and by trees (35) | mid-term 58, 60, 64-69 | ported; slide 30 compacted in `deck.css` (`is-features-kept`) for the 26px floor. The old "Where the Signal Lives" slide was removed (the decomposition is still in the appendix) |
-| 36-40 | Explanations: divider (36), how it works (37), fade vs no-fade example (38), merits: readable by anyone (39), post-campaign themes (40) | new | done; examples from the trader-concentration doc (locked block). Speaker-note owners TBC |
-| 41-46 | Project management | mid-term 71-76 | ported |
-| 47-49 | Handover | new | placeholders |
-| 50 | Q&A | mid-term 80 | ported |
-| 51-72 | Appendix | mid-term 81-102 | ported unchanged |
+| 17-18 | System architecture | mid-term 28 | ported; slide 18 has an unconnected Auto-retrainer box above the Judge; kicker "Project Cassandra and Judge · During campaign" |
+| 19 | Part 1, campaign end to hand-off (title "Project Cassandra Architecture"): slide 18's architecture scoped to campaign end to hand-off; no Redis, workers, Judge or Dashboard | new `arch-after-end` | done |
+| 20-24 | Step builds of slide 19 (one per step: campaign ended, after the reply, Postgres, Storage, Trainer hand-off); lit parts at 100%, the rest at 60% | `arch-after-end` with `is-step-N` | trial |
+| 25-36 | Part 2 (right to left) and its 11 step builds (slides 26-36), lit parts at 100%, the rest at 60% | `arch-promotion` with `is-step-N` | trial |
+| (25) | Part 2, after a challenger is trained: right-to-left flow (Services, Pipeline, Data, Input/Output, C22); Trainer, Evaluator, Training tracker, Judge | new `arch-promotion` | done; title "Project Cassandra Architecture" |
+| 37-48 | Same as 25, mirrored to read left to right, with its 11 step builds (slides 38-48) | `arch-promotion-ltr` with `is-step-N` | trial |
+| (37) | Same as 25, mirrored | new `arch-promotion-ltr` | done |
+| 27 | Retraining pipeline inside the API box; arrows to Trainer and Judge cut across the data lane | new `retrain-api-diagram` | done |
+| 28-35 | Auto-retrainer: divider (28), flow (29), 3 detail slides, 3 key design decisions | new | 29 done; 30-35 placeholders |
+| 32-40 | Model training: divider (27), hurdle model (28), data (29), 18 features kept (30), cross-validation layout (31), feature-set ablation (32), what each notebook tried (33), train vs validation by campaigns (34) and by trees (35) | mid-term 58, 60, 64-69 | ported; slide 30 compacted in `deck.css` (`is-features-kept`) for the 26px floor. The old "Where the Signal Lives" slide was removed (the decomposition is still in the appendix) |
+| 41-45 | Explanations: divider (36), how it works (37), fade vs no-fade example (38), merits: readable by anyone (39), post-campaign themes (40) | new | done; examples from the trader-concentration doc (locked block). Speaker-note owners TBC |
+| 46-51 | Project management | mid-term 71-76 | ported |
+| 52-54 | Handover | new | placeholders |
+| 55 | Q&A | mid-term 80 | ported |
+| 56-77 | Appendix | mid-term 81-102 | ported unchanged |
 
 ## Open items
 - Find every placeholder: `grep -rn "@placeholder" decks/final-presentation/slides`

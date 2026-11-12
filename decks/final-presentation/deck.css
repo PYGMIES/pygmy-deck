@@ -238,3 +238,27 @@
 .c-card-grid.is-features-kept .c-feature-group__list strong { font-size: max(26px, var(--fs-min, 0px)); }
 .c-card-grid.is-features-kept .c-feature-group__list code { line-height: 1.15; }
 .c-card-grid.is-features-kept .c-feature-group__list li { align-items: start; }
+
+/* slide 21: right-hand cards fill the column height to match the spread-out steps; the last card takes the spare space */
+.c-column.is-fill { height: 100%; }
+.c-column.is-fill > .c-note-card:last-child { flex: 1; }
+
+/* kicker on a diagram slide (19-20): lift it above the title so the 1728×800 diagram keeps slide 18's position */
+.c-slide-title.is-tight { position: relative; }
+.c-slide-title.is-tight .c-slide-title__kicker { position: absolute; top: -40px; left: 0; margin: 0; white-space: nowrap; }
+
+/* owner chip next to a slide title's kicker (Auto-retrainer section): same colours as the "How a New Model Gets Made" slide */
+.owner-chip {
+  display: inline-block;
+  margin-left: 16px;
+  padding: 2px 18px;
+  border-radius: 999px;
+  background: var(--o);
+  color: var(--on);
+  letter-spacing: 0.06em;
+  vertical-align: 2px;
+}
+.owner-chip.is-app { --o: var(--owner-app); --on: var(--on-owner-app); }
+.owner-chip.is-trainer { --o: var(--owner-trainer); --on: var(--on-owner-trainer); }
+.owner-chip.is-eval { --o: var(--owner-eval); --on: var(--on-owner-eval); }
+.owner-chip.is-dash { --o: var(--owner-dash); --on: var(--on-owner-dash); }

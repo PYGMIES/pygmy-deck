@@ -1,0 +1,22 @@
+<div class="c-train-stages {{class|}}">
+  <p class="c-train-stages__lead reveal">A separate Trainer builds the challenger. The app only sends links and tracks progress.</p>
+
+  <div class="c-train-stages__row">
+    <div class="c-train-stages__stage is-app reveal"><span class="n">1</span><h3>Export</h3>
+      <p>One Parquet file in Storage. Trader emails become a one-way code. Read back, checksum recorded.</p>
+      <strong>A frozen file, no personal data leaving.</strong></div>
+    <div class="c-train-stages__stage is-app reveal"><span class="n">2</span><h3>Hand-off</h3>
+      <p>The app calls the Trainer with 4 time-limited download and upload links (valid 2 hours).</p>
+      <strong>The Trainer never gets database access.</strong></div>
+    <div class="c-train-stages__stage is-trainer reveal"><span class="n">3</span><h3>Train</h3>
+      <p>Downloads the data and the champion, checks the data, trains the challenger, scores both on the same TEST trades, uploads the model and predictions.</p>
+      <strong>Live scoring continues as normal.</strong></div>
+    <div class="c-train-stages__stage is-app reveal"><span class="n">4</span><h3>Track</h3>
+      <p>A loop in the API asks the Trainer for progress every 30 s. On success the challenger is registered as an inactive model.</p>
+      <strong>Over 2 hours, the run is marked failed.</strong></div>
+  </div>
+
+  <div class="c-train-stages__ticks reveal"><i></i><i class="is-gap"></i><i></i><i></i></div>
+  <p class="c-train-stages__storage reveal"><b>Storage</b> dataset · model · predictions</p>
+  <p class="c-train-stages__callout reveal">A separate container.</p>
+</div>

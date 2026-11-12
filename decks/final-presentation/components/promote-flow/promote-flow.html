@@ -1,0 +1,32 @@
+<div class="c-promote-flow {{class|}}">
+  <p class="c-promote-flow__lead reveal">One click makes a model live, and the same click goes back to an old one.</p>
+
+  <div class="c-promote-flow__main">
+    <div class="c-promote-flow__panel reveal">
+      <p class="c-promote-flow__panel-head">Judge Performance<span class="owner-chip is-dash">Dashboard</span></p>
+      <div class="c-promote-flow__row"><span>Candidate model</span><b>v7 ▾</b></div>
+      <div class="c-promote-flow__row"><span>Recommendation</span><b>Promote, with reasons</b></div>
+      <div class="c-promote-flow__row"><span>Per-campaign results</span><b>vs the live model</b></div>
+      <div class="c-promote-flow__row"><span>Note</span><b class="is-soft">optional</b></div>
+      <p class="c-promote-flow__btn">Promote</p>
+    </div>
+
+    <div class="c-promote-flow__go reveal"><i></i></div>
+
+    <div class="c-promote-flow__steps">
+      <div class="c-promote-flow__step reveal"><i>1</i><div><h3>Check</h3><p>App: no live campaign, no unfinished run, model file stored</p></div></div>
+      <div class="c-promote-flow__step is-key reveal"><i>2</i><div><h3>Load</h3><p>Judge: downloads, verifies, loads</p><strong>If the Judge refuses, nothing changes.</strong></div></div>
+      <div class="c-promote-flow__step reveal"><i>3</i><div><h3>Switch</h3><p>Database: new model active, old one inactive</p></div></div>
+      <p class="c-promote-flow__result reveal">Next trade uses it.</p>
+    </div>
+  </div>
+
+  <div class="c-promote-flow__timeline reveal">
+    <div class="c-promote-flow__models">
+      <span class="m">v5</span><em></em><span class="m">v6</span><em></em><span class="m is-live">v7 <small>live</small></span>
+      <p>All kept. Any can be promoted.</p>
+    </div>
+    <svg class="c-promote-flow__back" viewBox="0 0 700 70" aria-hidden="true"><path d="M555 6 Q 422 66 295 10"/><path d="M308 25 L295 10 L315 9"/></svg>
+    <p class="c-promote-flow__back-label"><b>Rollback:</b> pick v6, Promote, v6 is live again</p>
+  </div>
+</div>
