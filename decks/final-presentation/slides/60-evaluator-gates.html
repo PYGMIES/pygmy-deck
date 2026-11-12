@@ -1,0 +1,25 @@
+<!-- notes: The evaluator is rule-based, not a model, and its checks run in a fixed order: the first one that gives an answer decides (project-cassandra evaluator/rules.py, doc/client/EVALUATOR_RULES.md section 4). 1) Inputs (Tier 0): can we trust the numbers? Each trade counted once, the test campaigns were never trained on by either model, the champion scored is really the live model, no feature leaks the outcome, and the file's numbers recompute exactly and match the trainer's summary. Any failure is a Hold: it says nothing about the model, only that the numbers can't be trusted yet. 2) Leak alarm: an AUC above 0.65 is a Hold. Honest models in this family top out around 0.61; the only one that ever scored higher (0.664) was using stop-loss and take-profit prices that are only known after the trade closes. Checks 3 and 4 are on the next slide. -->
+<!-- @slide-title kicker="Auto-retrainer · Evaluator" text="Four Checks, in Order" -->
+<aside class="ev-terms reveal"><span class="ev-policy-note__kicker">Key terms</span><p><strong>AUC</strong> ranks winners above losers; 0.5 = coin flip</p><p><strong>Brier</strong> probability accuracy; lower is better</p></aside>
+<p class="ev-policy-line reveal">C22 can modify any threshold on the dashboard</p>
+<div class="ev-gates is-two inset">
+  <article class="ev-gate reveal">
+    <header class="ev-gate__head"><span class="ev-gate__num">1</span><span class="ev-gate__kicker">Inputs</span></header>
+    <h3>Can we trust the numbers?</h3>
+    <dl class="ev-gate__checks">
+      <dt>Right data?</dt><dd>Unseen campaigns, each trade once, real live model</dd>
+      <dt>Model cheating?</dt><dd>Leakage gate: no feature tied to the outcome above 0.02</dd>
+      <dt>Numbers add up?</dt><dd>Recomputed totals match the trainer's report</dd>
+    </dl>
+    <p class="ev-gate__out is-hold">Fail → Hold</p>
+  </article>
+
+  <article class="ev-gate reveal">
+    <header class="ev-gate__head"><span class="ev-gate__num">2</span><span class="ev-gate__kicker">Leak alarm</span></header>
+    <h3>Is AUC suspiciously high?</h3>
+    <dl class="ev-gate__checks">
+      <dt>AUC &gt; 0.65</dt><dd>Signals a leak rather than a breakthrough</dd>
+    </dl>
+    <p class="ev-gate__out is-hold">Above 0.65 → Hold</p>
+  </article>
+</div>

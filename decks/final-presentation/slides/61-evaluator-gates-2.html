@@ -1,0 +1,28 @@
+<!-- notes: Continued from the previous slide (project-cassandra evaluator/rules.py). 3) On its own (Tier 1): AUC at least 0.53 overall, at least 0.50 in every test campaign (never worse than a coin flip anywhere), Brier better than always guessing the base rate, and its top 5% picks beat random picks at least as well as the live model's do on the same block (and at least 40, where 50 is chance). Fail: Reject, which the dashboard shows as Keep the live model. 4) Head to head: only then is it compared with the live model, on the next slide. -->
+<!-- @slide-title kicker="Auto-retrainer · Evaluator" text="Four Checks, in Order" -->
+<aside class="ev-terms reveal"><span class="ev-policy-note__kicker">Key terms</span><p><strong>AUC</strong> ranks winners above losers; 0.5 = coin flip</p><p><strong>Brier</strong> probability accuracy; lower is better</p></aside>
+<p class="ev-policy-line reveal">C22 can modify any threshold on the dashboard</p>
+<div class="ev-gates is-two inset">
+  <article class="ev-gate reveal">
+    <header class="ev-gate__head"><span class="ev-gate__num">3</span><span class="ev-gate__kicker">On its own</span></header>
+    <h3>Is the new model sound?</h3>
+    <dl class="ev-gate__checks">
+      <dt>Ranks trades well?</dt><dd>Overall AUC ≥ 0.53, clearly above a coin flip</dd>
+      <dt>In every campaign?</dt><dd>Never below a coin flip (AUC 0.5)</dd>
+      <dt>Win probabilities accurate?</dt><dd>Brier lower than always guessing the average</dd>
+      <dt>Better than random?</dt><dd>Top-5% P&amp;L beats random picks at least as well as the live model’s</dd>
+    </dl>
+    <p class="ev-gate__out is-keep">Fail → Keep</p>
+  </article>
+
+  <article class="ev-gate is-final reveal">
+    <header class="ev-gate__head"><span class="ev-gate__num">4</span><span class="ev-gate__kicker">Compare</span></header>
+    <h3>Better than the live model?</h3>
+    <dl class="ev-gate__checks">
+      <dt>Earns more?</dt><dd>Top-5% P&amp;L higher on average than the live model</dd>
+      <dt>Not just luck?</dt><dd>Top-5% P&amp;L higher in over half the test campaigns</dd>
+      <dt>Nothing worse?</dt><dd>AUC and Brier not clearly worse than the live model</dd>
+    </dl>
+    <p class="ev-gate__out is-promote">Promote · Keep · Hold</p>
+  </article>
+</div>

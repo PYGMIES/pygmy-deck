@@ -577,3 +577,23 @@
 .ev-gate.is-final .ev-gate__out.is-promote { background: var(--bg); color: var(--ink); }
 .ev-gate li::before { background: var(--ink); }
 .ev-gate__out.is-hold { background: var(--bg); color: var(--ink); box-shadow: inset 0 0 0 2px var(--rule); }
+/* Slide 60: rollback strip (component rollback-strip) bottom-left, under the C22 circle */
+.c-rollback-strip.is-promote-slide { position: absolute; left: var(--pad-x); top: 790px; }
+/* Slides 60-61: the four evaluator checks split two per slide */
+.ev-gates.is-two { grid-template-columns: repeat(2, 1fr); gap: 72px; }
+.ev-gates.is-two .ev-gate + .ev-gate::before { left: -48px; }
+.ev-gates.is-two .ev-gate { padding: 44px 48px 40px; }
+.slide .ev-gate__out { max-width: none; }
+.ev-gates.is-two .ev-gate h3 { font-size: 52px; margin-top: 32px; }
+.ev-gates.is-two .ev-gate__checks { margin-top: 32px; gap: 6px; }
+.ev-gates.is-two .ev-gate__checks dt,
+.ev-gates.is-two .ev-gate__checks dd,
+.ev-gates.is-two .ev-gate li { font-size: 30px; }
+.ev-gates.is-two .ev-gate__checks dd { margin-bottom: 20px; }
+.ev-gates.is-two .ev-gate h3 { margin-top: 24px; }
+.ev-gates.is-two .ev-gate__checks { margin-top: 24px; }
+.ev-gates.is-two .ev-gate__checks dt,
+.ev-gates.is-two .ev-gate__checks dd,
+.ev-gates.is-two .ev-gate li { font-size: 28px; }
+.ev-gates.is-two .ev-gate__checks dd { margin-bottom: 12px; }
+.ev-gates.is-two .ev-gate { padding: 36px 48px 32px; }

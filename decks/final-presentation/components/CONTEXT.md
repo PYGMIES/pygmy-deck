@@ -59,3 +59,5 @@ Project management and handover (slides 46-52):
 | `step-card` | `num`, `icon`, `title`, `body` | Charcoal card: circled number + accent icon, title, body; `<code>` in the body = one chip per line. Use in `card-grid cols="4"`. Slide 51. |
 
 `method-compare`, `sprint-cycle`, `retro-changes` and `project-timeline` are no longer used in this deck (their slides were replaced); kept in case they come back.
+
+| `rollback-strip` | `class?` | Model-version timeline (v5, v6, v7 live) with a curved arrow back to v6; the rollback row of `promote-flow` as a standalone block. Position with a class in `deck.css`. Slide 59. |

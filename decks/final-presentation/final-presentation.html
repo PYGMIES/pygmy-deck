@@ -2657,67 +2657,6 @@ body.overview .deck-viewport {
 /* the global paragraph measure would wrap these lines */
 .slide .c-grade-gates p { max-width: none; }
 
-/* ===== COMPONENT promote-flow ===== */
-/* === COMPONENT (deck): promote-flow ===
-   Promote and Roll Back: the Dashboard panel (decide), the three safe steps (switch), the model timeline (rollback). */
-.c-promote-flow {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-s);
-  margin-top: -36px;
-  padding-left: var(--inset);
-}
-
-.c-promote-flow__lead { font-size: var(--fs-lead); font-weight: 600; line-height: 1.15; color: var(--ink-muted); max-width: none; }
-
-.c-promote-flow__main { display: grid; grid-template-columns: 620px 70px 1fr; align-items: center; }
-
-/* --- Dashboard panel --- */
-.c-promote-flow__panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-xs);
-  padding: var(--gap-s);
-  border: var(--rule-w) solid var(--owner-dash);
-  border-radius: var(--radius);
-  background: var(--bg-deep);
-}
-.c-promote-flow__panel-head { display: flex; align-items: center; font-family: var(--font-display); font-weight: var(--display-weight); font-size: 40px; line-height: 1; max-width: none; }
-.c-promote-flow__panel-head .owner-chip { font-family: var(--font-body); font-size: var(--fs-small); font-weight: 700; }
-.c-promote-flow__row { display: flex; justify-content: space-between; align-items: center; gap: var(--gap-s); padding: 10px var(--gap-xs); border-radius: var(--radius-s); background: var(--bg); font-size: var(--fs-small); }
-.c-promote-flow__row span { color: var(--ink-muted); font-weight: 600; }
-.c-promote-flow__row b { font-weight: 700; text-align: right; }
-.c-promote-flow__row b.is-soft { color: var(--ink-muted); font-weight: 500; }
-.c-promote-flow__btn { align-self: flex-start; padding: 8px 36px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: var(--fs-small); font-weight: 800; max-width: none; }
-
-/* --- arrow from the Promote click into step 1 --- */
-.c-promote-flow__go { display: grid; place-items: center; }
-.c-promote-flow__go i { width: 40px; height: 3px; background: var(--ink); position: relative; }
-.c-promote-flow__go i::after { content: ""; position: absolute; right: -2px; top: -9px; border: 10px solid transparent; border-left: 16px solid var(--ink); border-right: 0; }
-
-/* --- three steps --- */
-.c-promote-flow__steps { display: flex; flex-direction: column; gap: var(--gap-xs); }
-.c-promote-flow__step { display: flex; align-items: center; gap: var(--gap-s); padding: 14px var(--gap-s); border-radius: var(--radius); background: var(--bg-deep); }
-.c-promote-flow__step i { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--owner-dash); color: var(--on-owner-dash); font-family: var(--font-display); font-style: normal; font-weight: 800; font-size: 30px; padding-top: 3px; }
-.c-promote-flow__step h3 { font-family: var(--font-display); font-weight: var(--display-weight); font-size: 38px; line-height: 1; color: inherit; }
-.c-promote-flow__step p { font-size: var(--fs-small); line-height: 1.3; max-width: none; }
-.c-promote-flow__step strong { display: block; margin-top: 4px; font-size: var(--fs-small); font-weight: 700; }
-.c-promote-flow__step.is-key { box-shadow: 0 0 0 4px var(--accent); }   /* same glow as the Judge on the architecture slides */
-.c-promote-flow__result { align-self: flex-start; padding: 8px var(--gap-m); border-radius: var(--radius); background: var(--card); color: var(--on-card); font-size: var(--fs-body); font-weight: 700; max-width: none; }
-
-/* --- model timeline --- */
-.c-promote-flow__timeline { position: relative; height: 150px; }
-.c-promote-flow__models { display: flex; align-items: center; gap: 0; }
-.c-promote-flow__models .m { display: flex; align-items: center; justify-content: center; min-width: 120px; height: 64px; white-space: nowrap; padding: 0 var(--gap-s); border-radius: var(--radius-s); background: var(--card); color: var(--on-card); font-family: var(--font-display); font-weight: var(--display-weight); font-size: 34px; }
-.c-promote-flow__models .m small { font-family: var(--font-body); font-size: var(--fs-small); font-weight: 700; margin-left: 10px; }
-.c-promote-flow__models .m.is-live { background: var(--accent); color: var(--on-accent); min-width: 190px; }
-.c-promote-flow__models em { width: 110px; height: 3px; background: var(--ink-muted); }
-.c-promote-flow__models p { margin-left: var(--gap-m); font-size: var(--fs-small); font-weight: 600; color: var(--ink-muted); max-width: none; }
-.c-promote-flow__back { position: absolute; left: 0; top: 66px; width: 700px; height: 70px; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.c-promote-flow__back-label { position: absolute; left: 700px; top: 92px; font-size: var(--fs-small); max-width: none; white-space: nowrap; }
-
-.slide .c-promote-flow p { max-width: none; }
-
 /* ===== COMPONENT decisions-trio ===== */
 /* === COMPONENT (deck): decisions-trio ===
    Three key design decisions side by side: decision, rejected + rationale, trade off. Rows line up across columns. */
@@ -3000,6 +2939,34 @@ body.overview .deck-viewport {
   stroke-width: 5;
   stroke-linejoin: round;
 }
+
+/* ===== COMPONENT rollback-strip ===== */
+/* === COMPONENT (deck): rollback-strip ===
+   The model-version timeline from promote-flow's rollback row (v5, v6, v7 live) with a curved arrow
+   back to v6, as a standalone block. Position it with a class on the slide (see deck.css). */
+.c-rollback-strip { width: 500px; }
+.c-rollback-strip__kicker {
+  font-size: var(--fs-min);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  max-width: none;
+}
+.c-rollback-strip__models { display: flex; align-items: center; margin-top: 12px; }
+.c-rollback-strip__models .m {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 100px; height: 60px; padding: 0 var(--gap-s);
+  border-radius: var(--radius-s);
+  background: var(--card); color: var(--on-card);
+  font-family: var(--font-display); font-weight: var(--display-weight); font-size: 32px;
+  white-space: nowrap;
+}
+.c-rollback-strip__models .m small { font-family: var(--font-body); font-size: var(--fs-min); font-weight: 700; margin-left: 10px; }
+.c-rollback-strip__models .m.is-live { background: var(--accent); color: var(--ink); min-width: 170px; }
+.c-rollback-strip__models em { width: 60px; height: 3px; background: var(--ink-muted); }
+.c-rollback-strip__back { display: block; width: 500px; height: 60px; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.c-rollback-strip__label { font-size: var(--fs-min); max-width: none; white-space: nowrap; }
 
 /* ===== COMPONENT bullet-list ===== */
 /* === COMPONENT: bullet-list === ruled list; children are <li> (add class="reveal" to stagger) */
@@ -5136,6 +5103,26 @@ body.overview .deck-viewport {
 .ev-gate.is-final .ev-gate__out.is-promote { background: var(--bg); color: var(--ink); }
 .ev-gate li::before { background: var(--ink); }
 .ev-gate__out.is-hold { background: var(--bg); color: var(--ink); box-shadow: inset 0 0 0 2px var(--rule); }
+/* Slide 60: rollback strip (component rollback-strip) bottom-left, under the C22 circle */
+.c-rollback-strip.is-promote-slide { position: absolute; left: var(--pad-x); top: 790px; }
+/* Slides 60-61: the four evaluator checks split two per slide */
+.ev-gates.is-two { grid-template-columns: repeat(2, 1fr); gap: 72px; }
+.ev-gates.is-two .ev-gate + .ev-gate::before { left: -48px; }
+.ev-gates.is-two .ev-gate { padding: 44px 48px 40px; }
+.slide .ev-gate__out { max-width: none; }
+.ev-gates.is-two .ev-gate h3 { font-size: 52px; margin-top: 32px; }
+.ev-gates.is-two .ev-gate__checks { margin-top: 32px; gap: 6px; }
+.ev-gates.is-two .ev-gate__checks dt,
+.ev-gates.is-two .ev-gate__checks dd,
+.ev-gates.is-two .ev-gate li { font-size: 30px; }
+.ev-gates.is-two .ev-gate__checks dd { margin-bottom: 20px; }
+.ev-gates.is-two .ev-gate h3 { margin-top: 24px; }
+.ev-gates.is-two .ev-gate__checks { margin-top: 24px; }
+.ev-gates.is-two .ev-gate__checks dt,
+.ev-gates.is-two .ev-gate__checks dd,
+.ev-gates.is-two .ev-gate li { font-size: 28px; }
+.ev-gates.is-two .ev-gate__checks dd { margin-bottom: 12px; }
+.ev-gates.is-two .ev-gate { padding: 36px 48px 32px; }
 </style>
 </head>
 <body>
@@ -7684,48 +7671,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="57" data-name="retrainer-promote">
-<!-- notes: Promotion is a person clicking Promote on Judge Performance. It makes the chosen model the one that scores live trades. It works in a safe order: verify, load, then switch. The app checks it is safe, the Judge downloads, verifies and loads the model, and only then does the database mark it active. If the Judge refuses, nothing changes. It works any time no campaign is live and no run is unfinished; otherwise it is refused and the dashboard says why. It only affects the next trade onward: each trade records the version that scored it, so past trades and live campaigns are untouched. To decide, the person has the evaluator's recommendation and reasons, per-campaign results, a candidate picker and an optional note. Every model is kept, so promoting an older one is the rollback. -->
-<header class="c-slide-title is-tight">
-  <span class="c-slide-title__kicker reveal">Auto-retrainer <span class='owner-chip is-dash'>Dashboard</span></span>
-  <h1 class="reveal">Promote and Roll Back</h1>
-</header>
-<div class="c-promote-flow ">
-  <p class="c-promote-flow__lead reveal">One click makes a model live, and the same click goes back to an old one.</p>
-
-  <div class="c-promote-flow__main">
-    <div class="c-promote-flow__panel reveal">
-      <p class="c-promote-flow__panel-head">Judge Performance<span class="owner-chip is-dash">Dashboard</span></p>
-      <div class="c-promote-flow__row"><span>Candidate model</span><b>v7 ▾</b></div>
-      <div class="c-promote-flow__row"><span>Recommendation</span><b>Promote, with reasons</b></div>
-      <div class="c-promote-flow__row"><span>Per-campaign results</span><b>vs the live model</b></div>
-      <div class="c-promote-flow__row"><span>Note</span><b class="is-soft">optional</b></div>
-      <p class="c-promote-flow__btn">Promote</p>
-    </div>
-
-    <div class="c-promote-flow__go reveal"><i></i></div>
-
-    <div class="c-promote-flow__steps">
-      <div class="c-promote-flow__step reveal"><i>1</i><div><h3>Check</h3><p>App: no live campaign, no unfinished run, model file stored</p></div></div>
-      <div class="c-promote-flow__step is-key reveal"><i>2</i><div><h3>Load</h3><p>Judge: downloads, verifies, loads</p><strong>If the Judge refuses, nothing changes.</strong></div></div>
-      <div class="c-promote-flow__step reveal"><i>3</i><div><h3>Switch</h3><p>Database: new model active, old one inactive</p></div></div>
-      <p class="c-promote-flow__result reveal">Next trade uses it.</p>
-    </div>
-  </div>
-
-  <div class="c-promote-flow__timeline reveal">
-    <div class="c-promote-flow__models">
-      <span class="m">v5</span><em></em><span class="m">v6</span><em></em><span class="m is-live">v7 <small>live</small></span>
-      <p>All kept. Any can be promoted.</p>
-    </div>
-    <svg class="c-promote-flow__back" viewBox="0 0 700 70" aria-hidden="true"><path d="M555 6 Q 422 66 295 10"/><path d="M308 25 L295 10 L315 9"/></svg>
-    <p class="c-promote-flow__back-label"><b>Rollback:</b> pick v6, Promote, v6 is live again</p>
-  </div>
-</div>
-</section>
-
-
-<section class="slide" data-slide="58" data-name="key-decisions">
+<section class="slide" data-slide="57" data-name="key-decisions">
 <!-- notes: Three decisions shaped the auto-retrainer. When to retrain: accumulate eight campaigns and run automatically; we rejected retraining on every campaign, by hand or on a cron job, because we want enough data and a fixed rule. The trade-off is that two campaigns a week means about a monthly run. Where it trains: in a separate container, not inside the app or the Judge, so changes stay independent and the dependencies are not duplicated; the trade-off is one more container to manage. How to promote: the evaluator recommends and C22 decides, because a new model affects future campaigns; the trade-off is manual intervention and no alert in a localised deployment. -->
 <header class="c-slide-title is-static is-tight">
   <span class="c-slide-title__kicker reveal">Key design decisions · Auto-retrainer</span>
@@ -7748,7 +7694,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="59" data-name="promote-flow-1-poll">
+<section class="slide" data-slide="58" data-name="promote-flow-1-poll">
 <!-- notes: Steps 8 to 11. The poller and the evaluator are not separate services: they are two background loops inside the FastAPI app, started with it (main.py), each running every 30 seconds. Only the trainer runs in its own container. The trainer tells nobody when a job ends, so the poller asks it "done yet?" (GET /train/{run_id}) for every unfinished run, and writes the answer on the run. A 404 means the trainer restarted and lost the job, and a run still unfinished after 2 hours is failed; either way it stops blocking the next run. When the answer is SUCCEEDED, the poller saves the new model as a challenger: a model version that is stored but not live. The evaluator then downloads the predictions file the trainer uploaded to Supabase, checks it is the exact file (sha256), grades the challenger against the live model and stores one recommendation on the dashboard. Nobody gets a message: the operator checks Judge Performance. Source: project-cassandra main.py, poll_training_runs.py, grade_challengers.py. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -7847,7 +7793,7 @@ body.overview .deck-viewport {
   <p class="c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 220px; font-size: 26px;">Predictions on<br>unseen trades</p>
 
   <div class="c-flow-node c-flow-node--mid " style="left: 1510px; top: 440px; width: 340px; height: 140px;">
-  <strong style="font-size: 30px;">Recommendation</strong>
+  <strong style="font-size: 30px;">Dashboard</strong>
   <span>Promote · Keep · Hold</span>
 </div>
   <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
@@ -7863,7 +7809,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="60" data-name="promote-flow-2-promote">
+<section class="slide" data-slide="59" data-name="promote-flow-2-promote">
 <!-- notes: Steps 12 and 13. The evaluator only recommends; a person promotes. The operator reads the recommendation and its reasons, then presses Promote on the dashboard, which calls the FastAPI app (POST /models/{id}/promote). Promotion is refused while a campaign is live (one campaign would be scored by two models) or while a run is unfinished. The order is what makes it safe: first the Judge loads the new bundle from Supabase, and only then does the app switch the active model version in the database. If the Judge can't load it, nothing changes and the old model keeps scoring. The switch takes effect from the next trade. Every model is kept, so rolling back is just promoting an older one, and on every app start the Judge reloads whichever model is active. Source: project-cassandra promote_model.py, load_active_model.py, doc/client/EVALUATOR.md. -->
 <header class="c-dd-heading ">
   <div class="c-dd-heading__text">
@@ -7875,6 +7821,13 @@ body.overview .deck-viewport {
   
 
 </header>
+<div class="c-rollback-strip is-promote-slide reveal">
+  <p class="c-rollback-strip__kicker">Rollback</p>
+  <div class="c-rollback-strip__models">
+    <span class="m">v5</span><em></em><span class="m">v6</span><em></em><span class="m is-live">v7 <small>live</small></span>
+  </div>
+  <svg class="c-rollback-strip__back" viewBox="0 0 500 60" aria-hidden="true"><path d="M415 4 Q 312 62 210 6"/><path d="M224 20 L210 6 L231 3"/></svg>
+</div>
 <!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
 <div class="c-flow-stage reveal" data-morph-scope>
   <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
@@ -7889,7 +7842,7 @@ body.overview .deck-viewport {
   </svg>
   
   <div class="c-flow-node c-flow-node--mid " style="left: 100px; top: 260px; width: 360px; height: 130px;">
-  <strong style="font-size: 32px;">Recommendation</strong>
+  <strong style="font-size: 32px;">Dashboard</strong>
   <span>Promote · Keep · Hold</span>
 </div>
   <div class="c-flow-node c-flow-node--dark is-round" style="left: 160px; top: 490px; width: 240px; height: 240px;">
@@ -7897,13 +7850,13 @@ body.overview .deck-viewport {
   <span></span>
 </div>
   <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
-  <path d="M280 390 L280 488"/>
+  <path d="M280 488 L280 392"/>
 </svg>
-  <p class="c-flow-note c-flow-note--ink is-plain" style="left: 405px; top: 530px; width: 230px; font-size: 26px;">Makes final call<br>to promote</p>
-  <div class="c-flow-node c-flow-node--dark is-round is-step" style="left: 502px; top: 480px; width: 36px; height: 36px;">
+  <div class="c-flow-node c-flow-node--dark is-round is-step" style="left: 478px; top: 262px; width: 36px; height: 36px;">
   <strong style="font-size: 26px;">1</strong>
   <span></span>
 </div>
+  <p class="c-flow-note c-flow-note--ink is-plain is-left" style="left: 522px; top: 252px; width: 230px; font-size: 26px;">Makes final call<br>to promote</p>
 
   <div class="c-flow-node c-flow-node--api is-container" style="left: 640px; top: 400px; width: 540px; height: 390px;">
   <strong style="font-size: 34px;">FastAPI app</strong>
@@ -7913,8 +7866,11 @@ body.overview .deck-viewport {
   <strong style="font-size: 32px;">Promote</strong>
   <span></span>
 </div>
+  <svg class="c-flow-arrow c-flow-arrow--ink is-line" viewBox="0 0 1920 1080" aria-hidden="true">
+  <path d="M460 325 L760 325"/>
+</svg>
   <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
-  <path d="M400 610 L700 610"/>
+  <path d="M760 325 L760 538"/>
 </svg>
 
   <div class="c-flow-node c-flow-node--dark " style="left: 1360px; top: 540px; width: 300px; height: 140px;">
@@ -7938,7 +7894,7 @@ body.overview .deck-viewport {
   <svg class="c-flow-arrow c-flow-arrow--ink " viewBox="0 0 1920 1080" aria-hidden="true">
   <path d="M1510 380 L1510 538"/>
 </svg>
-  <p class="c-flow-note c-flow-note--ink is-plain" style="left: 1560px; top: 430px; width: 200px; font-size: 26px;">Downloads<br>model file</p>
+  <p class="c-flow-note c-flow-note--ink is-plain" style="left: 1560px; top: 430px; width: 200px; font-size: 26px;">Downloads<br>frozen model</p>
   <div class="c-flow-node c-flow-node--dark is-round is-step" style="left: 1524px; top: 427px; width: 36px; height: 36px;">
   <strong style="font-size: 26px;">3</strong>
   <span></span>
@@ -7966,22 +7922,22 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="61" data-name="evaluator-gates">
-<!-- notes: The evaluator is rule-based, not a model, and its checks run in a fixed order: the first one that gives an answer decides (project-cassandra evaluator/rules.py, doc/client/EVALUATOR_RULES.md section 4). 1) Inputs (Tier 0): can we trust the numbers? Each trade counted once, the test campaigns were never trained on by either model, the champion scored is really the live model, no feature leaks the outcome, and the file's numbers recompute exactly and match the trainer's summary. Any failure is a Hold: it says nothing about the model, only that the numbers can't be trusted yet. 2) Leak alarm: an AUC above 0.65 is a Hold. Honest models in this family top out around 0.61; the only one that ever scored higher (0.664) was using stop-loss and take-profit prices that are only known after the trade closes. 3) On its own (Tier 1): AUC at least 0.53 overall, at least 0.50 in every test campaign (never worse than a coin flip anywhere), Brier better than always guessing the base rate, and its top 5% picks beat random picks at least as well as the live model's do on the same block (and at least 40, where 50 is chance). Fail: Reject, which the dashboard shows as Keep the live model. 4) Head to head: only then is it compared with the live model, on the next slide. -->
+<section class="slide" data-slide="60" data-name="evaluator-gates">
+<!-- notes: The evaluator is rule-based, not a model, and its checks run in a fixed order: the first one that gives an answer decides (project-cassandra evaluator/rules.py, doc/client/EVALUATOR_RULES.md section 4). 1) Inputs (Tier 0): can we trust the numbers? Each trade counted once, the test campaigns were never trained on by either model, the champion scored is really the live model, no feature leaks the outcome, and the file's numbers recompute exactly and match the trainer's summary. Any failure is a Hold: it says nothing about the model, only that the numbers can't be trusted yet. 2) Leak alarm: an AUC above 0.65 is a Hold. Honest models in this family top out around 0.61; the only one that ever scored higher (0.664) was using stop-loss and take-profit prices that are only known after the trade closes. Checks 3 and 4 are on the next slide. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Auto-retrainer · Evaluator</span>
   <h1 class="reveal">Four Checks, in Order</h1>
 </header>
 <aside class="ev-terms reveal"><span class="ev-policy-note__kicker">Key terms</span><p><strong>AUC</strong> ranks winners above losers; 0.5 = coin flip</p><p><strong>Brier</strong> probability accuracy; lower is better</p></aside>
 <p class="ev-policy-line reveal">C22 can modify any threshold on the dashboard</p>
-<div class="ev-gates inset">
+<div class="ev-gates is-two inset">
   <article class="ev-gate reveal">
     <header class="ev-gate__head"><span class="ev-gate__num">1</span><span class="ev-gate__kicker">Inputs</span></header>
     <h3>Can we trust the numbers?</h3>
     <dl class="ev-gate__checks">
-      <dt>Right data?</dt><dd>Unseen campaigns, each trade once</dd>
-      <dt>Model cheating?</dt><dd>Passes the leakage gate</dd>
-      <dt>Numbers add up?</dt><dd>Per-trade rows add up to the trainer's report</dd>
+      <dt>Right data?</dt><dd>Unseen campaigns, each trade once, real live model</dd>
+      <dt>Model cheating?</dt><dd>Leakage gate: no feature tied to the outcome above 0.02</dd>
+      <dt>Numbers add up?</dt><dd>Recomputed totals match the trainer's report</dd>
     </dl>
     <p class="ev-gate__out is-hold">Fail → Hold</p>
   </article>
@@ -7989,20 +7945,32 @@ body.overview .deck-viewport {
   <article class="ev-gate reveal">
     <header class="ev-gate__head"><span class="ev-gate__num">2</span><span class="ev-gate__kicker">Leak alarm</span></header>
     <h3>Is AUC suspiciously high?</h3>
-    <ul>
-      <li>AUC > 0.65 signals a leak rather than a breakthrough</li>
-    </ul>
+    <dl class="ev-gate__checks">
+      <dt>AUC &gt; 0.65</dt><dd>Signals a leak rather than a breakthrough</dd>
+    </dl>
     <p class="ev-gate__out is-hold">Above 0.65 → Hold</p>
   </article>
+</div>
+</section>
 
+
+<section class="slide" data-slide="61" data-name="evaluator-gates-2">
+<!-- notes: Continued from the previous slide (project-cassandra evaluator/rules.py). 3) On its own (Tier 1): AUC at least 0.53 overall, at least 0.50 in every test campaign (never worse than a coin flip anywhere), Brier better than always guessing the base rate, and its top 5% picks beat random picks at least as well as the live model's do on the same block (and at least 40, where 50 is chance). Fail: Reject, which the dashboard shows as Keep the live model. 4) Head to head: only then is it compared with the live model, on the next slide. -->
+<header class="c-slide-title ">
+  <span class="c-slide-title__kicker reveal">Auto-retrainer · Evaluator</span>
+  <h1 class="reveal">Four Checks, in Order</h1>
+</header>
+<aside class="ev-terms reveal"><span class="ev-policy-note__kicker">Key terms</span><p><strong>AUC</strong> ranks winners above losers; 0.5 = coin flip</p><p><strong>Brier</strong> probability accuracy; lower is better</p></aside>
+<p class="ev-policy-line reveal">C22 can modify any threshold on the dashboard</p>
+<div class="ev-gates is-two inset">
   <article class="ev-gate reveal">
     <header class="ev-gate__head"><span class="ev-gate__num">3</span><span class="ev-gate__kicker">On its own</span></header>
     <h3>Is the new model sound?</h3>
     <dl class="ev-gate__checks">
-      <dt>Ranks trades well?</dt><dd>Overall AUC ≥ 0.53</dd>
-      <dt>In every campaign?</dt><dd>Never below a coin flip</dd>
-      <dt>Probabilities right?</dt><dd>Brier beats guessing</dd>
-      <dt>Better than random?</dt><dd>No worse than live model</dd>
+      <dt>Ranks trades well?</dt><dd>Overall AUC ≥ 0.53, clearly above a coin flip</dd>
+      <dt>In every campaign?</dt><dd>Never below a coin flip (AUC 0.5)</dd>
+      <dt>Win probabilities accurate?</dt><dd>Brier lower than always guessing the average</dd>
+      <dt>Better than random?</dt><dd>Top-5% P&amp;L beats random picks at least as well as the live model’s</dd>
     </dl>
     <p class="ev-gate__out is-keep">Fail → Keep</p>
   </article>
@@ -8011,9 +7979,9 @@ body.overview .deck-viewport {
     <header class="ev-gate__head"><span class="ev-gate__num">4</span><span class="ev-gate__kicker">Compare</span></header>
     <h3>Better than the live model?</h3>
     <dl class="ev-gate__checks">
-      <dt>Earns more?</dt><dd>Higher top-5% P&amp;L</dd>
-      <dt>Not just luck?</dt><dd>Wins most campaigns</dd>
-      <dt>Nothing worse?</dt><dd>AUC, Brier no worse</dd>
+      <dt>Earns more?</dt><dd>Top-5% P&amp;L higher on average than the live model</dd>
+      <dt>Not just luck?</dt><dd>Top-5% P&amp;L higher in over half the test campaigns</dd>
+      <dt>Nothing worse?</dt><dd>AUC and Brier not clearly worse than the live model</dd>
     </dl>
     <p class="ev-gate__out is-promote">Promote · Keep · Hold</p>
   </article>
