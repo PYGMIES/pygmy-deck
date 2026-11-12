@@ -8725,7 +8725,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="82" data-name="handover-receives">
-<!-- notes: SCRIPT (~30s): C22 gets six pieces. The API takes in trades and runs paper trading and campaigns. The Judge scores each trade: fade or skip. The Trainer trains a challenger and grades it against the champion. The dashboard shows the campaign, how the Judge is doing, live trades and model evaluation. The database comes with the Supabase schema, and one command seeds it with real campaigns 33 to 81. The docs cover operators, the retraining contract, the evaluator rules and developers. → How we hand it over. -->
+<!-- notes: SCRIPT (~30s): C22 gets six pieces. The API takes in trades and runs paper trading and campaigns. The Judge scores each trade: fade or skip. The Trainer trains a challenger and grades it against the champion. The dashboard shows the campaign, how the Judge is doing, live trades and model evaluation. The database comes with the Supabase schema, and make seed loads 43 real campaigns, 33 to 77. The docs cover operators, the retraining contract, the evaluator rules and developers. → How we hand it over. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Handover</span>
   <h1 class="reveal">What C22 Receives</h1>
@@ -8760,8 +8760,8 @@ body.overview .deck-viewport {
   <li class="c-spec-row reveal ">
   <i class="c-spec-row__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zMiA2IDQgMjBsMjggMTQgMjgtMTR6Ii8+PHBhdGggZD0iTTQgMzJsMjggMTQgMjgtMTRNNCA0NGwyOCAxNCAyOC0xNCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
   <h3>Database</h3>
-  <p>Supabase schema, plus real campaigns 33 to 81 to seed</p>
-  <code>make seed-local</code>
+  <p>Supabase schema, plus 43 real campaigns (33 to 77) to load</p>
+  <code>make seed</code>
 </li>
   <li class="c-spec-row reveal ">
   <i class="c-spec-row__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDZoMjZsMTAgMTB2NDJIMTR6Ii8+PHBhdGggZD0iTTQwIDZ2MTBoMTAiLz48cGF0aCBkPSJNMjAgNDZsOC05IDYgNSAxMC0xMiIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
@@ -8775,7 +8775,8 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="83" data-name="handover-how">
-<!-- notes: SCRIPT (~30s): We hand over in four steps, between 17 and 30 November. First, access. The repo and secrets move to C22, and the OANDA and Supabase keys live in Infisical. Second, run it with three make commands, in this order: dev-local, seed-local, backfill-features. Third, we walk them through a live retrain, grade and promote, with the retraining contract and evaluator rules as the written reference. Fourth, they check it works: the dashboard on port 3000 shows the seeded campaigns, and the Judge and Trainer docs are up on 8001 and 8002. → What is left. -->
+<!-- notes: SCRIPT (~50s): We hand over between 17 and 30 November, in four steps. One, access: C22 gets the app folder as a zip. They create a free OANDA practice account and paste its token into the .env file. A live account's token won't work. The Supabase settings are local defaults, the same on every machine, so there are no secrets to hand over. Two, run it: npm ci, then make start, then make seed in a second terminal, and restart with make start. The seed loads 43 campaigns, 33 to 77. You need Docker, Node 20 or newer, make, Python 3, curl and uv. Three, walk through: we can't demo a retrain live, because a run only starts after every 8 completed campaigns and can take up to 2 hours. The first run starts when campaign 85 ends, about four weeks away. So we explain how retraining works, show the evaluator's three recommendations, Promote, Keep or Hold, and show where to promote on the Judge Performance page. Only C22 can promote a model, and the evaluator never changes anything by itself. Four, check: the Campaign page lists campaigns 33 to 77, and the API docs open at localhost:8000/docs. → What is left. -->
+<!-- notes: Sources: project-cassandra README, Makefile and doc/client at the 11 Nov commit. Repair steps, not part of setup: make backfill-features is only for campaigns added later (the seed already holds the feature vectors); make register-v5-run only for the errors champion_not_ready or no_active_model. Docs to point to: RETRAINING.md, EVALUATOR.md, RETRAINING_CONTRACT.md, EVALUATOR_RULES.md. :8001 is the live Judge (curl localhost:8001/ready), :8002 is the trainer, curl localhost:8000/health is the app health check. Nothing is sent to a broker: all reversals are paper trades. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Handover</span>
   <h1 class="reveal">How We Hand Over</h1>
@@ -8788,7 +8789,7 @@ body.overview .deck-viewport {
     <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTciIGN5PSIzMiIgcj0iMTIiLz48cGF0aCBkPSJNMjkgMzJoMzFNNTAgMzJ2MTBNNTggMzJ2OCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
   </header>
   <h3>Access</h3>
-  <p>Repo and secrets move to C22. Keys live in Infisical: OANDA and Supabase.</p>
+  <p>No secrets to hand over. C22 gets the app as a zip and pastes a free OANDA practice token into <code>.env</code></p>
 </article>
   <article class="c-step-card reveal ">
   <header>
@@ -8796,7 +8797,7 @@ body.overview .deck-viewport {
     <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zNiA0IDEwIDM4aDIwbC00IDIyIDI4LTM2SDM0eiIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
   </header>
   <h3>Run it</h3>
-  <p>Three make commands, in order: <code>dev-local</code><code>seed-local</code><code>backfill-features</code></p>
+  <p><code>npm ci</code><code>make start</code><code>make seed</code>Run the seed in a second terminal, then restart.</p>
 </article>
   <article class="c-step-card reveal ">
   <header>
@@ -8804,7 +8805,7 @@ body.overview .deck-viewport {
     <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgMzJDMTAgMTkgMjAgMTIgMzIgMTJzMjIgNyAyOSAyMGMtNyAxMy0xNyAyMC0yOSAyMFMxMCA0NSAzIDMyeiIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjkiLz48L3N2Zz4K);" aria-hidden="true"></i>
   </header>
   <h3>Walk through</h3>
-  <p>Live demo of retrain, grade, promote. Docs: retraining contract, evaluator rules.</p>
+  <p>We explain retraining: a run starts after 8 new campaigns. The evaluator says Promote, Keep or Hold. Only C22 promotes.</p>
 </article>
   <article class="c-step-card reveal ">
   <header>
@@ -8812,7 +8813,7 @@ body.overview .deck-viewport {
     <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzNCIgcj0iMjUiLz48Y2lyY2xlIGN4PSIzMCIgY3k9IjM0IiByPSIxNSIvPjxjaXJjbGUgY3g9IjMwIiBjeT0iMzQiIHI9IjUiIGZpbGw9IiMwMDAiLz48cGF0aCBkPSJNMzAgMzQgNTYgOE00OCA4aDh2OCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
   </header>
   <h3>Check</h3>
-  <p>Dashboard on :3000 shows the seeded campaigns. Judge and trainer docs on :8001 and :8002.</p>
+  <p>Campaign page lists campaigns 33 to 77. API docs open at <code>:8000/docs</code></p>
 </article>
 
 </div>
