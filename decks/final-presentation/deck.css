@@ -597,3 +597,58 @@
 .ev-gates.is-two .ev-gate li { font-size: 28px; }
 .ev-gates.is-two .ev-gate__checks dd { margin-bottom: 12px; }
 .ev-gates.is-two .ev-gate { padding: 36px 48px 32px; }
+
+/* === CONCLUSION (slides 85-87) === */
+
+/* long sponsor quote: smaller type than the shared 84px pull quote */
+.c-quote.is-long {
+  max-width: none;
+  padding-left: 150px;
+  margin-top: 30px;
+}
+
+.c-quote.is-long::before {
+  font-size: 220px;
+  top: -30px;
+}
+
+.c-quote.is-long blockquote {
+  font-size: 46px;
+  line-height: 1.12;
+}
+
+/* pills hold one short line: do not wrap at the 34ch paragraph limit */
+.slide .c-pill-note {
+  max-width: none;
+}
+
+/* highlighted phrase inside the long sponsor quote */
+.c-quote.is-long em {
+  color: var(--ink);
+  background: linear-gradient(transparent 10%, var(--accent) 10%);
+  padding: 0 6px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* statement without its icon, centred in its column (slide 79) */
+.c-statement.is-plain {
+  align-items: center;
+  text-align: center;
+}
+
+.c-statement.is-plain .c-statement__icon {
+  display: none;
+}
+
+/* slide 86: the chart group and its pill sit together in the middle of the space under the title */
+.c-column.is-centered {
+  flex: 1;
+  justify-content: center;
+  gap: 56px;
+  margin-right: var(--pad-x);
+}
+
+.c-column.is-centered > .c-split {
+  flex: none;
+}
