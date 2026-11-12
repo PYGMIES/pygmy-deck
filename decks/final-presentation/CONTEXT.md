@@ -38,8 +38,9 @@
 | 72-76 | Explanations: divider (72), how it works (73), fade vs no-fade example (74), merits: readable by anyone (75), post-campaign themes (76) | new | done; examples from the trader-concentration doc (locked block). Speaker-note owners TBC |
 | 77-80 | Project management: divider (77), how we ran Scrum: Plan › Build › Review › Retro (78, `icon-steps`), feedback changes the backlog (79, `statement` + chat screenshot), Sprint 2 → Sprint 3 retro changes (80, `change-table`) | new (replaces mid-term 71-76) | done (79 screenshot: `assets/chat-retraining-flow.png`, `image-frame is-shot` in `deck.css`); speaker notes drafted for Arin |
 | 81-84 | Handover: divider (81), what C22 receives: API, Judge, Trainer, Dashboard, Database, Docs (82, `spec-list`), how we hand over in 4 steps + handover window 17-30 Nov (83, `step-card`, `pill-note`), what is left: C22's platform API (84, `statement`) | new | done; speaker notes drafted |
-| 86 | Q&A | mid-term 80 | ported |
-| 87-108 | Appendix | mid-term 81-102 | ported unchanged |
+| 85-87 | Conclusion: we verified the data need with the sponsor quote (85, `quote`), a fresh perspective: 30 variants explored, notebook screenshots (86), an end-to-end suite (87, `step-card`). Each ends with the mid-term value-proposition line | new | quote from the sponsor; screenshots on slide 86 are a placeholder; speaker notes need an owner |
+| 88 | Q&A | mid-term 80 | ported |
+| 89-110 | Appendix | mid-term 81-102 | ported unchanged |
 
 ## Open items
 - Find every placeholder: `grep -rn "@placeholder" decks/final-presentation/slides`
@@ -48,3 +49,4 @@
 - Slide 13 still uses the mid-term chart data and title; slide 12 benchmark statuses depend on it.
 - Appendix needs a backup slide for "How do you know it's the data and not the model?" Slide 61 (learning curve) shows a flat curve, which argues *against* "more data helps": prepare the answer before using it.
 - Mid-term slides 77-79 (constraints, edge-setting, what's next) were left out; handover replaces "what's next".
+- Slide 86 needs the notebook screenshots (placeholder, owner Arin): `grep -rn "@placeholder" decks/final-presentation/slides`.
