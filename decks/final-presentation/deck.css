@@ -610,3 +610,13 @@
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
+
+/* statement without its icon, centred in its column (slide 79) */
+.c-statement.is-plain {
+  align-items: center;
+  text-align: center;
+}
+
+.c-statement.is-plain .c-statement__icon {
+  display: none;
+}

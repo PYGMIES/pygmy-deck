@@ -24,7 +24,6 @@
   height: var(--h);
   border: 6px solid var(--success);
   border-radius: 12px;
-  background: color-mix(in srgb, var(--success) 10%, transparent);
 }
 
 .c-shot-box span {
