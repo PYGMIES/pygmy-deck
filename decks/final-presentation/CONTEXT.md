@@ -25,7 +25,7 @@
 | 11 | Divider: Goals & Impact | mid-term 16 | done |
 | 12 | What we committed to: benchmarks (fade, random, C22's rule) + midterm promises (magnitude, paper trading, auto-retrainer, explanations) with status pills (`label-card is-status`; green = done, amber `is-warn` = data limitations). Replaces mid-term 17 + 19 | new | benchmark statuses follow slide 13; re-check once final numbers land |
 | 13 | Where the Judge landed: cumulative P&L (`equity-chart`) | mid-term 18 | chart data and title still mid-term numbers; swap in final numbers |
-| 14 | Mid-term feedback (the *what*; Explanations covers the *how*). Feedback is said out loud, not quoted on the slide | new | done; speaker notes need an owner |
+| 14 | Mid-term feedback (the *what*; Explanations covers the *how*). Quote strip under the title (`chevron-callout is-quote`), then three cards. The quote is Prof Kyong's question from the mid-term Q&A (Linear "Mid-term QNA minutes", item 2; the minutes paraphrase it, so it isn't word for word) | new | done; speaker notes need an owner |
 | 15 | What C22 gets beyond the Judge: paper trading, scale, daily backups, easy imports (4 cards, `card-grid is-four`) | new | done; speaker notes need an owner |
 | 16 | Demo divider (content TBD) | new | divider only |
 | 17-18 | System architecture | mid-term 28 | ported; slide 18 has an unconnected Auto-retrainer box above the Judge; kicker "Project Cassandra and Judge · During campaign" |
