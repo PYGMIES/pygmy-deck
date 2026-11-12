@@ -83,3 +83,19 @@
   font-size: 28px;
   word-spacing: 0.15em;
 }
+
+/* optional subtitle under the "for <client>" line (e.g. "Final Presentation"); hidden when empty */
+.c-title-cover__subtitle {
+  margin-top: 40px;
+  max-width: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--ink-muted);
+}
+
+.c-title-cover__subtitle:empty {
+  display: none;
+}

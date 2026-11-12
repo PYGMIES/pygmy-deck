@@ -14,15 +14,19 @@
 ## Outline
 | # | Slide | Source | State |
 |---|-------|--------|-------|
-| 01-03 | Cover, team, agenda | mid-term 01-02, new agenda | cover text and agenda owners need updating |
-| 04 | Divider: Recap | new | done |
+| 01-03 | Cover (subtitle "Final Presentation"), team, agenda | mid-term 01-02, new agenda | agenda owners need updating |
+| 04 | Divider: Recap ("The problem, and what changed since midterms") | new | done |
 | 05 | The whole journey | mid-term 14 | done |
-| 06 | A few traders drive the data | new `trader-pile` | done |
-| 07-08 | C22 data ceiling, own platform (500 to 2,000) | new | done |
-| 09 | Our positioning | new | done |
-| 10-13 | Goals and impact | mid-term 16-19 | ported, not yet reframed around "improves over time"; slide 11 staircase is still illustrative |
-| 14 | Mid-term feedback | new | placeholder for the feedback quote |
-| 15 | What C22 gets beyond the Judge (added value: room to grow, less risk, less manual work) | new | done; speaker notes need an owner |
+| 06 | C22 hit a data ceiling (kicker: The constraint) + sponsor quote strip (Clement, C22 chat, 10 Nov 2026; punctuation tidied, words verbatim) (`chevron-callout is-quote`) | new | done |
+| 07 | A few traders drive the data (kicker: The constraint): proof of the diversity limit | new `trader-pile` | done |
+| 08 | More modelling won't fix this: 6/30 notebook variants above $0 + Profit = Direction × Size, two sizing rules moved profit < $130/campaign (NB18, `results/trade_size_readout.csv`); callout "More data, not a bigger model" (`big-stat` + `is-formula`, `chevron-callout`) | new | done |
+| 09 | C22 built its own platform (500 to 2,000) + "More traders means more data, so the Judge can keep improving" | new | done |
+| 10 | Our positioning: make retraining easy (keep at the "why" level; mechanics live in the Auto-Retrainer section) | new | done |
+| 11 | Divider: Goals & Impact | mid-term 16 | done |
+| 12 | What we committed to: benchmarks (fade, random, C22's rule) + midterm promises (magnitude, paper trading, auto-retrainer, explanations) with status pills (`label-card is-status`; green = done, amber `is-warn` = data limitations). Replaces mid-term 17 + 19 | new | benchmark statuses follow slide 13; re-check once final numbers land |
+| 13 | Where the Judge landed: cumulative P&L (`equity-chart`) | mid-term 18 | chart data and title still mid-term numbers; swap in final numbers |
+| 14 | Mid-term feedback (the *what*; Explanations covers the *how*). Feedback is said out loud, not quoted on the slide | new | done; speaker notes need an owner |
+| 15 | What C22 gets beyond the Judge: paper trading, scale, daily backups, easy imports (4 cards, `card-grid is-four`) | new | done; speaker notes need an owner |
 | 16 | Demo divider (content TBD) | new | divider only |
 | 17-18 | System architecture | mid-term 28 | ported; no Trainer lane yet |
 | 19-26 | Auto-retrainer: flow, 3 detail slides, 3 key design decisions | new | 20 done; 21-26 placeholders |
@@ -37,5 +41,6 @@
 - Find every placeholder: `grep -rn "@placeholder" decks/final-presentation/slides`
 - Slide numbers inside ported speaker notes and the Q&A note ("#28", "#71") still use mid-term numbers.
 - Mid-term open items carry over: campaign counts (54 vs 45 vs 38) and the PM numbers on slides 41-44.
-- Slides 10-13 copy and the agenda owners are not rewritten.
+- Slide 13 still uses the mid-term chart data and title; slide 12 benchmark statuses depend on it.
+- Appendix needs a backup slide for "How do you know it's the data and not the model?" Slide 61 (learning curve) shows a flat curve, which argues *against* "more data helps": prepare the answer before using it.
 - Mid-term slides 77-79 (constraints, edge-setting, what's next) were left out; handover replaces "what's next".
