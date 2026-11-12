@@ -28,20 +28,23 @@
 | 14 | Mid-term feedback (the *what*; Explanations covers the *how*). Feedback is said out loud, not quoted on the slide | new | done; speaker notes need an owner |
 | 15 | What C22 gets beyond the Judge: paper trading, scale, daily backups, easy imports (4 cards, `card-grid is-four`) | new | done; speaker notes need an owner |
 | 16 | Demo divider (content TBD) | new | divider only |
-| 17-18 | System architecture | mid-term 28 | ported; no Trainer lane yet |
-| 19-26 | Auto-retrainer: flow, 3 detail slides, 3 key design decisions | new | 20 done; 21-26 placeholders |
-| 27-30 | Model promotion and evaluation: poll and grade flow (27), promote flow (28) (`flow-stage`, same visual language as mid-term 43-46), evaluator's four checks in decision order, each ending in its outcome (29; raw HTML + `.ev-gate` CSS in `deck.css`, accurate to `evaluator/rules.py`), how step 4 decides (30: decision tree Earns more? → Ranks clearly worse? → Wins most campaigns?, equivalent to `decide()` in `rules.py`; `flow-stage` pieces, footnote defines "clearly" = bootstrap) | new; source `poll_training_runs.py`, `grade_challengers.py`, `promote_model.py`, `EVALUATOR_RULES.md` | done; speaker-note owner TBC. Overlaps the placeholders on 22-23 |
-| 31-39 | Model training: divider (31), hurdle model (32), data (33), 18 features kept (34), cross-validation layout (35), feature-set ablation (36), what each notebook tried (37), train vs validation by campaigns (38) and by trees (39) | mid-term 58, 60, 64-69 | ported; slide 34 compacted in `deck.css` (`is-features-kept`) for the 26px floor. The old "Where the Signal Lives" slide was removed (the decomposition is still in the appendix) |
-| 40-44 | Explanations: divider (40), how it works (41), fade vs no-fade example (42), merits: readable by anyone (43), post-campaign themes (44) | new | done; examples from the trader-concentration doc (locked block). Speaker-note owners TBC |
-| 45-48 | Project management: divider (45), how we ran Scrum: Plan › Build › Review › Retro (46, `icon-steps`), feedback changes the backlog (47, `statement` + chat screenshot), Sprint 2 → Sprint 3 retro changes (48, `change-table`) | new (replaces mid-term 71-76) | done (47 screenshot: `assets/chat-retraining-flow.png`, `image-frame is-shot` in `deck.css`); speaker notes drafted for Arin |
-| 49-52 | Handover: divider (49), what C22 receives: API, Judge, Trainer, Dashboard, Database, Docs (50, `spec-list`), how we hand over in 4 steps + handover window 17-30 Nov (51, `step-card`, `pill-note`), what is left: C22's platform API (52, `statement`) | new | done; speaker notes drafted |
-| 53 | Q&A | mid-term 80 | ported |
-| 54-75 | Appendix | mid-term 81-102 | ported unchanged |
+| 17-18 | System architecture | mid-term 28 | ported; slide 18 has an unconnected Auto-retrainer box above the Judge; kicker "Project Cassandra and Judge · During campaign" |
+| 19-24 | Part 1, campaign end to hand-off (title "Project Cassandra Architecture", `arch-after-end`): the full view (19) and five step builds (20-24); lit parts at 100%, the rest at 60% | new | done; trial |
+| 25-36 | Part 2, after a challenger is trained, right to left (`arch-promotion`): the full view (25) and eleven step builds (26-36) | new | done; trial |
+| 37-48 | Part 2 mirrored to read left to right (`arch-promotion-ltr`): the full view (37) and eleven step builds (38-48) | new | done; trial |
+| 49-58 | Auto-retrainer: divider (49), How a New Model Gets Made (50, `flow-owners`), Trigger and Split in four builds (51-54, `split-flow`), Train (55, `train-stages`), Grade (56, `grade-gates`), Promote and Roll Back (57, `promote-flow`), Three Decisions That Shaped It (58, `decisions-trio`). Owner colours are grey / black / orange tokens | new | done |
+| 59-62 | Model promotion and evaluation: poll and grade flow (59), promote flow (60) (`flow-stage`, same visual language as mid-term 43-46), evaluator's four checks in decision order, each ending in its outcome (29; raw HTML + `.ev-gate` CSS in `deck.css`, accurate to `evaluator/rules.py`), how step 4 decides (30: decision tree Earns more? → Ranks clearly worse? → Wins most campaigns?, equivalent to `decide()` in `rules.py`; `flow-stage` pieces, footnote defines "clearly" = bootstrap) | new; source `poll_training_runs.py`, `grade_challengers.py`, `promote_model.py`, `EVALUATOR_RULES.md` | done; speaker-note owner TBC. Overlaps the placeholders on 22-23 |
+| 63-71 | Model training: divider (63), hurdle model (64), data (65), 18 features kept (66), cross-validation layout (67), feature-set ablation (68), what each notebook tried (69), train vs validation by campaigns (70) and by trees (71) | mid-term 58, 60, 64-69 | ported; slide 34 compacted in `deck.css` (`is-features-kept`) for the 26px floor. The old "Where the Signal Lives" slide was removed (the decomposition is still in the appendix) |
+| 72-76 | Explanations: divider (72), how it works (73), fade vs no-fade example (74), merits: readable by anyone (75), post-campaign themes (76) | new | done; examples from the trader-concentration doc (locked block). Speaker-note owners TBC |
+| 77-80 | Project management: divider (77), how we ran Scrum: Plan › Build › Review › Retro (78, `icon-steps`), feedback changes the backlog (79, `statement` + chat screenshot), Sprint 2 → Sprint 3 retro changes (80, `change-table`) | new (replaces mid-term 71-76) | done (79 screenshot: `assets/chat-retraining-flow.png`, `image-frame is-shot` in `deck.css`); speaker notes drafted for Arin |
+| 81-84 | Handover: divider (81), what C22 receives: API, Judge, Trainer, Dashboard, Database, Docs (82, `spec-list`), how we hand over in 4 steps + handover window 17-30 Nov (83, `step-card`, `pill-note`), what is left: C22's platform API (84, `statement`) | new | done; speaker notes drafted |
+| 86 | Q&A | mid-term 80 | ported |
+| 87-108 | Appendix | mid-term 81-102 | ported unchanged |
 
 ## Open items
 - Find every placeholder: `grep -rn "@placeholder" decks/final-presentation/slides`
 - Slide numbers inside ported speaker notes and the Q&A note ("#28", "#71") still use mid-term numbers.
-- Mid-term open items carry over: campaign counts (54 vs 45 vs 38) and the PM numbers on slides 41-44.
+- Mid-term open items carry over: campaign counts (54 vs 45 vs 38).
 - Slide 13 still uses the mid-term chart data and title; slide 12 benchmark statuses depend on it.
 - Appendix needs a backup slide for "How do you know it's the data and not the model?" Slide 61 (learning curve) shows a flat curve, which argues *against* "more data helps": prepare the answer before using it.
 - Mid-term slides 77-79 (constraints, edge-setting, what's next) were left out; handover replaces "what's next".

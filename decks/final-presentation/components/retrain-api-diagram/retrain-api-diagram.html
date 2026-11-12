@@ -1,0 +1,61 @@
+<div class="c-arch c-retrain {{class|}}">
+  <!-- Lanes -->
+  <div class="c-arch__lane p1" style="left: 360px; width: 670px;"><span>Input/Output</span></div>
+  <div class="c-arch__lane p2" style="left: 1060px; width: 330px;"><span>Data &amp; Storage</span></div>
+  <div class="c-arch__lane p4" style="left: 1420px; width: 308px;"><span>Services</span></div>
+
+  <!-- Wires -->
+  <svg class="c-arch__wires" viewBox="0 0 1728 800" aria-hidden="true">
+    <defs>
+      <marker id="arch-arrow-rtapi" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+        <path d="M2 2 L10.5 6 L2 10" fill="none" stroke="context-stroke" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <g class="c-arch__io">
+      <path d="M215 110 H550" marker-end="url(#arch-arrow-rtapi)"/>
+      <path d="M540 655 H196" marker-end="url(#arch-arrow-rtapi)"/>
+    </g>
+    <g class="c-arch__flow">
+      <path class="is-black" d="M1075 680 H850" marker-end="url(#arch-arrow-rtapi)"/>
+      <path class="is-black" d="M1010 540 H1045 V630 H1075" marker-start="url(#arch-arrow-rtapi)" marker-end="url(#arch-arrow-rtapi)"/>
+      <path class="is-black" d="M1010 205 H1075" marker-start="url(#arch-arrow-rtapi)" marker-end="url(#arch-arrow-rtapi)"/>
+      <path class="is-black" d="M1010 330 H1445" marker-start="url(#arch-arrow-rtapi)" marker-end="url(#arch-arrow-rtapi)"/>
+      <path class="is-black" d="M1010 450 H1445" marker-start="url(#arch-arrow-rtapi)" marker-end="url(#arch-arrow-rtapi)"/>
+    </g>
+  </svg>
+
+  <!-- Actors: C22's trading platform in, C22 (Clement &amp; Lee Yang) out -->
+  <div class="c-arch__actor" style="top: 10px; left: -24px;">
+    <b class="c-arch__logo">C22</b>
+    <strong>C22’s trading platform</strong>
+  </div>
+  <span class="c-arch__wire-label" style="left: 215px; top: 40px; width: 164px;">Campaign<br>ended</span>
+
+  <div class="c-arch__actor" style="top: 585px; left: -24px;">
+    <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="12" r="9"/><path d="M14 46c0-11 8-20 18-20s18 9 18 20z"/></svg>
+    <strong>C22</strong>
+    <span>Clement &amp; Lee Yang</span>
+  </div>
+  <span class="c-arch__wire-label" style="left: 205px; top: 585px; width: 160px;">Retraining<br>results</span>
+
+  <!-- I/O: the API (with its pipeline) on top, Dashboard at the bottom -->
+  <div class="p3 c-arch__group" style="left: 380px; top: 10px; width: 630px; height: 558px;"><span class="c-arch__group-title">API</span></div>
+  <div class="p1 c-arch__node" style="left: 555px; top: 68px; width: 280px; height: 84px;">POST<br>/campaign/end</div>
+  <p class="c-arch__sub" style="left: 380px; top: 166px; width: 630px;">Retraining pipeline</p>
+  <div class="p3 c-arch__node c-arch__node--pill c-retrain__step" data-n="1" style="left: 400px; top: 208px; width: 590px; height: 44px;">Replay the campaign’s features</div>
+  <div class="p3 c-arch__node c-arch__node--pill c-retrain__step" data-n="2" style="left: 400px; top: 258px; width: 590px; height: 44px;">Check for 8 new campaigns</div>
+  <div class="p3 c-arch__node c-arch__node--pill c-retrain__step" data-n="3" style="left: 400px; top: 308px; width: 590px; height: 44px;">Start a run, pick the campaigns</div>
+  <div class="p3 c-arch__node c-arch__node--pill c-retrain__step" data-n="4" style="left: 400px; top: 358px; width: 590px; height: 44px;">Export the dataset, emails hashed</div>
+  <div class="p3 c-arch__node c-arch__node--pill c-retrain__step" data-n="5" style="left: 400px; top: 408px; width: 590px; height: 44px;">Hand off to the Trainer to train</div>
+  <div class="p3 c-arch__node c-arch__node--pill c-retrain__step" data-n="6" style="left: 400px; top: 458px; width: 590px; height: 44px;">Poll the Trainer for progress</div>
+  <div class="p3 c-arch__node c-arch__node--pill c-retrain__step" data-n="7" style="left: 400px; top: 508px; width: 590px; height: 44px;">Grade the challenger vs champion</div>
+  <div class="p1 c-arch__node" style="left: 540px; top: 605px; width: 310px; height: 100px;">Dashboard<small>visualisation</small></div>
+
+  <!-- Data & storage -->
+  <div class="p2 c-arch__node" style="left: 1075px; top: 140px; width: 300px; height: 130px;">Storage<small>dataset, model,<br>predictions</small></div>
+  <div class="p2 c-arch__node" style="left: 1075px; top: 605px; width: 300px; height: 100px;">Postgres<small>runs, results</small></div>
+
+  <!-- Services -->
+  <div class="p4 c-arch__node c-arch__node--dark" style="left: 1445px; top: 280px; width: 258px; height: 100px;">Trainer<small>own container</small></div>
+  <div class="p4 c-arch__node c-arch__node--dark c-arch__node--judge" style="left: 1445px; top: 405px; width: 258px; height: 90px;">Judge<small>on promote</small></div>
+</div>

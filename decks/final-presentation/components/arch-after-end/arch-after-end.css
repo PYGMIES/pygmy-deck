@@ -1,0 +1,96 @@
+/* === COMPONENT (deck): arch-after-end ===
+   Slide 18's four-lane architecture, scoped to one flow. Reuses .c-arch from arch-diagram.css and the numbered pills from
+   retrain-diagram.css. Shared bits (C22 logo, numbered arrow markers) live in arch-after-end.css. */
+
+/* big "C22" standing in for the actor icon */
+.c-arch__actor .c-arch__logo {
+  display: block;
+  height: 72px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 88px;
+  line-height: 72px;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+/* numbered marker on an arrow (absolute) or inside a wire label (inline) */
+.c-arch__num {
+  position: absolute;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+  padding-top: 2px;
+}
+
+.c-arch__wire-label .c-arch__num {
+  position: static;
+  display: inline-grid;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+/* "(containerized)" caption above the Services lane label (slides 19-21) */
+.c-arch__lane span .c-arch__lane-sub {
+  display: block;
+  margin-bottom: 4px;
+  font-size: max(22px, var(--fs-min, 0px));
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* Step builds of slide 19 (is-step is-step-N): everything dims to 60% except the parts marked data-lit~="N".
+   Text notes, titles, lanes and backgrounds are never dimmed. */
+.c-arch.is-step .c-arch__d { opacity: 0.6; }
+.c-arch.is-step-1 [data-lit~="1"] { opacity: 1; }
+.c-arch.is-step-2 [data-lit~="2"] { opacity: 1; }
+.c-arch.is-step-3 [data-lit~="3"] { opacity: 1; }
+.c-arch.is-step-4 [data-lit~="4"] { opacity: 1; }
+.c-arch.is-step-5 [data-lit~="5"] { opacity: 1; }
+.c-arch.is-step-6 [data-lit~="6"] { opacity: 1; }
+.c-arch.is-step-7 [data-lit~="7"] { opacity: 1; }
+.c-arch.is-step-8 [data-lit~="8"] { opacity: 1; }
+.c-arch.is-step-9 [data-lit~="9"] { opacity: 1; }
+
+/* Step builds only (is-step): every arrow is black and no box carries the permanent Trainer/Judge ring.
+   What is lit at step N (data-lit~="N") gets the accent: orange arrows, orange outline on boxes. */
+.c-arch.is-step .c-arch__wires g[data-lit] > path { stroke: var(--ink); color: var(--ink); }
+.c-arch.is-step .c-arch__node--judge { box-shadow: none; }
+.c-arch.is-step-1 .c-arch__wires g[data-lit~="1"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-1 .c-arch__node[data-lit~="1"] { box-shadow: 0 0 0 4px var(--accent); }
+.c-arch.is-step-2 .c-arch__wires g[data-lit~="2"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-2 .c-arch__node[data-lit~="2"] { box-shadow: 0 0 0 4px var(--accent); }
+.c-arch.is-step-3 .c-arch__wires g[data-lit~="3"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-3 .c-arch__node[data-lit~="3"] { box-shadow: 0 0 0 4px var(--accent); }
+.c-arch.is-step-4 .c-arch__wires g[data-lit~="4"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-4 .c-arch__node[data-lit~="4"] { box-shadow: 0 0 0 4px var(--accent); }
+.c-arch.is-step-5 .c-arch__wires g[data-lit~="5"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-5 .c-arch__node[data-lit~="5"] { box-shadow: 0 0 0 4px var(--accent); }
+.c-arch.is-step-6 .c-arch__wires g[data-lit~="6"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-6 .c-arch__node[data-lit~="6"] { box-shadow: 0 0 0 4px var(--accent); }
+.c-arch.is-step-7 .c-arch__wires g[data-lit~="7"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-7 .c-arch__node[data-lit~="7"] { box-shadow: 0 0 0 4px var(--accent); }
+.c-arch.is-step-8 .c-arch__wires g[data-lit~="8"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-8 .c-arch__node[data-lit~="8"] { box-shadow: 0 0 0 4px var(--accent); }
+.c-arch.is-step-9 .c-arch__wires g[data-lit~="9"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-9 .c-arch__node[data-lit~="9"] { box-shadow: 0 0 0 4px var(--accent); }
+.c-arch.is-step-10 [data-lit~="10"] { opacity: 1; }
+.c-arch.is-step-10 .c-arch__wires g[data-lit~="10"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-10 .c-arch__node[data-lit~="10"] { box-shadow: 0 0 0 4px var(--accent); }
+.c-arch.is-step-11 [data-lit~="11"] { opacity: 1; }
+.c-arch.is-step-11 .c-arch__wires g[data-lit~="11"] > path { stroke: var(--accent); color: var(--accent); }
+.c-arch.is-step-11 .c-arch__node[data-lit~="11"] { box-shadow: 0 0 0 4px var(--accent); }
+
+/* the C22 icon and name stay at full opacity on every step */
+.c-arch.is-step .c-arch__actor { opacity: 1; }
