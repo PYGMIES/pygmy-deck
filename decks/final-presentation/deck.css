@@ -601,3 +601,11 @@
 .slide .c-pill-note {
   max-width: none;
 }
+
+/* highlighted phrase inside the long sponsor quote */
+.c-quote.is-long em {
+  color: inherit;
+  background: linear-gradient(transparent 62%, var(--accent-soft) 62%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
