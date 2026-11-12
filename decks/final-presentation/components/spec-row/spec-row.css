@@ -1,0 +1,46 @@
+/* === COMPONENT (deck): spec-row ===
+   Charcoal bar: accent icon, display name, one-line description, mono tag right. */
+.c-spec-row {
+  display: grid;
+  grid-template-columns: 56px 250px 1fr auto;
+  align-items: center;
+  gap: 28px;
+  min-height: 92px;
+  padding: 12px 26px 12px 34px;
+  border-radius: 18px;
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-spec-row__icon {
+  width: 52px;
+  height: 52px;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.c-spec-row h3 {
+  font-size: 44px;
+  line-height: 1;
+  padding-top: 6px;
+  color: var(--on-card);
+}
+
+.c-spec-row p {
+  max-width: none;
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--on-card-muted);
+}
+
+.c-spec-row code {
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--on-card) 10%, transparent);
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--on-card);
+  white-space: nowrap;
+}

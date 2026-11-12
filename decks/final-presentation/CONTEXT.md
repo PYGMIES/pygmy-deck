@@ -33,10 +33,10 @@
 | 27-30 | Model promotion and evaluation: poll and grade flow (27), promote flow (28) (`flow-stage`, same visual language as mid-term 43-46), evaluator's four checks in decision order, each ending in its outcome (29; raw HTML + `.ev-gate` CSS in `deck.css`, accurate to `evaluator/rules.py`), how step 4 decides (30: decision tree Earns more? → Ranks clearly worse? → Wins most campaigns?, equivalent to `decide()` in `rules.py`; `flow-stage` pieces, footnote defines "clearly" = bootstrap) | new; source `poll_training_runs.py`, `grade_challengers.py`, `promote_model.py`, `EVALUATOR_RULES.md` | done; speaker-note owner TBC. Overlaps the placeholders on 22-23 |
 | 31-39 | Model training: divider (31), hurdle model (32), data (33), 18 features kept (34), cross-validation layout (35), feature-set ablation (36), what each notebook tried (37), train vs validation by campaigns (38) and by trees (39) | mid-term 58, 60, 64-69 | ported; slide 34 compacted in `deck.css` (`is-features-kept`) for the 26px floor. The old "Where the Signal Lives" slide was removed (the decomposition is still in the appendix) |
 | 40-44 | Explanations: divider (40), how it works (41), fade vs no-fade example (42), merits: readable by anyone (43), post-campaign themes (44) | new | done; examples from the trader-concentration doc (locked block). Speaker-note owners TBC |
-| 45-50 | Project management | mid-term 71-76 | ported |
-| 51-53 | Handover | new | placeholders |
-| 54 | Q&A | mid-term 80 | ported |
-| 55-76 | Appendix | mid-term 81-102 | ported unchanged |
+| 45-48 | Project management: divider (45), how we ran Scrum: Plan › Build › Review › Retro (46, `icon-steps`), feedback changes the backlog (47, `statement` + chat screenshot), Sprint 2 → Sprint 3 retro changes (48, `change-table`) | new (replaces mid-term 71-76) | 47 needs the 18 October chat screenshot (placeholder); speaker notes drafted for Arin |
+| 49-52 | Handover: divider (49), what C22 receives: API, Judge, Trainer, Dashboard, Database, Docs (50, `spec-list`), how we hand over in 4 steps + handover window 17-30 Nov (51, `step-card`, `pill-note`), what is left: C22's platform API (52, `statement`) | new | done; speaker notes drafted |
+| 53 | Q&A | mid-term 80 | ported |
+| 54-75 | Appendix | mid-term 81-102 | ported unchanged |
 
 ## Open items
 - Find every placeholder: `grep -rn "@placeholder" decks/final-presentation/slides`

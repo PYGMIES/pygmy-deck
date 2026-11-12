@@ -46,3 +46,16 @@ Layout components (flow, not fixed canvas):
 | ◻ `column-chart` | `max`, `label?` | CSS bar chart filling its container: children `<li style="--v: 21"><b>21</b><span>30 Jul</span></li>`, `class="is-focus"` highlights a bar. Bars grow in (reduced-motion safe). Slide 48. |
 | `arch-flow` | `flow` (`open`\|`close`), `step` (1–6), `label`, `text`, `end?` | One step of the open / close trade walkthrough (slides 29–40) on the same canvas as `arch-diagram`. Pass only `flow` + `step`; node and arrow timing lives in the CSS (`--from` / `--at`). The step's arrows are fully opaque, earlier ones 50%. Includes the step tracker (top right) and the description panel. |
 | `trader-pile` | — | 100 dots = 100% of trades: Sally (top 10% of traders) holds 55, nine others hold 5 each. Fixed copy and numbers (trader_concentration_summary.json); rename the nine in the HTML. Slide 06. |
+
+Project management and handover (slides 46-52):
+
+| Component | Params | What |
+|-----------|--------|------|
+| ◻ `icon-steps` / `icon-step` | `icon`, `title` | Row of tall charcoal cards, big accent icon over a display title, accent chevrons between. Slide 46. |
+| ◻ `statement` | `icon`, `text` | Accent icon over one big display sentence; wrap the key phrase in `<mark>` for the accent-soft underlay. Children (e.g. `pill-note`) go underneath. Slides 47, 52. |
+| `pill-note` | `text` | Accent-outlined pale pill for a date or blocker. Slides 51, 52. |
+| ◻ `change-table` / `change-row` | table: `a? b? c?` (column labels); row: `found`, `icon`, `fix`, `result` | Found (pale) › changed (charcoal + icon) › result (success outline). Slide 48. |
+| ◻ `spec-list` / `spec-row` | `icon`, `name`, `body`, `tag` | Full-width charcoal bars: icon, name, one-line description, mono tag on the right. Slide 50. |
+| `step-card` | `num`, `icon`, `title`, `body` | Charcoal card: circled number + accent icon, title, body; `<code>` in the body = one chip per line. Use in `card-grid cols="4"`. Slide 51. |
+
+`method-compare`, `sprint-cycle`, `retro-changes` and `project-timeline` are no longer used in this deck (their slides were replaced); kept in case they come back.

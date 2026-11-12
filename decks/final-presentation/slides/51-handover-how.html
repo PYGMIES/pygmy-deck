@@ -1,0 +1,9 @@
+<!-- notes: SCRIPT (~30s): We hand over in four steps, between 17 and 30 November. First, access. The repo and secrets move to C22, and the OANDA and Supabase keys live in Infisical. Second, run it with three make commands, in this order: dev-local, seed-local, backfill-features. Third, we walk them through a live retrain, grade and promote, with the retraining contract and evaluator rules as the written reference. Fourth, they check it works: the dashboard on port 3000 shows the seeded campaigns, and the Judge and Trainer docs are up on 8001 and 8002. → What is left. -->
+<!-- @slide-title kicker="Handover" text="How We Hand Over" -->
+<!-- @card-grid cols="4" class="inset" -->
+  <!-- @step-card num="1" icon="assets/icons/key.svg" title="Access" body="Repo and secrets move to C22. Keys live in Infisical: OANDA and Supabase." -->
+  <!-- @step-card num="2" icon="assets/icons/bolt.svg" title="Run it" body="Three make commands, in order: <code>dev-local</code><code>seed-local</code><code>backfill-features</code>" -->
+  <!-- @step-card num="3" icon="assets/icons/eye.svg" title="Walk through" body="Live demo of retrain, grade, promote. Docs: retraining contract, evaluator rules." -->
+  <!-- @step-card num="4" icon="assets/icons/target.svg" title="Check" body="Dashboard on :3000 shows the seeded campaigns. Judge and trainer docs on :8001 and :8002." -->
+<!-- @/card-grid -->
+<!-- @pill-note text="Handover window: 17 to 30 November" class="inset" -->
