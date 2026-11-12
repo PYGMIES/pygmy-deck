@@ -620,3 +620,15 @@
 .c-statement.is-plain .c-statement__icon {
   display: none;
 }
+
+/* slide 86: the chart group and its pill sit together in the middle of the space under the title */
+.c-column.is-centered {
+  flex: 1;
+  justify-content: center;
+  gap: 56px;
+  margin-right: var(--pad-x);
+}
+
+.c-column.is-centered > .c-split {
+  flex: none;
+}
