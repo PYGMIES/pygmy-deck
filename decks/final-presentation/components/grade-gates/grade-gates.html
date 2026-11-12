@@ -1,0 +1,25 @@
+<div class="c-grade-gates {{class|}}">
+  <p class="c-grade-gates__lead reveal">A rule-based evaluator recommends. It never promotes.</p>
+  <p class="c-grade-gates__callout reveal">Recomputes everything. Trusts nothing.</p>
+
+  <div class="c-grade-gates__row">
+    <div class="c-grade-gates__gate reveal"><span class="n">1</span><h3>Inputs trustworthy?</h3><p>Same trades, no TEST data in training, right champion, no leak signal, maths recomputes to the cent.</p></div>
+    <div class="c-grade-gates__gate reveal"><span class="n">2</span><h3>Leak alarm</h3><p>AUC above 0.65.</p></div>
+    <div class="c-grade-gates__gate reveal"><span class="n">3</span><h3>Sound alone?</h3><p>AUC at least 0.53, no campaign worse than a coin flip, probabilities beat guessing.</p></div>
+    <div class="c-grade-gates__gate reveal"><span class="n">4</span><h3>Beats the champion?</h3><p>Top 5% of trades, campaign by campaign. The gain must be real and spread across campaigns.</p></div>
+  </div>
+
+  <div class="c-grade-gates__ticks reveal"><i></i><i></i><i></i><i></i></div>
+  <div class="c-grade-gates__outs">
+    <p class="reveal is-hold">fails: HOLD</p>
+    <p class="reveal is-hold">fails: HOLD</p>
+    <p class="reveal is-reject">fails: REJECT</p>
+    <p class="reveal is-final"><b>PROMOTE</b> / HOLD / REJECT</p>
+  </div>
+
+  <div class="c-grade-gates__facts">
+    <p class="reveal"><b>Money vetoes.</b> A higher AUC that makes less money is rejected.</p>
+    <p class="reveal"><b>The champion wins ties.</b> Switching has a cost.</p>
+    <p class="reveal"><b>A person decides.</b> The verdict waits on the Judge Performance page.</p>
+  </div>
+</div>

@@ -1,0 +1,158 @@
+/* === COMPONENT (deck): flow-owners ===
+   Five steps, who owns each (colour bracket) and what it produces. Owner colours are theme tokens. */
+.c-flow-owners {
+  display: grid;
+  grid-template-columns: 680px 300px 1fr;
+  grid-template-rows: auto repeat(5, 92px) auto;
+  column-gap: 28px;
+  row-gap: 14px;
+  padding-left: var(--inset);
+}
+
+.c-flow-owners .is-app { --o: var(--owner-app); --on: var(--on-owner-app); }
+.c-flow-owners .is-trainer { --o: var(--owner-trainer); --on: var(--on-owner-trainer); }
+.c-flow-owners .is-eval { --o: var(--owner-eval); --on: var(--on-owner-eval); }
+.c-flow-owners .is-dash { --o: var(--owner-dash); --on: var(--on-owner-dash); }
+
+.c-flow-owners__h {
+  align-self: end;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  max-width: none;
+}
+.c-flow-owners__h.is-steps { grid-column: 1; grid-row: 1; }
+.c-flow-owners__h.is-who { grid-column: 2; grid-row: 1; }
+.c-flow-owners__h.is-out { grid-column: 3; grid-row: 1; }
+
+.c-flow-owners__step {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.c-flow-owners__step i {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--o);
+  color: var(--on);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 34px;
+  padding-top: 3px;
+}
+
+.c-flow-owners__step span {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 42px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.c-flow-owners__who {
+  grid-column: 2;
+  display: grid;
+  place-items: center;
+  padding: 0 var(--gap-xs);
+  border-radius: var(--radius);
+  background: var(--o);
+  color: var(--on);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  line-height: 1;
+  text-align: center;
+}
+
+.c-flow-owners__out {
+  grid-column: 3;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--gap-m);
+  border: var(--rule-w) solid var(--o);
+  border-radius: var(--radius);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.c-flow-owners__side {
+  grid-column: 4;
+  grid-row: 4 / span 3;
+  align-self: center;
+  position: relative;
+  padding: var(--gap-s);
+  border: var(--rule-w) solid var(--owner-eval);
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+}
+
+.c-flow-owners__side::before {            /* pointer toward the Evaluator row (step 4) */
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 50%;
+  margin-top: -15px;
+  border: 15px solid transparent;
+  border-right: 21px solid var(--owner-eval);
+  border-left: 0;
+}
+
+.c-flow-owners__side h3 {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+  color: inherit;
+}
+
+.c-flow-owners__side p {
+  margin-top: var(--gap-xs);
+  font-size: var(--fs-small);
+  line-height: 1.3;
+  max-width: none;
+}
+
+.c-flow-owners__side ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+  margin-top: var(--gap-s);
+  list-style: none;
+}
+
+.c-flow-owners__side li {
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--on-card);
+  font-size: var(--fs-small);
+  font-weight: 700;
+}
+
+.c-flow-owners__foot {
+  grid-column: 1 / -1;
+  grid-row: 7;
+  margin-top: 44px;
+  padding: var(--gap-s) var(--gap-m);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: 1.25;
+  max-width: none;
+}
+
+/* the global paragraph measure would wrap these lines */
+.slide .c-flow-owners p { max-width: none; }

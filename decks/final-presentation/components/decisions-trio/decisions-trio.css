@@ -1,0 +1,74 @@
+/* === COMPONENT (deck): decisions-trio ===
+   Three key design decisions side by side: decision, rejected + rationale, trade off. Rows line up across columns. */
+.c-decisions-trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto 1fr auto;
+  column-gap: var(--gap-m);
+  row-gap: var(--gap-xs);
+  margin-top: -24px;
+}
+
+.c-decisions-trio__head {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-s);
+  padding-bottom: var(--gap-xs);
+  border-bottom: var(--rule-w) solid var(--ink);
+  margin-bottom: 4px;
+}
+
+.c-decisions-trio__head i {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--on-card);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  padding-top: 3px;
+}
+
+.c-decisions-trio__head h2 {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+}
+
+.c-decisions-trio__card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px var(--gap-s);
+  border-radius: var(--radius);
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+.c-decisions-trio__card span {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.c-decisions-trio__card p { font-weight: 600; max-width: none; }
+
+.c-decisions-trio__card hr {
+  width: 100%;
+  margin: 12px 0 8px;
+  border: 0;
+  border-top: var(--rule-w) solid var(--rule);
+}
+
+.c-decisions-trio__card.is-decision { background: var(--accent); color: var(--on-accent); }
+.c-decisions-trio__card.is-why { background: var(--bg-deep); color: var(--ink); }
+.c-decisions-trio__card.is-trade { background: var(--card); color: var(--on-card); }
