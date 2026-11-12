@@ -62,7 +62,7 @@
 }
 
 .c-title-cover__course {
-  font-size: 28px;
+  font-size: max(28px, var(--fs-min, 0px));
 }
 
 .c-title-cover__by {
@@ -80,7 +80,7 @@
 }
 
 .c-title-cover__by span {
-  font-size: 28px;
+  font-size: max(28px, var(--fs-min, 0px));
   word-spacing: 0.15em;
 }
 

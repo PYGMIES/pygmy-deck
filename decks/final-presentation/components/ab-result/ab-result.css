@@ -63,7 +63,7 @@
 
 .c-ab-result .c-ab-result__body {
   margin-top: 32px;
-  font-size: 28px;
+  font-size: max(28px, var(--fs-min, 0px));
   line-height: 1.35;
   max-width: none;
 }

@@ -53,7 +53,7 @@
 .c-panel-card table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 26px;
+  font-size: max(26px, var(--fs-min, 0px));
 }
 
 .c-panel-card th {

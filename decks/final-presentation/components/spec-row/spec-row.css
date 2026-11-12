@@ -29,7 +29,7 @@
 
 .c-spec-row p {
   max-width: none;
-  font-size: 28px;
+  font-size: max(28px, var(--fs-min, 0px));
   line-height: 1.2;
   color: var(--on-card-muted);
 }
@@ -39,7 +39,7 @@
   border-radius: 8px;
   background: color-mix(in srgb, var(--on-card) 10%, transparent);
   font-family: var(--font-mono);
-  font-size: 28px;
+  font-size: max(28px, var(--fs-min, 0px));
   font-weight: 600;
   color: var(--on-card);
   white-space: nowrap;

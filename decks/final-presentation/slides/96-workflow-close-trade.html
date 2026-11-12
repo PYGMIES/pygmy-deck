@@ -1,6 +1,6 @@
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the close is queued, a worker runs steps 3-6. Key notes: the Redis rolling metrics update even if the simulated close fails (e.g. the market price fetch). They are updated with a read-check-write retry pattern instead of locks. Reverse-trading PnL streams to the dashboard the moment each trade closes. -->
 <!-- @slide-title kicker="System Architecture" text="Workflow 3: Close Trade" -->
-<!-- @split cols="1fr 700px" align="stretch" class="inset is-workflow" -->
+<!-- @split cols="1fr 560px" align="stretch" class="inset is-workflow" -->
   <!-- @step-list class="is-compact is-close" -->
     <li class="reveal">Close trade arrives<small>Trader closes an existing position</small></li>
     <li class="reveal">Store trade in Postgres, queue it<small>Picked up by workers to run the close-trade pipeline</small></li>

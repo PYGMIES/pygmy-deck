@@ -1,11 +1,14 @@
 /* === DECK OVERRIDES === */
 
-/* Minimum text size: nothing below 26px (13pt at the 1920x1080 stage).
+/* Minimum text size: nothing below 30px (15pt at the 1920x1080 stage), so the deck reads
+   from the back of a large room. Body and lead text are bumped to match.
    Components write small sizes as max(Npx, var(--fs-min, 0px)), so decks that
    don't set --fs-min keep their old sizes. */
 :root {
-  --fs-min: 26px;
-  --fs-small: 26px;
+  --fs-min: 30px;
+  --fs-small: 30px;
+  --fs-body: 36px;
+  --fs-lead: 40px;
 }
 
 /* Short card row: centre it in the space under the slide title (slide 67) */
@@ -131,7 +134,7 @@
 .c-card-grid.is-before-features .c-feature-group__head p { font-size: max(23px, var(--fs-min, 0px)); line-height: 1.45; margin-top: 12px; }
 .c-card-grid.is-before-features .c-feature-group__list { gap: 32px; }
 .c-card-grid.is-before-features .c-feature-group__list li { row-gap: 8px; }
-.c-card-grid.is-before-features .c-feature-group__list strong { font-size: 26px; }
+.c-card-grid.is-before-features .c-feature-group__list strong { font-size: max(26px, var(--fs-min, 0px)); }
 .c-card-grid.is-before-features .c-feature-group__list code { font-size: max(19px, var(--fs-min, 0px)); line-height: 1.4; }
 .c-card-grid.is-before-features .c-feature-group__list span { font-size: max(20px, var(--fs-min, 0px)); line-height: 1.4; }
 
@@ -153,7 +156,7 @@
 .dropped-chart .tick.is-small { font-size: max(17px, var(--fs-min, 0px)); }
 .dropped-chart .row { font-size: max(24px, var(--fs-min, 0px)); font-weight: 600; fill: var(--chart-ink); text-anchor: end; }
 .dropped-chart .val { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); text-anchor: middle; }
-.dropped-chart .val.is-strong { font-size: 26px; font-weight: 700; fill: var(--chart-ink); }
+.dropped-chart .val.is-strong { font-size: max(26px, var(--fs-min, 0px)); font-weight: 700; fill: var(--chart-ink); }
 .dropped-chart .val.is-diff { font-size: max(22px, var(--fs-min, 0px)); font-weight: 700; fill: var(--danger); }
 .dropped-chart .move { stroke: var(--danger); stroke-width: 4; }
 .dropped-chart .is-with, .dropped-chart .is-with-fill { fill: var(--danger); }
@@ -190,6 +193,13 @@
 }
 
 /* Minimum text size for shared components used by this deck (shared files stay untouched) */
+.c-agenda-item__owner,
+.c-agenda-item__mins,
+.c-grid-card p,
+.c-icon-card p,
+.c-numbered-card p,
+.c-label-card p,
+.c-req-card p { font-size: max(28px, var(--fs-min)); }
 .c-agenda-item__owner > span { font-size: max(24px, var(--fs-min)); }
 .c-note-card p { font-size: max(24px, var(--fs-min)); }
 .c-note-card__tags li { font-size: max(22px, var(--fs-min)); }
@@ -204,6 +214,11 @@
 .c-screen-frame__bar span { font-size: max(20px, var(--fs-min)); }
 .c-step-list.is-compact li small { font-size: max(22px, var(--fs-min)); }
 .c-step-list__band { font-size: max(22px, var(--fs-min)); }
+/* fixed px line-heights in these components were set for 22-24px text: give the 30px floor room to wrap */
+.c-step-list.is-compact li small,
+.c-note-card.is-compact p,
+.c-note-card.is-bullets .c-note-card__tags li,
+.c-note-card.is-tall p { line-height: 1.22; }
 
 /* Workflow slides 51-52: the group box fills its column and the gap to the notes is tighter, so step text and the band label stay on one line */
 .c-split.is-workflow {
@@ -276,14 +291,15 @@
 /* What We Committed To (slide 12): compact charcoal rows, status pill on the right */
 .c-split.is-scorecard { gap: var(--gap-l); }
 .c-split.is-scorecard .c-column { gap: var(--gap-s); }
-.c-label-card.is-status { min-height: 112px; padding: 20px 32px; }
+.c-label-card.is-status { min-height: 112px; padding: 20px 26px; gap: 20px; }
 .c-label-card.is-status h3 { font-size: var(--fs-h3); }
 .c-label-card.is-status p { max-width: none; }
 .c-label-card .status {
   display: inline-block;
-  padding: 10px 22px;
+  padding: 10px 16px;
   border-radius: 999px;
   border: 2px solid var(--on-card-muted);
+  letter-spacing: 0;
   font-size: max(26px, var(--fs-min, 0px));
   font-weight: 600;
   color: var(--on-card-muted);
@@ -594,7 +610,7 @@
 .ev-gates.is-two .ev-gate__checks { margin-top: 24px; }
 .ev-gates.is-two .ev-gate__checks dt,
 .ev-gates.is-two .ev-gate__checks dd,
-.ev-gates.is-two .ev-gate li { font-size: 28px; }
+.ev-gates.is-two .ev-gate li { font-size: max(28px, var(--fs-min, 0px)); }
 .ev-gates.is-two .ev-gate__checks dd { margin-bottom: 12px; }
 .ev-gates.is-two .ev-gate { padding: 36px 48px 32px; }
 
@@ -652,3 +668,72 @@
 .c-column.is-centered > .c-split {
   flex: none;
 }
+
+/* === 30px TEXT FLOOR RE-SPACING === */
+
+/* Four Checks, in Order (slides 60-61): key terms on one line each at 30px */
+.ev-terms.ev-terms { width: 800px; padding: 20px 26px; }
+.slide .ev-terms.ev-terms p { letter-spacing: 0; }
+.ev-terms.ev-terms strong { min-width: 86px; }
+
+/* Latency and Throughput (appendix): shorter chart pair so the bullets fit underneath */
+.c-chart-pair.is-short { height: 360px; }
+
+/* Train / Grade (slides 55-56): tighter vertical rhythm so the 30px text and the Storage bar / rule cards fit */
+.c-train-stages.c-train-stages,
+.c-grade-gates.c-grade-gates { gap: 8px; }
+.c-train-stages .c-train-stages__lead { letter-spacing: 0; margin-bottom: 12px; }
+.c-train-stages .c-train-stages__stage,
+.c-grade-gates .c-grade-gates__gate { padding: 20px; gap: 8px; }
+.c-train-stages .c-train-stages__stage p,
+.c-train-stages .c-train-stages__stage strong,
+.c-grade-gates .c-grade-gates__gate p,
+.c-grade-gates .c-grade-gates__facts p { line-height: 1.22; }
+.c-train-stages .c-train-stages__ticks,
+.c-grade-gates .c-grade-gates__ticks { height: 14px; }
+.c-train-stages .c-train-stages__storage { min-height: 60px; }
+.c-train-stages .c-train-stages__callout { top: 96px; }
+.c-grade-gates .c-grade-gates__outs p { min-height: 80px; line-height: 1.15; }
+.c-grade-gates .c-grade-gates__lead { margin-bottom: 14px; }
+/* slide 56: the "Recomputes everything" pill moves up beside the short "Grade" title */
+.c-grade-gates .c-grade-gates__callout { position: absolute; top: -150px; right: 0; margin: 0; }
+
+/* Workflow slides 94-97 at the 30px floor */
+.is-workflow .c-step-list__band { letter-spacing: 0.08em; }
+/* slide 94: second note sits a little higher so its three tag rows clear the transaction bar */
+.c-note-card.is-offset { margin-top: 90px; }
+/* slide 95: right column gets 620px; the two tall notes shrink to their content */
+.is-workflow.is-open .c-note-card.is-tall { min-height: 0; padding: 14px 26px; }
+.is-workflow.is-open .c-note-card.is-dark { padding: 20px 26px; }
+/* slide 96: tighter steps so the six steps and their detail lines fit */
+.c-step-list.is-compact.is-close { --step-gap: 14px; --line-end: 98px; }
+/* slide 97: five steps spread evenly over the column height */
+.c-step-list.is-compact.is-end { --step-gap: 0px; justify-content: space-between; }
+.is-workflow.is-open .c-step-list.is-compact { --step-gap: 14px; --line-end: 132px; }
+
+/* Architecture diagrams: node sub-labels and side notes drop the body tracking so they fit their boxes at 30px */
+.c-arch .c-arch__node small { letter-spacing: 0; }
+.c-arch .c-arch__foot { letter-spacing: 0; line-height: 1.2; }
+
+/* C22 Hit a Data Ceiling (slide 06): limit cards' text on two wider lines so both cards clear the quote */
+.c-split.is-data-ceiling .c-label-card { min-height: 112px; padding: 16px 36px; }
+.c-split.is-data-ceiling .c-label-card p { max-width: 15em; line-height: 1.15; }
+
+/* Bottom-margin fixes at the 30px floor */
+/* slide 03: nine agenda rows fit above the page number */
+.c-agenda-item { padding: 11px 0; }
+/* slide 13: shorter chart so the two-line takeaway clears the bottom margin */
+.c-equity-chart__svg { height: 560px; }
+/* slide 50: tighter rows so the two-line footer clears the page number */
+.c-flow-owners { grid-template-rows: auto repeat(5, 88px) auto; row-gap: 12px; }
+.c-flow-owners__foot { margin-top: 22px; padding: 18px var(--gap-m); }
+/* slide 66: wider middle card, tighter spacing, so the cards end above the page number */
+.c-card-grid.is-features-kept { grid-template-columns: 1fr 2fr 1fr; gap: 24px; }
+.c-card-grid.is-features-kept .c-feature-group { gap: 14px; padding: 24px 26px 24px; }
+.c-card-grid.is-features-kept .c-feature-group__head { padding-bottom: 12px; }
+.c-card-grid.is-features-kept .c-feature-group__list { gap: 10px 24px; }
+/* Slides 60-61 at the 30px floor: tighter card rhythm so slide 61's four checks end above the page number */
+.ev-gates.is-two .ev-gate { padding: 28px 44px 26px; }
+.ev-gates.is-two .ev-gate h3 { margin-top: 16px; }
+.ev-gates.is-two .ev-gate__checks { margin-top: 16px; }
+.ev-gates.is-two .ev-gate__checks dd { margin-bottom: 6px; line-height: 1.18; }

@@ -28,7 +28,7 @@
   font-family: var(--font-display);
   font-style: normal;
   font-weight: 800;
-  font-size: 26px;
+  font-size: max(26px, var(--fs-min, 0px));
   line-height: 1;
   padding-top: 2px;
 }

@@ -1,6 +1,7 @@
 /* === COMPONENT (deck): scatter-chart ===
    $ per campaign for every variant tried per notebook (one dot each), inline SVG on the
-   white chart backing. Geometry lives in the viewBox (1728×640). Dots are stacked in a
+   white chart backing. Geometry lives in the viewBox (1728×640); SVG text sizes divide the
+   floor by 0.95, the drawn scale on slide 69. Dots are stacked in a
    column per notebook; hover (core/runtime.js [data-hover-scatter]) shows what that
    notebook changed. Slide 67. */
 .c-scatter-chart {
@@ -24,10 +25,10 @@
 }
 
 .c-scatter-chart__svg text { font-family: var(--font-body); }
-.c-scatter-chart__svg .sc-tick { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); }
-.c-scatter-chart__svg .sc-nb { font-size: max(24px, var(--fs-min, 0px)); font-weight: 600; fill: var(--chart-ink); }
-.c-scatter-chart__svg .sc-axis { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); }
-.c-scatter-chart__svg .sc-leg { font-size: max(22px, var(--fs-min, 0px)); font-weight: 600; fill: var(--chart-ink); }
+.c-scatter-chart__svg .sc-tick { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); fill: var(--chart-ink-muted); }
+.c-scatter-chart__svg .sc-nb { font-size: max(24px, calc(var(--fs-min, 0px) / 0.95)); font-weight: 600; fill: var(--chart-ink); }
+.c-scatter-chart__svg .sc-axis { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); fill: var(--chart-ink-muted); }
+.c-scatter-chart__svg .sc-leg { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); font-weight: 600; fill: var(--chart-ink); }
 .c-scatter-chart__svg .sc-grid { stroke: var(--chart-grid); stroke-width: 1.5; }
 .c-scatter-chart__svg .sc-zero { stroke: var(--chart-ink-muted); stroke-width: 2; }
 .c-scatter-chart__svg .sc-dot { stroke: var(--chart-bg); stroke-width: 3; }
@@ -62,7 +63,52 @@
   z-index: 2;
 }
 .sc-tip[hidden] { display: none; }
-.sc-tip b { display: block; font-size: 26px; font-weight: 700; }
+.sc-tip b { display: block; font-size: max(26px, var(--fs-min, 0px)); font-weight: 700; }
 .sc-tip__desc { margin-bottom: 10px; color: var(--chart-ink-muted); }
 .sc-tip__row { display: flex; justify-content: space-between; gap: 32px; font-variant-numeric: tabular-nums; }
 .sc-tip__row.is-muted { color: var(--chart-ink-muted); }
+
+/* Compact (is-compact, slide 86): the chart is drawn at about 0.6x, so SVG labels are
+   scaled by --sc-k to reach the text floor on screen; the axis title and legend move
+   into an HTML row above the plot because they no longer fit on the SVG's top line. */
+.c-scatter-chart__key { display: none; }
+.c-scatter-chart.is-compact { --sc-k: 1.85; gap: 16px; }
+.c-scatter-chart.is-compact .c-scatter-chart__key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 28px;
+  font-size: max(22px, var(--fs-min, 0px));
+  line-height: 1.2;
+  color: var(--ink-muted);
+}
+.c-scatter-chart.is-compact .c-scatter-chart__axis { flex-basis: 100%; }
+.c-scatter-chart.is-compact .c-scatter-chart__leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.c-scatter-chart.is-compact .c-scatter-chart__leg::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+.c-scatter-chart.is-compact .c-scatter-chart__leg.is-pos::before { background: var(--chart-model); }
+.c-scatter-chart.is-compact .c-scatter-chart__leg.is-neg::before { background: var(--chart-rand); }
+.c-scatter-chart.is-compact .sc-axis,
+.c-scatter-chart.is-compact .sc-leg,
+.c-scatter-chart.is-compact .sc-key { display: none; }
+.c-scatter-chart.is-compact .c-scatter-chart__plot { padding: 12px 20px 22px 92px; }
+.c-scatter-chart.is-compact .c-scatter-chart__svg { overflow: visible; margin-top: -24px; }
+.c-scatter-chart.is-compact .c-scatter-chart__svg .sc-dot { r: 15px; }
+.c-scatter-chart.is-compact .c-scatter-chart__svg .sc-tick {
+  font-size: calc(max(22px, var(--fs-min, 0px) / 0.95) * var(--sc-k));
+  transform: translateY(9px);
+}
+.c-scatter-chart.is-compact .c-scatter-chart__svg .sc-nb {
+  font-size: calc(max(22px, var(--fs-min, 0px) / 0.95) * var(--sc-k));
+  transform: translateY(30px);
+}
