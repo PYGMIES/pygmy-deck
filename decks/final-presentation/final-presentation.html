@@ -3473,7 +3473,8 @@ body.overview .deck-viewport {
 /* ===== COMPONENT scatter-chart ===== */
 /* === COMPONENT (deck): scatter-chart ===
    $ per campaign for every variant tried per notebook (one dot each), inline SVG on the
-   white chart backing. Geometry lives in the viewBox (1728×640). Dots are stacked in a
+   white chart backing. Geometry lives in the viewBox (1728×640); SVG text sizes divide the
+   floor by 0.95, the drawn scale on slide 69. Dots are stacked in a
    column per notebook; hover (core/runtime.js [data-hover-scatter]) shows what that
    notebook changed. Slide 67. */
 .c-scatter-chart {
@@ -3497,10 +3498,10 @@ body.overview .deck-viewport {
 }
 
 .c-scatter-chart__svg text { font-family: var(--font-body); }
-.c-scatter-chart__svg .sc-tick { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); }
-.c-scatter-chart__svg .sc-nb { font-size: max(24px, var(--fs-min, 0px)); font-weight: 600; fill: var(--chart-ink); }
-.c-scatter-chart__svg .sc-axis { font-size: max(22px, var(--fs-min, 0px)); fill: var(--chart-ink-muted); }
-.c-scatter-chart__svg .sc-leg { font-size: max(22px, var(--fs-min, 0px)); font-weight: 600; fill: var(--chart-ink); }
+.c-scatter-chart__svg .sc-tick { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); fill: var(--chart-ink-muted); }
+.c-scatter-chart__svg .sc-nb { font-size: max(24px, calc(var(--fs-min, 0px) / 0.95)); font-weight: 600; fill: var(--chart-ink); }
+.c-scatter-chart__svg .sc-axis { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); fill: var(--chart-ink-muted); }
+.c-scatter-chart__svg .sc-leg { font-size: max(22px, calc(var(--fs-min, 0px) / 0.95)); font-weight: 600; fill: var(--chart-ink); }
 .c-scatter-chart__svg .sc-grid { stroke: var(--chart-grid); stroke-width: 1.5; }
 .c-scatter-chart__svg .sc-zero { stroke: var(--chart-ink-muted); stroke-width: 2; }
 .c-scatter-chart__svg .sc-dot { stroke: var(--chart-bg); stroke-width: 3; }
@@ -3539,6 +3540,51 @@ body.overview .deck-viewport {
 .sc-tip__desc { margin-bottom: 10px; color: var(--chart-ink-muted); }
 .sc-tip__row { display: flex; justify-content: space-between; gap: 32px; font-variant-numeric: tabular-nums; }
 .sc-tip__row.is-muted { color: var(--chart-ink-muted); }
+
+/* Compact (is-compact, slide 86): the chart is drawn at about 0.6x, so SVG labels are
+   scaled by --sc-k to reach the text floor on screen; the axis title and legend move
+   into an HTML row above the plot because they no longer fit on the SVG's top line. */
+.c-scatter-chart__key { display: none; }
+.c-scatter-chart.is-compact { --sc-k: 1.85; gap: 16px; }
+.c-scatter-chart.is-compact .c-scatter-chart__key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 28px;
+  font-size: max(22px, var(--fs-min, 0px));
+  line-height: 1.2;
+  color: var(--ink-muted);
+}
+.c-scatter-chart.is-compact .c-scatter-chart__axis { flex-basis: 100%; }
+.c-scatter-chart.is-compact .c-scatter-chart__leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.c-scatter-chart.is-compact .c-scatter-chart__leg::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+.c-scatter-chart.is-compact .c-scatter-chart__leg.is-pos::before { background: var(--chart-model); }
+.c-scatter-chart.is-compact .c-scatter-chart__leg.is-neg::before { background: var(--chart-rand); }
+.c-scatter-chart.is-compact .sc-axis,
+.c-scatter-chart.is-compact .sc-leg,
+.c-scatter-chart.is-compact .sc-key { display: none; }
+.c-scatter-chart.is-compact .c-scatter-chart__plot { padding: 12px 20px 22px 92px; }
+.c-scatter-chart.is-compact .c-scatter-chart__svg { overflow: visible; margin-top: -24px; }
+.c-scatter-chart.is-compact .c-scatter-chart__svg .sc-dot { r: 15px; }
+.c-scatter-chart.is-compact .c-scatter-chart__svg .sc-tick {
+  font-size: calc(max(22px, var(--fs-min, 0px) / 0.95) * var(--sc-k));
+  transform: translateY(9px);
+}
+.c-scatter-chart.is-compact .c-scatter-chart__svg .sc-nb {
+  font-size: calc(max(22px, var(--fs-min, 0px) / 0.95) * var(--sc-k));
+  transform: translateY(30px);
+}
 
 /* ===== COMPONENT step-list ===== */
 /* === COMPONENT: step-list === numbered vertical flow joined by a line; children are <li> (add class="reveal" to stagger).
@@ -8564,6 +8610,7 @@ body.overview .deck-viewport {
   <h1 class="reveal">What Each Notebook Tried</h1>
 </header>
 <figure class="c-scatter-chart reveal inset">
+  <div class="c-scatter-chart__key" aria-hidden="true"><span class="c-scatter-chart__axis">$ per campaign, top 5% of trades, locked campaigns 69–77</span><span class="c-scatter-chart__leg is-pos">Above $0</span><span class="c-scatter-chart__leg is-neg">At or below $0</span></div>
   <div class="c-scatter-chart__plot" data-hover-scatter='{"w":1728,"h":640,"p":[{"x":260.0,"y":308.1,"t":"NB 07 · v3 tuning · 26 features frozen","d":"Tuned the model, froze the 26-feature shortlist","v":"v3 frozen (26 feat)","u":"−$393","ci":""},{"x":480.0,"y":409.7,"t":"NB 08 · v4 · retrained on 45 campaigns","d":"Retrained on 45 campaigns, gross-profit target","v":"v4 frozen (26 feat)","u":"−$747","ci":""},{"x":689.0,"y":320.8,"t":"NB 11 · Ensemble + stop-price classifier","d":"Added predicted stop-price usage. Null result","v":"ensemble clean","u":"−$437","ci":""},{"x":711.0,"y":327.1,"t":"NB 11 · Ensemble + stop-price classifier","d":"Added predicted stop-price usage. Null result","v":"ensemble + p_sl","u":"−$459","ci":""},{"x":887.0,"y":245.8,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"full","u":"−$177","ci":""},{"x":909.0,"y":156.5,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"no_outcome (control)","u":"+$134","ci":""},{"x":931.0,"y":328.4,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"behaviour only","u":"−$464","ci":""},{"x":953.0,"y":118.5,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"ticket only","u":"+$266","ci":""},{"x":1096.0,"y":487.7,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"+ same-day block","u":"−$1,018","ci":"−$2,608 to +$571"},{"x":1118.0,"y":291.4,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"+ Joyce history","u":"−$335","ci":"−$944 to +$274"},{"x":1140.0,"y":354.3,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"all 48","u":"−$554","ci":"−$1,148 to +$40"},{"x":1162.0,"y":254.4,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"45 no_outcome","u":"−$206","ci":"−$1,402 to +$989"},{"x":1184.0,"y":153.7,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"45 behaviour","u":"+$144","ci":"−$587 to +$874"},{"x":1285.0,"y":225.9,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"cat:crowd5","u":"−$108","ci":"−$1,297 to +$1,082"},{"x":1303.8,"y":319.9,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"cat:mkt4","u":"−$434","ci":"−$1,597 to +$728"},{"x":1322.5,"y":430.5,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"cat:no_outcome","u":"−$819","ci":"−$2,289 to +$651"},{"x":1341.2,"y":272.8,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"lgbm:crowd5","u":"−$271","ci":"−$1,190 to +$648"},{"x":1360.0,"y":307.3,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"lgbm:mkt4","u":"−$391","ci":"−$1,888 to +$1,107"},{"x":1378.8,"y":156.5,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"lgbm:no_outcome","u":"+$134","ci":"−$1,340 to +$1,607"},{"x":1397.5,"y":316.6,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"xgb:crowd5","u":"−$423","ci":"−$1,293 to +$447"},{"x":1416.2,"y":336.8,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"xgb:mkt4","u":"−$493","ci":"−$1,647 to +$660"},{"x":1435.0,"y":269.6,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"xgb:no_outcome","u":"−$259","ci":"−$1,375 to +$856"},{"x":1505.0,"y":354.2,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"clf_off","u":"−$554","ci":"−$1,697 to +$590"},{"x":1526.4,"y":156.5,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"full","u":"+$134","ci":"−$1,340 to +$1,607"},{"x":1547.9,"y":466.1,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"gain_lin","u":"−$943","ci":"−$2,020 to +$134"},{"x":1569.3,"y":218.6,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"gain_off","u":"−$82","ci":"−$464 to +$300"},{"x":1590.7,"y":235.8,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"loss_lin","u":"−$142","ci":"−$1,202 to +$918"},{"x":1612.1,"y":222.2,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"loss_off","u":"−$95","ci":"−$1,045 to +$856"},{"x":1633.6,"y":388.2,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"regs_lin","u":"−$672","ci":"−$1,460 to +$116"},{"x":1655.0,"y":125.8,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"regs_off","u":"+$241","ci":"−$479 to +$960"}]}'>
     <svg class="c-scatter-chart__svg" viewBox="0 0 1728 640" role="img" aria-label="Profit per campaign for each variant tried in notebooks 7 to 15">
     <line class="sc-grid" x1="150" x2="1690" y1="540.0" y2="540.0"/><text class="sc-tick" x="134" y="548.0" text-anchor="end">−$1,200</text>
@@ -8609,7 +8656,7 @@ body.overview .deck-viewport {
     <circle class="sc-dot sc-neg" cx="1612.1" cy="222.2" r="10"/>
     <circle class="sc-dot sc-neg" cx="1633.6" cy="388.2" r="10"/>
     <circle class="sc-dot sc-pos" cx="1655.0" cy="125.8" r="10"/>
-    <circle class="sc-dot sc-pos" cx="1230" cy="43" r="10"/><text class="sc-leg" x="1248" y="51">Above $0</text><circle class="sc-dot sc-neg" cx="1430" cy="43" r="10"/><text class="sc-leg" x="1448" y="51">At or below $0</text>
+    <circle class="sc-dot sc-pos sc-key" cx="1230" cy="43" r="10"/><text class="sc-leg" x="1248" y="51">Above $0</text><circle class="sc-dot sc-neg sc-key" cx="1430" cy="43" r="10"/><text class="sc-leg" x="1448" y="51">At or below $0</text>
     </svg>
   </div>
   <figcaption class="c-scatter-chart__take">Only 6 of 30 arms finish above $0.<br>Where we have intervals (NB 13–15), every one spans zero.</figcaption>
@@ -9086,7 +9133,8 @@ body.overview .deck-viewport {
 </div>
     <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
   
-      <figure class="c-scatter-chart reveal ">
+      <figure class="c-scatter-chart reveal is-compact">
+  <div class="c-scatter-chart__key" aria-hidden="true"><span class="c-scatter-chart__axis">$ per campaign, top 5% of trades, locked campaigns 69–77</span><span class="c-scatter-chart__leg is-pos">Above $0</span><span class="c-scatter-chart__leg is-neg">At or below $0</span></div>
   <div class="c-scatter-chart__plot" data-hover-scatter='{"w":1728,"h":640,"p":[{"x":260.0,"y":308.1,"t":"NB 07 · v3 tuning · 26 features frozen","d":"Tuned the model, froze the 26-feature shortlist","v":"v3 frozen (26 feat)","u":"−$393","ci":""},{"x":480.0,"y":409.7,"t":"NB 08 · v4 · retrained on 45 campaigns","d":"Retrained on 45 campaigns, gross-profit target","v":"v4 frozen (26 feat)","u":"−$747","ci":""},{"x":689.0,"y":320.8,"t":"NB 11 · Ensemble + stop-price classifier","d":"Added predicted stop-price usage. Null result","v":"ensemble clean","u":"−$437","ci":""},{"x":711.0,"y":327.1,"t":"NB 11 · Ensemble + stop-price classifier","d":"Added predicted stop-price usage. Null result","v":"ensemble + p_sl","u":"−$459","ci":""},{"x":887.0,"y":245.8,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"full","u":"−$177","ci":""},{"x":909.0,"y":156.5,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"no_outcome (control)","u":"+$134","ci":""},{"x":931.0,"y":328.4,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"behaviour only","u":"−$464","ci":""},{"x":953.0,"y":118.5,"t":"NB 12 · History ablation","d":"Dropped outcome-history features. no_outcome makes money","v":"ticket only","u":"+$266","ci":""},{"x":1096.0,"y":487.7,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"+ same-day block","u":"−$1,018","ci":"−$2,608 to +$571"},{"x":1118.0,"y":291.4,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"+ Joyce history","u":"−$335","ci":"−$944 to +$274"},{"x":1140.0,"y":354.3,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"all 48","u":"−$554","ci":"−$1,148 to +$40"},{"x":1162.0,"y":254.4,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"45 no_outcome","u":"−$206","ci":"−$1,402 to +$989"},{"x":1184.0,"y":153.7,"t":"NB 13 · Feature-origin ablation","d":"Tested 22 extra columns from the other feature track. None promoted","v":"45 behaviour","u":"+$144","ci":"−$587 to +$874"},{"x":1285.0,"y":225.9,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"cat:crowd5","u":"−$108","ci":"−$1,297 to +$1,082"},{"x":1303.8,"y":319.9,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"cat:mkt4","u":"−$434","ci":"−$1,597 to +$728"},{"x":1322.5,"y":430.5,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"cat:no_outcome","u":"−$819","ci":"−$2,289 to +$651"},{"x":1341.2,"y":272.8,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"lgbm:crowd5","u":"−$271","ci":"−$1,190 to +$648"},{"x":1360.0,"y":307.3,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"lgbm:mkt4","u":"−$391","ci":"−$1,888 to +$1,107"},{"x":1378.8,"y":156.5,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"lgbm:no_outcome","u":"+$134","ci":"−$1,340 to +$1,607"},{"x":1397.5,"y":316.6,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"xgb:crowd5","u":"−$423","ci":"−$1,293 to +$447"},{"x":1416.2,"y":336.8,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"xgb:mkt4","u":"−$493","ci":"−$1,647 to +$660"},{"x":1435.0,"y":269.6,"t":"NB 14 · Market + crowd features, 3 learners","d":"Added market-data (M1 bars) and crowd features on LightGBM, XGBoost, CatBoost. Nothing ships","v":"xgb:no_outcome","u":"−$259","ci":"−$1,375 to +$856"},{"x":1505.0,"y":354.2,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"clf_off","u":"−$554","ci":"−$1,697 to +$590"},{"x":1526.4,"y":156.5,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"full","u":"+$134","ci":"−$1,340 to +$1,607"},{"x":1547.9,"y":466.1,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"gain_lin","u":"−$943","ci":"−$2,020 to +$134"},{"x":1569.3,"y":218.6,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"gain_off","u":"−$82","ci":"−$464 to +$300"},{"x":1590.7,"y":235.8,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"loss_lin","u":"−$142","ci":"−$1,202 to +$918"},{"x":1612.1,"y":222.2,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"loss_off","u":"−$95","ci":"−$1,045 to +$856"},{"x":1633.6,"y":388.2,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"regs_lin","u":"−$672","ci":"−$1,460 to +$116"},{"x":1655.0,"y":125.8,"t":"NB 15 · Hurdle decomposition","d":"Switched off hurdle components one at a time (lesions)","v":"regs_off","u":"+$241","ci":"−$479 to +$960"}]}'>
     <svg class="c-scatter-chart__svg" viewBox="0 0 1728 640" role="img" aria-label="Profit per campaign for each variant tried in notebooks 7 to 15">
     <line class="sc-grid" x1="150" x2="1690" y1="540.0" y2="540.0"/><text class="sc-tick" x="134" y="548.0" text-anchor="end">−$1,200</text>
@@ -9132,7 +9180,7 @@ body.overview .deck-viewport {
     <circle class="sc-dot sc-neg" cx="1612.1" cy="222.2" r="10"/>
     <circle class="sc-dot sc-neg" cx="1633.6" cy="388.2" r="10"/>
     <circle class="sc-dot sc-pos" cx="1655.0" cy="125.8" r="10"/>
-    <circle class="sc-dot sc-pos" cx="1230" cy="43" r="10"/><text class="sc-leg" x="1248" y="51">Above $0</text><circle class="sc-dot sc-neg" cx="1430" cy="43" r="10"/><text class="sc-leg" x="1448" y="51">At or below $0</text>
+    <circle class="sc-dot sc-pos sc-key" cx="1230" cy="43" r="10"/><text class="sc-leg" x="1248" y="51">Above $0</text><circle class="sc-dot sc-neg sc-key" cx="1430" cy="43" r="10"/><text class="sc-leg" x="1448" y="51">At or below $0</text>
     </svg>
   </div>
   <figcaption class="c-scatter-chart__take"></figcaption>
