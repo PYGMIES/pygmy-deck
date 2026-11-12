@@ -1,0 +1,11 @@
+<!-- notes: TODO owner. SCRIPT (~35s): C22 receives the whole system. The API takes in trades, runs the paper trades and serves the campaign data. The Judge scores each trade as fade or skip. The trainer trains a challenger model and grades it against the current champion. The dashboard has four views: campaigns, Judge performance, live trades and model evaluation. The database comes with 43 real campaigns, 33 to 77, ready to load with make seed. And the docs cover every role: operator guides, the retraining contract, the evaluator rules and a developer guide. -->
+<!-- notes: Source: project-cassandra README and Makefile (ports 8000, 8001, 8002, 3000; make seed loads 43 campaigns, 33 to 77, 65,092 trades). Nothing is sent to a broker: all reversals are paper trades and src/ folders. Checked against the repo at the 11 Nov commit. -->
+<!-- @slide-title kicker="Handover" text="What C22 Receives" -->
+<!-- @card-stack gap="12px" class="inset is-after-title" -->
+  <!-- @service-row icon="assets/icons/bolt.svg" title="API" body="Trade ingestion, paper trading and campaign endpoints" tag=":8000" -->
+  <!-- @service-row icon="assets/icons/gavel.svg" title="Judge" body="Scores each trade FADE or SKIP" tag=":8001" -->
+  <!-- @service-row icon="assets/icons/brain-chip.svg" title="Trainer" body="Trains a challenger and grades it against the champion" tag=":8002" -->
+  <!-- @service-row icon="assets/icons/dashboard.svg" title="Dashboard" body="Campaign, Judge performance, live trades, model evaluation" tag=":3000" -->
+  <!-- @service-row icon="assets/icons/layers.svg" title="Database" body="Supabase schema, plus 43 real campaigns (33 to 77) to load" tag="make seed" -->
+  <!-- @service-row icon="assets/icons/report.svg" title="Docs" body="Operator guides, retraining contract, evaluator rules, developer guide" tag="doc/" -->
+<!-- @/card-stack -->

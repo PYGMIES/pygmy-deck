@@ -1,0 +1,13 @@
+/* === COMPONENT (deck): shot-frame === screenshot at natural ratio, rounded, soft shadow */
+.c-shot-frame {
+  display: flex;
+  align-items: center;
+}
+
+.c-shot-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+}

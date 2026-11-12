@@ -33,15 +33,17 @@
 | 27-30 | Model promotion and evaluation: poll and grade flow (27), promote flow (28) (`flow-stage`, same visual language as mid-term 43-46), evaluator's four checks in decision order, each ending in its outcome (29; raw HTML + `.ev-gate` CSS in `deck.css`, accurate to `evaluator/rules.py`), how step 4 decides (30: decision tree Earns more? → Ranks clearly worse? → Wins most campaigns?, equivalent to `decide()` in `rules.py`; `flow-stage` pieces, footnote defines "clearly" = bootstrap) | new; source `poll_training_runs.py`, `grade_challengers.py`, `promote_model.py`, `EVALUATOR_RULES.md` | done; speaker-note owner TBC. Overlaps the placeholders on 22-23 |
 | 31-39 | Model training: divider (31), hurdle model (32), data (33), 18 features kept (34), cross-validation layout (35), feature-set ablation (36), what each notebook tried (37), train vs validation by campaigns (38) and by trees (39) | mid-term 58, 60, 64-69 | ported; slide 34 compacted in `deck.css` (`is-features-kept`) for the 26px floor. The old "Where the Signal Lives" slide was removed (the decomposition is still in the appendix) |
 | 40-44 | Explanations: divider (40), how it works (41), fade vs no-fade example (42), merits: readable by anyone (43), post-campaign themes (44) | new | done; examples from the trader-concentration doc (locked block). Speaker-note owners TBC |
-| 45-50 | Project management | mid-term 71-76 | ported |
-| 51-53 | Handover | new | placeholders |
+| 45-48 | Project management: divider (45), How We Ran Scrum: Plan, Build, Review, Retro (46), feedback changes the backlog with the Clement screenshot (47), Sprint 2 to Sprint 3 retro fix (48) | new, from Linear sprint docs | done; the old Scrum/sprint-cycle/retros/timeline/milestones slides were removed |
+| 49-52 | Handover: divider (49), what C22 receives: services, ports, database, docs (50), how we hand over: 4 steps, 17-30 Nov (51), what is left: only the C22 platform API, C22 has not given us their platform (52) | new, from project-cassandra README, Makefile, doc/client | done; speaker notes need an owner |
 | 54 | Q&A | mid-term 80 | ported |
 | 55-76 | Appendix | mid-term 81-102 | ported unchanged |
 
 ## Open items
 - Find every placeholder: `grep -rn "@placeholder" decks/final-presentation/slides`
 - Slide numbers inside ported speaker notes and the Q&A note ("#28", "#71") still use mid-term numbers.
-- Mid-term open items carry over: campaign counts (54 vs 45 vs 38) and the PM numbers on slides 41-44.
+- Mid-term open items carry over: campaign counts (54 vs 45 vs 38).
 - Slide 13 still uses the mid-term chart data and title; slide 12 benchmark statuses depend on it.
 - Appendix needs a backup slide for "How do you know it's the data and not the model?" Slide 61 (learning curve) shows a flat curve, which argues *against* "more data helps": prepare the answer before using it.
 - Mid-term slides 77-79 (constraints, edge-setting, what's next) were left out; handover replaces "what's next".
+- Slides 45-52 use deck-local components `phase-flow`, `change-table`/`change-row`, `statement`, `shot-frame`, `service-row`, `step-card` and `pill-note`. `sprint-cycle`, `retro-changes` and `project-timeline` are no longer used by any slide here.
+- File number 53 is intentionally unused (files go 52 to 54).

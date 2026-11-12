@@ -1,0 +1,12 @@
+/* === COMPONENT (deck): pill-note === accent-outlined one-liner */
+.slide .c-pill-note {
+  align-self: flex-start;
+  max-width: none;
+  padding: 18px 34px;
+  border: 3px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  color: var(--ink-accent);
+  font-size: 30px;
+  font-weight: 600;
+}

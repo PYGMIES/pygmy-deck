@@ -1,0 +1,30 @@
+/* === COMPONENT (deck): statement === icon over a large display sentence */
+.c-statement {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 26px;
+}
+
+.c-statement i {
+  width: 88px;
+  height: 88px;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.slide .c-statement p {
+  max-width: none;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 64px;
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+  color: var(--ink);
+}
+
+.slide .c-statement em {
+  background: linear-gradient(transparent 62%, var(--accent-soft) 62%);
+  color: var(--ink);
+}

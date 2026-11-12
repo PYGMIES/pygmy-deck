@@ -1,0 +1,62 @@
+/* === COMPONENT (deck): step-card === numbered card with an accent icon */
+.c-step-card {
+  min-height: 430px;
+  padding: 36px 38px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-step-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c-step-card__num {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding-top: 4px;
+  border-radius: 50%;
+  background: var(--on-card);
+  color: var(--card);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.c-step-card__top i {
+  width: 64px;
+  height: 64px;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.c-step-card h3 {
+  margin: 22px 0 18px;
+  font-size: 46px;
+  line-height: 1;
+  color: var(--on-card);
+}
+
+.slide .c-step-card p {
+  max-width: none;
+  font-size: 28px;
+  line-height: 1.32;
+  color: var(--on-card-muted);
+}
+
+.c-step-card code {
+  display: inline-block;
+  margin: 4px 0;
+  padding: 2px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  font-family: var(--font-mono);
+  font-size: max(26px, var(--fs-min, 0px));
+  color: var(--on-card);
+}

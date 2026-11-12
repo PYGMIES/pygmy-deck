@@ -1,0 +1,46 @@
+/* === COMPONENT (deck): phase-flow === four big icon cards joined by accent arrows */
+.c-phase-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 64px;
+  margin-top: 70px;
+}
+
+.c-phase-flow__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  min-height: 540px;
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.c-phase-flow__card i {
+  width: 150px;
+  height: 150px;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.c-phase-flow__card h3 {
+  font-size: 76px;
+  line-height: 1;
+  color: var(--on-card);
+}
+
+.c-phase-flow__card + .c-phase-flow__card::before {
+  content: "";
+  position: absolute;
+  left: -44px;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+  border-top: 5px solid var(--accent);
+  border-right: 5px solid var(--accent);
+  transform: rotate(45deg);
+}

@@ -1,0 +1,42 @@
+/* === COMPONENT (deck): service-row === charcoal row: icon | name | one line | mono tag */
+.c-service-row {
+  display: grid;
+  grid-template-columns: 56px 250px 1fr auto;
+  gap: 32px;
+  align-items: center;
+  height: 96px;
+  padding: 0 40px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-service-row i {
+  width: 56px;
+  height: 56px;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.c-service-row h3 {
+  font-size: 44px;
+  line-height: 1;
+  color: var(--on-card);
+}
+
+.slide .c-service-row p {
+  max-width: none;
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--on-card-muted);
+}
+
+.c-service-row code {
+  font-family: var(--font-mono);
+  font-size: max(26px, var(--fs-min, 0px));
+  padding: 4px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--on-card);
+}
