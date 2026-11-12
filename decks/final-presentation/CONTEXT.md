@@ -14,35 +14,37 @@
 ## Outline
 | # | Slide | Source | State |
 |---|-------|--------|-------|
-| 01-03 | Cover, team, agenda | mid-term 01-02, new agenda | cover text and agenda owners need updating |
-| 04 | Divider: Recap | new | done |
+| 01-03 | Cover (subtitle "Final Presentation"), team, agenda | mid-term 01-02, new agenda | agenda owners need updating |
+| 04 | Divider: Recap ("The problem, and what changed since midterms") | new | done |
 | 05 | The whole journey | mid-term 14 | done |
-| 06 | A few traders drive the data | new `trader-pile` | done |
-| 07-08 | C22 data ceiling, own platform (500 to 2,000) | new | done |
-| 09 | Our positioning | new | done |
-| 10-13 | Goals and impact | mid-term 16-19 | ported, not yet reframed around "improves over time"; slide 11 staircase is still illustrative |
-| 14 | Mid-term feedback | new | placeholder for the feedback quote |
-| 15 | What C22 gets beyond the Judge (added value: room to grow, less risk, less manual work) | new | done; speaker notes need an owner |
+| 06 | C22 hit a data ceiling (kicker: The constraint) + sponsor quote strip (Clement, C22 chat, 10 Nov 2026; punctuation tidied, words verbatim) (`chevron-callout is-quote`) | new | done |
+| 07 | A few traders drive the data (kicker: The constraint): proof of the diversity limit | new `trader-pile` | done |
+| 08 | More modelling won't fix this: 6/30 notebook variants above $0 + Profit = Direction × Size, two sizing rules moved profit < $130/campaign (NB18, `results/trade_size_readout.csv`); callout "More data, not a bigger model" (`big-stat` + `is-formula`, `chevron-callout`) | new | done |
+| 09 | C22 built its own platform (500 to 2,000) + "More traders means more data, so the Judge can keep improving" | new | done |
+| 10 | Our positioning: make retraining easy (keep at the "why" level; mechanics live in the Auto-Retrainer section) | new | done |
+| 11 | Divider: Goals & Impact | mid-term 16 | done |
+| 12 | What we committed to: benchmarks (fade, random, C22's rule) + midterm promises (magnitude, paper trading, auto-retrainer, explanations) with status pills (`label-card is-status`; green = done, amber `is-warn` = data limitations). Replaces mid-term 17 + 19 | new | benchmark statuses follow slide 13; re-check once final numbers land |
+| 13 | Where the Judge landed: cumulative P&L (`equity-chart`) | mid-term 18 | chart data and title still mid-term numbers; swap in final numbers |
+| 14 | Mid-term feedback (the *what*; Explanations covers the *how*). Feedback is said out loud, not quoted on the slide | new | done; speaker notes need an owner |
+| 15 | What C22 gets beyond the Judge: paper trading, scale, daily backups, easy imports (4 cards, `card-grid is-four`) | new | done; speaker notes need an owner |
 | 16 | Demo divider (content TBD) | new | divider only |
 | 17-18 | System architecture | mid-term 28 | ported; slide 18 has an unconnected Auto-retrainer box above the Judge; kicker "Project Cassandra and Judge · During campaign" |
-| 19 | Part 1, campaign end to hand-off (title "Project Cassandra Architecture"): slide 18's architecture scoped to campaign end to hand-off; no Redis, workers, Judge or Dashboard | new `arch-after-end` | done |
-| 20-24 | Step builds of slide 19 (one per step: campaign ended, after the reply, Postgres, Storage, Trainer hand-off); lit parts at 100%, the rest at 60% | `arch-after-end` with `is-step-N` | trial |
-| 25-36 | Part 2 (right to left) and its 11 step builds (slides 26-36), lit parts at 100%, the rest at 60% | `arch-promotion` with `is-step-N` | trial |
-| (25) | Part 2, after a challenger is trained: right-to-left flow (Services, Pipeline, Data, Input/Output, C22); Trainer, Evaluator, Training tracker, Judge | new `arch-promotion` | done; title "Project Cassandra Architecture" |
-| 37-48 | Same as 25, mirrored to read left to right, with its 11 step builds (slides 38-48) | `arch-promotion-ltr` with `is-step-N` | trial |
-| (37) | Same as 25, mirrored | new `arch-promotion-ltr` | done |
-| 27 | Retraining pipeline inside the API box; arrows to Trainer and Judge cut across the data lane | new `retrain-api-diagram` | done |
-| 28-35 | Auto-retrainer: divider (28), flow (29), 3 detail slides, 3 key design decisions | new | 29 done; 30-35 placeholders |
-| 32-40 | Model training: divider (27), hurdle model (28), data (29), 18 features kept (30), cross-validation layout (31), feature-set ablation (32), what each notebook tried (33), train vs validation by campaigns (34) and by trees (35) | mid-term 58, 60, 64-69 | ported; slide 30 compacted in `deck.css` (`is-features-kept`) for the 26px floor. The old "Where the Signal Lives" slide was removed (the decomposition is still in the appendix) |
-| 41-45 | Explanations: divider (36), how it works (37), fade vs no-fade example (38), merits: readable by anyone (39), post-campaign themes (40) | new | done; examples from the trader-concentration doc (locked block). Speaker-note owners TBC |
-| 46-51 | Project management | mid-term 71-76 | ported |
-| 52-54 | Handover | new | placeholders |
-| 55 | Q&A | mid-term 80 | ported |
-| 56-77 | Appendix | mid-term 81-102 | ported unchanged |
+| 19-24 | Part 1, campaign end to hand-off (title "Project Cassandra Architecture", `arch-after-end`): the full view (19) and five step builds (20-24); lit parts at 100%, the rest at 60% | new | done; trial |
+| 25-36 | Part 2, after a challenger is trained, right to left (`arch-promotion`): the full view (25) and eleven step builds (26-36) | new | done; trial |
+| 37-48 | Part 2 mirrored to read left to right (`arch-promotion-ltr`): the full view (37) and eleven step builds (38-48) | new | done; trial |
+| 49-58 | Auto-retrainer: divider (49), How a New Model Gets Made (50, `flow-owners`), Trigger and Split in four builds (51-54, `split-flow`), Train (55, `train-stages`), Grade (56, `grade-gates`), Promote and Roll Back (57, `promote-flow`), Three Decisions That Shaped It (58, `decisions-trio`). Owner colours are grey / black / orange tokens | new | done |
+| 59-62 | Model promotion and evaluation: poll and grade flow (59), promote flow (60) (`flow-stage`, same visual language as mid-term 43-46), evaluator's four checks in decision order, each ending in its outcome (29; raw HTML + `.ev-gate` CSS in `deck.css`, accurate to `evaluator/rules.py`), how step 4 decides (30: decision tree Earns more? → Ranks clearly worse? → Wins most campaigns?, equivalent to `decide()` in `rules.py`; `flow-stage` pieces, footnote defines "clearly" = bootstrap) | new; source `poll_training_runs.py`, `grade_challengers.py`, `promote_model.py`, `EVALUATOR_RULES.md` | done; speaker-note owner TBC. Overlaps the placeholders on 22-23 |
+| 63-71 | Model training: divider (63), hurdle model (64), data (65), 18 features kept (66), cross-validation layout (67), feature-set ablation (68), what each notebook tried (69), train vs validation by campaigns (70) and by trees (71) | mid-term 58, 60, 64-69 | ported; slide 34 compacted in `deck.css` (`is-features-kept`) for the 26px floor. The old "Where the Signal Lives" slide was removed (the decomposition is still in the appendix) |
+| 72-76 | Explanations: divider (72), how it works (73), fade vs no-fade example (74), merits: readable by anyone (75), post-campaign themes (76) | new | done; examples from the trader-concentration doc (locked block). Speaker-note owners TBC |
+| 77-82 | Project management | mid-term 71-76 | ported |
+| 83-85 | Handover | new | placeholders |
+| 86 | Q&A | mid-term 80 | ported |
+| 87-108 | Appendix | mid-term 81-102 | ported unchanged |
 
 ## Open items
 - Find every placeholder: `grep -rn "@placeholder" decks/final-presentation/slides`
 - Slide numbers inside ported speaker notes and the Q&A note ("#28", "#71") still use mid-term numbers.
 - Mid-term open items carry over: campaign counts (54 vs 45 vs 38) and the PM numbers on slides 41-44.
-- Slides 10-13 copy and the agenda owners are not rewritten.
+- Slide 13 still uses the mid-term chart data and title; slide 12 benchmark statuses depend on it.
+- Appendix needs a backup slide for "How do you know it's the data and not the model?" Slide 61 (learning curve) shows a flat curve, which argues *against* "more data helps": prepare the answer before using it.
 - Mid-term slides 77-79 (constraints, edge-setting, what's next) were left out; handover replaces "what's next".
