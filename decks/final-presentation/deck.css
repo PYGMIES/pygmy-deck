@@ -224,3 +224,57 @@
   min-height: 190px;
   padding: 14px 32px;
 }
+
+/* The 18 Features We Kept (slide 30): three feature-group cards, compacted to fit the stage at the 26px floor.
+   Long code names wrap instead of clipping. */
+.c-card-grid.is-features-kept { grid-template-columns: 1.1fr 1.7fr 1.1fr; gap: 28px; }
+.c-card-grid.is-features-kept .c-feature-group { grid-column: auto; gap: 18px; padding: 28px 28px 30px; }
+.c-card-grid.is-features-kept .c-feature-group__head { padding-bottom: 16px; }
+.c-card-grid.is-features-kept .c-feature-group__count { font-size: 64px; }
+.c-card-grid.is-features-kept .c-feature-group h3 { font-size: 34px; margin-top: 10px; }
+.c-card-grid.is-features-kept .c-feature-group__head p { line-height: 1.25; margin-top: 8px; }
+.c-card-grid.is-features-kept .c-feature-group__list { gap: 14px 28px; }
+.c-card-grid.is-features-kept .c-feature-group__list li { row-gap: 2px; }
+.c-card-grid.is-features-kept .c-feature-group__list strong { font-size: max(26px, var(--fs-min, 0px)); }
+.c-card-grid.is-features-kept .c-feature-group__list code { line-height: 1.15; }
+.c-card-grid.is-features-kept .c-feature-group__list li { align-items: start; }
+
+/* More Modelling Won't Fix This (slide 08): two big statements side by side. The formula's two lines
+   take the same height as the 260px "6/30" so the rules and labels line up */
+.c-split.is-ceiling { gap: var(--gap-xl); flex: none; }
+.c-big-stat.is-formula .c-big-stat__value {
+  font-size: 112px;
+  line-height: 0.93;
+  letter-spacing: -0.035em;
+  min-height: 208px;
+}
+
+/* What We Committed To (slide 12): compact charcoal rows, status pill on the right */
+.c-split.is-scorecard { gap: var(--gap-l); }
+.c-split.is-scorecard .c-column { gap: var(--gap-s); }
+.c-label-card.is-status { min-height: 112px; padding: 20px 32px; }
+.c-label-card.is-status h3 { font-size: var(--fs-h3); }
+.c-label-card.is-status p { max-width: none; }
+.c-label-card .status {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 2px solid var(--on-card-muted);
+  font-size: max(26px, var(--fs-min, 0px));
+  font-weight: 600;
+  color: var(--on-card-muted);
+  white-space: nowrap;
+}
+.c-label-card .status.is-done { border-color: var(--success-on-card); color: var(--success-on-card); }
+.c-label-card .status.is-warn { border-color: var(--accent); color: var(--accent); }
+
+/* What C22 Gets Beyond the Judge (slide 15): four cards, so smaller headings than the 3-up grid */
+.c-card-grid.is-four { gap: 28px; }
+.c-card-grid.is-four .c-grid-card { padding: 40px 36px; }
+.c-card-grid.is-four .c-grid-card h3 { font-size: 52px; }
+
+/* C22 Hit a Data Ceiling (slide 06): shorter limit cards so the sponsor quote fits underneath */
+.c-split.is-data-ceiling .c-label-card { min-height: 136px; padding: 20px 40px; }
+.c-chevron-callout.is-quote { grid-template-columns: 420px 1fr; margin-top: var(--gap-m); }
+.c-chevron-callout.is-quote .c-chevron-callout__lead { padding: 28px 80px 28px 40px; font-size: max(28px, var(--fs-min, 0px)); line-height: 1.25; }
+.c-chevron-callout.is-quote blockquote { padding: 28px 48px 28px 32px; font-size: 40px; line-height: 1.12; letter-spacing: -0.01em; }

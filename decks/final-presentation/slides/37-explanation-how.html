@@ -1,0 +1,16 @@
+<!-- notes: TODO owner. Four steps. The Judge scores each trade in dollars. TreeSHAP splits that score across features. We group them into six families: size, pace, stops, experience, timing, market. Fixed templates turn the top 2-4 into sentences. Not an LLM, so the same trade always gets the same words. The explanation never changes the decision. contrib_usd is a first-order estimate: summed, the contributions miss the score by a median of $1.71. Source: reverse-trade-judge scripts/build_judge_v5_gross.py, explain_templates.py. -->
+<!-- @slide-title kicker="Explanations" text="How It Works" -->
+<!-- @split cols="1fr 680px" class="inset" -->
+  <!-- @step-list -->
+    <li class="reveal">The Judge scores the trade in dollars</li>
+    <li class="reveal">TreeSHAP splits that score across features</li>
+    <li class="reveal">Features roll up into six families<small>size, pace, stops, experience, timing, market</small></li>
+    <li class="reveal">Fixed templates write the top 2–4 as sentences</li>
+  <!-- @/step-list -->
+  <!-- @column gap="20px" -->
+    <!-- @note-card title="Not an LLM" body="Same trade, same words, every time" -->
+    <!-- @/note-card -->
+    <!-- @note-card title="Never in the decision" body="The explanation reads the score. It does not change it" -->
+    <!-- @/note-card -->
+  <!-- @/column -->
+<!-- @/split -->

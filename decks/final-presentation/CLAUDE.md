@@ -17,5 +17,5 @@ Nothing in this deck renders below **26px** (13pt at the 1920×1080 stage). `dec
 - A hard-coded small size in a component is written `font-size: max(22px, var(--fs-min, 0px))`: the deck floor wins, and a deck that doesn't set `--fs-min` keeps the old size.
 - Shared components used here get their floor from the "Minimum text size" block at the end of `deck.css`.
 - Text inside an SVG (e.g. `equity-chart`) is scaled with the drawing, so divide the floor by that scale.
-- Exception: slide 48 (the latency diagram, `arch-diagram` with `is-timed`) keeps its original small text: the class sets `--fs-min: 0px`.
-- After adding text, check nothing is under the floor and that it still fits: the 26px floor already forced re-spacing of slides 12, 17, 36, 39, 48.
+- Exception: slide 53 (the latency diagram, `arch-diagram` with `is-timed`) keeps its original small text: the class sets `--fs-min: 0px`.
+- After adding text, check nothing is under the floor and that it still fits: the 26px floor already forced re-spacing of slides 13 (was 12), 17, 41, 44, 53.

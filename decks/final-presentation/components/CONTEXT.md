@@ -36,7 +36,7 @@ Layout components (flow, not fixed canvas):
 
 | Component | Params | What |
 |-----------|--------|------|
-| `title-cover` | `title`, `image`, `presented`, `lead?`, `client?`, `alt?`, `course?`, `team?` | Cover: stacked title + "for <client>" left, illustration right (PNG multiplied onto the light canvas), course line bottom-left, "Presented by" + names bottom-right. Slide 01. |
+| `title-cover` | `title`, `image`, `presented`, `lead?`, `client?`, `subtitle?`, `alt?`, `course?`, `team?` | Cover: stacked title + "for <client>" left (optional muted `subtitle` line under it, e.g. "Final Presentation"), illustration right (PNG multiplied onto the light canvas), course line bottom-left, "Presented by" + names bottom-right. Slide 01. |
 | ◻ `team-roster` | — | Row of `team-group`s, vertically centred. Slide 02. |
 | ◻ `team-group` | `label`, `size?` | Labelled cluster; `size` = member count so every card gets equal width. |
 | `team-member` | `initial`, `role`, `name` | Card: initial in a ring, role + name at bottom. `class="is-light"` for pale. |
