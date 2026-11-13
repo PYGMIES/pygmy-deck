@@ -1,6 +1,6 @@
 <!-- notes: Continued from the previous slide (project-cassandra evaluator/rules.py). 3) On its own (Tier 1): AUC at least 0.53 overall, at least 0.50 in every test campaign (never worse than a coin flip anywhere), Brier better than always guessing the base rate, and its top 5% picks beat random picks at least as well as the live model's do on the same block (and at least 40, where 50 is chance). Fail: Reject, which the dashboard shows as Keep the live model. 4) Head to head: only then is it compared with the live model, on the next slide. -->
 <!-- @slide-title kicker="Auto-retrainer · Evaluator" text="Four Checks, in Order" -->
-<aside class="ev-terms reveal"><span class="ev-policy-note__kicker">Key terms</span><p><strong>AUC</strong> ranks winners above losers; 0.5 = coin flip</p><p><strong>Brier</strong> how far predicted win chances are from results; lower is better</p></aside>
+<aside class="ev-terms reveal"><span class="ev-policy-note__kicker">Key terms</span><p><strong>AUC</strong> ranks winners above losers; 0.5 = coin flip</p><p><strong>Brier</strong> how far predicted win probabilities are from results; lower is better</p></aside>
 <p class="ev-policy-line reveal">C22 can modify any threshold on the dashboard</p>
 <div class="ev-gates is-two inset">
   <article class="ev-gate reveal">
