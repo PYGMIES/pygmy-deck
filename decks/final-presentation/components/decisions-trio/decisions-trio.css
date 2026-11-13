@@ -48,7 +48,7 @@
   gap: 4px;
   padding: 20px var(--gap-s);
   border-radius: var(--radius);
-  font-size: 28px;
+  font-size: max(28px, var(--fs-min, 0px));
   line-height: 1.25;
 }
 

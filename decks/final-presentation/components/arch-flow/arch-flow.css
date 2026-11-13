@@ -158,7 +158,7 @@
 }
 
 .c-arch-flow__node--pill {
-  font-size: 26px;
+  font-size: max(26px, var(--fs-min, 0px));
   border-radius: 999px;
 }
 

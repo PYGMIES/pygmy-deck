@@ -48,7 +48,7 @@
   text-align: center;
   font-family: var(--font-display);
   font-weight: var(--display-weight);
-  font-size: 28px;
+  font-size: max(28px, var(--fs-min, 0px));
   line-height: 1;
   letter-spacing: var(--display-tracking);
   color: var(--ink-accent);
