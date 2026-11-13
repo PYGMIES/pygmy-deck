@@ -1,5 +1,15 @@
-<!-- notes: SCRIPT (~15s): We have built the API. The only thing left is to connect C22's platform to our system. Their platform isn't ready yet, so we can't do that step. [Say who picks this up once it's ready.] → To conclude. -->
+<!-- notes: SCRIPT (~20s): We documented the API interfaces cleanly so C22 can connect to them. This is the interactive documentation C22 gets: health, campaigns, the evaluator policy and paper trades. The only thing left is to connect C22's platform to our system: on the slide, our system plugs into theirs. Their platform isn't ready yet, so we can't do that step. [Say who picks this up once it's ready.] → To conclude. -->
+<!-- notes: Screenshot: the FastAPI docs page of the app (localhost:8000/docs): default, campaign, evaluator-policy and paper-trades endpoints. -->
 <!-- @slide-title kicker="Handover" text="What Is Left" -->
-<!-- @statement icon="assets/icons/plug.svg" text="We built the API. One thing is left: <mark>connecting C22’s platform to our system.</mark>" class="inset" -->
-  <!-- @pill-note text="C22’s platform is not ready yet" -->
-<!-- @/statement -->
+<!-- @split cols="1fr 780px" align="center" class="inset" -->
+  <!-- @column class="is-left-stack" -->
+    <!-- @statement class="is-no-icon" icon="assets/icons/plug.svg" text="One thing is left: <mark>connecting C22’s platform to our system.</mark>" -->
+    <!-- @/statement -->
+    <!-- @plug-in -->
+    <!-- @pill-note text="C22’s platform is not ready yet" -->
+  <!-- @/column -->
+  <!-- @column class="is-api-col" -->
+    <!-- @pill-note class="is-callout" text="API interfaces documented cleanly for C22 to connect" -->
+    <!-- @image-frame src="assets/api-docs.jpg" alt="The FastAPI documentation page listing the health, campaign, evaluator-policy and paper-trades endpoints" fit="contain" class="is-shot" -->
+  <!-- @/column -->
+<!-- @/split -->

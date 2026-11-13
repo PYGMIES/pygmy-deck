@@ -1,0 +1,230 @@
+/* === COMPONENT (deck): import-flow ===
+   A five-node row (Clement → App → Retrain → Grade → Promote), built up over three slides.
+   Items for later steps show as faint ghosts so the path is visible from the start.
+   Animations play when the slide becomes active (.slide.active): the file flies from Clement
+   into the app (step 1) and the retrain bar fills (step 2). Reduced motion: final state, no motion. */
+.c-import-flow {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 72px;
+  min-height: 0;
+  padding-bottom: 24px;
+}
+
+.c-import-flow__row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 70px;
+}
+
+.c-import-flow__node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 250px;
+  height: 230px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-import-flow__node i {
+  width: 84px;
+  height: 84px;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.c-import-flow__node b {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.c-import-flow__arrow {
+  position: relative;
+  flex: none;
+  width: 76px;
+  height: 24px;
+}
+
+.c-import-flow__arrow::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -16px;
+  border-top: 5px solid var(--accent);
+  border-right: 5px solid var(--accent);
+  transform: rotate(45deg);
+}
+
+/* retrain progress bar (inside the Retrain node); the fill is the ::before */
+.c-import-flow__bar {
+  position: relative;
+  width: 170px;
+  height: 12px;
+  margin-top: -2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--on-card) 18%, transparent);
+  overflow: hidden;
+}
+
+.c-import-flow__bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+/* the file that Clement imports */
+.c-import-flow__file {
+  position: absolute;
+  left: 75px;
+  top: -112px;
+  display: grid;
+  place-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  background: var(--chart-bg);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--ink) 25%, transparent);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.c-import-flow__file i {
+  width: 60px;
+  height: 60px;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+/* captions */
+.slide .c-import-flow__caption,
+.slide .c-import-flow__closing {
+  max-width: none;
+  text-align: center;
+}
+
+.slide .c-import-flow__caption {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+  color: var(--ink);
+}
+
+.slide .c-import-flow__closing {
+  padding: 18px 44px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* --- step builds --------------------------------------------------------------------------
+   Pieces for a later click show as faint ghosts. The ghost level is set here (not under
+   .slide.active, and without .reveal) so the match-and-move glide between the click slides
+   fades a ghost up to 100% in place, instead of fading it out and back in. */
+.c-import-flow.is-step-1 [data-s="2"],
+.c-import-flow.is-step-1 [data-s="3"],
+.c-import-flow.is-step-2 [data-s="3"] {
+  opacity: 0.16;
+}
+
+/* the closing line keeps its space on every step (so the row never shifts) but only shows on the last */
+.c-import-flow:not(.is-step-3) .c-import-flow__closing {
+  visibility: hidden;
+}
+
+/* --- step 1: the file flies from Clement into the app --- */
+.slide.active .c-import-flow.is-step-1 .c-import-flow__file {
+  visibility: visible;
+  animation: if-file 1.7s ease-in-out 0.3s both;
+}
+
+.slide.active .c-import-flow.is-step-1 .is-app {
+  animation: if-glow 0.8s ease-out 1.65s both;
+}
+
+@keyframes if-file {
+  0% { opacity: 0; transform: translate(0, 12px); }
+  14% { opacity: 1; transform: translate(0, 0); }
+  42% { opacity: 1; transform: translate(0, 0); }
+  80% { opacity: 1; transform: translate(326px, 0); }
+  100% { opacity: 0; transform: translate(326px, 96px) scale(0.55); }
+}
+
+@keyframes if-glow {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent); }
+  40% { box-shadow: 0 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* --- step 2: retraining starts by itself --- */
+.slide.active .c-import-flow.is-step-2 .c-import-flow__bar::before {
+  animation: if-bar 2s linear 0.3s both;
+}
+
+.slide.active .c-import-flow.is-step-2 .is-retrain i {
+  animation: if-spin 1s linear 0.3s infinite;
+}
+
+.c-import-flow.is-step-3 .c-import-flow__bar::before {
+  width: 100%;
+}
+
+@keyframes if-bar {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes if-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- step 3: the tick pops when the person promotes --- */
+.slide.active .c-import-flow.is-step-3 .is-promote i {
+  animation: if-pop 0.5s var(--ease-out) 0.5s both;
+}
+
+@keyframes if-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  70% { transform: scale(1.18); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-import-flow *,
+  .slide.active .c-import-flow * {
+    animation: none !important;
+  }
+
+  .c-import-flow__file {
+    display: none;
+  }
+
+  .c-import-flow.is-step-2 .c-import-flow__bar::before {
+    width: 100%;
+  }
+}

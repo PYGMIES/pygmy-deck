@@ -1,0 +1,64 @@
+/* === COMPONENT (deck): decision-solo ===
+   One design decision across the whole slide: the decision on the left, what was rejected, why, and the trade-off stacked on the right. */
+.c-decision-solo {
+  display: grid;
+  grid-template-columns: 0.46fr 1fr;
+  gap: var(--gap-m);
+  height: 700px;
+}
+
+.c-decision-solo span {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.c-decision-solo p { max-width: none; }
+
+.c-decision-solo__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--gap-m);
+  padding: var(--gap-m);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.c-decision-solo__main p {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 54px;
+  line-height: 1.02;
+  letter-spacing: var(--display-tracking);
+}
+
+.c-decision-solo__side { display: grid; grid-template-rows: repeat(3, 1fr); gap: var(--gap-s); }
+
+.c-decision-solo__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 var(--gap-m);
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  color: var(--ink);
+}
+
+.c-decision-solo__card p { font-size: 40px; font-weight: 600; line-height: 1.2; }
+.c-decision-solo__card.is-trade { background: var(--card); color: var(--on-card); }
+
+.c-decision-solo__icon {
+  width: 132px;
+  height: 132px;
+  fill: none;
+  stroke: var(--on-accent);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.c-decision-solo__icon text { font: 800 24px var(--font-display); fill: var(--on-accent); stroke: none; text-anchor: middle; }

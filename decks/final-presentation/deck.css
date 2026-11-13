@@ -744,3 +744,41 @@
 
 /* bold kicker (Project Cassandra architecture slides) */
 .c-slide-title.is-bold .c-slide-title__kicker { font-weight: 800; }
+
+/* call-out pill: solid accent so the key point stands out (slide 73) */
+.slide .c-pill-note.is-callout {
+  align-self: stretch;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* tick in front of the call-out text */
+.slide .c-pill-note.is-callout::before {
+  content: "";
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  margin-right: 16px;
+  vertical-align: -9px;
+  background: var(--ink);
+  -webkit-mask: url(assets/icons/check.svg) center / contain no-repeat;
+  mask: url(assets/icons/check.svg) center / contain no-repeat;
+}
+
+/* slide 73: call-out + screenshot group, a little tighter and lifted */
+.c-column.is-api-col {
+  gap: 28px;
+  margin-top: -40px;
+}
+
+/* slide 73: statement without its icon, stacked above the plug-in diagram */
+.c-statement.is-no-icon .c-statement__icon {
+  display: none;
+}
+
+.c-column.is-left-stack {
+  gap: 44px;
+}
