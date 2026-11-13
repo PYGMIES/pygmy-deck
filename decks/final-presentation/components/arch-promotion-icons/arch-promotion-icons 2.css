@@ -1,0 +1,34 @@
+/* === COMPONENT (deck): arch-promotion-icons ===
+   Slide 25's architecture with industry-standard icons instead of boxes: cylinder = database, bucket = object
+   storage, monitor = dashboard, { } = API, container, scales = Judge, clipboard = evaluator, clock = polling loop.
+   Same lanes, arrows and colours as arch-promotion; arrows snap to the icon squares. */
+.c-arch__iconbox { background: none; display: block; }
+.c-arch__iconbox svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--bg);
+  stroke: var(--ink);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+.c-arch__iconbox svg path[d*="M32 8 V54"] { fill: none; }
+
+.c-arch__iconlabel {
+  position: absolute;
+  z-index: 2;
+  font-size: var(--fs-small);
+  line-height: 1.15;
+  max-width: none;
+  color: var(--ink-muted);
+}
+.c-arch__iconlabel b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: max(32px, var(--fs-min, 0px));
+  letter-spacing: var(--display-tracking);
+  color: var(--ink);
+}
+.c-arch__iconlabel small { display: block; font-size: var(--fs-small); font-weight: 500; }

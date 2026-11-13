@@ -8,7 +8,7 @@
   grid-template-rows: auto auto auto 112px auto 112px auto;
   column-gap: var(--gap-s);
   row-gap: 10px;
-  margin-top: -16px;
+  margin-top: -44px;
 }
 
 .c-flow-timeline .is-app { --o: var(--owner-app); --on: var(--on-owner-app); }
@@ -34,7 +34,7 @@
   grid-column: 1 / -1;
   grid-row: 2;
   align-self: start;
-  margin: 41px 10% 0;
+  margin: 36px 10% 0;
   height: 4px;
   background: var(--ink-muted);
   position: relative;
@@ -63,8 +63,8 @@
 .c-flow-timeline__stage i {
   display: grid;
   place-items: center;
-  width: 86px;
-  height: 86px;
+  width: 76px;
+  height: 76px;
   border-radius: 50%;
   background: var(--o);
   color: var(--on);
@@ -72,7 +72,7 @@
   font-family: var(--font-display);
   font-style: normal;
   font-weight: 800;
-  font-size: 48px;
+  font-size: 42px;
   padding-top: 4px;
 }
 
@@ -118,8 +118,8 @@
 .c-flow-timeline__foot {
   grid-column: 1 / -1;
   grid-row: 7;
-  margin-top: 14px;
-  padding: var(--gap-s) var(--gap-m);
+  margin-top: 8px;
+  padding: 18px var(--gap-m);
   border-radius: var(--radius);
   background: var(--card);
   color: var(--on-card);

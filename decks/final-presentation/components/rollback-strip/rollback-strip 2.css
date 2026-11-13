@@ -1,0 +1,26 @@
+/* === COMPONENT (deck): rollback-strip ===
+   The model-version timeline from promote-flow's rollback row (v5, v6, v7 live) with a curved arrow
+   back to v6, as a standalone block. Position it with a class on the slide (see deck.css). */
+.c-rollback-strip { width: 500px; }
+.c-rollback-strip__kicker {
+  font-size: var(--fs-min);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  max-width: none;
+}
+.c-rollback-strip__models { display: flex; align-items: center; margin-top: 12px; }
+.c-rollback-strip__models .m {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 100px; height: 60px; padding: 0 var(--gap-s);
+  border-radius: var(--radius-s);
+  background: var(--card); color: var(--on-card);
+  font-family: var(--font-display); font-weight: var(--display-weight); font-size: 32px;
+  white-space: nowrap;
+}
+.c-rollback-strip__models .m small { font-family: var(--font-body); font-size: var(--fs-min); font-weight: 700; margin-left: 10px; }
+.c-rollback-strip__models .m.is-live { background: var(--accent); color: var(--ink); min-width: 170px; }
+.c-rollback-strip__models em { width: 60px; height: 3px; background: var(--ink-muted); }
+.c-rollback-strip__back { display: block; width: 500px; height: 60px; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.c-rollback-strip__label { font-size: var(--fs-min); max-width: none; white-space: nowrap; }

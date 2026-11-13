@@ -257,3 +257,39 @@
 .c-split-flow__notes li { font-size: var(--fs-small); font-weight: 600; line-height: 1.4; }
 
 .c-split-flow__cap em { font-style: italic; background: none; box-shadow: none; padding: 0; text-decoration: none; }
+
+/* --- spread-out layout (slides 37-40): bigger gaps, taller cards, centred titles, plain example line --- */
+.c-split-flow { gap: 28px; }
+.c-split-flow__count-row { align-items: center; gap: 48px; }
+.c-split-flow__count { font-size: 170px; }
+.c-split-flow__chip { height: 80px; font-size: 34px; }
+.c-split-flow__trigger { font-size: 32px; }
+.c-split-flow__grid { row-gap: 18px; }
+.c-split-flow__before { font-size: 30px; }
+.c-split-flow__card {
+  min-height: 250px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.c-split-flow__card h3 { font-size: 76px; }
+.c-split-flow__cond-box {
+  padding: 0;
+  background: none;
+  color: var(--ink-muted);
+  border-radius: 0;
+  font-size: 32px;
+  font-weight: 600;
+  font-style: italic;
+  text-align: center;
+}
+.c-split-flow__conds { margin-top: 0; }
+
+.c-split-flow__count.is-text { font-size: 84px; line-height: 0.92; letter-spacing: var(--display-tracking); }
+.c-split-flow__cap { flex: none; white-space: nowrap; }
+
+/* count row: big "~1 month's worth" with the italic caption directly under it; notes box stays at the right */
+.c-split-flow__head { display: flex; flex-direction: column; gap: 6px; }
+.c-split-flow__count.is-text { white-space: nowrap; }
+.c-split-flow__cap { font-style: italic; }
+.c-split-flow__cond-box { font-size: 30px; white-space: nowrap; }
