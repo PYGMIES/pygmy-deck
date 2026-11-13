@@ -165,9 +165,9 @@
   opacity: 0.45;
 }
 
-/* an empty closing line takes no space */
-.c-import-flow__closing:empty {
-  display: none;
+/* the closing line keeps its space on every step (so the row never shifts) but only shows on the last */
+.c-import-flow:not(.is-step-3) .c-import-flow__closing {
+  visibility: hidden;
 }
 
 /* --- step 1: the file flies from Clement into the app --- */
