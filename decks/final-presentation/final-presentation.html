@@ -8371,7 +8371,20 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="75" data-name="conclusion-data">
+<section class="slide" data-slide="75" data-name="section-conclusion">
+<!-- notes: SCRIPT (~5s): To conclude, three things. -->
+<div class="c-section-divider ">
+  <span class="c-section-divider__num reveal">10</span>
+  <div class="c-section-divider__text">
+    <h2 class="reveal">Conclusion</h2>
+    <p class="reveal">What we verified, explored and built</p>
+    <span class="c-section-divider__presenter reveal"></span>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-slide="76" data-name="conclusion-data">
 <!-- notes: TODO owner. SCRIPT (~30s): To conclude, three things. First, we independently checked C22's hypothesis that they need a larger and more diverse dataset. Our sponsor said it himself, and I'll read it: "Some of your findings line up with what I've been seeing independently." And: "I think the model itself you work on is pretty good, it's just maybe like you said the lack of data that can't paint a better picture." That is the research partnership we set out to be: a second pair of eyes that reaches the same conclusion on its own. → Fresh perspective. -->
 <!-- notes: Source: message from our sponsor (pasted by the team). Wording kept as sent; only "cant" was changed to "can't" and a comma added. Part of the message, "Crowd followers don't lose more often. matches my result that the crowd tells you about price", is on the slide as well. -->
 <header class="c-slide-title ">
@@ -8386,7 +8399,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="76" data-name="conclusion-perspective">
+<section class="slide" data-slide="77" data-name="conclusion-perspective">
 <!-- notes: TODO owner. SCRIPT (~30s): Second, a fresh perspective. We explored 30 variants across notebooks 7 to 15: different feature sets, different model types and different targets. Each dot on the chart is one of them, scored on the locked campaigns. Hover a dot to see what that notebook changed. Only 6 finish above zero, and where we have intervals every one spans zero. Swapping the model type moved AUC by only 0.002, so the ceiling is the data, not the model. That is what new eyes on feature engineering and modelling beyond the current rules gives C22. → An end-to-end suite. -->
 <!-- notes: Same chart as "What Each Notebook Tried" (slide 69), shown smaller. Figures from slide 8: 30 variants across notebooks 7 to 15, AUC moved 0.002. -->
 <header class="c-slide-title ">
@@ -8470,7 +8483,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="77" data-name="conclusion-suite">
+<section class="slide" data-slide="78" data-name="conclusion-suite">
 <!-- notes: TODO owner. SCRIPT (~30s): Third, an end-to-end suite. C22 doesn't just get a model, it gets a platform. Trades come in through the API and are prepared for the Judge. The Judge scores each trade, paper trading tracks the result, and the dashboard shows it. And when new campaigns finish, a training run starts on its own, the new model is graded against the current one, and a person promotes it, with every older model kept for rollback. So the Judge is easy to update and easy to retrain in the long run, after we have handed over. → Questions. -->
 <!-- notes: Mid-term value proposition (slide "Beyond the Model"): fresh perspective, new modelling, end-to-end suite. Retraining facts as on slide 10 and the handover slides: a run starts after 8 new campaigns; only C22 promotes. -->
 <header class="c-slide-title ">
@@ -8509,7 +8522,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="78" data-name="qna">
+<section class="slide" data-slide="79" data-name="qna">
 <!-- notes: SCRIPT (~10s): That's everything from us. Thank you. We're happy to take questions, and we can jump back to the architecture or the timeline if that helps. -->
 <!-- notes: 30 min Q&A. Jump with #28 (architecture) and #71 (timeline) in the URL. -->
 <div class="c-closing is-title-only">
@@ -8522,7 +8535,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="79" data-name="section-appendix">
+<section class="slide" data-slide="80" data-name="section-appendix">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">A</span>
   <div class="c-section-divider__text">
@@ -8534,7 +8547,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="80" data-name="app-latency-throughput">
+<section class="slide" data-slide="81" data-name="app-latency-throughput">
 <!-- notes: Appendix. Evidence behind the latency and throughput requirements on the NFR slide. Left chart: the median time for gold to move $0.10 against the desk is 0.6-0.85 s over a typical minute, and it varies by hour (UTC); it is about 0.3 s in the 13-14 UTC London/New York overlap. Right chart: the share of trades that fail the $0.10 adverse-price check grows with end-to-end latency (client fill to desk order); keeping failures at 5% needs about 50-90 ms. Throughput, all 84,456 trades Feb-Sep: the busiest minute had 19 trades and the busiest second 5, from 5 different accounts; the median gap between trades is 24 s. Even at the busiest second with 1 s latency about 5 trades are judged at once, so sizing for bursts of 5-10 simultaneous trades is plenty. Only 2% of trades close within 5 s. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -8567,7 +8580,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="81" data-name="app-latency-budget">
+<section class="slide" data-slide="82" data-name="app-latency-budget">
 <!-- notes: Appendix. Follows the latency and throughput evidence slide. Left: what the historical data says about the 10c adverse-price check. It only works if the time from client fill to desk order stays around 100 ms; at 1 s roughly 30% of trades already fail it. That is why the 10c latency limit is the requirement that matters, not concurrency: 6 trades/min is the busiest period anywhere in the data. Keeping failures at 1% needs about 15-30 ms. In a calm minute (p10 volatility) 5% failures allows about 0.7 s, but in the most volatile 1% of minutes (news spikes) it is about 3 ms and most trades fail whatever the system does. These numbers assume the check compares prices once, when the desk places its order; if a move to +10c at any point before that counts, the limits roughly halve. There is no data finer than one second, so sub-second figures were scaled down from 1-10 minute measurements and cross-checked against the second-stamped fills. Below 1 s the real market moves slower than the scaling predicts, so the budget is on the cautious side. Right: our own peak run (peak-790963676.csv): 102 trades through the pipeline, 99 completed and 3 marked slipped (OANDA's price moved between the cached candle and the pipeline's read). The clock starts when the API receives the trade, so the time from the client's fill to reaching us is not included. Received to decision published is 31 ms at the median, 88 ms at p90, 228 ms at p99. Received to OANDA price read is 558 ms at the median and 951 ms at p99. About 10% of trades are over 100 ms. The median is fine; the slow tail is on the Slow 10% slide. If the desk order has to wait for the OANDA price check, almost every trade misses the budget. Bursts of 4-5 trades did not slow anything noticeably. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -8607,7 +8620,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="82" data-name="app-latency-architecture">
+<section class="slide" data-slide="83" data-name="app-latency-architecture">
 <!-- notes: Appendix. Where the time goes for an open trade, measured in a peak run of 102 trades (peak-790963676.csv). Each chip is the median time of that hop, with the 99th percentile beneath. The clock starts when the API receives the trade; the client round trip (13 ms median) is measured separately and is not part of the 31 ms to a published decision. API to Postgres is the campaign lookup plus storing the open trade. Queue wait is about half a millisecond. The worker's Postgres chip is counting earlier closed trades (2 ms median, 108 ms at p99) plus storing the prediction (3 ms). The Judge call is 14 ms median, of which the model itself is about 3 ms; the rest is network and a new HTTP client built per call. The Oanda price read dominates everything else at about 0.5 s and is the step that decides whether the order meets the latency budget. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -8696,7 +8709,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="83" data-name="app-latency-tail">
+<section class="slide" data-slide="84" data-name="app-latency-tail">
 <!-- notes: Appendix. Why the slowest 10% of decisions are slow, from the peak run of 102 trades. Three steps cause the tail. The Judge call: median 10 ms for network and client, 32 ms at p90, 87 ms at p99; judge.client_setup alone is 80 ms at p99 because a new HTTP client (and its TLS setup) is built on every call, so a shared client would remove most of it. Counting earlier closed trades: one query with a bad tail, 2 ms median but 107 ms at p99, worth an EXPLAIN and probably a missing index. Storing the open trade: two commits, 8 ms median and 31 ms at p99, which could be one. What turned out not to be the problem: queue wait is about 0.5 ms (p99 1.5 ms); every Redis step is under 1 ms at the median; the judge model itself takes about 3 ms; bursts of 5 did not slow anything down. An earlier suspicion that open trades would sit behind a one-second wait was wrong; with 15 workers one is always free, and the 645 ms seen in the smoke run was a cold start. The real problem is OANDA, on both open and close. Clock note: the containers' clocks differ from the Mac's, so we measure from when the API receives the trade; a --host-clock switch changes it back to the seed's send time. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -8730,7 +8743,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="84" data-name="workflow-campaign-start">
+<section class="slide" data-slide="85" data-name="workflow-campaign-start">
 <!-- notes: James Z. Walk the six steps top to bottom. Pause on step 1 (reference price) and step 5 (six history features; a new trader gets zeros/nulls, not an error). Land the callout: one transaction, so a failed Redis write rolls everything back. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -8783,7 +8796,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="85" data-name="workflow-open-trade">
+<section class="slide" data-slide="86" data-name="workflow-open-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the trade is queued, a worker runs steps 3-6. Step 4: 18 features built live from the trade plus the cached history, then the Judge decides. Step 5: Oanda is a stand-in for C22's market data; slippage is the gap between the trader's entry price and ours. Key notes: in production, market data is polled or read from C22 directly and no response is sent. C22's slippage threshold is 0.10; we adjusted it for the demo because of the historical data. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -8841,7 +8854,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="86" data-name="workflow-close-trade">
+<section class="slide" data-slide="87" data-name="workflow-close-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the close is queued, a worker runs steps 3-6. Key notes: the Redis rolling metrics update even if the simulated close fails (e.g. the market price fetch). They are updated with a read-check-write retry pattern instead of locks. Reverse-trading PnL streams to the dashboard the moment each trade closes. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -8884,7 +8897,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="87" data-name="workflow-campaign-end">
+<section class="slide" data-slide="88" data-name="workflow-campaign-end">
 <!-- notes: James Z. Five steps, top to bottom. The /end call is idempotent: a second request for an already ended campaign does nothing and does not rerun the flow. Open trades are force-failed so the evaluation only uses completed trades. The same completed trades are scored three ways: Judge-led reverse, reverse all trades, coin-flip-led reverse. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -8926,7 +8939,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="88" data-name="app-correlation">
+<section class="slide" data-slide="89" data-name="app-correlation">
 <!-- notes: Appendix. Pearson correlation of the point-in-time features with each other and with the two targets (last two rows and columns). Leaked stop and target fields are already removed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -8955,7 +8968,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="89" data-name="app-learning-calibration">
+<section class="slide" data-slide="90" data-name="app-learning-calibration">
 <!-- notes: Appendix. Left: validation AUC against training campaigns on the gross target is flat (correlation −0.383), so more campaigns do not help yet. Right: calibration fitted on out-of-fold predictions only; isotonic moves Brier 0.2384 to 0.2380. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -8974,7 +8987,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="90" data-name="app-shap-features">
+<section class="slide" data-slide="91" data-name="app-shap-features">
 <!-- notes: Appendix. Per-feature mean |SHAP|. Solid bars: full 26-feature model. Faded bars: no_outcome model. Colours are feature groups. Take outcome history away and prior_sl_use_rate and sec_since_last_close take over. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9003,7 +9016,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="91" data-name="app-cost-curve">
+<section class="slide" data-slide="92" data-name="app-cost-curve">
 <!-- notes: Appendix. The reversing cost is a constant $7 per lot, which is what flips the sign of fade-everything. Sweeping the assumed cost from $0 to $7, the model's rule sits between the 13.5th and 22.9th percentile of random selection at the same exposure at every level. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9022,7 +9035,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="92" data-name="app-market-data">
+<section class="slide" data-slide="93" data-name="app-market-data">
 <!-- notes: Appendix. Market-data features on the no_outcome arm, across three learners. Share of mean |SHAP| divided by a uniform share, so 1.0 means indifferent. AUC says neutral-to-better, dollars say worse in all eight arms. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9041,7 +9054,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="93" data-name="app-dropped">
+<section class="slide" data-slide="94" data-name="app-dropped">
 <!-- notes: Appendix. Levers we tried and dropped, with the measured result. Market context: 18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005 (CI −0.0018 to +0.0025); 14 Yahoo macro features B+C −$23.5k to −$47.6k; NB14 flips negative on all three learners. SL/TP channel: even the leaked flag buys only +0.006. Hyperparameters: 50 Optuna trials +0.0028 CV AUC. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9067,7 +9080,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="94" data-name="app-decomposition">
+<section class="slide" data-slide="95" data-name="app-decomposition">
 <!-- notes: Appendix. Value of perfecting each part of the hurdle model, in dollars per campaign at the top-5% readout. As fitted: classifier +687, gain arm +216, loss arm +229. Perfected ceilings: classifier +13,146, gain arm +24,663, loss arm +10,050. Marginal question: perfect classifier given perfect regressors adds +351; perfect gain and loss regressors given a perfect classifier add +12,417, 35 times more. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9086,7 +9099,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="95" data-name="app-feature-arms">
+<section class="slide" data-slide="96" data-name="app-feature-arms">
 <!-- notes: Appendix. The 26 features in four buckets (ticket, behaviour, outcome, counter) and which feature set (arm) keeps which. Sets are nested, so the filled region only shrinks left to right and the outcome block disappears first: full 26, no_outcome 18, behaviour_only 14, ticket_only 6. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9115,7 +9128,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="96" data-name="app-topk">
+<section class="slide" data-slide="97" data-name="app-topk">
 <!-- notes: Appendix. Top-k ranking quality: each arm fades the same fraction of every campaign, so exposure is identical and only the picks differ. Realised reverseProfit in $000 against random at matched exposure. The full model, which sees outcome history, sits below random at every fraction (e.g. −$23.1k vs −$14.2k at 50%). The other arms hover around random. All lines are negative at most fractions: this is a ranking check, not a profit claim. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9134,7 +9147,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="97" data-name="app-hyperparams">
+<section class="slide" data-slide="98" data-name="app-hyperparams">
 <!-- notes: Appendix. Final hyperparameters of the v5 judge (judge_v5_gross_18, 18 no_outcome features). Source: scripts/target_ablation.py BASE, CLF_PARAMS, REG_PARAMS. One LightGBM parameter set shared by all three models; the classifier uses binary loss, the gain and loss regressors use huber. Early stopping 100 rounds; final refit at the median best iteration across the six folds: classifier 44 trees, gain 6,392, loss 6,412. Isotonic calibration on leave-one-fold-out predictions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9201,7 +9214,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="98" data-name="market-regimes">
+<section class="slide" data-slide="99" data-name="market-regimes">
 <!-- notes: To avoid cherry-picking an easy window, we used two lenses. Activity is the number of trades per slot. Volatility is beta against gold futures. That gives four market conditions, and we picked two opposite corners. → Here’s the data behind those labels. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9262,7 +9275,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="99" data-name="demo-data">
+<section class="slide" data-slide="100" data-name="demo-data">
 <!-- notes: On the left, we counted trades in a rolling 30-minute window. Typical sits near p50, the median, and busy is p95 and above. On the right, we measured each slot’s beta against gold futures. One or less is calm, above one is volatile. → Applying both rules gives us our two timeslots. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -9287,7 +9300,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="100" data-name="chosen-timeslots">
+<section class="slide" data-slide="101" data-name="chosen-timeslots">
 <!-- notes: Our typical, calm slot is 3:30 to 4:00, and our busy, volatile slot is 5:30 to 6:00. Together they test the Judge in both an ordinary and a stressful market. → With that, I’ll hand over to Jerrick to start the demo. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
