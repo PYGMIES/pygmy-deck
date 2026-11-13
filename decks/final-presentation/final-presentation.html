@@ -8261,13 +8261,13 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="73" data-name="handover-how">
-<!-- notes: SCRIPT (~50s): We hand over between 17 and 30 November, in four steps. One, access: C22 gets the app folder as a zip. They create a free OANDA practice account and paste its token into the .env file. A live account's token won't work. The Supabase settings are local defaults, the same on every machine, so there are no secrets to hand over. Two, run it: npm ci, then make start, then make seed in a second terminal, and restart with make start. The seed loads 43 campaigns, 33 to 77. You need Docker, Node 20 or newer, make, Python 3, curl and uv. Three, walk through: we can't demo a retrain live, because a run only starts after every 8 completed campaigns and can take up to 2 hours. The first run starts when campaign 85 ends, about four weeks away. So we explain how retraining works, show the evaluator's three recommendations, Promote, Keep or Hold, and show where to promote on the Judge Performance page. Only C22 can promote a model, and the evaluator never changes anything by itself. Four, check: the Campaign page lists campaigns 33 to 77, and the API docs open at localhost:8000/docs. → What is left. -->
+<!-- notes: SCRIPT (~50s): We hand over between 17 and 30 November, in three steps. One, access: C22 gets the app folder as a zip. They create a free OANDA practice account and paste its token into the .env file. A live account's token won't work. The Supabase settings are local defaults, the same on every machine, so there are no secrets to hand over. Two, run it: npm ci, then make start, then make seed in a second terminal, and restart with make start. The seed loads 43 campaigns, 33 to 77. You need Docker, Node 20 or newer, make, Python 3, curl and uv. Three, walk through: we can't demo a retrain live, because a run only starts after every 8 completed campaigns and can take up to 2 hours. The first run starts when campaign 85 ends, about four weeks away. So we explain how retraining works, show the evaluator's three recommendations, Promote, Keep or Hold, and show where to promote on the Judge Performance page. Only C22 can promote a model, and the evaluator never changes anything by itself. → What is left. -->
 <!-- notes: Sources: project-cassandra README, Makefile and doc/client at the 11 Nov commit. Repair steps, not part of setup: make backfill-features is only for campaigns added later (the seed already holds the feature vectors); make register-v5-run only for the errors champion_not_ready or no_active_model. Docs to point to: RETRAINING.md, EVALUATOR.md, RETRAINING_CONTRACT.md, EVALUATOR_RULES.md. :8001 is the live Judge (curl localhost:8001/ready), :8002 is the trainer, curl localhost:8000/health is the app health check. Nothing is sent to a broker: all reversals are paper trades. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Handover</span>
   <h1 class="reveal">How We Hand Over</h1>
 </header>
-<div class="c-card-grid inset" style="--grid-cols: 4;">
+<div class="c-card-grid inset" style="--grid-cols: 3;">
   
   <article class="c-step-card reveal ">
   <header>
@@ -8292,14 +8292,6 @@ body.overview .deck-viewport {
   </header>
   <h3>Walk through</h3>
   <p>We explain retraining: a run starts after 8 new campaigns. The evaluator says Promote, Keep or Hold. Only C22 promotes.</p>
-</article>
-  <article class="c-step-card reveal ">
-  <header>
-    <span class="c-step-card__num">4</span>
-    <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzNCIgcj0iMjUiLz48Y2lyY2xlIGN4PSIzMCIgY3k9IjM0IiByPSIxNSIvPjxjaXJjbGUgY3g9IjMwIiBjeT0iMzQiIHI9IjUiIGZpbGw9IiMwMDAiLz48cGF0aCBkPSJNMzAgMzQgNTYgOE00OCA4aDh2OCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
-  </header>
-  <h3>Check</h3>
-  <p>Campaign page lists campaigns 33 to 77. API docs open at <code>:8000/docs</code></p>
 </article>
 
 </div>
