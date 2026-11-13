@@ -4428,26 +4428,13 @@ body.overview .deck-viewport {
 }
 
 /* --- step builds --------------------------------------------------------------------------
-   Earlier steps hold still; later steps are faint ghosts. */
-.slide .c-import-flow.is-step-2 [data-s="1"],
-.slide .c-import-flow.is-step-3 [data-s="1"],
-.slide .c-import-flow.is-step-3 [data-s="2"] {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
-.slide.active .c-import-flow.is-step-1 [data-s="2"],
-.slide.active .c-import-flow.is-step-1 [data-s="3"],
-.slide.active .c-import-flow.is-step-2 [data-s="3"] {
+   Pieces for a later click show as faint ghosts. The ghost level is set here (not under
+   .slide.active, and without .reveal) so the match-and-move glide between the click slides
+   fades a ghost up to 100% in place, instead of fading it out and back in. */
+.c-import-flow.is-step-1 [data-s="2"],
+.c-import-flow.is-step-1 [data-s="3"],
+.c-import-flow.is-step-2 [data-s="3"] {
   opacity: 0.16;
-  transform: none;
-}
-
-/* the Clement node fades back once he has done his part */
-.slide.active .c-import-flow.is-step-2 .is-clement,
-.slide.active .c-import-flow.is-step-3 .is-clement {
-  opacity: 0.45;
 }
 
 /* the closing line keeps its space on every step (so the row never shifts) but only shows on the last */
@@ -8632,7 +8619,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="70" data-name="sprint-changes">
-<!-- notes: SCRIPT (~40s, Arin): The Sprint 2 retro turned up three problems. First, there was no Wednesday check-in. The BA squad worked async, and nobody knew who was doing what. We added a live Wednesday sync, and at the Sprint 3 retro we kept it, capped at 15 to 20 minutes. Second, work got finished on the last day. Wednesday is now our internal deadline, so we have two to three days of buffer, and at the Sprint 3 retro nobody had anything to put under Stop. Third, gaps only showed up once we were building. Now each story is broken into inputs, outputs and acceptance criteria, and for Sprint 3 we wrote the design decisions down before the build. → Handover. -->
+<!-- notes: SCRIPT (~40s, Arin): The Sprint 2 retro turned up two problems. First, there was no Wednesday check-in. The BA squad worked async, and nobody knew who was doing what. We added a live Wednesday sync, and at the Sprint 3 retro we kept it, capped at 15 to 20 minutes. Second, work got finished on the last day. Wednesday is now our internal deadline, so we have two to three days of buffer, and at the Sprint 3 retro nobody had anything to put under Stop. → Handover. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
   <h1 class="reveal">Sprint 2 → Sprint 3</h1>
@@ -8651,11 +8638,6 @@ body.overview .deck-viewport {
   <p class="c-change-row__found">Work was finished on the last day</p>
   <div class="c-change-row__fix"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMjciLz48cGF0aCBkPSJNMzIgMTZ2MTZsMTEgNyIvPjwvc3ZnPgo=);" aria-hidden="true"></i><p>Wednesday is the internal deadline, leaving two to three days of buffer</p></div>
   <p class="c-change-row__result">Sprint 3 retro: nothing left to put in Stop</p>
-</div>
-  <div class="c-change-row reveal ">
-  <p class="c-change-row__found">Gaps only showed up during the build</p>
-  <div class="c-change-row__fix"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDZoMjZsMTAgMTB2NDJIMTR6Ii8+PHBhdGggZD0iTTQwIDZ2MTBoMTAiLz48cGF0aCBkPSJNMjAgNDZsOC05IDYgNSAxMC0xMiIvPjwvc3ZnPgo=);" aria-hidden="true"></i><p>Break stories into inputs, outputs and acceptance criteria</p></div>
-  <p class="c-change-row__result">Sprint 3 plan: design decisions written down before the build</p>
 </div>
 
 </div>
@@ -8907,15 +8889,15 @@ body.overview .deck-viewport {
   <div class="c-import-flow__row">
     <div class="c-import-flow__file" aria-hidden="true"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDZoMjZsMTAgMTB2NDJIMTR6Ii8+PHBhdGggZD0iTTQwIDZ2MTBoMTAiLz48cGF0aCBkPSJNMjAgNDZsOC05IDYgNSAxMC0xMiIvPjwvc3ZnPgo=);"></i></div>
 
-    <div class="c-import-flow__node is-clement reveal" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMzIiIGN5PSIyMSIgcj0iMTEiLz48cGF0aCBkPSJNMTAgNTZjMi0xMyAxMS0yMCAyMi0yMHMyMCA3IDIyIDIwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Clement</b></div>
-    <div class="c-import-flow__arrow reveal" data-s="1"></div>
-    <div class="c-import-flow__node is-app reveal" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zMiA2IDQgMjBsMjggMTQgMjgtMTR6Ii8+PHBhdGggZD0iTTQgMzJsMjggMTQgMjgtMTRNNCA0NGwyOCAxNCAyOC0xNCIvPjwvc3ZnPgo=);" aria-hidden="true"></i><b>App</b></div>
-    <div class="c-import-flow__arrow reveal" data-s="2"></div>
-    <div class="c-import-flow__node is-retrain reveal" data-s="2"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDI2YTIxIDIxIDAgMCAxIDM4LTZNNTIgMzhhMjEgMjEgMCAwIDEtMzggNiIvPjxwYXRoIGQ9Ik01MiA4djEySDQwTTEyIDU2VjQ0aDEyIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Retrain</b><div class="c-import-flow__bar"></div></div>
-    <div class="c-import-flow__arrow reveal" data-s="3"></div>
-    <div class="c-import-flow__node is-grade reveal" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjgiIHk9IjkiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNCIgcng9IjMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDM4IDE2KSIvPjxwYXRoIGQ9Ik0zMyAyMSAxMCA0NCIvPjxwYXRoIGQ9Ik04IDU3aDMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Grade</b></div>
-    <div class="c-import-flow__arrow reveal" data-s="3"></div>
-    <div class="c-import-flow__node is-promote reveal" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Promote</b></div>
+    <div class="c-import-flow__node is-clement" data-morph="if-n1" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMzIiIGN5PSIyMSIgcj0iMTEiLz48cGF0aCBkPSJNMTAgNTZjMi0xMyAxMS0yMCAyMi0yMHMyMCA3IDIyIDIwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Clement</b></div>
+    <div class="c-import-flow__arrow" data-morph="if-a1" data-s="1"></div>
+    <div class="c-import-flow__node is-app" data-morph="if-n2" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zMiA2IDQgMjBsMjggMTQgMjgtMTR6Ii8+PHBhdGggZD0iTTQgMzJsMjggMTQgMjgtMTRNNCA0NGwyOCAxNCAyOC0xNCIvPjwvc3ZnPgo=);" aria-hidden="true"></i><b>App</b></div>
+    <div class="c-import-flow__arrow" data-morph="if-a2" data-s="2"></div>
+    <div class="c-import-flow__node is-retrain" data-morph="if-n3" data-s="2"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDI2YTIxIDIxIDAgMCAxIDM4LTZNNTIgMzhhMjEgMjEgMCAwIDEtMzggNiIvPjxwYXRoIGQ9Ik01MiA4djEySDQwTTEyIDU2VjQ0aDEyIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Retrain</b><div class="c-import-flow__bar"></div></div>
+    <div class="c-import-flow__arrow" data-morph="if-a3" data-s="3"></div>
+    <div class="c-import-flow__node is-grade" data-morph="if-n4" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjgiIHk9IjkiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNCIgcng9IjMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDM4IDE2KSIvPjxwYXRoIGQ9Ik0zMyAyMSAxMCA0NCIvPjxwYXRoIGQ9Ik04IDU3aDMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Grade</b></div>
+    <div class="c-import-flow__arrow" data-morph="if-a4" data-s="3"></div>
+    <div class="c-import-flow__node is-promote" data-morph="if-n5" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Promote</b></div>
   </div>
 
   <p class="c-import-flow__caption reveal">To update the model, Clement imports a file.</p>
@@ -8939,15 +8921,15 @@ body.overview .deck-viewport {
   <div class="c-import-flow__row">
     <div class="c-import-flow__file" aria-hidden="true"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDZoMjZsMTAgMTB2NDJIMTR6Ii8+PHBhdGggZD0iTTQwIDZ2MTBoMTAiLz48cGF0aCBkPSJNMjAgNDZsOC05IDYgNSAxMC0xMiIvPjwvc3ZnPgo=);"></i></div>
 
-    <div class="c-import-flow__node is-clement reveal" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMzIiIGN5PSIyMSIgcj0iMTEiLz48cGF0aCBkPSJNMTAgNTZjMi0xMyAxMS0yMCAyMi0yMHMyMCA3IDIyIDIwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Clement</b></div>
-    <div class="c-import-flow__arrow reveal" data-s="1"></div>
-    <div class="c-import-flow__node is-app reveal" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zMiA2IDQgMjBsMjggMTQgMjgtMTR6Ii8+PHBhdGggZD0iTTQgMzJsMjggMTQgMjgtMTRNNCA0NGwyOCAxNCAyOC0xNCIvPjwvc3ZnPgo=);" aria-hidden="true"></i><b>App</b></div>
-    <div class="c-import-flow__arrow reveal" data-s="2"></div>
-    <div class="c-import-flow__node is-retrain reveal" data-s="2"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDI2YTIxIDIxIDAgMCAxIDM4LTZNNTIgMzhhMjEgMjEgMCAwIDEtMzggNiIvPjxwYXRoIGQ9Ik01MiA4djEySDQwTTEyIDU2VjQ0aDEyIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Retrain</b><div class="c-import-flow__bar"></div></div>
-    <div class="c-import-flow__arrow reveal" data-s="3"></div>
-    <div class="c-import-flow__node is-grade reveal" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjgiIHk9IjkiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNCIgcng9IjMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDM4IDE2KSIvPjxwYXRoIGQ9Ik0zMyAyMSAxMCA0NCIvPjxwYXRoIGQ9Ik04IDU3aDMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Grade</b></div>
-    <div class="c-import-flow__arrow reveal" data-s="3"></div>
-    <div class="c-import-flow__node is-promote reveal" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Promote</b></div>
+    <div class="c-import-flow__node is-clement" data-morph="if-n1" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMzIiIGN5PSIyMSIgcj0iMTEiLz48cGF0aCBkPSJNMTAgNTZjMi0xMyAxMS0yMCAyMi0yMHMyMCA3IDIyIDIwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Clement</b></div>
+    <div class="c-import-flow__arrow" data-morph="if-a1" data-s="1"></div>
+    <div class="c-import-flow__node is-app" data-morph="if-n2" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zMiA2IDQgMjBsMjggMTQgMjgtMTR6Ii8+PHBhdGggZD0iTTQgMzJsMjggMTQgMjgtMTRNNCA0NGwyOCAxNCAyOC0xNCIvPjwvc3ZnPgo=);" aria-hidden="true"></i><b>App</b></div>
+    <div class="c-import-flow__arrow" data-morph="if-a2" data-s="2"></div>
+    <div class="c-import-flow__node is-retrain" data-morph="if-n3" data-s="2"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDI2YTIxIDIxIDAgMCAxIDM4LTZNNTIgMzhhMjEgMjEgMCAwIDEtMzggNiIvPjxwYXRoIGQ9Ik01MiA4djEySDQwTTEyIDU2VjQ0aDEyIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Retrain</b><div class="c-import-flow__bar"></div></div>
+    <div class="c-import-flow__arrow" data-morph="if-a3" data-s="3"></div>
+    <div class="c-import-flow__node is-grade" data-morph="if-n4" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjgiIHk9IjkiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNCIgcng9IjMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDM4IDE2KSIvPjxwYXRoIGQ9Ik0zMyAyMSAxMCA0NCIvPjxwYXRoIGQ9Ik04IDU3aDMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Grade</b></div>
+    <div class="c-import-flow__arrow" data-morph="if-a4" data-s="3"></div>
+    <div class="c-import-flow__node is-promote" data-morph="if-n5" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Promote</b></div>
   </div>
 
   <p class="c-import-flow__caption reveal">Retraining starts by itself. No notebook.</p>
@@ -8971,15 +8953,15 @@ body.overview .deck-viewport {
   <div class="c-import-flow__row">
     <div class="c-import-flow__file" aria-hidden="true"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDZoMjZsMTAgMTB2NDJIMTR6Ii8+PHBhdGggZD0iTTQwIDZ2MTBoMTAiLz48cGF0aCBkPSJNMjAgNDZsOC05IDYgNSAxMC0xMiIvPjwvc3ZnPgo=);"></i></div>
 
-    <div class="c-import-flow__node is-clement reveal" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMzIiIGN5PSIyMSIgcj0iMTEiLz48cGF0aCBkPSJNMTAgNTZjMi0xMyAxMS0yMCAyMi0yMHMyMCA3IDIyIDIwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Clement</b></div>
-    <div class="c-import-flow__arrow reveal" data-s="1"></div>
-    <div class="c-import-flow__node is-app reveal" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zMiA2IDQgMjBsMjggMTQgMjgtMTR6Ii8+PHBhdGggZD0iTTQgMzJsMjggMTQgMjgtMTRNNCA0NGwyOCAxNCAyOC0xNCIvPjwvc3ZnPgo=);" aria-hidden="true"></i><b>App</b></div>
-    <div class="c-import-flow__arrow reveal" data-s="2"></div>
-    <div class="c-import-flow__node is-retrain reveal" data-s="2"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDI2YTIxIDIxIDAgMCAxIDM4LTZNNTIgMzhhMjEgMjEgMCAwIDEtMzggNiIvPjxwYXRoIGQ9Ik01MiA4djEySDQwTTEyIDU2VjQ0aDEyIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Retrain</b><div class="c-import-flow__bar"></div></div>
-    <div class="c-import-flow__arrow reveal" data-s="3"></div>
-    <div class="c-import-flow__node is-grade reveal" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjgiIHk9IjkiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNCIgcng9IjMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDM4IDE2KSIvPjxwYXRoIGQ9Ik0zMyAyMSAxMCA0NCIvPjxwYXRoIGQ9Ik04IDU3aDMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Grade</b></div>
-    <div class="c-import-flow__arrow reveal" data-s="3"></div>
-    <div class="c-import-flow__node is-promote reveal" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Promote</b></div>
+    <div class="c-import-flow__node is-clement" data-morph="if-n1" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMzIiIGN5PSIyMSIgcj0iMTEiLz48cGF0aCBkPSJNMTAgNTZjMi0xMyAxMS0yMCAyMi0yMHMyMCA3IDIyIDIwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Clement</b></div>
+    <div class="c-import-flow__arrow" data-morph="if-a1" data-s="1"></div>
+    <div class="c-import-flow__node is-app" data-morph="if-n2" data-s="1"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zMiA2IDQgMjBsMjggMTQgMjgtMTR6Ii8+PHBhdGggZD0iTTQgMzJsMjggMTQgMjgtMTRNNCA0NGwyOCAxNCAyOC0xNCIvPjwvc3ZnPgo=);" aria-hidden="true"></i><b>App</b></div>
+    <div class="c-import-flow__arrow" data-morph="if-a2" data-s="2"></div>
+    <div class="c-import-flow__node is-retrain" data-morph="if-n3" data-s="2"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDI2YTIxIDIxIDAgMCAxIDM4LTZNNTIgMzhhMjEgMjEgMCAwIDEtMzggNiIvPjxwYXRoIGQ9Ik01MiA4djEySDQwTTEyIDU2VjQ0aDEyIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Retrain</b><div class="c-import-flow__bar"></div></div>
+    <div class="c-import-flow__arrow" data-morph="if-a3" data-s="3"></div>
+    <div class="c-import-flow__node is-grade" data-morph="if-n4" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjgiIHk9IjkiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNCIgcng9IjMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDM4IDE2KSIvPjxwYXRoIGQ9Ik0zMyAyMSAxMCA0NCIvPjxwYXRoIGQ9Ik04IDU3aDMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Grade</b></div>
+    <div class="c-import-flow__arrow" data-morph="if-a4" data-s="3"></div>
+    <div class="c-import-flow__node is-promote" data-morph="if-n5" data-s="3"><i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i><b>Promote</b></div>
   </div>
 
   <p class="c-import-flow__caption reveal">Graded automatically. Promoted by a person.</p>

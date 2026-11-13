@@ -143,26 +143,13 @@
 }
 
 /* --- step builds --------------------------------------------------------------------------
-   Earlier steps hold still; later steps are faint ghosts. */
-.slide .c-import-flow.is-step-2 [data-s="1"],
-.slide .c-import-flow.is-step-3 [data-s="1"],
-.slide .c-import-flow.is-step-3 [data-s="2"] {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
-.slide.active .c-import-flow.is-step-1 [data-s="2"],
-.slide.active .c-import-flow.is-step-1 [data-s="3"],
-.slide.active .c-import-flow.is-step-2 [data-s="3"] {
+   Pieces for a later click show as faint ghosts. The ghost level is set here (not under
+   .slide.active, and without .reveal) so the match-and-move glide between the click slides
+   fades a ghost up to 100% in place, instead of fading it out and back in. */
+.c-import-flow.is-step-1 [data-s="2"],
+.c-import-flow.is-step-1 [data-s="3"],
+.c-import-flow.is-step-2 [data-s="3"] {
   opacity: 0.16;
-  transform: none;
-}
-
-/* the Clement node fades back once he has done his part */
-.slide.active .c-import-flow.is-step-2 .is-clement,
-.slide.active .c-import-flow.is-step-3 .is-clement {
-  opacity: 0.45;
 }
 
 /* the closing line keeps its space on every step (so the row never shifts) but only shows on the last */
