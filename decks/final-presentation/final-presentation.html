@@ -4203,6 +4203,7 @@ body.overview .deck-viewport {
 /* the link between the two boxes */
 .c-plug-in__link {
   position: relative;
+  z-index: 4;
   flex: none;
   width: var(--pi-link);
   height: 66px;
@@ -4237,9 +4238,10 @@ body.overview .deck-viewport {
   position: absolute;
   left: calc(var(--pi-link) - 4px);
   top: 50%;
+  z-index: 5;
   width: 46px;
   height: 46px;
-  border: 5px solid var(--accent);
+  border: 8px solid var(--accent);
   border-radius: 50%;
   opacity: 0;
   pointer-events: none;
@@ -4248,11 +4250,11 @@ body.overview .deck-viewport {
 
 /* --- animation (plays each time the slide opens) --- */
 .slide.active .c-plug-in__snap {
-  animation: pi-ring 0.7s ease-out 2s both;
+  animation: pi-ring 0.8s ease-out 2s both;
 }
 
 .slide.active .c-plug-in__snap.is-late {
-  animation: pi-ring 0.7s ease-out 2.18s both;
+  animation: pi-ring 0.8s ease-out 2.2s both;
 }
 
 .slide.active .c-plug-in__plug {
@@ -4263,8 +4265,12 @@ body.overview .deck-viewport {
   animation: pi-cable 1.4s cubic-bezier(0.45, 0, 0.3, 1) 0.6s both;
 }
 
+.slide.active .c-plug-in__box.is-ours {
+  animation: pi-bump 0.4s ease-out 2s both;
+}
+
 .slide.active .c-plug-in__box.is-theirs {
-  animation: pi-theirs 0.6s ease-out 2s both, pi-jolt 0.45s ease-out 2s both;
+  animation: pi-theirs 0.6s ease-out 2s both, pi-jolt 0.55s ease-out 2s both, pi-flash 0.7s ease-out 2s both;
 }
 
 .slide.active .c-plug-in__box.is-theirs i {
@@ -4277,29 +4283,42 @@ body.overview .deck-viewport {
 
 @keyframes pi-plug {
   0% { transform: translateX(0) rotate(90deg); }
-  88% { transform: translateX(calc(var(--pi-d) - 6px)) rotate(90deg); }
-  94% { transform: translateX(calc(var(--pi-d) + 9px)) rotate(90deg); }
+  84% { transform: translateX(calc(var(--pi-d) - 14px)) rotate(90deg); }
+  91% { transform: translateX(calc(var(--pi-d) + 20px)) rotate(90deg); }
+  96% { transform: translateX(calc(var(--pi-d) - 5px)) rotate(90deg); }
   100% { transform: translateX(var(--pi-d)) rotate(90deg); }
 }
 
 @keyframes pi-cable {
   0% { width: 24px; }
-  88% { width: calc(var(--pi-d) + 18px); }
-  94% { width: calc(var(--pi-d) + 33px); }
+  84% { width: calc(var(--pi-d) + 10px); }
+  91% { width: calc(var(--pi-d) + 44px); }
+  96% { width: calc(var(--pi-d) + 19px); }
   100% { width: calc(var(--pi-d) + 24px); }
 }
 
 /* the snap: C22's box jolts as the plug seats, and two rings pulse out of the contact point */
 @keyframes pi-jolt {
   0% { transform: translateX(0); }
-  30% { transform: translateX(9px); }
-  60% { transform: translateX(-3px); }
+  22% { transform: translateX(18px); }
+  48% { transform: translateX(-7px); }
+  74% { transform: translateX(4px); }
   100% { transform: translateX(0); }
 }
 
+@keyframes pi-bump {
+  0%, 100% { transform: translateX(0); }
+  35% { transform: translateX(-7px); }
+}
+
+@keyframes pi-flash {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 85%, transparent); }
+  100% { box-shadow: 0 0 0 46px color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+
 @keyframes pi-ring {
-  0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.3); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(3.4); }
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.4); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(5.5); }
 }
 
 @keyframes pi-theirs {
@@ -5741,6 +5760,10 @@ body.overview .deck-viewport {
 .c-column.is-left-stack {
   gap: 44px;
 }
+
+/* slide 55 (How Step 4 Decides): the header (kicker, title, Fair comparison note) floats in with the usual stagger,
+   then the whole diagram floats in as one piece; reduced motion still turns it off in core/stage.css */
+.slide .ev-tree .reveal { transition-delay: 600ms; }
 </style>
 </head>
 <body>
