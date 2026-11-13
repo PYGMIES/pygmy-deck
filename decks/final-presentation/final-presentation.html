@@ -2023,6 +2023,23 @@ body.overview .deck-viewport {
 .c-flow-timeline.is-step-3 [data-s="5"] { visibility: hidden; }
 .c-flow-timeline.is-step-4 [data-s="5"] { visibility: hidden; }
 
+/* is-fill: no bottom banner on this build, so the rows grow to use the space the banner would have taken */
+.c-flow-timeline.is-fill {
+  grid-template-rows: auto auto auto 150px auto 150px;
+  row-gap: 18px;
+}
+.c-flow-timeline.is-fill .c-flow-timeline__foot { display: none; }
+
+/* is-dim: everything but the bottom statement drops to half opacity */
+.c-flow-timeline.is-dim > :not(.c-flow-timeline__foot):not(.c-flow-timeline__stage) { opacity: 0.5; }
+/* the number circles sit on the line: a solid half-tone fill, not a see-through one */
+.c-flow-timeline.is-dim .c-flow-timeline__stage h3,
+.c-flow-timeline.is-dim .c-flow-timeline__stage p { opacity: 0.5; }
+.c-flow-timeline.is-dim .c-flow-timeline__stage i {
+  background: color-mix(in srgb, var(--o) 50%, var(--bg));
+  color: color-mix(in srgb, var(--on) 50%, color-mix(in srgb, var(--o) 50%, var(--bg)));
+}
+
 /* ===== COMPONENT dd-heading ===== */
 /* === COMPONENT (deck): dd-heading ===
    Key Design Decisions content heading: kicker, title (86px, leaves room for the card), then an
@@ -2285,6 +2302,11 @@ body.overview .deck-viewport {
 .c-stage-tag.is-compact i { width: 44px; height: 44px; font-size: 26px; }
 .c-stage-tag.is-compact strong { font-size: 30px; }
 .c-stage-tag span:empty { display: none; }
+
+/* is-short: tighter box for the corner reminders on the Part 2 architecture slide */
+.c-stage-tag.is-compact.is-short { min-height: 56px; gap: 10px; padding: 6px 14px 6px 10px; }
+.c-stage-tag.is-compact.is-short i { width: 36px; height: 36px; font-size: 22px; }
+.c-stage-tag.is-compact.is-short strong { line-height: 1; }
 
 /* ===== COMPONENT rollback-strip ===== */
 /* === COMPONENT (deck): rollback-strip ===
@@ -6400,14 +6422,14 @@ body.overview .deck-viewport {
 <!-- notes: The same five steps as the previous slide, laid out as a timeline. Under each stage is who owns it, and under that, what it produces. The app notices eight new campaigns and freezes the data. A separate Trainer builds the challenger. The evaluator grades it. A person decides. Accuracy notes: the evaluator is rules code that runs inside the app, not a separate container. Reject means keep the current model. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
-  <h1 class="reveal">How a New Model Gets Made</h1>
+  <h1 class="reveal">How Does a New Model Get Created</h1>
 </header>
-<div class="c-flow-timeline is-step-1" data-morph-scope>
+<div class="c-flow-timeline is-step-1 is-fill" data-morph-scope>
   <p class="reveal c-flow-timeline__cap is-stages">Main stages</p>
   <i class="reveal c-flow-timeline__line"></i>
 
-  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 campaigns worth accumulated</h3><p>A run starts</p></div>
-  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare retraining data</h3><p>Older 4 validate, newer 4 test</p></div>
+  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 unseen campaigns</h3><p>A run starts</p></div>
+  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare training data</h3><p>Older 4 validate, newer 4 test</p></div>
   <div data-s="3" class="c-flow-timeline__stage is-trainer" style="grid-column:3"><i>3</i><h3>Train a challenger</h3><p>In a separate container</p></div>
   <div data-s="4" class="c-flow-timeline__stage is-eval" style="grid-column:4"><i>4</i><h3>Grade it</h3><p>Against the current champion</p></div>
   <div data-s="5" class="c-flow-timeline__stage is-dash" style="grid-column:5"><i>5</i><h3>C22 promotes challenger</h3><p>On the dashboard</p></div>
@@ -6422,8 +6444,8 @@ body.overview .deck-viewport {
   <div data-s="1" class="c-flow-timeline__out is-app" style="grid-column:1">Trigger to start retraining</div>
   <div data-s="2" class="c-flow-timeline__out is-app" style="grid-column:2">Retraining dataset</div>
   <div data-s="3" class="c-flow-timeline__out is-trainer" style="grid-column:3">A challenger model</div>
-  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">A recommendation</div>
-  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">A new live model</div>
+  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">Model promotion recommendation</div>
+  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">An active latest model</div>
 
   <p class="reveal c-flow-timeline__foot" data-s="5">Live trading keeps running throughout. Nothing changes until a person promotes.</p>
 </div>
@@ -6435,14 +6457,14 @@ body.overview .deck-viewport {
 <!-- notes: The same five steps as the previous slide, laid out as a timeline. Under each stage is who owns it, and under that, what it produces. The app notices eight new campaigns and freezes the data. A separate Trainer builds the challenger. The evaluator grades it. A person decides. Accuracy notes: the evaluator is rules code that runs inside the app, not a separate container. Reject means keep the current model. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
-  <h1 class="reveal">How a New Model Gets Made</h1>
+  <h1 class="reveal">How Does a New Model Get Created</h1>
 </header>
-<div class="c-flow-timeline is-step-2" data-morph-scope>
+<div class="c-flow-timeline is-step-2 is-fill" data-morph-scope>
   <p class="reveal c-flow-timeline__cap is-stages">Main stages</p>
   <i class="reveal c-flow-timeline__line"></i>
 
-  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 campaigns worth accumulated</h3><p>A run starts</p></div>
-  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare retraining data</h3><p>Older 4 validate, newer 4 test</p></div>
+  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 unseen campaigns</h3><p>A run starts</p></div>
+  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare training data</h3><p>Older 4 validate, newer 4 test</p></div>
   <div data-s="3" class="c-flow-timeline__stage is-trainer" style="grid-column:3"><i>3</i><h3>Train a challenger</h3><p>In a separate container</p></div>
   <div data-s="4" class="c-flow-timeline__stage is-eval" style="grid-column:4"><i>4</i><h3>Grade it</h3><p>Against the current champion</p></div>
   <div data-s="5" class="c-flow-timeline__stage is-dash" style="grid-column:5"><i>5</i><h3>C22 promotes challenger</h3><p>On the dashboard</p></div>
@@ -6457,8 +6479,8 @@ body.overview .deck-viewport {
   <div data-s="1" class="c-flow-timeline__out is-app" style="grid-column:1">Trigger to start retraining</div>
   <div data-s="2" class="c-flow-timeline__out is-app" style="grid-column:2">Retraining dataset</div>
   <div data-s="3" class="c-flow-timeline__out is-trainer" style="grid-column:3">A challenger model</div>
-  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">A recommendation</div>
-  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">A new live model</div>
+  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">Model promotion recommendation</div>
+  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">An active latest model</div>
 
   <p class="reveal c-flow-timeline__foot" data-s="5">Live trading keeps running throughout. Nothing changes until a person promotes.</p>
 </div>
@@ -6586,7 +6608,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">2</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left on-dark" style="left: 868px; top: 516px; width: 170px; font-size: max(26px, var(--fs-min, 0px));">After the<br>reply</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left on-dark" style="left: 868px; top: 516px; width: 170px; font-size: max(26px, var(--fs-min, 0px));">Calls<br>pipeline</p>
 
 
 
@@ -6657,7 +6679,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">2</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left on-dark" style="left: 868px; top: 516px; width: 170px; font-size: max(26px, var(--fs-min, 0px));">After the<br>reply</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left on-dark" style="left: 868px; top: 516px; width: 170px; font-size: max(26px, var(--fs-min, 0px));">Calls<br>pipeline</p>
 
   <svg class="reveal c-flow-db is-gray" style="left: 674px; top: 780px;" viewBox="0 0 93 118" aria-hidden="true">
   <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
@@ -6672,16 +6694,16 @@ body.overview .deck-viewport {
   <svg class="reveal c-flow-arrow c-flow-arrow--accent " viewBox="0 0 1920 1080" aria-hidden="true">
   <path d="M1100 850 L769 850"/>
 </svg>
-  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 748px; width: 36px; height: 36px;">
+  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 884px; width: 36px; height: 36px;">
   <strong style="font-size: max(26px, var(--fs-min, 0px));">3</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 734px; width: 250px; font-size: max(26px, var(--fs-min, 0px));">Checks it is time<br>and safe, saves<br>the run</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 872px; width: 380px; font-size: max(26px, var(--fs-min, 0px));">Checks for sufficient unseen campaign data</p>
 
 
   <div class="c-stage-tag c-stage-tag--app " style="left: 1190px; top: 40px; width: 660px;">
   <i>1</i>
-  <div><strong>8 campaigns worth accumulated</strong><span>A run starts</span></div>
+  <div><strong>8 unseen campaigns</strong><span>A run starts</span></div>
 </div>
 
 </div>
@@ -6750,7 +6772,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">2</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left on-dark" style="left: 868px; top: 516px; width: 170px; font-size: max(26px, var(--fs-min, 0px));">After the<br>reply</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left on-dark" style="left: 868px; top: 516px; width: 170px; font-size: max(26px, var(--fs-min, 0px));">Calls<br>pipeline</p>
 
   <svg class="reveal c-flow-db is-gray" style="left: 674px; top: 780px;" viewBox="0 0 93 118" aria-hidden="true">
   <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
@@ -6765,11 +6787,11 @@ body.overview .deck-viewport {
   <svg class="reveal c-flow-arrow c-flow-arrow--accent " viewBox="0 0 1920 1080" aria-hidden="true">
   <path d="M1100 850 L769 850"/>
 </svg>
-  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 748px; width: 36px; height: 36px;">
+  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 884px; width: 36px; height: 36px;">
   <strong style="font-size: max(26px, var(--fs-min, 0px));">3</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 734px; width: 250px; font-size: max(26px, var(--fs-min, 0px));">Checks it is time<br>and safe, saves<br>the run</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 872px; width: 380px; font-size: max(26px, var(--fs-min, 0px));">Checks for sufficient unseen campaign data</p>
 
   <svg class="reveal c-flow-db is-gray" style="left: 1214px; top: 780px;" viewBox="0 0 93 118" aria-hidden="true">
   <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
@@ -6785,15 +6807,15 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">4</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 300px; font-size: max(26px, var(--fs-min, 0px));">Freezes the data<br>into one file</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 300px; font-size: max(26px, var(--fs-min, 0px));">Creates and stores<br>training dataset</p>
 
   <div class="c-stage-tag c-stage-tag--app " style="left: 1190px; top: 40px; width: 660px;">
   <i>1</i>
-  <div><strong>8 campaigns worth accumulated</strong><span>A run starts</span></div>
+  <div><strong>8 unseen campaigns</strong><span>A run starts</span></div>
 </div>
   <div class="c-stage-tag c-stage-tag--app " style="left: 1190px; top: 152px; width: 660px;">
   <i>2</i>
-  <div><strong>Prepare retraining data</strong><span>Older 4 validate, newer 4 test</span></div>
+  <div><strong>Prepare training data</strong><span>Older 4 validate, newer 4 test</span></div>
 </div>
 
 </div>
@@ -6862,7 +6884,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">2</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left on-dark" style="left: 868px; top: 516px; width: 170px; font-size: max(26px, var(--fs-min, 0px));">After the<br>reply</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left on-dark" style="left: 868px; top: 516px; width: 170px; font-size: max(26px, var(--fs-min, 0px));">Calls<br>pipeline</p>
 
   <svg class="reveal c-flow-db is-gray" style="left: 674px; top: 780px;" viewBox="0 0 93 118" aria-hidden="true">
   <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
@@ -6877,11 +6899,11 @@ body.overview .deck-viewport {
   <svg class="reveal c-flow-arrow c-flow-arrow--accent " viewBox="0 0 1920 1080" aria-hidden="true">
   <path d="M1100 850 L769 850"/>
 </svg>
-  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 748px; width: 36px; height: 36px;">
+  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 884px; width: 36px; height: 36px;">
   <strong style="font-size: max(26px, var(--fs-min, 0px));">3</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 734px; width: 250px; font-size: max(26px, var(--fs-min, 0px));">Checks it is time<br>and safe, saves<br>the run</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 872px; width: 380px; font-size: max(26px, var(--fs-min, 0px));">Checks for sufficient unseen campaign data</p>
 
   <svg class="reveal c-flow-db is-gray" style="left: 1214px; top: 780px;" viewBox="0 0 93 118" aria-hidden="true">
   <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
@@ -6897,7 +6919,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">4</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 300px; font-size: max(26px, var(--fs-min, 0px));">Freezes the data<br>into one file</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 300px; font-size: max(26px, var(--fs-min, 0px));">Creates and stores<br>training dataset</p>
 
   <div class="reveal c-flow-node c-flow-node--orange " style="left: 1560px; top: 440px; width: 280px; height: 140px;">
   <strong style="font-size: max(32px, var(--fs-min, 0px));">Trainer</strong>
@@ -6910,14 +6932,14 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">5</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1370px; top: 516px; width: 180px; font-size: max(26px, var(--fs-min, 0px));">Hand-off<br>+ 4 links</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1370px; top: 516px; width: 180px; font-size: max(26px, var(--fs-min, 0px));">Retraining<br>request</p>
   <div class="c-stage-tag c-stage-tag--app " style="left: 1190px; top: 40px; width: 660px;">
   <i>1</i>
-  <div><strong>8 campaigns worth accumulated</strong><span>A run starts</span></div>
+  <div><strong>8 unseen campaigns</strong><span>A run starts</span></div>
 </div>
   <div class="c-stage-tag c-stage-tag--app " style="left: 1190px; top: 152px; width: 660px;">
   <i>2</i>
-  <div><strong>Prepare retraining data</strong><span>Older 4 validate, newer 4 test</span></div>
+  <div><strong>Prepare training data</strong><span>Older 4 validate, newer 4 test</span></div>
 </div>
 
 </div>
@@ -6929,14 +6951,14 @@ body.overview .deck-viewport {
 <!-- notes: The same five steps as the previous slide, laid out as a timeline. Under each stage is who owns it, and under that, what it produces. The app notices eight new campaigns and freezes the data. A separate Trainer builds the challenger. The evaluator grades it. A person decides. Accuracy notes: the evaluator is rules code that runs inside the app, not a separate container. Reject means keep the current model. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
-  <h1 class="reveal">How a New Model Gets Made</h1>
+  <h1 class="reveal">How Does a New Model Get Created</h1>
 </header>
-<div class="c-flow-timeline is-step-2" data-morph-scope>
+<div class="c-flow-timeline is-step-2 is-fill" data-morph-scope>
   <p class="reveal c-flow-timeline__cap is-stages">Main stages</p>
   <i class="reveal c-flow-timeline__line"></i>
 
-  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 campaigns worth accumulated</h3><p>A run starts</p></div>
-  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare retraining data</h3><p>Older 4 validate, newer 4 test</p></div>
+  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 unseen campaigns</h3><p>A run starts</p></div>
+  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare training data</h3><p>Older 4 validate, newer 4 test</p></div>
   <div data-s="3" class="c-flow-timeline__stage is-trainer" style="grid-column:3"><i>3</i><h3>Train a challenger</h3><p>In a separate container</p></div>
   <div data-s="4" class="c-flow-timeline__stage is-eval" style="grid-column:4"><i>4</i><h3>Grade it</h3><p>Against the current champion</p></div>
   <div data-s="5" class="c-flow-timeline__stage is-dash" style="grid-column:5"><i>5</i><h3>C22 promotes challenger</h3><p>On the dashboard</p></div>
@@ -6951,8 +6973,8 @@ body.overview .deck-viewport {
   <div data-s="1" class="c-flow-timeline__out is-app" style="grid-column:1">Trigger to start retraining</div>
   <div data-s="2" class="c-flow-timeline__out is-app" style="grid-column:2">Retraining dataset</div>
   <div data-s="3" class="c-flow-timeline__out is-trainer" style="grid-column:3">A challenger model</div>
-  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">A recommendation</div>
-  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">A new live model</div>
+  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">Model promotion recommendation</div>
+  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">An active latest model</div>
 
   <p class="reveal c-flow-timeline__foot" data-s="5">Live trading keeps running throughout. Nothing changes until a person promotes.</p>
 </div>
@@ -6964,14 +6986,14 @@ body.overview .deck-viewport {
 <!-- notes: The same five steps as the previous slide, laid out as a timeline. Under each stage is who owns it, and under that, what it produces. The app notices eight new campaigns and freezes the data. A separate Trainer builds the challenger. The evaluator grades it. A person decides. Accuracy notes: the evaluator is rules code that runs inside the app, not a separate container. Reject means keep the current model. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
-  <h1 class="reveal">How a New Model Gets Made</h1>
+  <h1 class="reveal">How Does a New Model Get Created</h1>
 </header>
-<div class="c-flow-timeline is-step-3" data-morph-scope>
+<div class="c-flow-timeline is-step-3 is-fill" data-morph-scope>
   <p class="reveal c-flow-timeline__cap is-stages">Main stages</p>
   <i class="reveal c-flow-timeline__line"></i>
 
-  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 campaigns worth accumulated</h3><p>A run starts</p></div>
-  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare retraining data</h3><p>Older 4 validate, newer 4 test</p></div>
+  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 unseen campaigns</h3><p>A run starts</p></div>
+  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare training data</h3><p>Older 4 validate, newer 4 test</p></div>
   <div data-s="3" class="c-flow-timeline__stage is-trainer" style="grid-column:3"><i>3</i><h3>Train a challenger</h3><p>In a separate container</p></div>
   <div data-s="4" class="c-flow-timeline__stage is-eval" style="grid-column:4"><i>4</i><h3>Grade it</h3><p>Against the current champion</p></div>
   <div data-s="5" class="c-flow-timeline__stage is-dash" style="grid-column:5"><i>5</i><h3>C22 promotes challenger</h3><p>On the dashboard</p></div>
@@ -6986,8 +7008,8 @@ body.overview .deck-viewport {
   <div data-s="1" class="c-flow-timeline__out is-app" style="grid-column:1">Trigger to start retraining</div>
   <div data-s="2" class="c-flow-timeline__out is-app" style="grid-column:2">Retraining dataset</div>
   <div data-s="3" class="c-flow-timeline__out is-trainer" style="grid-column:3">A challenger model</div>
-  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">A recommendation</div>
-  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">A new live model</div>
+  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">Model promotion recommendation</div>
+  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">An active latest model</div>
 
   <p class="reveal c-flow-timeline__foot" data-s="5">Live trading keeps running throughout. Nothing changes until a person promotes.</p>
 </div>
@@ -6999,14 +7021,14 @@ body.overview .deck-viewport {
 <!-- notes: The same five steps as the previous slide, laid out as a timeline. Under each stage is who owns it, and under that, what it produces. The app notices eight new campaigns and freezes the data. A separate Trainer builds the challenger. The evaluator grades it. A person decides. Accuracy notes: the evaluator is rules code that runs inside the app, not a separate container. Reject means keep the current model. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
-  <h1 class="reveal">How a New Model Gets Made</h1>
+  <h1 class="reveal">How Does a New Model Get Created</h1>
 </header>
-<div class="c-flow-timeline is-step-4" data-morph-scope>
+<div class="c-flow-timeline is-step-4 is-fill" data-morph-scope>
   <p class="reveal c-flow-timeline__cap is-stages">Main stages</p>
   <i class="reveal c-flow-timeline__line"></i>
 
-  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 campaigns worth accumulated</h3><p>A run starts</p></div>
-  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare retraining data</h3><p>Older 4 validate, newer 4 test</p></div>
+  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 unseen campaigns</h3><p>A run starts</p></div>
+  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare training data</h3><p>Older 4 validate, newer 4 test</p></div>
   <div data-s="3" class="c-flow-timeline__stage is-trainer" style="grid-column:3"><i>3</i><h3>Train a challenger</h3><p>In a separate container</p></div>
   <div data-s="4" class="c-flow-timeline__stage is-eval" style="grid-column:4"><i>4</i><h3>Grade it</h3><p>Against the current champion</p></div>
   <div data-s="5" class="c-flow-timeline__stage is-dash" style="grid-column:5"><i>5</i><h3>C22 promotes challenger</h3><p>On the dashboard</p></div>
@@ -7021,8 +7043,8 @@ body.overview .deck-viewport {
   <div data-s="1" class="c-flow-timeline__out is-app" style="grid-column:1">Trigger to start retraining</div>
   <div data-s="2" class="c-flow-timeline__out is-app" style="grid-column:2">Retraining dataset</div>
   <div data-s="3" class="c-flow-timeline__out is-trainer" style="grid-column:3">A challenger model</div>
-  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">A recommendation</div>
-  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">A new live model</div>
+  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">Model promotion recommendation</div>
+  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">An active latest model</div>
 
   <p class="reveal c-flow-timeline__foot" data-s="5">Live trading keeps running throughout. Nothing changes until a person promotes.</p>
 </div>
@@ -7303,11 +7325,11 @@ body.overview .deck-viewport {
   <svg class="reveal c-flow-arrow c-flow-arrow--accent " viewBox="0 0 1920 1080" aria-hidden="true">
   <path d="M1060 850 L769 850"/>
 </svg>
-  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 788px; width: 36px; height: 36px;">
+  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 750px; width: 36px; height: 36px;">
   <strong style="font-size: max(26px, var(--fs-min, 0px));">3</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 776px; width: 200px; font-size: max(26px, var(--fs-min, 0px));">Polls for<br>new runs</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 738px; width: 240px; font-size: max(26px, var(--fs-min, 0px));">Checks for new<br>unevaluated<br>model</p>
 
 
   <div class="c-stage-tag c-stage-tag--trainer " style="left: 1190px; top: 40px; width: 660px;">
@@ -7399,11 +7421,11 @@ body.overview .deck-viewport {
   <svg class="reveal c-flow-arrow c-flow-arrow--accent " viewBox="0 0 1920 1080" aria-hidden="true">
   <path d="M1060 850 L769 850"/>
 </svg>
-  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 788px; width: 36px; height: 36px;">
+  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 750px; width: 36px; height: 36px;">
   <strong style="font-size: max(26px, var(--fs-min, 0px));">3</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 776px; width: 200px; font-size: max(26px, var(--fs-min, 0px));">Polls for<br>new runs</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 738px; width: 240px; font-size: max(26px, var(--fs-min, 0px));">Checks for new<br>unevaluated<br>model</p>
 
   <svg class="reveal c-flow-db is-gray" style="left: 1214px; top: 780px;" viewBox="0 0 93 118" aria-hidden="true">
   <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
@@ -7419,7 +7441,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">4</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 260px; font-size: max(26px, var(--fs-min, 0px));">Predictions on<br>unseen trades</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 260px; font-size: max(26px, var(--fs-min, 0px));">Fetch predictions<br>of unseen campaigns</p>
 
   <div class="c-stage-tag c-stage-tag--trainer " style="left: 1190px; top: 40px; width: 660px;">
   <i>3</i>
@@ -7514,11 +7536,11 @@ body.overview .deck-viewport {
   <svg class="reveal c-flow-arrow c-flow-arrow--accent " viewBox="0 0 1920 1080" aria-hidden="true">
   <path d="M1060 850 L769 850"/>
 </svg>
-  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 788px; width: 36px; height: 36px;">
+  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 790px; top: 750px; width: 36px; height: 36px;">
   <strong style="font-size: max(26px, var(--fs-min, 0px));">3</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 776px; width: 200px; font-size: max(26px, var(--fs-min, 0px));">Polls for<br>new runs</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 738px; width: 240px; font-size: max(26px, var(--fs-min, 0px));">Checks for new<br>unevaluated<br>model</p>
 
   <svg class="reveal c-flow-db is-gray" style="left: 1214px; top: 780px;" viewBox="0 0 93 118" aria-hidden="true">
   <ellipse cx="46.5" cy="19" rx="40" ry="14"/>
@@ -7534,20 +7556,20 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">4</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 260px; font-size: max(26px, var(--fs-min, 0px));">Predictions on<br>unseen trades</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 260px; font-size: max(26px, var(--fs-min, 0px));">Fetch predictions<br>of unseen campaigns</p>
 
-  <div class="reveal c-flow-node c-flow-node--dash " style="left: 1510px; top: 440px; width: 340px; height: 140px;">
+  <div class="reveal c-flow-node c-flow-node--dash " style="left: 1610px; top: 440px; width: 240px; height: 140px;">
   <strong style="font-size: max(30px, var(--fs-min, 0px));">Dashboard</strong>
-  <span>Promote · Keep · Hold</span>
+  <span></span>
 </div>
   <svg class="reveal c-flow-arrow c-flow-arrow--accent " viewBox="0 0 1920 1080" aria-hidden="true">
-  <path d="M1300 510 L1510 510"/>
+  <path d="M1300 510 L1608 510"/>
 </svg>
-  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 1352px; top: 527px; width: 36px; height: 36px;">
+  <div class="reveal c-flow-node c-flow-node--dark is-round is-step" style="left: 1316px; top: 527px; width: 36px; height: 36px;">
   <strong style="font-size: max(26px, var(--fs-min, 0px));">5</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1398px; top: 528px; width: 100px; font-size: max(26px, var(--fs-min, 0px));">Grades</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1360px; top: 528px; width: 235px; font-size: max(26px, var(--fs-min, 0px));">Returns<br>promotion<br>recommendation</p>
   <div class="c-stage-tag c-stage-tag--trainer " style="left: 1190px; top: 40px; width: 660px;">
   <i>3</i>
   <div><strong>Train a challenger</strong><span>In a separate container</span></div>
@@ -7566,14 +7588,14 @@ body.overview .deck-viewport {
 <!-- notes: The same five steps as the previous slide, laid out as a timeline. Under each stage is who owns it, and under that, what it produces. The app notices eight new campaigns and freezes the data. A separate Trainer builds the challenger. The evaluator grades it. A person decides. Accuracy notes: the evaluator is rules code that runs inside the app, not a separate container. Reject means keep the current model. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
-  <h1 class="reveal">How a New Model Gets Made</h1>
+  <h1 class="reveal">How Does a New Model Get Created</h1>
 </header>
-<div class="c-flow-timeline is-step-5" data-morph-scope>
+<div class="c-flow-timeline is-step-4 is-fill" data-morph-scope>
   <p class="reveal c-flow-timeline__cap is-stages">Main stages</p>
   <i class="reveal c-flow-timeline__line"></i>
 
-  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 campaigns worth accumulated</h3><p>A run starts</p></div>
-  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare retraining data</h3><p>Older 4 validate, newer 4 test</p></div>
+  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 unseen campaigns</h3><p>A run starts</p></div>
+  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare training data</h3><p>Older 4 validate, newer 4 test</p></div>
   <div data-s="3" class="c-flow-timeline__stage is-trainer" style="grid-column:3"><i>3</i><h3>Train a challenger</h3><p>In a separate container</p></div>
   <div data-s="4" class="c-flow-timeline__stage is-eval" style="grid-column:4"><i>4</i><h3>Grade it</h3><p>Against the current champion</p></div>
   <div data-s="5" class="c-flow-timeline__stage is-dash" style="grid-column:5"><i>5</i><h3>C22 promotes challenger</h3><p>On the dashboard</p></div>
@@ -7588,10 +7610,10 @@ body.overview .deck-viewport {
   <div data-s="1" class="c-flow-timeline__out is-app" style="grid-column:1">Trigger to start retraining</div>
   <div data-s="2" class="c-flow-timeline__out is-app" style="grid-column:2">Retraining dataset</div>
   <div data-s="3" class="c-flow-timeline__out is-trainer" style="grid-column:3">A challenger model</div>
-  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">A recommendation</div>
-  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">A new live model</div>
+  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">Model promotion recommendation</div>
+  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">An active latest model</div>
 
-  <p class="reveal c-flow-timeline__foot" data-s="5">The new model is promoted only when no campaign is live and C22 approves it.</p>
+  <p class="reveal c-flow-timeline__foot" data-s="5">Live trading keeps running throughout. Nothing changes until a person promotes.</p>
 </div>
 </section>
 
@@ -7601,14 +7623,14 @@ body.overview .deck-viewport {
 <!-- notes: The same five steps as the previous slide, laid out as a timeline. Under each stage is who owns it, and under that, what it produces. The app notices eight new campaigns and freezes the data. A separate Trainer builds the challenger. The evaluator grades it. A person decides. Accuracy notes: the evaluator is rules code that runs inside the app, not a separate container. Reject means keep the current model. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
-  <h1 class="reveal">How a New Model Gets Made</h1>
+  <h1 class="reveal">How Does a New Model Get Created</h1>
 </header>
-<div class="c-flow-timeline is-step-4" data-morph-scope>
+<div class="c-flow-timeline is-step-5 is-fill" data-morph-scope>
   <p class="reveal c-flow-timeline__cap is-stages">Main stages</p>
   <i class="reveal c-flow-timeline__line"></i>
 
-  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 campaigns worth accumulated</h3><p>A run starts</p></div>
-  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare retraining data</h3><p>Older 4 validate, newer 4 test</p></div>
+  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 unseen campaigns</h3><p>A run starts</p></div>
+  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare training data</h3><p>Older 4 validate, newer 4 test</p></div>
   <div data-s="3" class="c-flow-timeline__stage is-trainer" style="grid-column:3"><i>3</i><h3>Train a challenger</h3><p>In a separate container</p></div>
   <div data-s="4" class="c-flow-timeline__stage is-eval" style="grid-column:4"><i>4</i><h3>Grade it</h3><p>Against the current champion</p></div>
   <div data-s="5" class="c-flow-timeline__stage is-dash" style="grid-column:5"><i>5</i><h3>C22 promotes challenger</h3><p>On the dashboard</p></div>
@@ -7623,10 +7645,10 @@ body.overview .deck-viewport {
   <div data-s="1" class="c-flow-timeline__out is-app" style="grid-column:1">Trigger to start retraining</div>
   <div data-s="2" class="c-flow-timeline__out is-app" style="grid-column:2">Retraining dataset</div>
   <div data-s="3" class="c-flow-timeline__out is-trainer" style="grid-column:3">A challenger model</div>
-  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">A recommendation</div>
-  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">A new live model</div>
+  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">Model promotion recommendation</div>
+  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">An active latest model</div>
 
-  <p class="reveal c-flow-timeline__foot" data-s="5">Live trading keeps running throughout. Nothing changes until a person promotes.</p>
+  <p class="reveal c-flow-timeline__foot" data-s="5">The new model is promoted only when no campaign is live and C22 approves it.</p>
 </div>
 </section>
 
@@ -7662,7 +7684,7 @@ body.overview .deck-viewport {
   
   <div class="reveal c-flow-node c-flow-node--dash " style="left: 100px; top: 260px; width: 400px; height: 130px;">
   <strong style="font-size: max(32px, var(--fs-min, 0px));">Dashboard</strong>
-  <span>Promote · Keep · Hold</span>
+  <span>Promote?</span>
 </div>
   <div class="reveal c-flow-node c-flow-node--dark is-round" style="left: 180px; top: 490px; width: 240px; height: 240px;">
   <strong style="font-size: max(38px, var(--fs-min, 0px));"><svg class='flow-person' viewBox='0 0 48 48' aria-hidden='true'><circle cx='24' cy='15' r='8'/><path d='M8 42c0-9 7-15 16-15s16 6 16 15'/></svg>C22</strong>
@@ -7715,7 +7737,7 @@ body.overview .deck-viewport {
   
   <div class="reveal c-flow-node c-flow-node--dash " style="left: 100px; top: 260px; width: 400px; height: 130px;">
   <strong style="font-size: max(32px, var(--fs-min, 0px));">Dashboard</strong>
-  <span>Promote · Keep · Hold</span>
+  <span>Promote.</span>
 </div>
   <div class="reveal c-flow-node c-flow-node--dark is-round" style="left: 180px; top: 490px; width: 240px; height: 240px;">
   <strong style="font-size: max(38px, var(--fs-min, 0px));"><svg class='flow-person' viewBox='0 0 48 48' aria-hidden='true'><circle cx='24' cy='15' r='8'/><path d='M8 42c0-9 7-15 16-15s16 6 16 15'/></svg>C22</strong>
@@ -7728,7 +7750,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">1</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 560px; top: 238px; width: 270px; font-size: max(26px, var(--fs-min, 0px));">Makes final call<br>to promote</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 560px; top: 228px; width: 340px; font-size: max(26px, var(--fs-min, 0px));">Submits promotion<br>request</p>
 
   <div class="reveal c-flow-node c-flow-node--app is-container" style="left: 640px; top: 400px; width: 540px; height: 390px;">
   <strong style="font-size: max(34px, var(--fs-min, 0px));">FastAPI app</strong>
@@ -7787,7 +7809,7 @@ body.overview .deck-viewport {
   
   <div class="reveal c-flow-node c-flow-node--dash " style="left: 100px; top: 260px; width: 400px; height: 130px;">
   <strong style="font-size: max(32px, var(--fs-min, 0px));">Dashboard</strong>
-  <span>Promote · Keep · Hold</span>
+  <span>Promote.</span>
 </div>
   <div class="reveal c-flow-node c-flow-node--dark is-round" style="left: 180px; top: 490px; width: 240px; height: 240px;">
   <strong style="font-size: max(38px, var(--fs-min, 0px));"><svg class='flow-person' viewBox='0 0 48 48' aria-hidden='true'><circle cx='24' cy='15' r='8'/><path d='M8 42c0-9 7-15 16-15s16 6 16 15'/></svg>C22</strong>
@@ -7800,7 +7822,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">1</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 560px; top: 238px; width: 270px; font-size: max(26px, var(--fs-min, 0px));">Makes final call<br>to promote</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 560px; top: 228px; width: 340px; font-size: max(26px, var(--fs-min, 0px));">Submits promotion<br>request</p>
 
   <div class="reveal c-flow-node c-flow-node--app is-container" style="left: 640px; top: 400px; width: 540px; height: 390px;">
   <strong style="font-size: max(34px, var(--fs-min, 0px));">FastAPI app</strong>
@@ -7871,7 +7893,7 @@ body.overview .deck-viewport {
   
   <div class="reveal c-flow-node c-flow-node--dash " style="left: 100px; top: 260px; width: 400px; height: 130px;">
   <strong style="font-size: max(32px, var(--fs-min, 0px));">Dashboard</strong>
-  <span>Promote · Keep · Hold</span>
+  <span>Promote.</span>
 </div>
   <div class="reveal c-flow-node c-flow-node--dark is-round" style="left: 180px; top: 490px; width: 240px; height: 240px;">
   <strong style="font-size: max(38px, var(--fs-min, 0px));"><svg class='flow-person' viewBox='0 0 48 48' aria-hidden='true'><circle cx='24' cy='15' r='8'/><path d='M8 42c0-9 7-15 16-15s16 6 16 15'/></svg>C22</strong>
@@ -7884,7 +7906,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">1</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 560px; top: 238px; width: 270px; font-size: max(26px, var(--fs-min, 0px));">Makes final call<br>to promote</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 560px; top: 228px; width: 340px; font-size: max(26px, var(--fs-min, 0px));">Submits promotion<br>request</p>
 
   <div class="reveal c-flow-node c-flow-node--app is-container" style="left: 640px; top: 400px; width: 540px; height: 390px;">
   <strong style="font-size: max(34px, var(--fs-min, 0px));">FastAPI app</strong>
@@ -7970,7 +7992,7 @@ body.overview .deck-viewport {
   
   <div class="reveal c-flow-node c-flow-node--dash " style="left: 100px; top: 260px; width: 400px; height: 130px;">
   <strong style="font-size: max(32px, var(--fs-min, 0px));">Dashboard</strong>
-  <span>Promote · Keep · Hold</span>
+  <span>Promote.</span>
 </div>
   <div class="reveal c-flow-node c-flow-node--dark is-round" style="left: 180px; top: 490px; width: 240px; height: 240px;">
   <strong style="font-size: max(38px, var(--fs-min, 0px));"><svg class='flow-person' viewBox='0 0 48 48' aria-hidden='true'><circle cx='24' cy='15' r='8'/><path d='M8 42c0-9 7-15 16-15s16 6 16 15'/></svg>C22</strong>
@@ -7983,7 +8005,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">1</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 560px; top: 238px; width: 270px; font-size: max(26px, var(--fs-min, 0px));">Makes final call<br>to promote</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 560px; top: 228px; width: 340px; font-size: max(26px, var(--fs-min, 0px));">Submits promotion<br>request</p>
 
   <div class="reveal c-flow-node c-flow-node--app is-container" style="left: 640px; top: 400px; width: 540px; height: 390px;">
   <strong style="font-size: max(34px, var(--fs-min, 0px));">FastAPI app</strong>
@@ -8091,7 +8113,7 @@ body.overview .deck-viewport {
   
   <div class="reveal c-flow-node c-flow-node--dash " style="left: 100px; top: 260px; width: 400px; height: 130px;">
   <strong style="font-size: max(32px, var(--fs-min, 0px));">Dashboard</strong>
-  <span>Promote · Keep · Hold</span>
+  <span>Promote.</span>
 </div>
   <div class="reveal c-flow-node c-flow-node--dark is-round" style="left: 180px; top: 490px; width: 240px; height: 240px;">
   <strong style="font-size: max(38px, var(--fs-min, 0px));"><svg class='flow-person' viewBox='0 0 48 48' aria-hidden='true'><circle cx='24' cy='15' r='8'/><path d='M8 42c0-9 7-15 16-15s16 6 16 15'/></svg>C22</strong>
@@ -8104,7 +8126,7 @@ body.overview .deck-viewport {
   <strong style="font-size: max(26px, var(--fs-min, 0px));">1</strong>
   <span></span>
 </div>
-  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 560px; top: 238px; width: 270px; font-size: max(26px, var(--fs-min, 0px));">Makes final call<br>to promote</p>
+  <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 560px; top: 228px; width: 340px; font-size: max(26px, var(--fs-min, 0px));">Submits promotion<br>request</p>
 
   <div class="reveal c-flow-node c-flow-node--app is-container" style="left: 640px; top: 400px; width: 540px; height: 390px;">
   <strong style="font-size: max(34px, var(--fs-min, 0px));">FastAPI app</strong>
@@ -8174,7 +8196,42 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="43" data-name="architecture-part-1" data-no-anim>
+<section class="slide" data-slide="43" data-name="how-a-new-model-gets-made-build-5-statement" data-no-anim>
+<!-- no-anim -->
+<!-- notes: The same five steps as the previous slide, laid out as a timeline. Under each stage is who owns it, and under that, what it produces. The app notices eight new campaigns and freezes the data. A separate Trainer builds the challenger. The evaluator grades it. A person decides. Accuracy notes: the evaluator is rules code that runs inside the app, not a separate container. Reject means keep the current model. -->
+<header class="c-slide-title is-static">
+  <span class="c-slide-title__kicker reveal">Auto-retrainer</span>
+  <h1 class="reveal">How Does a New Model Get Created</h1>
+</header>
+<div class="c-flow-timeline is-step-5 is-dim" data-morph-scope>
+  <p class="reveal c-flow-timeline__cap is-stages">Main stages</p>
+  <i class="reveal c-flow-timeline__line"></i>
+
+  <div data-s="1" class="c-flow-timeline__stage is-app" style="grid-column:1"><i>1</i><h3>8 unseen campaigns</h3><p>A run starts</p></div>
+  <div data-s="2" class="c-flow-timeline__stage is-app" style="grid-column:2"><i>2</i><h3>Prepare training data</h3><p>Older 4 validate, newer 4 test</p></div>
+  <div data-s="3" class="c-flow-timeline__stage is-trainer" style="grid-column:3"><i>3</i><h3>Train a challenger</h3><p>In a separate container</p></div>
+  <div data-s="4" class="c-flow-timeline__stage is-eval" style="grid-column:4"><i>4</i><h3>Grade it</h3><p>Against the current champion</p></div>
+  <div data-s="5" class="c-flow-timeline__stage is-dash" style="grid-column:5"><i>5</i><h3>C22 promotes challenger</h3><p>On the dashboard</p></div>
+
+  <p class="reveal c-flow-timeline__cap is-who">Who does it</p>
+  <div data-s="1" class="c-flow-timeline__who is-app" style="grid-column:1 / span 2">Cassandra app</div>
+  <div data-s="3" class="c-flow-timeline__who is-trainer" style="grid-column:3">Trainer</div>
+  <div data-s="4" class="c-flow-timeline__who is-eval" style="grid-column:4">Evaluator</div>
+  <div data-s="5" class="c-flow-timeline__who is-dash" style="grid-column:5">Dashboard</div>
+
+  <p class="reveal c-flow-timeline__cap is-out">What it produces</p>
+  <div data-s="1" class="c-flow-timeline__out is-app" style="grid-column:1">Trigger to start retraining</div>
+  <div data-s="2" class="c-flow-timeline__out is-app" style="grid-column:2">Retraining dataset</div>
+  <div data-s="3" class="c-flow-timeline__out is-trainer" style="grid-column:3">A challenger model</div>
+  <div data-s="4" class="c-flow-timeline__out is-eval" style="grid-column:4">Model promotion recommendation</div>
+  <div data-s="5" class="c-flow-timeline__out is-dash" style="grid-column:5">An active latest model</div>
+
+  <p class="reveal c-flow-timeline__foot" data-s="5">The new model is promoted only when no campaign is live and C22 approves it.</p>
+</div>
+</section>
+
+
+<section class="slide" data-slide="44" data-name="architecture-part-1" data-no-anim>
 <!-- no-anim -->
 <!-- notes: When a campaign ends, the API replies first. Then, in the background and with no workers, it checks it is time (8 campaigns) and safe (nothing live), picks and freezes the data into one file in Storage, and hands the Trainer a package with four temporary links. After that, the API's part is over. -->
 <header class="c-slide-title is-static is-tight is-bold">
@@ -8233,20 +8290,20 @@ body.overview .deck-viewport {
     </defs>
   </svg>
   
-  <div class="c-stage-tag c-stage-tag--app is-compact" style="left: 96px; top: 790px; width: 310px;">
+  <div class="c-stage-tag c-stage-tag--app is-compact" style="left: 96px; top: 820px; width: 310px;">
   <i>1</i>
-  <div><strong>8 campaigns worth accumulated</strong><span></span></div>
+  <div><strong>8 unseen campaigns</strong><span></span></div>
 </div>
   <div class="c-stage-tag c-stage-tag--app is-compact" style="left: 96px; top: 915px; width: 310px;">
   <i>2</i>
-  <div><strong>Prepare retraining data</strong><span></span></div>
+  <div><strong>Prepare training data</strong><span></span></div>
 </div>
 
 </div>
 </section>
 
 
-<section class="slide" data-slide="44" data-name="architecture-part-2" data-no-anim>
+<section class="slide" data-slide="45" data-name="architecture-part-2" data-no-anim>
 <!-- no-anim -->
 <!-- notes: The Trainer uploads the challenger and its predictions to Storage. Two loops in the API pick it up every 30 seconds: the training tracker records the result and registers the model, and the evaluator writes a verdict. The dashboard shows C22 the verdict next to the model. C22 decides. Only on Promote does the API ask the Judge to load the file. Nothing goes live without a person's click. -->
 <header class="c-slide-title is-static is-tight is-bold">
@@ -8315,15 +8372,15 @@ body.overview .deck-viewport {
     </defs>
   </svg>
   
-  <div class="c-stage-tag c-stage-tag--trainer is-compact" style="left: 1500px; top: 80px; width: 350px;">
+  <div class="c-stage-tag c-stage-tag--trainer is-compact is-short" style="left: 1516px; top: 820px; width: 308px;">
   <i>3</i>
   <div><strong>Train a challenger</strong><span></span></div>
 </div>
-  <div class="c-stage-tag c-stage-tag--eval is-compact" style="left: 1500px; top: 172px; width: 350px;">
+  <div class="c-stage-tag c-stage-tag--eval is-compact is-short" style="left: 1516px; top: 884px; width: 308px;">
   <i>4</i>
   <div><strong>Grade it</strong><span></span></div>
 </div>
-  <div class="c-stage-tag c-stage-tag--dash is-compact" style="left: 1500px; top: 264px; width: 350px;">
+  <div class="c-stage-tag c-stage-tag--dash is-compact is-short" style="left: 1516px; top: 948px; width: 308px;">
   <i>5</i>
   <div><strong>C22 promotes challenger</strong><span></span></div>
 </div>
@@ -8332,7 +8389,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="45" data-name="section-retrainer" data-no-anim>
+<section class="slide" data-slide="46" data-name="section-retrainer" data-no-anim>
 <!-- no-anim -->
 <!-- notes: The main new piece of work since the mid-term. -->
 <div class="c-section-divider ">
@@ -8346,7 +8403,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="46" data-name="retrainer-trigger-split-count">
+<section class="slide" data-slide="47" data-name="retrainer-trigger-split-count">
 <!-- notes: Retraining isn't scheduled. Each time a campaign ends, the app counts how many have finished since the last run. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer <span class='owner-chip is-app'>Cassandra app</span></span>
@@ -8383,7 +8440,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="47" data-name="retrainer-trigger-split-chips">
+<section class="slide" data-slide="48" data-name="retrainer-trigger-split-chips">
 <!-- notes: At eight, it freezes those eight campaigns: the older four tune the new model, and the newer four are the exam neither model has seen. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer <span class='owner-chip is-app'>Cassandra app</span></span>
@@ -8420,7 +8477,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="48" data-name="retrainer-trigger-split-train">
+<section class="slide" data-slide="49" data-name="retrainer-trigger-split-train">
 <!-- notes: Everything older is training data. At two campaigns a week, that's about one run a month. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer <span class='owner-chip is-app'>Cassandra app</span></span>
@@ -8457,7 +8514,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="49" data-name="retrainer-trigger-split-conditions">
+<section class="slide" data-slide="50" data-name="retrainer-trigger-split-conditions">
 <!-- notes: A run only starts when both conditions hold: no campaign is live, and there are whole batches of eight to use. With 17 waiting, the oldest 16 are used. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Auto-retrainer <span class='owner-chip is-app'>Cassandra app</span></span>
@@ -8494,7 +8551,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="50" data-name="decision-1-retrain">
+<section class="slide" data-slide="51" data-name="decision-1-retrain">
 <!-- notes: We wait for eight finished campaigns and then retrain without anyone pressing a button. We turned down retraining after every campaign, by hand or on a schedule: a run needs enough new data, and a fixed count lets the app decide by itself. The cost is timing. At two campaigns a week, that is roughly one run a month. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Key design decision 1 of 3</span>
@@ -8511,7 +8568,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="51" data-name="decision-2-container">
+<section class="slide" data-slide="52" data-name="decision-2-container">
 <!-- notes: Training runs in its own container. We rejected training inside the app or the Judge, because then every change to one touches the others and their dependencies pile up. The trade-off is one more container to look after. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Key design decision 2 of 3</span>
@@ -8528,7 +8585,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="52" data-name="decision-3-promote">
+<section class="slide" data-slide="53" data-name="decision-3-promote">
 <!-- notes: The evaluator recommends and C22 decides. We rejected promoting automatically after a good evaluation, because a new model affects every future campaign. The cost is manual action, and a localised deployment sends no alerts. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Key design decision 3 of 3</span>
@@ -8545,7 +8602,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="53" data-name="evaluator-gates">
+<section class="slide" data-slide="54" data-name="evaluator-gates">
 <!-- notes: The evaluator is rule-based, not a model, and its checks run in a fixed order: the first one that gives an answer decides (project-cassandra evaluator/rules.py, doc/client/EVALUATOR_RULES.md section 4). 1) Inputs (Tier 0): can we trust the numbers? Each trade counted once, the test campaigns were never trained on by either model, the champion scored is really the live model, no feature leaks the outcome, and the file's numbers recompute exactly and match the trainer's summary. Any failure is a Hold: it says nothing about the model, only that the numbers can't be trusted yet. 2) Leak alarm: an AUC above 0.65 is a Hold. Honest models in this family top out around 0.61; the only one that ever scored higher (0.664) was using stop-loss and take-profit prices that are only known after the trade closes. Checks 3 and 4 are on the next slide. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Auto-retrainer · Evaluator</span>
@@ -8577,7 +8634,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="54" data-name="evaluator-gates-2">
+<section class="slide" data-slide="55" data-name="evaluator-gates-2">
 <!-- notes: Continued from the previous slide (project-cassandra evaluator/rules.py). 3) On its own (Tier 1): AUC at least 0.53 overall, at least 0.50 in every test campaign (never worse than a coin flip anywhere), Brier better than always guessing the base rate, and its top 5% picks beat random picks at least as well as the live model's do on the same block (and at least 40, where 50 is chance). Fail: Reject, which the dashboard shows as Keep the live model. 4) Head to head: only then is it compared with the live model, on the next slide. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Auto-retrainer · Evaluator</span>
@@ -8612,7 +8669,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="55" data-name="evaluator-compare">
+<section class="slide" data-slide="56" data-name="evaluator-compare">
 <!-- notes: Step 4 in detail, in the exact order evaluator/rules.py decide() checks it; the first rule that matches decides (the leak alarm, AUC above 0.65, runs before these and is on the previous slide). Every comparison is paired: both models on the same test trades, one difference per test campaign. Top-5% P&L: in each campaign each model fades its own 5% highest-scoring trades, so both trade the same amount. Rule 1: if the whole bootstrap range of the top-5% P&L difference is below zero, the new model clearly picks worse trades: Keep. Rule 2: if top-5% P&L is higher on average, it wins more than half the campaigns, and neither AUC nor Brier is worse: Promote. Rule 3: if AUC is better but top-5% P&L is lower on average: Keep, money vetoes; this project has seen many changes that raised AUC and lost money. Rule 4: if top-5% P&L is higher but AUC is worse: Hold, a mixed signal for a person to judge. Otherwise: Keep, ties go to the live model because switching has a cost. AUC and Brier only count as better or worse when the bootstrap range (campaigns resampled 10,000 times) sits entirely on one side of zero and the gap passes the policy minimum (0.005 AUC, 0.002 Brier). Keep is RECOMMEND_REJECT in the code. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Auto-retrainer · Evaluator</span>
@@ -8718,7 +8775,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="56" data-name="section-training">
+<section class="slide" data-slide="57" data-name="section-training">
 <!-- notes: Quick recap of the model; detail is in the appendix. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">06</span>
@@ -8731,7 +8788,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="57" data-name="hurdle-model">
+<section class="slide" data-slide="58" data-name="hurdle-model">
 <!-- notes: Jerrick. Judge v5 is a hurdle model with three arms. Each fills in one term of EV = p × E[gain] − (1 − p) × E[loss]. The classifier gives p (calibrated); the two Huber regressors give the dollar gain and loss. This is gross EV: the models train on gross = −profit. Direction only, fade or skip. amount only sets the cost: score = ev − 7.00 × amount, and we take the trade if it lands in the top 5% of the frozen pool distribution. Trade magnitude: TODO, to be covered later. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -8794,7 +8851,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="58" data-name="data">
+<section class="slide" data-slide="59" data-name="data">
 <!-- notes: Yanting. How the data was used: 54 campaigns from C22. Each trade row has the trader's side, amount, open and close prices, and open and close times. Campaigns 33–68 are the training set, 69–77 the testing set, and 78–86 will be used as an additional test set. Feature count by version, v1 to v5: 21, 26, 45 (two feature sets combined), 26, then 18, keeping only what held up on unseen days. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Step 01: Data</span>
@@ -8844,7 +8901,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="59" data-name="features-kept">
+<section class="slide" data-slide="60" data-name="features-kept">
 <!-- notes: Yanting. The final feature set: 18 features in three groups, moving back in time. The trade itself, what the customer did earlier today, and what they did on earlier days. All built from information available when the trade opened. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Step 02: Feature engineering</span>
@@ -8916,7 +8973,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="60" data-name="cv-layout">
+<section class="slide" data-slide="61" data-name="cv-layout">
 <!-- notes: Blocked cross-validation layout used in Notebook 12 and the final judge. Pool campaigns 33–68 train six expanding folds (12 campaigns to start, 4-campaign validation blocks). The final model is refit on the whole pool. The locked test block is 69–77, with 78–86 since added to the held-out set. Nothing trains on its own future. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Steps 03–04: Training &amp; validation</span>
@@ -8935,7 +8992,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="61" data-name="feature-arms-auc">
+<section class="slide" data-slide="62" data-name="feature-arms-auc">
 <!-- notes: Held-out AUC for each nested feature set on each of the nine locked campaigns (69–77). Full 26 features 0.606, no_outcome (18) 0.571, behaviour_only (14) 0.570, ticket_only (6) 0.510. Paired drop from removing outcome history: −0.035, CI −0.046 to −0.023, 9 of 9 campaigns. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Step 04: Validation</span>
@@ -8954,7 +9011,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="62" data-name="notebook-scatter">
+<section class="slide" data-slide="63" data-name="notebook-scatter">
 <!-- notes: Isaiah. Every variant we tried in notebooks 7 to 15, one dot each, on the locked campaigns 69–77. Hover a dot to see what that notebook changed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Step 04: Validation</span>
@@ -9015,7 +9072,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="63" data-name="train-val-campaigns">
+<section class="slide" data-slide="64" data-name="train-val-campaigns">
 <!-- notes: Owner TBC. Train vs validation score as the training window grows from the 6 to the 24 most recent campaigns (mean of 3 blocks, band = min/max, score at the early-stopped model). Classifier: train AUC falls 0.66 to 0.62 while validation creeps up 0.565 to 0.575, so the gap narrows but stays about 0.05. Gain and loss regressors: validation L1 is flat (about 45 and 41.3) regardless of window. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Step 04: Validation</span>
@@ -9034,7 +9091,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="64" data-name="train-val-trees">
+<section class="slide" data-slide="65" data-name="train-val-trees">
 <!-- notes: Owner TBC. Train vs validation by boosting round, all training campaigns in each of blocks 3, 4 and 5; black line = early-stop point. Classifier: validation logloss bottoms near 0.683 after 22 to 54 trees and then drifts up while train keeps falling, so it stops early. Gain and loss regressors keep improving for thousands of trees (stops near 4,000 to 13,000, log axis). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Step 04: Validation</span>
@@ -9053,7 +9110,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="65" data-name="section-explanation">
+<section class="slide" data-slide="66" data-name="section-explanation">
 <!-- notes: Our answer to the mid-term feedback. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">07</span>
@@ -9066,7 +9123,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="66" data-name="explanation-how">
+<section class="slide" data-slide="67" data-name="explanation-how">
 <!-- notes: TODO owner. Four steps. The Judge scores each trade in dollars. TreeSHAP splits that score across features. We group them into six families: size, pace, stops, experience, timing, market. Fixed templates turn the top 2-4 into sentences. Not an LLM, so the same trade always gets the same words. The explanation never changes the decision. contrib_usd is a first-order estimate: summed, the contributions miss the score by a median of $1.71. Source: reverse-trade-judge scripts/build_judge_v5_gross.py, explain_templates.py. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Explanations</span>
@@ -9107,7 +9164,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="67" data-name="explanation-example">
+<section class="slide" data-slide="68" data-name="explanation-example">
 <!-- notes: TODO owner. Two real trades from the Judge, as the app shows them. Left: a SKIP (the Judge says don't fade), reasons Stops, Size and Pace, each "against fade". Right: a FADE, reasons Experience and Timing, each "toward fade", with the dollar effect on the score beside each reason. The footer says it plainly: this describes what moved the Judge's score, it is not evidence the trade will pay. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Explanations</span>
@@ -9132,7 +9189,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="68" data-name="explanation-readable">
+<section class="slide" data-slide="69" data-name="explanation-readable">
 <!-- notes: TODO owner. Merit 1: anyone can read a decision. Before, a trade came back as a dollar score. Now it comes back as plain sentences, so staff without data skills can follow why the Judge faded it. This answers the mid-term feedback and builds trust in the Judge. Example is the campaign 69 fade from the previous slide. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Explanations</span>
@@ -9160,7 +9217,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="69" data-name="explanation-themes">
+<section class="slide" data-slide="70" data-name="explanation-themes">
 <!-- notes: TODO owner. Merit 2: post-campaign themes. Reasons are grouped across a campaign's trades, so a reviewer reads a few themes instead of thousands of trades. Figures are the locked block (campaigns 69-77, 659 fades): size first on 425 (64%), stops 143, experience 82, side 9. Honest read: the reasons are accurate, and they show the Judge's picks are mostly about size. Source: results/judge_v5_gross_18_explanation.csv. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Explanations</span>
@@ -9188,7 +9245,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="70" data-name="section-pm">
+<section class="slide" data-slide="71" data-name="section-pm">
 <!-- notes: SCRIPT (~10s, Arin): Next: how we worked as a team. Our Scrum loop, how client feedback changed the backlog, and what changed between Sprint 2 and Sprint 3. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">08</span>
@@ -9201,7 +9258,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="71" data-name="scrum-loop">
+<section class="slide" data-slide="72" data-name="scrum-loop">
 <!-- notes: SCRIPT (~25s, Arin): We worked in two-week Scrum sprints, and every sprint had four steps. Plan: we pick the stories. Build: we do the work. Review: we show the client what's done and hear their feedback. Retro: we look at how we worked and pick what to change. Review and retro both feed the next plan. → Here's a review that changed the plan. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
@@ -9231,7 +9288,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="72" data-name="feedback-backlog">
+<section class="slide" data-slide="73" data-name="feedback-backlog">
 <!-- notes: SCRIPT (~35s, Arin): Our backlog isn't fixed; it moves with what the client tells us. And we don't just ask a quick question. After a Saturday meeting, on 18 October, we wrote C22 a document called "Judge retraining and promotion: two decisions". It explains the context with a flow diagram, then asks for their preference on two questions, boxed in green. Question 1: when should retraining start? Option A is a fixed schedule that starts automatically, option B is a button they press. Question 2: how should the promotion recommendation be made? Option A is rules only, option B is rules plus Claude. In both cases they approve every promotion. [Say what C22 answered and which stories it changed.] → What our own retro changed. -->
 <!-- notes: Source: the PDF "Judge retraining and promotion two decisions" sent to C22 on 18 Oct (page 1 and the start of page 2 shown). Green boxes: Question 1 at the bottom of page 1, Question 2 in the middle of page 2. -->
 <header class="c-slide-title ">
@@ -9269,7 +9326,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="73" data-name="sprint-changes">
+<section class="slide" data-slide="74" data-name="sprint-changes">
 <!-- notes: SCRIPT (~40s, Arin): The Sprint 2 retro turned up two problems. First, there was no Wednesday check-in. The BA squad worked async, and nobody knew who was doing what. We added a live Wednesday sync, and at the Sprint 3 retro we kept it, capped at 15 to 20 minutes. Second, work got finished on the last day. Wednesday is now our internal deadline, so we have two to three days of buffer, and at the Sprint 3 retro nobody had anything to put under Stop. → Handover. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Project Management</span>
@@ -9295,7 +9352,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="74" data-name="section-handover">
+<section class="slide" data-slide="75" data-name="section-handover">
 <!-- notes: What C22 gets and what is left to do. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">09</span>
@@ -9308,7 +9365,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="75" data-name="handover-receives">
+<section class="slide" data-slide="76" data-name="handover-receives">
 <!-- notes: SCRIPT (~30s): C22 gets six pieces. The API takes in trades and runs paper trading and campaigns. The Judge scores each trade: fade or skip. The Trainer trains a challenger and grades it against the champion. The dashboard shows the campaign, how the Judge is doing, live trades and model evaluation. The database comes with the Supabase schema, and make seed loads 43 real campaigns, 33 to 77. The docs cover operators, the retraining contract, the evaluator rules and developers. → How we hand it over. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Handover</span>
@@ -9358,7 +9415,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="76" data-name="handover-next">
+<section class="slide" data-slide="77" data-name="handover-next">
 <!-- notes: SCRIPT (~20s): We documented the API interfaces cleanly so C22 can connect to them. This is the interactive documentation C22 gets: health, campaigns, the evaluator policy and paper trades. The only thing left is to connect C22's platform to our system: on the slide, our system plugs into theirs. Their platform isn't ready yet, so we can't do that step. [Say who picks this up once it's ready.] → To conclude. -->
 <!-- notes: Screenshot: the FastAPI docs page of the app (localhost:8000/docs): default, campaign, evaluator-policy and paper-trades endpoints. -->
 <header class="c-slide-title ">
@@ -9414,7 +9471,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="77" data-name="section-conclusion">
+<section class="slide" data-slide="78" data-name="section-conclusion">
 <!-- notes: SCRIPT (~5s): To conclude, three things. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">10</span>
@@ -9427,7 +9484,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="78" data-name="conclusion-data">
+<section class="slide" data-slide="79" data-name="conclusion-data">
 <!-- notes: TODO owner. SCRIPT (~30s): To conclude, three things. First, we help inform C22's next steps. We independently checked their hypothesis that they need a larger and more diverse dataset. Our sponsor said it himself, and I'll read it: "Some of your findings line up with what I've been seeing independently." And: "I think the model itself you work on is pretty good, it's just maybe like you said the lack of data that can't paint a better picture." That is the research partnership we set out to be: a second pair of eyes that reaches the same conclusion on its own. → Fresh perspective. -->
 <!-- notes: Source: message from our sponsor (pasted by the team). Wording kept as sent; only "cant" was changed to "can't" and a comma added. Part of the message, "Crowd followers don't lose more often. matches my result that the crowd tells you about price", is on the slide as well. -->
 <header class="c-slide-title ">
@@ -9442,7 +9499,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="79" data-name="conclusion-perspective">
+<section class="slide" data-slide="80" data-name="conclusion-perspective">
 <!-- notes: TODO owner. SCRIPT (~30s): Second, a fresh perspective. We explored 30 variants across notebooks 7 to 15: different feature sets, different model types and different targets. Each dot on the chart is one of them, scored on the locked campaigns. Hover a dot to see what that notebook changed. Only 6 finish above zero, and where we have intervals every one spans zero. Swapping the model type moved AUC by only 0.002, so the ceiling is the data, not the model. That is what new eyes on feature engineering and modelling beyond the current rules gives C22. → An end-to-end suite. -->
 <!-- notes: Same chart as "What Each Notebook Tried" (slide 69), shown smaller. Figures from slide 8: 30 variants across notebooks 7 to 15, AUC moved 0.002. -->
 <header class="c-slide-title ">
@@ -9526,7 +9583,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="80" data-name="conclusion-import">
+<section class="slide" data-slide="81" data-name="conclusion-import">
 <!-- notes: TODO owner. SCRIPT (~15s): Third, we created a system that outlives us. Here is what updating the model looks like now. Clement imports a file. [Click: the file flies into the app.] -->
 <!-- notes: Mid-term value proposition (slide "Beyond the Model"): fresh perspective, new modelling, end-to-end suite. This slide is a three-click build; the file animation plays when the slide opens. -->
 <header class="c-slide-title is-static">
@@ -9559,7 +9616,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="81" data-name="conclusion-retrain">
+<section class="slide" data-slide="82" data-name="conclusion-retrain">
 <!-- notes: [Click] Retraining starts by itself, once there is enough new data. Nobody from our team has to run anything, and there is no Jupyter notebook. The retrainer trains a new model on the new data while the live one keeps scoring. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Conclusion · 3 of 3</span>
@@ -9591,7 +9648,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="82" data-name="conclusion-promote">
+<section class="slide" data-slide="83" data-name="conclusion-promote">
 <!-- notes: [Click] The new model is graded against the live one automatically, and then a person decides: Clement promotes it, and every older model is kept for rollback. So the Judge keeps improving as new campaigns arrive, long after we have left. That is the system we are handing over. → Questions. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Conclusion · 3 of 3</span>
@@ -9623,7 +9680,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="83" data-name="qna">
+<section class="slide" data-slide="84" data-name="qna">
 <!-- notes: SCRIPT (~10s): That's everything from us. Thank you. We're happy to take questions, and we can jump back to the architecture or the timeline if that helps. -->
 <!-- notes: 30 min Q&A. Jump with #28 (architecture) and #71 (timeline) in the URL. -->
 <div class="c-closing is-title-only">
@@ -9636,7 +9693,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="84" data-name="section-appendix">
+<section class="slide" data-slide="85" data-name="section-appendix">
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">A</span>
   <div class="c-section-divider__text">
@@ -9648,7 +9705,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="85" data-name="app-latency-throughput">
+<section class="slide" data-slide="86" data-name="app-latency-throughput">
 <!-- notes: Appendix. Evidence behind the latency and throughput requirements on the NFR slide. Left chart: the median time for gold to move $0.10 against the desk is 0.6-0.85 s over a typical minute, and it varies by hour (UTC); it is about 0.3 s in the 13-14 UTC London/New York overlap. Right chart: the share of trades that fail the $0.10 adverse-price check grows with end-to-end latency (client fill to desk order); keeping failures at 5% needs about 50-90 ms. Throughput, all 84,456 trades Feb-Sep: the busiest minute had 19 trades and the busiest second 5, from 5 different accounts; the median gap between trades is 24 s. Even at the busiest second with 1 s latency about 5 trades are judged at once, so sizing for bursts of 5-10 simultaneous trades is plenty. Only 2% of trades close within 5 s. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -9681,7 +9738,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="86" data-name="app-latency-budget">
+<section class="slide" data-slide="87" data-name="app-latency-budget">
 <!-- notes: Appendix. Follows the latency and throughput evidence slide. Left: what the historical data says about the 10c adverse-price check. It only works if the time from client fill to desk order stays around 100 ms; at 1 s roughly 30% of trades already fail it. That is why the 10c latency limit is the requirement that matters, not concurrency: 6 trades/min is the busiest period anywhere in the data. Keeping failures at 1% needs about 15-30 ms. In a calm minute (p10 volatility) 5% failures allows about 0.7 s, but in the most volatile 1% of minutes (news spikes) it is about 3 ms and most trades fail whatever the system does. These numbers assume the check compares prices once, when the desk places its order; if a move to +10c at any point before that counts, the limits roughly halve. There is no data finer than one second, so sub-second figures were scaled down from 1-10 minute measurements and cross-checked against the second-stamped fills. Below 1 s the real market moves slower than the scaling predicts, so the budget is on the cautious side. Right: our own peak run (peak-790963676.csv): 102 trades through the pipeline, 99 completed and 3 marked slipped (OANDA's price moved between the cached candle and the pipeline's read). The clock starts when the API receives the trade, so the time from the client's fill to reaching us is not included. Received to decision published is 31 ms at the median, 88 ms at p90, 228 ms at p99. Received to OANDA price read is 558 ms at the median and 951 ms at p99. About 10% of trades are over 100 ms. The median is fine; the slow tail is on the Slow 10% slide. If the desk order has to wait for the OANDA price check, almost every trade misses the budget. Bursts of 4-5 trades did not slow anything noticeably. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -9721,7 +9778,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="87" data-name="app-latency-architecture">
+<section class="slide" data-slide="88" data-name="app-latency-architecture">
 <!-- notes: Appendix. Where the time goes for an open trade, measured in a peak run of 102 trades (peak-790963676.csv). Each chip is the median time of that hop, with the 99th percentile beneath. The clock starts when the API receives the trade; the client round trip (13 ms median) is measured separately and is not part of the 31 ms to a published decision. API to Postgres is the campaign lookup plus storing the open trade. Queue wait is about half a millisecond. The worker's Postgres chip is counting earlier closed trades (2 ms median, 108 ms at p99) plus storing the prediction (3 ms). The Judge call is 14 ms median, of which the model itself is about 3 ms; the rest is network and a new HTTP client built per call. The Oanda price read dominates everything else at about 0.5 s and is the step that decides whether the order meets the latency budget. -->
 <header class="c-slide-title is-static">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -9810,7 +9867,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="88" data-name="app-latency-tail">
+<section class="slide" data-slide="89" data-name="app-latency-tail">
 <!-- notes: Appendix. Why the slowest 10% of decisions are slow, from the peak run of 102 trades. Three steps cause the tail. The Judge call: median 10 ms for network and client, 32 ms at p90, 87 ms at p99; judge.client_setup alone is 80 ms at p99 because a new HTTP client (and its TLS setup) is built on every call, so a shared client would remove most of it. Counting earlier closed trades: one query with a bad tail, 2 ms median but 107 ms at p99, worth an EXPLAIN and probably a missing index. Storing the open trade: two commits, 8 ms median and 31 ms at p99, which could be one. What turned out not to be the problem: queue wait is about 0.5 ms (p99 1.5 ms); every Redis step is under 1 ms at the median; the judge model itself takes about 3 ms; bursts of 5 did not slow anything down. An earlier suspicion that open trades would sit behind a one-second wait was wrong; with 15 workers one is always free, and the 645 ms seen in the smoke run was a cold start. The real problem is OANDA, on both open and close. Clock note: the containers' clocks differ from the Mac's, so we measure from when the API receives the trade; a --host-clock switch changes it back to the seed's send time. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix · Non-functional requirements</span>
@@ -9844,7 +9901,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="89" data-name="workflow-campaign-start">
+<section class="slide" data-slide="90" data-name="workflow-campaign-start">
 <!-- notes: James Z. Walk the six steps top to bottom. Pause on step 1 (reference price) and step 5 (six history features; a new trader gets zeros/nulls, not an error). Land the callout: one transaction, so a failed Redis write rolls everything back. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -9897,7 +9954,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="90" data-name="workflow-open-trade">
+<section class="slide" data-slide="91" data-name="workflow-open-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the trade is queued, a worker runs steps 3-6. Step 4: 18 features built live from the trade plus the cached history, then the Judge decides. Step 5: Oanda is a stand-in for C22's market data; slippage is the gap between the trader's entry price and ours. Key notes: in production, market data is polled or read from C22 directly and no response is sent. C22's slippage threshold is 0.10; we adjusted it for the demo because of the historical data. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -9955,7 +10012,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="91" data-name="workflow-close-trade">
+<section class="slide" data-slide="92" data-name="workflow-close-trade">
 <!-- notes: James Z. Walk the flow top to bottom. The framed block is the async part: once the close is queued, a worker runs steps 3-6. Key notes: the Redis rolling metrics update even if the simulated close fails (e.g. the market price fetch). They are updated with a read-check-write retry pattern instead of locks. Reverse-trading PnL streams to the dashboard the moment each trade closes. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -9998,7 +10055,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="92" data-name="workflow-campaign-end">
+<section class="slide" data-slide="93" data-name="workflow-campaign-end">
 <!-- notes: James Z. Five steps, top to bottom. The /end call is idempotent: a second request for an already ended campaign does nothing and does not rerun the flow. Open trades are force-failed so the evaluation only uses completed trades. The same completed trades are scored three ways: Judge-led reverse, reverse all trades, coin-flip-led reverse. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">System Architecture</span>
@@ -10040,7 +10097,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="93" data-name="after-campaign-ends-step-1">
+<section class="slide" data-slide="94" data-name="after-campaign-ends-step-1">
 <!-- notes: C22’s platform tells the API the campaign ended. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (1/2) - campaign end to preparing for a retraining session</span>
@@ -10085,7 +10142,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="94" data-name="after-campaign-ends-step-2">
+<section class="slide" data-slide="95" data-name="after-campaign-ends-step-2">
 <!-- notes: The API replies first. Once it has replied it records the campaign in Postgres and starts the retraining task. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (1/2) - campaign end to preparing for a retraining session</span>
@@ -10130,7 +10187,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="95" data-name="after-campaign-ends-step-3">
+<section class="slide" data-slide="96" data-name="after-campaign-ends-step-3">
 <!-- notes: The retraining task reads and writes runs, trades and features in Postgres. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (1/2) - campaign end to preparing for a retraining session</span>
@@ -10175,7 +10232,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="96" data-name="after-campaign-ends-step-4">
+<section class="slide" data-slide="97" data-name="after-campaign-ends-step-4">
 <!-- notes: The retraining task freezes the data into one dataset file in Storage. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (1/2) - campaign end to preparing for a retraining session</span>
@@ -10220,7 +10277,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="97" data-name="after-campaign-ends-step-5">
+<section class="slide" data-slide="98" data-name="after-campaign-ends-step-5">
 <!-- notes: The retraining task hands off to the Trainer: POST /train with four temporary links. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (1/2) - campaign end to preparing for a retraining session</span>
@@ -10265,7 +10322,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="98" data-name="challenger-to-promotion-step-1">
+<section class="slide" data-slide="99" data-name="challenger-to-promotion-step-1">
 <!-- notes: The Trainer uploads the challenger model and its predictions to Storage. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10320,7 +10377,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="99" data-name="challenger-to-promotion-step-2">
+<section class="slide" data-slide="100" data-name="challenger-to-promotion-step-2">
 <!-- notes: The training tracker asks the Trainer for the run’s status every 30 seconds. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10375,7 +10432,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="100" data-name="challenger-to-promotion-step-3">
+<section class="slide" data-slide="101" data-name="challenger-to-promotion-step-3">
 <!-- notes: The training tracker saves the result in Postgres and registers the challenger as a new, inactive model. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10430,7 +10487,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="101" data-name="challenger-to-promotion-step-4">
+<section class="slide" data-slide="102" data-name="challenger-to-promotion-step-4">
 <!-- notes: The evaluator looks in Postgres for a finished run with no verdict yet. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10485,7 +10542,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="102" data-name="challenger-to-promotion-step-5">
+<section class="slide" data-slide="103" data-name="challenger-to-promotion-step-5">
 <!-- notes: The evaluator downloads the predictions from Storage and checks them. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10540,7 +10597,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="103" data-name="challenger-to-promotion-step-6">
+<section class="slide" data-slide="104" data-name="challenger-to-promotion-step-6">
 <!-- notes: The dashboard and C22: the dashboard shows the verdicts and model versions, and C22 acts on them. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10595,7 +10652,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="104" data-name="challenger-to-promotion-step-7">
+<section class="slide" data-slide="105" data-name="challenger-to-promotion-step-7">
 <!-- notes: The dashboard reads the verdicts and model versions from Postgres and shows them to C22. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10650,7 +10707,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="105" data-name="challenger-to-promotion-step-8">
+<section class="slide" data-slide="106" data-name="challenger-to-promotion-step-8">
 <!-- notes: C22 reviews the verdict, picks a model and decides whether to promote it. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10705,7 +10762,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="106" data-name="challenger-to-promotion-step-9">
+<section class="slide" data-slide="107" data-name="challenger-to-promotion-step-9">
 <!-- notes: The dashboard sends the Promote request to FastAPI. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10760,7 +10817,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="107" data-name="challenger-to-promotion-step-10">
+<section class="slide" data-slide="108" data-name="challenger-to-promotion-step-10">
 <!-- notes: FastAPI checks the chosen model has a stored file in Storage and makes a temporary link to it for the Judge. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10815,7 +10872,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="108" data-name="challenger-to-promotion-step-11">
+<section class="slide" data-slide="109" data-name="challenger-to-promotion-step-11">
 <!-- notes: FastAPI asks the Judge to load the model, through a temporary link to the file in Storage. -->
 <header class="c-slide-title is-static is-tight is-bold">
   <span class="c-slide-title__kicker reveal">Retrainer (2/2) - retraining to promotion of new model trained</span>
@@ -10870,7 +10927,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="109" data-name="app-correlation">
+<section class="slide" data-slide="110" data-name="app-correlation">
 <!-- notes: Appendix. Pearson correlation of the point-in-time features with each other and with the two targets (last two rows and columns). Leaked stop and target fields are already removed. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -10899,7 +10956,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="110" data-name="app-learning-calibration">
+<section class="slide" data-slide="111" data-name="app-learning-calibration">
 <!-- notes: Appendix. Left: validation AUC against training campaigns on the gross target is flat (correlation −0.383), so more campaigns do not help yet. Right: calibration fitted on out-of-fold predictions only; isotonic moves Brier 0.2384 to 0.2380. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -10918,7 +10975,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="111" data-name="app-shap-features">
+<section class="slide" data-slide="112" data-name="app-shap-features">
 <!-- notes: Appendix. Per-feature mean |SHAP|. Solid bars: full 26-feature model. Faded bars: no_outcome model. Colours are feature groups. Take outcome history away and prior_sl_use_rate and sec_since_last_close take over. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -10947,7 +11004,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="112" data-name="app-cost-curve">
+<section class="slide" data-slide="113" data-name="app-cost-curve">
 <!-- notes: Appendix. The reversing cost is a constant $7 per lot, which is what flips the sign of fade-everything. Sweeping the assumed cost from $0 to $7, the model's rule sits between the 13.5th and 22.9th percentile of random selection at the same exposure at every level. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -10966,7 +11023,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="113" data-name="app-market-data">
+<section class="slide" data-slide="114" data-name="app-market-data">
 <!-- notes: Appendix. Market-data features on the no_outcome arm, across three learners. Share of mean |SHAP| divided by a uniform share, so 1.0 means indifferent. AUC says neutral-to-better, dollars say worse in all eight arms. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -10985,7 +11042,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="114" data-name="app-dropped">
+<section class="slide" data-slide="115" data-name="app-dropped">
 <!-- notes: Appendix. Levers we tried and dropped, with the measured result. Market context: 18 ATR/vol/session features −0.0036 AUC; 4 features +0.0005 (CI −0.0018 to +0.0025); 14 Yahoo macro features B+C −$23.5k to −$47.6k; NB14 flips negative on all three learners. SL/TP channel: even the leaked flag buys only +0.006. Hyperparameters: 50 Optuna trials +0.0028 CV AUC. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -11011,7 +11068,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="115" data-name="app-decomposition">
+<section class="slide" data-slide="116" data-name="app-decomposition">
 <!-- notes: Appendix. Value of perfecting each part of the hurdle model, in dollars per campaign at the top-5% readout. As fitted: classifier +687, gain arm +216, loss arm +229. Perfected ceilings: classifier +13,146, gain arm +24,663, loss arm +10,050. Marginal question: perfect classifier given perfect regressors adds +351; perfect gain and loss regressors given a perfect classifier add +12,417, 35 times more. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -11030,7 +11087,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="116" data-name="app-feature-arms">
+<section class="slide" data-slide="117" data-name="app-feature-arms">
 <!-- notes: Appendix. The 26 features in four buckets (ticket, behaviour, outcome, counter) and which feature set (arm) keeps which. Sets are nested, so the filled region only shrinks left to right and the outcome block disappears first: full 26, no_outcome 18, behaviour_only 14, ticket_only 6. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -11059,7 +11116,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="117" data-name="app-topk">
+<section class="slide" data-slide="118" data-name="app-topk">
 <!-- notes: Appendix. Top-k ranking quality: each arm fades the same fraction of every campaign, so exposure is identical and only the picks differ. Realised reverseProfit in $000 against random at matched exposure. The full model, which sees outcome history, sits below random at every fraction (e.g. −$23.1k vs −$14.2k at 50%). The other arms hover around random. All lines are negative at most fractions: this is a ranking check, not a profit claim. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -11078,7 +11135,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="118" data-name="app-hyperparams">
+<section class="slide" data-slide="119" data-name="app-hyperparams">
 <!-- notes: Appendix. Final hyperparameters of the v5 judge (judge_v5_gross_18, 18 no_outcome features). Source: scripts/target_ablation.py BASE, CLF_PARAMS, REG_PARAMS. One LightGBM parameter set shared by all three models; the classifier uses binary loss, the gain and loss regressors use huber. Early stopping 100 rounds; final refit at the median best iteration across the six folds: classifier 44 trees, gain 6,392, loss 6,412. Isotonic calibration on leave-one-fold-out predictions. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -11145,7 +11202,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="119" data-name="market-regimes">
+<section class="slide" data-slide="120" data-name="market-regimes">
 <!-- notes: To avoid cherry-picking an easy window, we used two lenses. Activity is the number of trades per slot. Volatility is beta against gold futures. That gives four market conditions, and we picked two opposite corners. → Here’s the data behind those labels. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -11206,7 +11263,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="120" data-name="demo-data">
+<section class="slide" data-slide="121" data-name="demo-data">
 <!-- notes: On the left, we counted trades in a rolling 30-minute window. Typical sits near p50, the median, and busy is p95 and above. On the right, we measured each slot’s beta against gold futures. One or less is calm, above one is volatile. → Applying both rules gives us our two timeslots. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>
@@ -11231,7 +11288,7 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="121" data-name="chosen-timeslots">
+<section class="slide" data-slide="122" data-name="chosen-timeslots">
 <!-- notes: Our typical, calm slot is 3:30 to 4:00, and our busy, volatile slot is 5:30 to 6:00. Together they test the Judge in both an ordinary and a stressful market. → With that, I’ll hand over to Jerrick to start the demo. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Appendix</span>

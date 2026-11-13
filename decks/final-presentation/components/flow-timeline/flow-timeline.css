@@ -142,3 +142,20 @@
 .c-flow-timeline.is-step-3 [data-s="4"],
 .c-flow-timeline.is-step-3 [data-s="5"] { visibility: hidden; }
 .c-flow-timeline.is-step-4 [data-s="5"] { visibility: hidden; }
+
+/* is-fill: no bottom banner on this build, so the rows grow to use the space the banner would have taken */
+.c-flow-timeline.is-fill {
+  grid-template-rows: auto auto auto 150px auto 150px;
+  row-gap: 18px;
+}
+.c-flow-timeline.is-fill .c-flow-timeline__foot { display: none; }
+
+/* is-dim: everything but the bottom statement drops to half opacity */
+.c-flow-timeline.is-dim > :not(.c-flow-timeline__foot):not(.c-flow-timeline__stage) { opacity: 0.5; }
+/* the number circles sit on the line: a solid half-tone fill, not a see-through one */
+.c-flow-timeline.is-dim .c-flow-timeline__stage h3,
+.c-flow-timeline.is-dim .c-flow-timeline__stage p { opacity: 0.5; }
+.c-flow-timeline.is-dim .c-flow-timeline__stage i {
+  background: color-mix(in srgb, var(--o) 50%, var(--bg));
+  color: color-mix(in srgb, var(--on) 50%, color-mix(in srgb, var(--o) 50%, var(--bg)));
+}

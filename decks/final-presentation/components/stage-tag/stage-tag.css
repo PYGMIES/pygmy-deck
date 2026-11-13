@@ -47,3 +47,8 @@
 .c-stage-tag.is-compact i { width: 44px; height: 44px; font-size: 26px; }
 .c-stage-tag.is-compact strong { font-size: 30px; }
 .c-stage-tag span:empty { display: none; }
+
+/* is-short: tighter box for the corner reminders on the Part 2 architecture slide */
+.c-stage-tag.is-compact.is-short { min-height: 56px; gap: 10px; padding: 6px 14px 6px 10px; }
+.c-stage-tag.is-compact.is-short i { width: 36px; height: 36px; font-size: 22px; }
+.c-stage-tag.is-compact.is-short strong { line-height: 1; }
