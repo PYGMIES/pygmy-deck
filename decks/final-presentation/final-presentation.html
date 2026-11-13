@@ -5203,6 +5203,19 @@ body.overview .deck-viewport {
   font-weight: 700;
   text-align: center;
 }
+
+/* tick in front of the call-out text */
+.slide .c-pill-note.is-callout::before {
+  content: "";
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  margin-right: 16px;
+  vertical-align: -9px;
+  background: var(--ink);
+  -webkit-mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==) center / contain no-repeat;
+  mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==) center / contain no-repeat;
+}
 </style>
 </head>
 <body>
@@ -8327,7 +8340,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="74" data-name="handover-next">
-<!-- notes: SCRIPT (~20s): We have built the API, and we documented its interfaces cleanly so C22 can connect to it. This is the interactive documentation C22 gets: health, campaigns, the evaluator policy and paper trades. The only thing left is to connect C22's platform to our system. Their platform isn't ready yet, so we can't do that step. [Say who picks this up once it's ready.] → To conclude. -->
+<!-- notes: SCRIPT (~20s): We documented the API interfaces cleanly so C22 can connect to them. This is the interactive documentation C22 gets: health, campaigns, the evaluator policy and paper trades. The only thing left is to connect C22's platform to our system. Their platform isn't ready yet, so we can't do that step. [Say who picks this up once it's ready.] → To conclude. -->
 <!-- notes: Screenshot: the FastAPI docs page of the app (localhost:8000/docs): default, campaign, evaluator-policy and paper-trades endpoints. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Handover</span>
@@ -8339,7 +8352,7 @@ body.overview .deck-viewport {
      Children (e.g. pill-note) go underneath. -->
 <div class="c-statement ">
   <i class="c-statement__icon reveal" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTIyIDR2MTRNNDIgNHYxNE0xMiAxOGg0MHYxMmEyMCAyMCAwIDAgMS00MCAwek0zMiA1MHYxMSIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
-  <h2 class="reveal">We built the API. One thing is left: <mark>connecting C22’s platform to our system.</mark></h2>
+  <h2 class="reveal">One thing is left: <mark>connecting C22’s platform to our system.</mark></h2>
 
     <p class="c-pill-note reveal ">C22’s platform is not ready yet</p>
   
