@@ -1,0 +1,67 @@
+/* === COMPONENT (deck): mini-flow + mini-step ===
+   One row of charcoal boxes (icon over a short label) joined by accent arrows.
+   class="is-old" on a mini-step: the way it used to be (dashed, muted, struck through). */
+.c-mini-flow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 72px;
+}
+
+.c-mini-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 150px;
+  padding: 24px 28px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-mini-step i {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.slide .c-mini-step p {
+  max-width: none;
+  font-size: max(30px, var(--fs-min, 0px));
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--on-card);
+}
+
+.c-mini-step + .c-mini-step::before {
+  content: "";
+  position: absolute;
+  left: -48px;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  border-top: 5px solid var(--accent);
+  border-right: 5px solid var(--accent);
+  transform: rotate(45deg);
+}
+
+.c-mini-step.is-old {
+  background: transparent;
+  border: 3px dashed var(--chrome);
+  color: var(--ink-muted);
+}
+
+.c-mini-step.is-old i {
+  background: var(--chrome);
+}
+
+.slide .c-mini-step.is-old p {
+  color: var(--ink-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+}

@@ -4156,6 +4156,78 @@ body.overview .deck-viewport {
   color: var(--on-card);
 }
 
+/* ===== COMPONENT mini-flow ===== */
+/* === COMPONENT (deck): mini-flow + mini-step ===
+   One row of charcoal boxes (icon over a short label) joined by accent arrows.
+   class="is-old" on a mini-step: the way it used to be (dashed, muted, struck through). */
+.c-mini-flow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 72px;
+}
+
+.c-mini-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 150px;
+  padding: 24px 28px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-mini-step i {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.slide .c-mini-step p {
+  max-width: none;
+  font-size: max(30px, var(--fs-min, 0px));
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--on-card);
+}
+
+.c-mini-step + .c-mini-step::before {
+  content: "";
+  position: absolute;
+  left: -48px;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  border-top: 5px solid var(--accent);
+  border-right: 5px solid var(--accent);
+  transform: rotate(45deg);
+}
+
+.c-mini-step.is-old {
+  background: transparent;
+  border: 3px dashed var(--chrome);
+  color: var(--ink-muted);
+}
+
+.c-mini-step.is-old i {
+  background: var(--chrome);
+}
+
+.slide .c-mini-step.is-old p {
+  color: var(--ink-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+}
+
+/* ===== COMPONENT mini-step ===== */
+/* === COMPONENT (deck): mini-step === styles live in mini-flow.css (always used together). */
+
 /* ===== COMPONENT closing ===== */
 /* === COMPONENT: closing === thank-you / call-to-action */
 .c-closing {
@@ -5221,6 +5293,15 @@ body.overview .deck-viewport {
 .c-column.is-api-col {
   gap: 28px;
   margin-top: -40px;
+}
+
+/* slide 76: shorter cards so the import-to-retrain diagram fits under them */
+.c-card-grid.is-compact-cards .c-step-card {
+  min-height: 0;
+}
+
+.c-card-grid.is-compact-cards + .c-mini-flow {
+  margin-top: 8px;
 }
 </style>
 </head>
@@ -8477,13 +8558,13 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="77" data-name="conclusion-suite">
-<!-- notes: TODO owner. SCRIPT (~30s): Third, we created a system that outlives us: an end-to-end suite. C22 doesn't just get a model, it gets a platform. Trades come in through the API and are prepared for the Judge. The Judge scores each trade, paper trading tracks the result, and the dashboard shows it. And when new campaigns finish, a training run starts on its own, the new model is graded against the current one, and a person promotes it, with every older model kept for rollback. So the Judge is easy to update and easy to retrain in the long run, after we have handed over. That is how the system lifts the project even with the data problem: updating the model is as simple as updating the API, instead of retraining in a Jupyter notebook. → Questions. -->
+<!-- notes: TODO owner. SCRIPT (~30s): Third, we created a system that outlives us: an end-to-end suite. C22 doesn't just get a model, it gets a platform. Trades come in through the API and are prepared for the Judge. The Judge scores each trade, paper trading tracks the result, and the dashboard shows it. And when new campaigns finish, a training run starts on its own, the new model is graded against the current one, and a person promotes it, with every older model kept for rollback. So the Judge is easy to update and easy to retrain in the long run, after we have handed over. That is how the system lifts the project even with the data problem: updating the model is as simple as importing a file. Retraining then starts automatically, and the new model is graded and promoted by a person, instead of running a Jupyter notebook by hand. → Questions. -->
 <!-- notes: Mid-term value proposition (slide "Beyond the Model"): fresh perspective, new modelling, end-to-end suite. Retraining facts as on slide 10 and the handover slides: a run starts after 8 new campaigns; only C22 promotes. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Conclusion · 3 of 3</span>
   <h1 class="reveal">Creating a System That Outlives Us</h1>
 </header>
-<div class="c-card-grid inset is-after-title" style="--grid-cols: 3;">
+<div class="c-card-grid inset is-after-title is-compact-cards" style="--grid-cols: 3;">
   
   <article class="c-step-card reveal ">
   <header>
@@ -8491,7 +8572,7 @@ body.overview .deck-viewport {
     <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zMiA2IDQgMjBsMjggMTQgMjgtMTR6Ii8+PHBhdGggZD0iTTQgMzJsMjggMTQgMjgtMTRNNCA0NGwyOCAxNCAyOC0xNCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
   </header>
   <h3>Data in</h3>
-  <p>Trades come in through the API and are prepared for the Judge.</p>
+  <p>Trades arrive through the API, ready for the Judge.</p>
 </article>
   <article class="c-step-card reveal ">
   <header>
@@ -8499,7 +8580,7 @@ body.overview .deck-viewport {
     <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjgiIHk9IjkiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNCIgcng9IjMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDM4IDE2KSIvPjxwYXRoIGQ9Ik0zMyAyMSAxMCA0NCIvPjxwYXRoIGQ9Ik04IDU3aDMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i>
   </header>
   <h3>Judge and dashboard</h3>
-  <p>The Judge scores each trade. Paper trading tracks the result and the dashboard shows it.</p>
+  <p>The Judge scores each trade. The dashboard shows the result.</p>
 </article>
   <article class="c-step-card reveal ">
   <header>
@@ -8507,11 +8588,31 @@ body.overview .deck-viewport {
     <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDI2YTIxIDIxIDAgMCAxIDM4LTZNNTIgMzhhMjEgMjEgMCAwIDEtMzggNiIvPjxwYXRoIGQ9Ik01MiA4djEySDQwTTEyIDU2VjQ0aDEyIi8+PC9zdmc+Cg==);" aria-hidden="true"></i>
   </header>
   <h3>Easy to retrain</h3>
-  <p>New campaigns start a training run. The new model is graded, and a person promotes it. Older models are kept.</p>
+  <p>A person promotes the graded model. Older models are kept.</p>
 </article>
 
 </div>
-<p class="c-pill-note reveal inset">Despite the data limit: update the API, not a Jupyter notebook</p>
+<!-- A single row of small boxes joined by accent arrows. Children are mini-step. -->
+<div class="c-mini-flow inset">
+  
+  <div class="c-mini-step reveal is-old">
+  <i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PHBhdGggZD0iTTI0IDRoMTZNMjYgNHYxOEw4IDU0YTQgNCAwIDAgMCA0IDZoNDBhNCA0IDAgMCAwIDQtNkwzOCAyMlY0Ii8+PHBhdGggZD0iTTE2IDQyaDMyIi8+PC9zdmc+Cg==);" aria-hidden="true"></i>
+  <p>Jupyter notebook</p>
+</div>
+  <div class="c-mini-step reveal ">
+  <i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE0IDZoMjZsMTAgMTB2NDJIMTR6Ii8+PHBhdGggZD0iTTQwIDZ2MTBoMTAiLz48cGF0aCBkPSJNMjAgNDZsOC05IDYgNSAxMC0xMiIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
+  <p>Import a file</p>
+</div>
+  <div class="c-mini-step reveal ">
+  <i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDI2YTIxIDIxIDAgMCAxIDM4LTZNNTIgMzhhMjEgMjEgMCAwIDEtMzggNiIvPjxwYXRoIGQ9Ik01MiA4djEySDQwTTEyIDU2VjQ0aDEyIi8+PC9zdmc+Cg==);" aria-hidden="true"></i>
+  <p>Retraining starts automatically</p>
+</div>
+  <div class="c-mini-step reveal ">
+  <i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==);" aria-hidden="true"></i>
+  <p>Graded, then a person promotes</p>
+</div>
+
+</div>
 </section>
 
 
