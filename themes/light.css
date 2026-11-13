@@ -19,6 +19,7 @@
   --letterbox: #dcdcdc;
   --accent: #d9922e;           /* "now" markers, highlighted flows */
   --accent-soft: #f1dfc4;      /* accent-tinted panels */
+  --highlight: #ffd93d;        /* marker-pen underline behind emphasised words */
   --chart-bg: #ffffff;         /* backing for exported chart PNGs (white in both themes) */
   --chart-ink: #1b1b1b;        /* chart labels (chart backing is white in both themes) */
   --chart-ink-muted: #5c5c5c;  /* chart ticks */
