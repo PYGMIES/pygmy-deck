@@ -4010,6 +4010,59 @@ body.overview .deck-viewport {
   display: none;
 }
 
+/* ===== COMPONENT pill-note ===== */
+/* === COMPONENT (deck): pill-note === short accent-outlined note (a date, a blocker). */
+.c-pill-note {
+  align-self: flex-start;
+  max-width: none;
+  padding: 20px 36px;
+  border-radius: 18px;
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 3px var(--accent);
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink-accent);
+}
+
+/* ===== COMPONENT quote ===== */
+/* === COMPONENT: quote === pull quote with a heavy opening mark */
+.c-quote {
+  position: relative;
+  max-width: 1400px;
+  padding-left: 200px;
+}
+
+.c-quote::before {
+  content: "\201C";
+  position: absolute;
+  left: 0;
+  top: -40px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 300px;
+  line-height: 1;
+  color: var(--card);
+}
+
+.c-quote blockquote {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 84px;
+  line-height: 0.98;
+  letter-spacing: var(--display-tracking);
+  color: var(--ink);
+}
+
+.c-quote figcaption {
+  margin-top: var(--gap-m);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
 /* ===== COMPONENT step-card ===== */
 /* === COMPONENT (deck): step-card ===
    Charcoal card: circled number left + accent icon right, then title and body.
@@ -4077,59 +4130,6 @@ body.overview .deck-viewport {
   font-size: max(24px, var(--fs-min, 0px));
   white-space: nowrap;
   color: var(--on-card);
-}
-
-/* ===== COMPONENT pill-note ===== */
-/* === COMPONENT (deck): pill-note === short accent-outlined note (a date, a blocker). */
-.c-pill-note {
-  align-self: flex-start;
-  max-width: none;
-  padding: 20px 36px;
-  border-radius: 18px;
-  background: var(--accent-soft);
-  box-shadow: inset 0 0 0 3px var(--accent);
-  font-size: 36px;
-  font-weight: 600;
-  line-height: 1.1;
-  color: var(--ink-accent);
-}
-
-/* ===== COMPONENT quote ===== */
-/* === COMPONENT: quote === pull quote with a heavy opening mark */
-.c-quote {
-  position: relative;
-  max-width: 1400px;
-  padding-left: 200px;
-}
-
-.c-quote::before {
-  content: "\201C";
-  position: absolute;
-  left: 0;
-  top: -40px;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 300px;
-  line-height: 1;
-  color: var(--card);
-}
-
-.c-quote blockquote {
-  font-family: var(--font-display);
-  font-weight: var(--display-weight);
-  font-size: 84px;
-  line-height: 0.98;
-  letter-spacing: var(--display-tracking);
-  color: var(--ink);
-}
-
-.c-quote figcaption {
-  margin-top: var(--gap-m);
-  font-size: var(--fs-small);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
 }
 
 /* ===== COMPONENT closing ===== */
@@ -5365,7 +5365,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="04" data-name="section-recap">
-<!-- notes: What has changed since the mid-term. → Let's have a refresher of the journey. -->
+<!-- notes: What has changed since the mid-term. → The journey. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">01</span>
   <div class="c-section-divider__text">
@@ -5429,6 +5429,7 @@ body.overview .deck-viewport {
 
 <section class="slide" data-slide="07" data-name="trader-pile">
 <!-- notes: The top 10% of traders place 55% of all trades. So the Judge mostly learns how a few hundred people trade, and knows little about new traders. → What that meant for the model. -->
+<!-- notes: Source: 389 of 3,884 traders placed 54.7% of trades (by count, not volume); median 5, 698 placed one. reverse-trade-judge/results/trader_concentration_summary.json. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">The constraint</span>
   <h1 class="reveal">A Few Traders Drive the Data</h1>
@@ -5482,8 +5483,8 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="08" data-name="more-modelling">
-<!-- notes: We tried 30 model variants and only 6 finished above $0. Changing model type moved AUC by 0.002. 
- Bet sizing didn’t help either, because profit is direction times size and our direction calls are close to chance. → The fix is more data. -->
+<!-- notes: We tried 30 model variants and only 6 finished above $0. Changing model type moved AUC by 0.002. Bet sizing didn’t help either, because profit is direction times size and our direction calls are close to chance. → The fix is more data. -->
+<!-- notes: Source: notebooks 7 to 15. Sizing on campaigns 78–86: flat −$133, score-scaled −$98, predicted −$8 per campaign, all inside the ±$450 noise floor (results/trade_size_readout.csv, NB18). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">What it meant</span>
   <h1 class="reveal">More Modelling Won’t Fix This</h1>
@@ -5582,8 +5583,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="12" data-name="strategy-comparison">
-<!-- notes: Joyce. Cumulative P&L over campaigns 69 to 86. The shaded part is data the model never saw. Ours is the only line that ends positive, at +$12.
-  Fade-everything ends at −$11,905. → Here’s how that stacks up against what we committed to. -->
+<!-- notes: Joyce. Cumulative P&L over campaigns 69 to 86. The shaded part is data the model never saw. Ours is the only line that ends positive, at +$12. Fade-everything ends at −$11,905. → Here’s how that stacks up against what we committed to. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Goals &amp; Impact</span>
   <h1 class="reveal">We beat 2 of the 3 benchmarks</h1>
@@ -5654,8 +5654,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="13" data-name="committed">
-<!-- notes: Joyce. So on the benchmarks, we beat fade-everything and random. Matching C22’s rule is limited by the data as explained earlier.
- On our midterm promises, sizing by magnitude made no difference, and we delivered paper trading, the auto-retrainer and explanations. → We also took the mid-term feedback. -->
+<!-- notes: Joyce. So on the benchmarks, we beat fade-everything and random. Matching C22’s rule is limited by the data. On our midterm promises, sizing by magnitude made no difference, and we delivered paper trading, the auto-retrainer and explanations. → We also took the mid-term feedback. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Goals &amp; Impact</span>
   <h1 class="reveal">What We Committed To</h1>
@@ -5720,7 +5719,8 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="14" data-name="feedback-explanations">
-<!-- notes: During our midterms,Prof Kyong asked what the model knows that Clement doesn’t. Now every trade gets a plain-English reason Clement can check. -->
+<!-- notes: TODO owner. Prof Kyong asked what the model knows that Clement doesn’t. Now every trade gets a plain-English reason Clement can check. More in Explanations. → What else C22 gets. -->
+<!-- notes: Source: Linear doc "Mid-term QNA minutes" (Q&A item 2). The minutes paraphrase the question, so it's credited to Prof Kyong as asked at the mid-term, not as a word-for-word quote. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Mid-term feedback</span>
   <h1 class="reveal">We Took the Feedback</h1>
@@ -5752,9 +5752,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="15" data-name="added-value">
-<!-- notes: Joyce. Beyond the judge, we offer an end to end suite that C22 can run without us.
- Paper trading tests the Judge at live gold prices with no real money, and the system can easily scale to 2,000 users, backs up daily and imports past campaigns.
- → Now, I will pass my time to Jerrick to bring you through the demo -->
+<!-- notes: TODO owner. C22 can run this without us. Paper trading tests the Judge at live gold prices with no real money, and the system scales to 2,000 users, backs up daily and imports past campaigns. → Let us show you. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Added value</span>
   <h1 class="reveal">What C22 Gets Beyond the Judge</h1>
@@ -5791,7 +5789,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="16" data-name="section-demo">
-<!-- notes: Live demo. Jerrick → Then how the system fits together. -->
+<!-- notes: Live demo. TODO owner. → Then how the system fits together. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">03</span>
   <div class="c-section-divider__text">
@@ -8318,47 +8316,8 @@ body.overview .deck-viewport {
 </section>
 
 
-<section class="slide" data-slide="73" data-name="handover-how">
-<!-- notes: SCRIPT (~50s): We hand over between 17 and 30 November, in three steps. One, access: C22 gets the app folder as a zip. They create a free OANDA practice account and paste its token into the .env file. A live account's token won't work. The Supabase settings are local defaults, the same on every machine, so there are no secrets to hand over. Two, run it: npm ci, then make start, then make seed in a second terminal, and restart with make start. The seed loads 43 campaigns, 33 to 77. You need Docker, Node 20 or newer, make, Python 3, curl and uv. Three, walk through: we can't demo a retrain live, because a run only starts after every 8 completed campaigns and can take up to 2 hours. The first run starts when campaign 85 ends, about four weeks away. So we explain how retraining works, show the evaluator's three recommendations, Promote, Keep or Hold, and show where to promote on the Judge Performance page. Only C22 can promote a model, and the evaluator never changes anything by itself. → What is left. -->
-<!-- notes: Sources: project-cassandra README, Makefile and doc/client at the 11 Nov commit. Repair steps, not part of setup: make backfill-features is only for campaigns added later (the seed already holds the feature vectors); make register-v5-run only for the errors champion_not_ready or no_active_model. Docs to point to: RETRAINING.md, EVALUATOR.md, RETRAINING_CONTRACT.md, EVALUATOR_RULES.md. :8001 is the live Judge (curl localhost:8001/ready), :8002 is the trainer, curl localhost:8000/health is the app health check. Nothing is sent to a broker: all reversals are paper trades. -->
-<header class="c-slide-title ">
-  <span class="c-slide-title__kicker reveal">Handover</span>
-  <h1 class="reveal">How We Hand Over</h1>
-</header>
-<div class="c-card-grid inset" style="--grid-cols: 3;">
-  
-  <article class="c-step-card reveal ">
-  <header>
-    <span class="c-step-card__num">1</span>
-    <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTciIGN5PSIzMiIgcj0iMTIiLz48cGF0aCBkPSJNMjkgMzJoMzFNNTAgMzJ2MTBNNTggMzJ2OCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
-  </header>
-  <h3>Access</h3>
-  <p>No secrets to hand over. C22 gets the app as a zip and pastes a free OANDA practice token into <code>.env</code></p>
-</article>
-  <article class="c-step-card reveal ">
-  <header>
-    <span class="c-step-card__num">2</span>
-    <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zNiA0IDEwIDM4aDIwbC00IDIyIDI4LTM2SDM0eiIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
-  </header>
-  <h3>Run it</h3>
-  <p><code>npm ci</code><code>make start</code><code>make seed</code>Run the seed in a second terminal, then restart.</p>
-</article>
-  <article class="c-step-card reveal ">
-  <header>
-    <span class="c-step-card__num">3</span>
-    <i class="c-step-card__icon" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgMzJDMTAgMTkgMjAgMTIgMzIgMTJzMjIgNyAyOSAyMGMtNyAxMy0xNyAyMC0yOSAyMFMxMCA0NSAzIDMyeiIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjkiLz48L3N2Zz4K);" aria-hidden="true"></i>
-  </header>
-  <h3>Walk through</h3>
-  <p>We explain retraining: a run starts after 8 new campaigns. The evaluator says Promote, Keep or Hold. Only C22 promotes.</p>
-</article>
-
-</div>
-<p class="c-pill-note reveal inset">Handover window: 17 to 30 November</p>
-</section>
-
-
 <section class="slide" data-slide="74" data-name="handover-next">
-<!-- notes: SCRIPT (~15s): We have built the API. The only thing left is to connect C22's platform to our system. Their platform isn't ready yet, so we can't do that step. [Say who picks this up once it's ready.] → To conclude. -->
+<!-- notes: SCRIPT (~15s): We have built the API, and we documented its interfaces cleanly so C22 can connect to it. The only thing left is to connect C22's platform to our system. Their platform isn't ready yet, so we can't do that step. [Say who picks this up once it's ready.] → To conclude. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Handover</span>
   <h1 class="reveal">What Is Left</h1>
@@ -8369,6 +8328,7 @@ body.overview .deck-viewport {
   <i class="c-statement__icon reveal" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTIyIDR2MTRNNDIgNHYxNE0xMiAxOGg0MHYxMmEyMCAyMCAwIDAgMS00MCAwek0zMiA1MHYxMSIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
   <h2 class="reveal">We built the API. One thing is left: <mark>connecting C22’s platform to our system.</mark></h2>
 
+  <p class="c-pill-note reveal ">API interfaces documented cleanly for C22 to connect</p>
   <p class="c-pill-note reveal ">C22’s platform is not ready yet</p>
 
 </div>
@@ -8376,11 +8336,11 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="75" data-name="conclusion-data">
-<!-- notes: TODO owner. SCRIPT (~30s): To conclude, three things. First, we independently checked C22's hypothesis that they need a larger and more diverse dataset. Our sponsor said it himself, and I'll read it: "Some of your findings line up with what I've been seeing independently." And: "I think the model itself you work on is pretty good, it's just maybe like you said the lack of data that can't paint a better picture." That is the research partnership we set out to be: a second pair of eyes that reaches the same conclusion on its own. → Fresh perspective. -->
+<!-- notes: TODO owner. SCRIPT (~30s): To conclude, three things. First, we help inform C22's next steps. We independently checked their hypothesis that they need a larger and more diverse dataset. Our sponsor said it himself, and I'll read it: "Some of your findings line up with what I've been seeing independently." And: "I think the model itself you work on is pretty good, it's just maybe like you said the lack of data that can't paint a better picture." That is the research partnership we set out to be: a second pair of eyes that reaches the same conclusion on its own. → Fresh perspective. -->
 <!-- notes: Source: message from our sponsor (pasted by the team). Wording kept as sent; only "cant" was changed to "can't" and a comma added. Part of the message, "Crowd followers don't lose more often. matches my result that the crowd tells you about price", is on the slide as well. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Conclusion · 1 of 3</span>
-  <h1 class="reveal">We Verified the Data Need</h1>
+  <h1 class="reveal">Help Inform C22’s Next Steps</h1>
 </header>
 <figure class="c-quote reveal inset is-long">
   <blockquote>Some of your findings line up with what I’ve been seeing independently. Crowd followers don’t lose more often. Matches my result that the crowd tells you about price. I think the model itself yall work on is pretty good, is just maybe <em>like you said the lack of data that can’t paint a better picture.</em></blockquote>
@@ -8475,11 +8435,11 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="77" data-name="conclusion-suite">
-<!-- notes: TODO owner. SCRIPT (~30s): Third, an end-to-end suite. C22 doesn't just get a model, it gets a platform. Trades come in through the API and are prepared for the Judge. The Judge scores each trade, paper trading tracks the result, and the dashboard shows it. And when new campaigns finish, a training run starts on its own, the new model is graded against the current one, and a person promotes it, with every older model kept for rollback. So the Judge is easy to update and easy to retrain in the long run, after we have handed over. → Questions. -->
+<!-- notes: TODO owner. SCRIPT (~30s): Third, an end-to-end suite. C22 doesn't just get a model, it gets a platform. Trades come in through the API and are prepared for the Judge. The Judge scores each trade, paper trading tracks the result, and the dashboard shows it. And when new campaigns finish, a training run starts on its own, the new model is graded against the current one, and a person promotes it, with every older model kept for rollback. So the Judge is easy to update and easy to retrain in the long run, after we have handed over. That is how the system lifts the project even with the data problem: updating the model is as simple as updating the API, instead of retraining in a Jupyter notebook. → Questions. -->
 <!-- notes: Mid-term value proposition (slide "Beyond the Model"): fresh perspective, new modelling, end-to-end suite. Retraining facts as on slide 10 and the handover slides: a run starts after 8 new campaigns; only C22 promotes. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Conclusion · 3 of 3</span>
-  <h1 class="reveal">An End-to-End Suite</h1>
+  <h1 class="reveal">A Model Update Is an API Update</h1>
 </header>
 <div class="c-card-grid inset is-after-title" style="--grid-cols: 3;">
   
@@ -8509,7 +8469,7 @@ body.overview .deck-viewport {
 </article>
 
 </div>
-<p class="c-pill-note reveal inset">End-to-end suite: a full platform, easy to update and retrain</p>
+<p class="c-pill-note reveal inset">Despite the data limit: update the API, not a Jupyter notebook</p>
 </section>
 
 
