@@ -737,3 +737,7 @@
 .ev-gates.is-two .ev-gate h3 { margin-top: 16px; }
 .ev-gates.is-two .ev-gate__checks { margin-top: 16px; }
 .ev-gates.is-two .ev-gate__checks dd { margin-bottom: 6px; line-height: 1.18; }
+
+/* slides 50-51: longer Brier definition wraps; hang the wrap under the definition and lift the box clear of the cards */
+.ev-terms.ev-terms { top: 76px; padding: 16px 26px; }
+.slide .ev-terms.ev-terms p { display: grid; grid-template-columns: 86px 1fr; column-gap: 8px; line-height: 1.2; }
