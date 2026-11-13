@@ -1,0 +1,36 @@
+<!-- notes: Steps 8 to 11. The poller and the evaluator are not separate services: they are two background loops inside the FastAPI app, started with it (main.py), each running every 30 seconds. Only the trainer runs in its own container. The trainer tells nobody when a job ends, so the poller asks it "done yet?" (GET /train/{run_id}) for every unfinished run, and writes the answer on the run. A 404 means the trainer restarted and lost the job, and a run still unfinished after 2 hours is failed; either way it stops blocking the next run. When the answer is SUCCEEDED, the poller saves the new model as a challenger: a model version that is stored but not live. The evaluator then downloads the predictions file the trainer uploaded to Supabase, checks it is the exact file (sha256), grades the challenger against the live model and stores one recommendation on the dashboard. Nobody gets a message: the operator checks Judge Performance. Source: project-cassandra main.py, poll_training_runs.py, grade_challengers.py. -->
+<!-- @dd-heading kicker="Auto-retrainer" title="From Trained to Live"  -->
+<!-- @/dd-heading -->
+<!-- @flow-stage -->
+  <!-- @flow-node x="100" y="440" w="220" h="140" tone="orange" label="Trainer" size="32" -->
+  <!-- @flow-node x="540" y="310" w="800" h="410" tone="app" class="is-container" label="FastAPI app" -->
+
+  <!-- @flow-node x="580" y="440" w="280" h="140" tone="work" label="Poller" size="32" -->
+  <!-- @flow-arrow tone="accent" x1="451" y1="510" x2="322" y2="510" -->
+  <!-- @flow-arrow tone="accent" x1="451" y1="510" x2="578" y2="510" -->
+  <!-- @flow-node x="330" y="542" w="36" h="36" class="is-round is-step" label="1" size="26" -->
+  <!-- @flow-note x="374" y="530" w="166" size="26" class="is-plain is-left" text="Polls for<br>finished run" -->
+
+  <!-- @flow-db class="is-gray" x="674" y="780" -->
+  <!-- @flow-note x="520" y="807" w="150" size="28" text="Supabase<br>Postgres" -->
+  <!-- @flow-arrow tone="accent" x1="720" y1="580" x2="720" y2="778" -->
+  <!-- @flow-node x="736" y="632" w="36" h="36" class="is-round is-step on-dark" label="2" size="26" -->
+  <!-- @flow-note x="782" y="620" w="200" size="26" class="is-plain is-left on-dark" text="Registers<br>new model" -->
+
+  <!-- @flow-node x="1020" y="440" w="280" h="140" tone="work" label="Evaluator" sub="rule-based" size="32" -->
+  <!-- @flow-arrow tone="accent" x1="1060" y1="850" x2="1060" y2="582" -->
+  <!-- @flow-arrow tone="accent" x1="1060" y1="850" x2="769" y2="850" -->
+  <!-- @flow-node x="790" y="788" w="36" h="36" class="is-round is-step" label="3" size="26" -->
+  <!-- @flow-note x="836" y="776" w="200" size="26" class="is-plain is-left" text="Polls for<br>new runs" -->
+
+  <!-- @flow-db class="is-gray" x="1214" y="780" -->
+  <!-- @flow-note x="1070" y="807" w="140" size="28" text="Supabase<br>Storage" -->
+  <!-- @flow-arrow tone="accent" x1="1260" y1="778" x2="1260" y2="582" -->
+  <!-- @flow-node x="1276" y="738" w="36" h="36" class="is-round is-step" label="4" size="26" -->
+  <!-- @flow-note x="1322" y="726" w="260" size="26" class="is-plain is-left" text="Predictions on<br>unseen trades" -->
+
+  <!-- @flow-node x="1510" y="440" w="340" h="140" tone="dash" label="Dashboard" sub="Promote · Keep · Hold" size="30" -->
+  <!-- @flow-arrow tone="accent" x1="1300" y1="510" x2="1510" y2="510" -->
+  <!-- @flow-node x="1352" y="527" w="36" h="36" class="is-round is-step" label="5" size="26" -->
+  <!-- @flow-note x="1398" y="528" w="100" size="26" class="is-plain is-left" text="Grades" -->
+<!-- @/flow-stage -->

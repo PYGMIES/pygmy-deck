@@ -99,3 +99,29 @@
 .c-arch:not(.is-step) .c-arch__node.is-key { box-shadow: 0 0 0 4px var(--accent); }   /* original look: dark box with the accent ring, as the Judge on slide 18 */
 /* step box in the top right corner (mirrors the top-left box on the Part 2 builds) */
 .c-arch.is-step .c-arch__stepbox.is-right { left: auto; right: 12px; }
+
+/* === Brand colours (is-brand): black = the app, orange = Trainer / Judge, grey boxes stay; every arrow is black === */
+.c-arch.is-brand .c-arch__node.k-app { background: var(--card); color: var(--on-card); }
+.c-arch.is-brand .c-arch__node.k-trainer { background: var(--accent); color: var(--on-accent); }
+.c-arch.is-brand .c-arch__node.k-trainer small { color: var(--on-accent); }
+.c-arch.is-brand .c-arch__node.is-key,
+.c-arch.is-brand .c-arch__node--judge { box-shadow: none; }
+.c-arch.is-brand .c-arch__wires g > path { stroke: var(--ink); color: var(--ink); }
+
+/* === Layer builds (is-layers is-layers-N): layers not yet shown sit at 40%; arrows follow their origin === */
+.c-arch.is-layers .c-arch__ly { opacity: 0.4; }
+.c-arch.is-layers-1 [data-ly~="1"] { opacity: 1; }
+.c-arch.is-layers-2 [data-ly~="2"] { opacity: 1; }
+.c-arch.is-layers-3 [data-ly~="3"] { opacity: 1; }
+
+/* Newly lit pieces of a build fade up from the dimmed state; pieces lit earlier stay still.
+   (Boxes and lanes are also glided by the runtime's match-and-move; this covers the arrows inside the wires SVG.) */
+@keyframes arch-ly-in { from { opacity: 0.4; } }
+.slide.active .c-arch.is-layers-2 [data-ly~="2"]:not([data-ly~="1"]),
+.slide.active .c-arch.is-layers-3 [data-ly~="3"]:not([data-ly~="2"]),
+.slide.active .c-arch.is-brand:not(.is-layers) [data-ly]:not([data-ly~="3"]) {
+  animation: arch-ly-in 0.9s 0.3s var(--ease-out) backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide.active .c-arch [data-ly] { animation: none !important; }
+}
