@@ -288,7 +288,7 @@
   min-height: 208px;
 }
 
-/* What We Committed To (slide 12): compact charcoal rows, status pill on the right */
+/* What We Committed To (slide 13): compact charcoal rows, status pill on the right */
 .c-split.is-scorecard { gap: var(--gap-l); }
 .c-split.is-scorecard .c-column { gap: var(--gap-s); }
 .c-label-card.is-status { min-height: 112px; padding: 20px 26px; gap: 20px; }
@@ -722,7 +722,7 @@
 /* Bottom-margin fixes at the 30px floor */
 /* slide 03: nine agenda rows fit above the page number */
 .c-agenda-item { padding: 11px 0; }
-/* slide 13: shorter chart so the two-line takeaway clears the bottom margin */
+/* slide 12: shorter chart so the two-line takeaway clears the bottom margin */
 .c-equity-chart__svg { height: 560px; }
 /* slide 50: tighter rows so the two-line footer clears the page number */
 .c-flow-owners { grid-template-rows: auto repeat(5, 88px) auto; row-gap: 12px; }
