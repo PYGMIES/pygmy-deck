@@ -5216,6 +5216,12 @@ body.overview .deck-viewport {
   -webkit-mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==) center / contain no-repeat;
   mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==) center / contain no-repeat;
 }
+
+/* slide 73: call-out + screenshot group, a little tighter and lifted */
+.c-column.is-api-col {
+  gap: 28px;
+  margin-top: -40px;
+}
 </style>
 </head>
 <body>
@@ -8346,7 +8352,7 @@ body.overview .deck-viewport {
   <span class="c-slide-title__kicker reveal">Handover</span>
   <h1 class="reveal">What Is Left</h1>
 </header>
-<div class="c-split inset" style="--split-cols: 1fr 860px; --split-align: center;">
+<div class="c-split inset" style="--split-cols: 1fr 780px; --split-align: center;">
   
   <!-- Accent icon over one big display sentence; wrap the key phrase in <mark>.
      Children (e.g. pill-note) go underneath. -->
@@ -8357,7 +8363,7 @@ body.overview .deck-viewport {
     <p class="c-pill-note reveal ">C22’s platform is not ready yet</p>
   
 </div>
-  <div class="c-column " style="--col-width: auto; --col-gap: var(--gap-m);">
+  <div class="c-column is-api-col" style="--col-width: auto; --col-gap: var(--gap-m);">
   
     <p class="c-pill-note reveal is-callout">API interfaces documented cleanly for C22 to connect</p>
     <figure class="c-image-frame reveal is-shot" style="--img-fit: contain;">
