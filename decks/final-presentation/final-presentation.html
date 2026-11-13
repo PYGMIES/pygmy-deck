@@ -4210,17 +4210,39 @@ body.overview .deck-viewport {
   transform: rotate(90deg);
 }
 
+/* contact-point rings (only visible during the snap) */
+.c-plug-in__snap {
+  position: absolute;
+  left: calc(var(--pi-link) - 4px);
+  top: 50%;
+  width: 46px;
+  height: 46px;
+  border: 5px solid var(--accent);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.3);
+}
+
 /* --- animation (plays each time the slide opens) --- */
+.slide.active .c-plug-in__snap {
+  animation: pi-ring 0.7s ease-out 2s both;
+}
+
+.slide.active .c-plug-in__snap.is-late {
+  animation: pi-ring 0.7s ease-out 2.18s both;
+}
+
 .slide.active .c-plug-in__plug {
-  animation: pi-plug 1.5s cubic-bezier(0.5, 0, 0.2, 1) 0.6s both;
+  animation: pi-plug 1.4s cubic-bezier(0.45, 0, 0.3, 1) 0.6s both;
 }
 
 .slide.active .c-plug-in__cable {
-  animation: pi-cable 1.5s cubic-bezier(0.5, 0, 0.2, 1) 0.6s both;
+  animation: pi-cable 1.4s cubic-bezier(0.45, 0, 0.3, 1) 0.6s both;
 }
 
 .slide.active .c-plug-in__box.is-theirs {
-  animation: pi-theirs 0.6s ease-out 2s both;
+  animation: pi-theirs 0.6s ease-out 2s both, pi-jolt 0.45s ease-out 2s both;
 }
 
 .slide.active .c-plug-in__box.is-theirs i {
@@ -4232,13 +4254,30 @@ body.overview .deck-viewport {
 }
 
 @keyframes pi-plug {
-  from { transform: translateX(0) rotate(90deg); }
-  to { transform: translateX(var(--pi-d)) rotate(90deg); }
+  0% { transform: translateX(0) rotate(90deg); }
+  88% { transform: translateX(calc(var(--pi-d) - 6px)) rotate(90deg); }
+  94% { transform: translateX(calc(var(--pi-d) + 9px)) rotate(90deg); }
+  100% { transform: translateX(var(--pi-d)) rotate(90deg); }
 }
 
 @keyframes pi-cable {
-  from { width: 24px; }
-  to { width: calc(var(--pi-d) + 24px); }
+  0% { width: 24px; }
+  88% { width: calc(var(--pi-d) + 18px); }
+  94% { width: calc(var(--pi-d) + 33px); }
+  100% { width: calc(var(--pi-d) + 24px); }
+}
+
+/* the snap: C22's box jolts as the plug seats, and two rings pulse out of the contact point */
+@keyframes pi-jolt {
+  0% { transform: translateX(0); }
+  30% { transform: translateX(9px); }
+  60% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes pi-ring {
+  0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.3); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(3.4); }
 }
 
 @keyframes pi-theirs {
@@ -9349,6 +9388,8 @@ body.overview .deck-viewport {
   <div class="c-plug-in__link" aria-hidden="true">
     <div class="c-plug-in__cable"></div>
     <i class="c-plug-in__plug" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTIyIDR2MTRNNDIgNHYxNE0xMiAxOGg0MHYxMmEyMCAyMCAwIDAgMS00MCAwek0zMiA1MHYxMSIvPjwvc3ZnPgo=);"></i>
+    <div class="c-plug-in__snap"></div>
+    <div class="c-plug-in__snap is-late"></div>
   </div>
 
   <div class="c-plug-in__box is-theirs reveal">
