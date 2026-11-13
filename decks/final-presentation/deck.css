@@ -252,7 +252,7 @@
 .c-card-grid.is-features-kept .c-feature-group__list li { row-gap: 2px; }
 .c-card-grid.is-features-kept .c-feature-group__list strong { font-size: max(26px, var(--fs-min, 0px)); }
 .c-card-grid.is-features-kept .c-feature-group__list code { line-height: 1.15; }
-.c-card-grid.is-features-kept .c-feature-group__list li { align-items: start; }
+.c-card-grid.is-features-kept .c-feature-group__list li { align-items: start; align-content: start; }
 
 /* slide 21: right-hand cards fill the column height to match the spread-out steps; the last card takes the spare space */
 .c-column.is-fill { height: 100%; }
