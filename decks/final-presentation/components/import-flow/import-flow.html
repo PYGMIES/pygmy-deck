@@ -1,0 +1,23 @@
+<!-- Clement imports a file, retraining starts, the model is graded, a person promotes.
+     One scene, three step builds: class="is-step-1|2|3". [data-s] = the step an item appears at.
+     caption = the line under the row; closing (optional) = the accent line on the last step. -->
+<div class="c-import-flow {{class|}}">
+
+  <div class="c-import-flow__row">
+    <div class="c-import-flow__file" aria-hidden="true"><i style="--icon: url(assets/icons/report.svg);"></i></div>
+
+    <div class="c-import-flow__node is-clement reveal" data-s="1"><i style="--icon: url(assets/icons/person.svg);" aria-hidden="true"></i><b>Clement</b></div>
+    <div class="c-import-flow__arrow reveal" data-s="1"></div>
+    <div class="c-import-flow__node is-app reveal" data-s="1"><i style="--icon: url(assets/icons/layers.svg);" aria-hidden="true"></i><b>App</b></div>
+    <div class="c-import-flow__arrow reveal" data-s="2"></div>
+    <div class="c-import-flow__node is-retrain reveal" data-s="2"><i style="--icon: url(assets/icons/refresh.svg);" aria-hidden="true"></i><b>Retrain</b><div class="c-import-flow__bar"></div></div>
+    <div class="c-import-flow__arrow reveal" data-s="3"></div>
+    <div class="c-import-flow__node is-grade reveal" data-s="3"><i style="--icon: url(assets/icons/gavel.svg);" aria-hidden="true"></i><b>Grade</b></div>
+    <div class="c-import-flow__arrow reveal" data-s="3"></div>
+    <div class="c-import-flow__node is-promote reveal" data-s="3"><i style="--icon: url(assets/icons/check.svg);" aria-hidden="true"></i><b>Promote</b></div>
+  </div>
+
+  <p class="c-import-flow__caption reveal">{{caption}}</p>
+  <p class="c-import-flow__closing reveal">{{closing|}}</p>
+
+</div>
