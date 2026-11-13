@@ -755,3 +755,41 @@
 .c-flow-db.is-gray { fill: color-mix(in srgb, var(--card) 76%, var(--bg)); }
 .c-flow-node.is-step.on-dark { background: var(--card); color: var(--on-card); box-shadow: inset 0 0 0 2px var(--on-card-muted); }
 .c-flow-note.on-dark { color: var(--on-card); }
+
+/* call-out pill: solid accent so the key point stands out (slide 73) */
+.slide .c-pill-note.is-callout {
+  align-self: stretch;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* tick in front of the call-out text */
+.slide .c-pill-note.is-callout::before {
+  content: "";
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  margin-right: 16px;
+  vertical-align: -9px;
+  background: var(--ink);
+  -webkit-mask: url(assets/icons/check.svg) center / contain no-repeat;
+  mask: url(assets/icons/check.svg) center / contain no-repeat;
+}
+
+/* slide 73: call-out + screenshot group, a little tighter and lifted */
+.c-column.is-api-col {
+  gap: 28px;
+  margin-top: -40px;
+}
+
+/* slide 73: statement without its icon, stacked above the plug-in diagram */
+.c-statement.is-no-icon .c-statement__icon {
+  display: none;
+}
+
+.c-column.is-left-stack {
+  gap: 44px;
+}
