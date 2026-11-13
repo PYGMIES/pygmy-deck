@@ -1,6 +1,6 @@
 /* === COMPONENT (deck): plug-in ===
    [Our system] ---plug--> [C22's platform]. On .slide.active the plug slides along the link and
-   connects (PI_D px), then C22's box turns from a dashed outline into a solid card with a tick.
+   connects (PI_D px), then C22's box turns from a dashed outline into a solid card.
    Reduced motion: shows the connected end state. */
 .c-plug-in {
   --pi-link: 290px;
@@ -50,28 +50,6 @@
 
 .c-plug-in__box.is-theirs i {
   background: var(--chrome);
-}
-
-/* the tick badge on C22's box */
-.c-plug-in__ok {
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--success);
-  opacity: 0;
-  transform: scale(0.3);
-}
-
-.c-plug-in__ok::before {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  background: var(--on-card);
-  -webkit-mask: url(assets/icons/check.svg) center / contain no-repeat;
-  mask: url(assets/icons/check.svg) center / contain no-repeat;
 }
 
 /* the link between the two boxes */
@@ -127,10 +105,6 @@
   animation: pi-label 0.6s ease-out 2s both;
 }
 
-.slide.active .c-plug-in__ok {
-  animation: pi-ok 0.55s var(--ease-out) 2.3s both;
-}
-
 @keyframes pi-plug {
   from { transform: translateX(0) rotate(90deg); }
   to { transform: translateX(var(--pi-d)) rotate(90deg); }
@@ -154,12 +128,6 @@
 @keyframes pi-label {
   from { color: var(--ink-muted); }
   to { color: var(--on-card); }
-}
-
-@keyframes pi-ok {
-  0% { opacity: 0; transform: scale(0.3); }
-  70% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 1; transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -186,8 +154,4 @@
     background: var(--accent);
   }
 
-  .c-plug-in__ok {
-    opacity: 1;
-    transform: none;
-  }
 }

@@ -18,6 +18,7 @@
   --letterbox: #0e0e0f;
   --accent: #e8a948;
   --accent-soft: #4a3a22;
+  --highlight: #b8921a;        /* marker-pen underline behind emphasised words */
   --chart-bg: #ffffff;         /* backing for exported chart PNGs (white in both themes) */
   --chart-ink: #1b1b1b;        /* chart labels (chart backing is white in both themes) */
   --chart-ink-muted: #5c5c5c;  /* chart ticks */
