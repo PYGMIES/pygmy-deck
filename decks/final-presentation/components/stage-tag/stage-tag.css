@@ -1,0 +1,43 @@
+/* === COMPONENT (deck): stage-tag ===
+   A "main stage" reminder (number, title, subtitle) pinned at stage coordinates, inside a flow-stage.
+   Same owner colours as the flow-timeline numbers: tone app (black) | trainer (orange) | eval (grey) | dash (light grey). */
+.c-stage-tag {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 100px;
+  padding: 0 24px 0 18px;
+  border: var(--rule-w) solid var(--o);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--ink);
+}
+.c-stage-tag--app { --o: var(--owner-app); --on: var(--on-owner-app); }
+.c-stage-tag--trainer { --o: var(--owner-trainer); --on: var(--on-owner-trainer); }
+.c-stage-tag--eval { --o: var(--owner-eval); --on: var(--on-owner-eval); }
+.c-stage-tag--dash { --o: var(--owner-dash); --on: var(--on-owner-dash); }
+.c-stage-tag i {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--o);
+  color: var(--on);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 36px;
+  padding-top: 3px;
+}
+.c-stage-tag div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.c-stage-tag strong {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 34px;
+  line-height: 1.02;
+  letter-spacing: var(--display-tracking);
+}
+.c-stage-tag span { font-size: var(--fs-small); line-height: 1.15; color: var(--ink-muted); }

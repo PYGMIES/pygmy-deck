@@ -124,6 +124,7 @@
 
   function morph(from, to) {
     const body = document.body.classList;
+    if (from.hasAttribute("data-no-anim") || to.hasAttribute("data-no-anim")) return;
     if (!booted || reduceMotion.matches || body.contains("editing") || body.contains("overview")) return;
     const { pairs, used } = morphPairs(from, to);
     if (!pairs.length) return;

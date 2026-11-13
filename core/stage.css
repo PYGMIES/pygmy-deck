@@ -112,6 +112,19 @@ body {
   transform: none;
 }
 
+/* === NO ANIMATION === a slide that carries <!-- no-anim --> shows all its content at once: no reveal, no build or keyframe motion */
+.slide[data-no-anim] .reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+.slide[data-no-anim] *,
+.slide[data-no-anim] *::before,
+.slide[data-no-anim] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
 /* === DECK CHROME === progress bar + counter, inside the stage */
 .deck-progress {
   position: absolute;
