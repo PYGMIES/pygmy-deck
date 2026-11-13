@@ -3,6 +3,7 @@
   <div class="c-arch__lane p3" style="left: 1044px; width: 327px;"><span data-n="3">Pipeline</span></div>
   <div class="c-arch__lane p2" style="left: 687px; width: 327px;"><span data-n="2">Data &amp; Messaging</span></div>
   <div class="c-arch__lane p1" style="left: 330px; width: 327px;"><span data-n="1">Input/Output</span></div>
+  <div class="c-arch__stepbox"><p class="c-arch__stepbox-title"><i>{{stepn|}}</i>{{steptitle|}}</p><ul><li>{{b1|}}</li><li>{{b2|}}</li></ul></div>
   <svg class="c-arch__wires" viewBox="0 0 1728 800" aria-hidden="true">
     <defs>
       <marker id="arch-arrow-{{uid|rtC}}" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
@@ -20,15 +21,15 @@
       <g class="c-arch__d" data-lit="4"><path class="is-black" d="M1067.5 365 L1000.5 365" marker-start="url(#arch-arrow-{{uid|rtC}})" marker-end="url(#arch-arrow-{{uid|rtC}})"/></g>
       <g class="c-arch__d" data-lit="3"><path class="is-black" d="M1067.5 460 L1000.5 460" marker-end="url(#arch-arrow-{{uid|rtC}})"/></g>
       <g class="c-arch__d" data-lit="7"><path class="is-orange" d="M700.5 360 L613.5 310" marker-start="url(#arch-arrow-{{uid|rtC}})" marker-end="url(#arch-arrow-{{uid|rtC}})"/></g>
-      <g class="c-arch__d" data-lit="9"><path class="is-orange" d="M493.5 320 L493.5 530" marker-end="url(#arch-arrow-{{uid|rtC}})"/></g>
-      <g class="c-arch__d" data-lit="10"><path class="is-orange" d="M627.2 530 L700.5 470" marker-end="url(#arch-arrow-{{uid|rtC}})"/></g>
+      <g class="c-arch__d" data-lit="9"><path class="is-orange" d="M493.5 320 L493.5 550" marker-end="url(#arch-arrow-{{uid|rtC}})"/></g>
+      <g class="c-arch__d" data-lit="10"><path class="is-orange" d="M618 550 L700.5 140" marker-end="url(#arch-arrow-{{uid|rtC}})"/></g>
       <g class="c-arch__d" data-lit="11"><path class="is-orange" d="M651.5 600 L1435.5 600" marker-end="url(#arch-arrow-{{uid|rtC}})"/></g>
     </g>
   </svg>
   <div class="c-arch__actor c-arch__d" data-lit="" style="top: 234px; left: -74px;">
     <svg viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="12" r="9"/><path d="M14 46c0-11 8-20 18-20s18 9 18 20z"/></svg>
     <strong>C22</strong>
-    <span>Clement &amp;<br>Lee Yang</span>
+    <span>Clement &amp; Lee Yang</span>
   </div>
   <span class="c-arch__wire-label c-arch__d" data-lit="6 7" style="left: 198px; top: 128px; width: 170px;">Verdicts +<br>models</span>
   <span class="c-arch__wire-label c-arch__d" data-lit="8" style="left: 198px; top: 350px; width: 170px;">Promote<br>decision</span>
@@ -38,8 +39,8 @@
   <div class="p4 c-arch__node--dark c-arch__node--judge c-arch__node c-arch__d" data-lit="11" style="left: 1435.5px; top: 550px; width: 258px; height: 100px;">Judge<small>promoted</small></div>
   <div class="p3 c-arch__node--dark c-arch__node c-arch__d" data-lit="4 5" style="left: 1067.5px; top: 285px; width: 280px; height: 110px;">Evaluator<small>polls every 30 s</small></div>
   <div class="p3 c-arch__node--dark c-arch__node c-arch__d" data-lit="2 3" style="left: 1067.5px; top: 430px; width: 280px; height: 110px;">Training tracker<small>polls every 30 s</small></div>
-  <div class="p2 c-arch__node c-arch__d" data-lit="1 5" style="left: 700.5px; top: 70px; width: 300px; height: 120px;">Storage<small>model +<br>predictions</small></div>
-  <div class="p2 c-arch__node c-arch__d" data-lit="3 4 7 10" style="left: 700.5px; top: 326px; width: 300px; height: 174px;">Postgres<small>training status,<br>model details,<br>verdict</small></div>
+  <div class="p2 c-arch__node c-arch__d" data-lit="1 5 10" style="left: 700.5px; top: 70px; width: 300px; height: 120px;">Storage<small>model +<br>predictions</small></div>
+  <div class="p2 c-arch__node c-arch__d" data-lit="3 4 7" style="left: 700.5px; top: 338px; width: 300px; height: 150px;">Postgres<small>training status,<br>model details,<br>verdict</small></div>
   <div class="p1 c-arch__node c-arch__d" data-lit="6 7 8 9" style="left: 373.5px; top: 220px; width: 240px; height: 100px;">Dashboard<small>visualisation</small></div>
-  <div class="p1 c-arch__node c-arch__d" data-lit="9 10 11" style="left: 335.5px; top: 530px; width: 316px; height: 140px;">FastAPI<small>/models/{id}/<br>promote</small></div>
+  <div class="p1 c-arch__node c-arch__d" data-lit="9 10 11" style="left: 335.5px; top: 550px; width: 316px; height: 100px;">FastAPI<small>/models/{id}/promote</small></div>
 </div>
