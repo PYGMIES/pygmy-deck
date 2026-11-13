@@ -1,14 +1,8 @@
-<!-- notes: TODO owner. Two real locked-block trades. Left: a fade in campaign 69, +$26.06. Right: the strongest no-fade in campaign 75, -$43.48. "Pool p95" means larger than 95% of pool trades (campaigns 33-68). Honest read: size is the first reason on 425 of 659 locked-block fades (64%). The reasons are accurate, but they describe a size-driven selection, not a behaviour that loses. Source: results/judge_v5_gross_18_explanation.csv. -->
+<!-- notes: TODO owner. Two real trades from the Judge, as the app shows them. Left: a SKIP (the Judge says don't fade), reasons Stops, Size and Pace, each "against fade". Right: a FADE, reasons Experience and Timing, each "toward fade", with the dollar effect on the score beside each reason. The footer says it plainly: this describes what moved the Judge's score, it is not evidence the trade will pay. -->
 <!-- @slide-title kicker="Explanations" text="An Example" -->
-<!-- @split cols="1fr 1fr" align="stretch" class="inset" -->
-  <!-- @panel-card title="Fade" note="Campaign 69 · score +$26.06" -->
-    <p>Size: 0.50 lots (pool p95).</p>
-    <p>Experience: 0 earlier closed trades in this campaign (pool p9).</p>
-  <!-- @/panel-card -->
-  <!-- @panel-card title="No fade" note="Campaign 75 · score −$43.48" -->
-    <p>Stops: set a stop-loss on 0% of earlier trades (pool p16).</p>
-    <p>Size: 0.40 lots (pool p87).</p>
-    <p>Experience: 20 trades in earlier campaigns (pool p47).</p>
-  <!-- @/panel-card -->
+<!-- @split cols="auto auto" align="center" class="inset" -->
+  <!-- @annotated-shot src="assets/skip_explanations.jpg" alt="Trade detail for a SKIP decision with three reasons: Stops, Size and Pace, each against fade" height="640px" -->
+  <!-- @/annotated-shot -->
+  <!-- @annotated-shot src="assets/fade_explanations.jpg" alt="Trade detail for a FADE decision with two reasons: Experience and Timing, each toward fade" height="640px" -->
+  <!-- @/annotated-shot -->
 <!-- @/split -->
-<!-- @section-heading title="Size comes first on 64% of fades" subtitle="“Pool p95” = larger than 95% of pool trades" class="inset" -->
