@@ -793,3 +793,6 @@
 .c-column.is-left-stack {
   gap: 44px;
 }
+
+/* slide 55 (How Step 4 Decides): the whole slide floats in as one piece instead of staggering; reduced motion still turns it off in core/stage.css */
+.slide:has(.ev-tree) .reveal { transition-delay: 120ms; }
