@@ -18,7 +18,7 @@
 | 04 | Divider: Recap ("The problem, and what changed since midterms") | new | done |
 | 05 | The whole journey | mid-term 14 | done |
 | 06 | C22 hit a data ceiling (kicker: The constraint) + sponsor quote strip (Clement, C22 chat, 10 Nov 2026; punctuation tidied, words verbatim) (`chevron-callout is-quote`) | new | done |
-| 07 | A few traders drive the data (kicker: The constraint): proof of the diversity limit | new `trader-pile` | done |
+| 07 | Limited data diversity (kicker: The constraint): 10 trader-decile bars (top 10% = 54.7% of trades) funnel into 60 campaign tiles, half marked "same few traders again" (60 ≈ 30 of variety) (`diversity-funnel`; replaces the `trader-pile` dots, which is now unused) | new | done; "60 ≈ 30" is rhetorical, campaign count to confirm (see open items) |
 | 08 | More modelling won't fix this: 6/30 notebook variants above $0 + Profit = Direction × Size, two sizing rules moved profit < $130/campaign (NB18, `results/trade_size_readout.csv`); callout "More data, not a bigger model" (`big-stat` + `is-formula`, `chevron-callout`) | new | done |
 | 09 | C22 built its own platform (500 to 2,000) + "More traders means more data, so the Judge can keep improving" | new | done |
 | 10 | Our positioning: make retraining easy (keep at the "why" level; mechanics live in the Auto-Retrainer section) | new | done |

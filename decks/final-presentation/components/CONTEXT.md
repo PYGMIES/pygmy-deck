@@ -61,3 +61,4 @@ Project management and handover (slides 46-52):
 `method-compare`, `sprint-cycle`, `retro-changes` and `project-timeline` are no longer used in this deck (their slides were replaced); kept in case they come back.
 
 | `rollback-strip` | `class?` | Model-version timeline (v5, v6, v7 live) with a curved arrow back to v6; the rollback row of `promote-flow` as a standalone block. Position with a class in `deck.css`. Slide 59. |
+| `diversity-funnel` | `class?` | 10 bars (groups of 10% of traders, share of trades; top bar 54.7% from `trader_concentration_summary.json`, other nine at their ~5% average) with an SVG funnel into 60 campaign tiles (30 charcoal, 30 accent). Plot 590px tall; edit the polygon and bar/tile counts together. Slide 07. |

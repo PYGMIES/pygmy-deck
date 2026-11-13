@@ -1314,115 +1314,107 @@ body.overview .deck-viewport {
   color: var(--ink);
 }
 
-/* ===== COMPONENT trader-pile ===== */
-/* === COMPONENT: trader-pile === 100 dots = 100% of trades.
-   Sally (top 10% of traders) holds 55 dots; the other nine each hold 5.
-   Same dot size everywhere, so pile area is proportional to trades. No own animation: uses .reveal. */
-.c-trader-pile {
-  --dot: 40px;
-  --dot-gap: 10px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto;
-  column-gap: 96px;
-  row-gap: 44px;
-  align-items: center;
-}
-
-.c-trader-pile__dots {
-  display: grid;
-  gap: var(--dot-gap);
-}
-
-.c-trader-pile__dots i,
-.c-trader-pile__key i {
-  display: block;
-  width: var(--dot);
-  height: var(--dot);
-  border-radius: 50%;
-}
-
-.c-trader-pile__dots--hero {
-  grid-template-columns: repeat(11, var(--dot));
-}
-
-.c-trader-pile__dots--small {
-  grid-template-columns: repeat(5, var(--dot));
-}
-
-/* Sally: accent dots on a soft accent panel */
-.c-trader-pile__hero {
+/* ===== COMPONENT diversity-funnel ===== */
+/* === COMPONENT: diversity-funnel === 10 bars (groups of 10% of traders, share of trades) funnel into 60 campaign tiles.
+   Plot is 590px tall: top bar 54.7% = 323px, other nine ~5% = 30px (average, illustrative). Funnel polygon in the HTML
+   joins the top bar to the bottom half (30) of the tile grid; edit both together. Uses .reveal only. */
+.c-diversity-funnel {
+  --plot: 590px;
+  --tile: 52px;
+  --tile-gap: 12px;
   margin: 0;
-  padding: 40px 44px 36px;
-  border-radius: var(--radius);
-  background: var(--accent-soft);
+  display: grid;
+  grid-template-columns: 628px 200px 628px;
+  grid-template-rows: var(--plot) auto;
+  column-gap: 0;
+  row-gap: 24px;
+}
+
+.c-diversity-funnel__bars {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(10, 52px);
+  column-gap: 12px;
+  align-items: end;
+}
+
+.c-diversity-funnel__bars > i {
+  display: block;
+  height: calc(var(--h) * 5.9px);
+  border-radius: 10px 10px 0 0;
+  background: var(--card);
+}
+
+.c-diversity-funnel__bars > i:last-of-type { background: var(--accent); }
+
+.c-diversity-funnel__link { width: 200px; height: var(--plot); display: block; }
+.c-diversity-funnel__link polygon { fill: var(--accent-soft); }
+
+.c-diversity-funnel__campaigns {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(10, var(--tile));
+  grid-auto-rows: var(--tile);
+  gap: var(--tile-gap);
+  align-content: end;
+}
+
+.c-diversity-funnel__campaigns > i {
+  display: block;
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.c-diversity-funnel__campaigns > i:nth-of-type(n+31) { background: var(--accent); }
+
+/* Headlines sit above each group, anchored top-left of the plot */
+.c-diversity-funnel p.c-diversity-funnel__hl {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: var(--fs-small);
+  line-height: 1.15;
+  color: var(--ink-muted);
+  max-width: none;
+}
+
+.c-diversity-funnel__hl b {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: 0.95;
+  letter-spacing: var(--display-tracking);
   color: var(--ink);
 }
 
-.c-trader-pile__hero .c-trader-pile__dots i { background: var(--accent); }
+.c-diversity-funnel__hl span { font-weight: 600; color: var(--ink-accent); }
 
-.c-trader-pile__hero figcaption {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: var(--rule-w) solid var(--rule);
-}
-
-.c-trader-pile__hero figcaption b {
-  font-family: var(--font-display);
-  font-size: var(--fs-h2);
-  line-height: 1;
-}
-
-.c-trader-pile__hero figcaption span {
-  font-size: var(--fs-small);
-  color: var(--ink-muted);
-}
-
-.c-trader-pile__hero figcaption .c-trader-pile__share { font-weight: 700; color: var(--ink-accent); }
-
-/* The other nine: charcoal dots, 3 x 3 */
-.c-trader-pile__rest {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: space-between;
-  row-gap: 40px;
-}
-
-.c-trader-pile__pile { margin: 0; }
-
-.c-trader-pile__pile .c-trader-pile__dots i { background: var(--card); }
-
-.c-trader-pile__pile figcaption {
-  margin-top: 12px;
+.c-diversity-funnel p.c-diversity-funnel__axis,
+.c-diversity-funnel p.c-diversity-funnel__legend {
+  margin: 0;
+  max-width: none;
   font-size: var(--fs-small);
   font-weight: 600;
   color: var(--ink-muted);
 }
 
-/* Key + headline stat across the bottom */
-.c-trader-pile p.c-trader-pile__key {
-  grid-column: 1 / -1;
+.c-diversity-funnel p.c-diversity-funnel__axis { grid-column: 1; padding-top: 14px; border-top: var(--rule-w) solid var(--rule); }
+
+.c-diversity-funnel p.c-diversity-funnel__legend {
+  grid-column: 3;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  font-size: var(--fs-small);
-  color: var(--ink-muted);
-  max-width: none;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  padding-top: 14px;
+  border-top: var(--rule-w) solid var(--rule);
 }
 
-.c-trader-pile__key strong { color: var(--ink); }
-
-.c-trader-pile__key span {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.c-trader-pile__key i { --dot: 22px; background: var(--card); flex: none; }
+.c-diversity-funnel__legend span { display: inline-flex; align-items: center; gap: 12px; }
+.c-diversity-funnel__legend i { width: 24px; height: 24px; border-radius: 6px; background: var(--card); flex: none; }
+.c-diversity-funnel__legend i.is-echo { background: var(--accent); }
 
 /* ===== COMPONENT card-grid ===== */
 /* === COMPONENT: card-grid === equal-width grid of cards */
@@ -5365,7 +5357,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="04" data-name="section-recap">
-<!-- notes: What has changed since the mid-term. → Let's have a refresher of the journey. -->
+<!-- notes: What has changed since the mid-term. → The journey. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">01</span>
   <div class="c-section-divider__text">
@@ -5428,62 +5420,31 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="07" data-name="trader-pile">
-<!-- notes: The top 10% of traders place 55% of all trades. So the Judge mostly learns how a few hundred people trade, and knows little about new traders. → What that meant for the model. -->
+<!-- notes: The top 10% of traders place 55% of all trades. So 60 campaigns give us about 30 campaigns of variety. The Judge learns how a few hundred people trade and knows little about new traders. → What that meant for the model. -->
+<!-- notes: Source: 389 of 3,884 traders placed 54.7% of trades (by count, not volume); median 5, 698 placed one. reverse-trade-judge/results/trader_concentration_summary.json. The nine lower bars are drawn at their average (about 5% each), not the real spread. "60 ≈ 30" is a rough equivalence, not a computed figure (Kish effective traders is 749 of 3,884). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">The constraint</span>
-  <h1 class="reveal">A Few Traders Drive the Data</h1>
+  <h1 class="reveal">Limited Data Diversity</h1>
 </header>
-<div class="c-trader-pile inset">
-  <figure class="c-trader-pile__hero reveal">
-    <div class="c-trader-pile__dots c-trader-pile__dots--hero"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <figcaption><b>Sally</b><span>Top 10% of traders</span><span class="c-trader-pile__share">55 of every 100 trades</span></figcaption>
-  </figure>
-  <div class="c-trader-pile__rest">
-    <figure class="c-trader-pile__pile reveal">
-      <div class="c-trader-pile__dots c-trader-pile__dots--small"><i></i><i></i><i></i><i></i><i></i></div>
-      <figcaption>Alex</figcaption>
-    </figure>
-    <figure class="c-trader-pile__pile reveal">
-      <div class="c-trader-pile__dots c-trader-pile__dots--small"><i></i><i></i><i></i><i></i><i></i></div>
-      <figcaption>Jon</figcaption>
-    </figure>
-    <figure class="c-trader-pile__pile reveal">
-      <div class="c-trader-pile__dots c-trader-pile__dots--small"><i></i><i></i><i></i><i></i><i></i></div>
-      <figcaption>Mei</figcaption>
-    </figure>
-    <figure class="c-trader-pile__pile reveal">
-      <div class="c-trader-pile__dots c-trader-pile__dots--small"><i></i><i></i><i></i><i></i><i></i></div>
-      <figcaption>Raj</figcaption>
-    </figure>
-    <figure class="c-trader-pile__pile reveal">
-      <div class="c-trader-pile__dots c-trader-pile__dots--small"><i></i><i></i><i></i><i></i><i></i></div>
-      <figcaption>Ben</figcaption>
-    </figure>
-    <figure class="c-trader-pile__pile reveal">
-      <div class="c-trader-pile__dots c-trader-pile__dots--small"><i></i><i></i><i></i><i></i><i></i></div>
-      <figcaption>Lena</figcaption>
-    </figure>
-    <figure class="c-trader-pile__pile reveal">
-      <div class="c-trader-pile__dots c-trader-pile__dots--small"><i></i><i></i><i></i><i></i><i></i></div>
-      <figcaption>Omar</figcaption>
-    </figure>
-    <figure class="c-trader-pile__pile reveal">
-      <div class="c-trader-pile__dots c-trader-pile__dots--small"><i></i><i></i><i></i><i></i><i></i></div>
-      <figcaption>Kai</figcaption>
-    </figure>
-    <figure class="c-trader-pile__pile reveal">
-      <div class="c-trader-pile__dots c-trader-pile__dots--small"><i></i><i></i><i></i><i></i><i></i></div>
-      <figcaption>Zoe</figcaption>
-    </figure>
+<figure class="c-diversity-funnel inset">
+  <div class="c-diversity-funnel__bars reveal" role="img" aria-label="Share of trades by group of traders: the top 10% place 54.7%, each of the other nine groups about 5%">
+    <p class="c-diversity-funnel__hl"><b>54.7%</b> of all trades<span>come from the top 10% of traders</span></p>
+    <i style="--h: 5.03"></i><i style="--h: 5.03"></i><i style="--h: 5.03"></i><i style="--h: 5.03"></i><i style="--h: 5.03"></i><i style="--h: 5.03"></i><i style="--h: 5.03"></i><i style="--h: 5.03"></i><i style="--h: 5.03"></i><i style="--h: 54.7"></i>
   </div>
-  <p class="c-trader-pile__key reveal"><strong>389 of 3,884 traders place 54.7% of all trades.</strong> <span><i></i> = 1 in 100 trades. Each person stands for 10% of traders.</span></p>
-</div>
+  <svg class="c-diversity-funnel__link reveal" viewBox="0 0 200 590" aria-hidden="true"><polygon points="0,267 200,404 200,590 0,590"/></svg>
+  <div class="c-diversity-funnel__campaigns reveal" role="img" aria-label="60 campaigns, about half of them filled by the same few traders">
+    <p class="c-diversity-funnel__hl"><b>60 campaigns</b> of data<span>≈ 30 campaigns of variety</span></p>
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  </div>
+  <p class="c-diversity-funnel__axis reveal">Traders in 10 groups, by trades placed</p>
+  <p class="c-diversity-funnel__legend reveal"><span><i></i> Everyone else</span><span><i class="is-echo"></i> The same few traders again</span></p>
+</figure>
 </section>
 
 
 <section class="slide" data-slide="08" data-name="more-modelling">
-<!-- notes: We tried 30 model variants and only 6 finished above $0. Changing model type moved AUC by 0.002. 
- Bet sizing didn’t help either, because profit is direction times size and our direction calls are close to chance. → The fix is more data. -->
+<!-- notes: We tried 30 model variants and only 6 finished above $0. Changing model type moved AUC by 0.002. Bet sizing didn’t help either, because profit is direction times size and our direction calls are close to chance. → The fix is more data. -->
+<!-- notes: Source: notebooks 7 to 15. Sizing on campaigns 78–86: flat −$133, score-scaled −$98, predicted −$8 per campaign, all inside the ±$450 noise floor (results/trade_size_readout.csv, NB18). -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">What it meant</span>
   <h1 class="reveal">More Modelling Won’t Fix This</h1>
@@ -5582,8 +5543,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="12" data-name="strategy-comparison">
-<!-- notes: Joyce. Cumulative P&L over campaigns 69 to 86. The shaded part is data the model never saw. Ours is the only line that ends positive, at +$12.
-  Fade-everything ends at −$11,905. → Here’s how that stacks up against what we committed to. -->
+<!-- notes: Joyce. Cumulative P&L over campaigns 69 to 86. The shaded part is data the model never saw. Ours is the only line that ends positive, at +$12. Fade-everything ends at −$11,905. → Here’s how that stacks up against what we committed to. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Goals &amp; Impact</span>
   <h1 class="reveal">We beat 2 of the 3 benchmarks</h1>
@@ -5654,8 +5614,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="13" data-name="committed">
-<!-- notes: Joyce. So on the benchmarks, we beat fade-everything and random. Matching C22’s rule is limited by the data as explained earlier.
- On our midterm promises, sizing by magnitude made no difference, and we delivered paper trading, the auto-retrainer and explanations. → We also took the mid-term feedback. -->
+<!-- notes: Joyce. So on the benchmarks, we beat fade-everything and random. Matching C22’s rule is limited by the data. On our midterm promises, sizing by magnitude made no difference, and we delivered paper trading, the auto-retrainer and explanations. → We also took the mid-term feedback. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Goals &amp; Impact</span>
   <h1 class="reveal">What We Committed To</h1>
@@ -5720,7 +5679,8 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="14" data-name="feedback-explanations">
-<!-- notes: During our midterms,Prof Kyong asked what the model knows that Clement doesn’t. Now every trade gets a plain-English reason Clement can check. -->
+<!-- notes: TODO owner. Prof Kyong asked what the model knows that Clement doesn’t. Now every trade gets a plain-English reason Clement can check. More in Explanations. → What else C22 gets. -->
+<!-- notes: Source: Linear doc "Mid-term QNA minutes" (Q&A item 2). The minutes paraphrase the question, so it's credited to Prof Kyong as asked at the mid-term, not as a word-for-word quote. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Mid-term feedback</span>
   <h1 class="reveal">We Took the Feedback</h1>
@@ -5752,9 +5712,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="15" data-name="added-value">
-<!-- notes: Joyce. Beyond the judge, we offer an end to end suite that C22 can run without us.
- Paper trading tests the Judge at live gold prices with no real money, and the system can easily scale to 2,000 users, backs up daily and imports past campaigns.
- → Now, I will pass my time to Jerrick to bring you through the demo -->
+<!-- notes: TODO owner. C22 can run this without us. Paper trading tests the Judge at live gold prices with no real money, and the system scales to 2,000 users, backs up daily and imports past campaigns. → Let us show you. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Added value</span>
   <h1 class="reveal">What C22 Gets Beyond the Judge</h1>
@@ -5791,7 +5749,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="16" data-name="section-demo">
-<!-- notes: Live demo. Jerrick → Then how the system fits together. -->
+<!-- notes: Live demo. TODO owner. → Then how the system fits together. -->
 <div class="c-section-divider ">
   <span class="c-section-divider__num reveal">03</span>
   <div class="c-section-divider__text">

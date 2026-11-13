@@ -1,0 +1,100 @@
+/* === COMPONENT: diversity-funnel === 10 bars (groups of 10% of traders, share of trades) funnel into 60 campaign tiles.
+   Plot is 590px tall: top bar 54.7% = 323px, other nine ~5% = 30px (average, illustrative). Funnel polygon in the HTML
+   joins the top bar to the bottom half (30) of the tile grid; edit both together. Uses .reveal only. */
+.c-diversity-funnel {
+  --plot: 590px;
+  --tile: 52px;
+  --tile-gap: 12px;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 628px 200px 628px;
+  grid-template-rows: var(--plot) auto;
+  column-gap: 0;
+  row-gap: 24px;
+}
+
+.c-diversity-funnel__bars {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(10, 52px);
+  column-gap: 12px;
+  align-items: end;
+}
+
+.c-diversity-funnel__bars > i {
+  display: block;
+  height: calc(var(--h) * 5.9px);
+  border-radius: 10px 10px 0 0;
+  background: var(--card);
+}
+
+.c-diversity-funnel__bars > i:last-of-type { background: var(--accent); }
+
+.c-diversity-funnel__link { width: 200px; height: var(--plot); display: block; }
+.c-diversity-funnel__link polygon { fill: var(--accent-soft); }
+
+.c-diversity-funnel__campaigns {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(10, var(--tile));
+  grid-auto-rows: var(--tile);
+  gap: var(--tile-gap);
+  align-content: end;
+}
+
+.c-diversity-funnel__campaigns > i {
+  display: block;
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.c-diversity-funnel__campaigns > i:nth-of-type(n+31) { background: var(--accent); }
+
+/* Headlines sit above each group, anchored top-left of the plot */
+.c-diversity-funnel p.c-diversity-funnel__hl {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: var(--fs-small);
+  line-height: 1.15;
+  color: var(--ink-muted);
+  max-width: none;
+}
+
+.c-diversity-funnel__hl b {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: 0.95;
+  letter-spacing: var(--display-tracking);
+  color: var(--ink);
+}
+
+.c-diversity-funnel__hl span { font-weight: 600; color: var(--ink-accent); }
+
+.c-diversity-funnel p.c-diversity-funnel__axis,
+.c-diversity-funnel p.c-diversity-funnel__legend {
+  margin: 0;
+  max-width: none;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.c-diversity-funnel p.c-diversity-funnel__axis { grid-column: 1; padding-top: 14px; border-top: var(--rule-w) solid var(--rule); }
+
+.c-diversity-funnel p.c-diversity-funnel__legend {
+  grid-column: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  padding-top: 14px;
+  border-top: var(--rule-w) solid var(--rule);
+}
+
+.c-diversity-funnel__legend span { display: inline-flex; align-items: center; gap: 12px; }
+.c-diversity-funnel__legend i { width: 24px; height: 24px; border-radius: 6px; background: var(--card); flex: none; }
+.c-diversity-funnel__legend i.is-echo { background: var(--accent); }
