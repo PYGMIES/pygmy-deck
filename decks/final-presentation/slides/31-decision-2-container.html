@@ -1,0 +1,3 @@
+<!-- notes: Training runs in its own container. We rejected training inside the app or the Judge, because then every change to one touches the others and their dependencies pile up. The trade-off is one more container to look after. -->
+<!-- @slide-title kicker="Key design decision 2 of 3" text="Separation of Retrainer" class="is-static" -->
+<!-- @decision-solo icon="<rect x='5' y='14' width='54' height='36' rx='4'/><path d='M17 14 V50 M29 14 V50 M41 14 V50 M53 14 V50'/>" decision="Train in a separate, dedicated container" rejected="Training inside the app or the Judge service" why="The pieces change independently, and no dependencies are duplicated" tradeoff="One more container to manage" -->

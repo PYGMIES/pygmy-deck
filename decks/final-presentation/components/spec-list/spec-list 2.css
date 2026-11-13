@@ -1,0 +1,7 @@
+/* === COMPONENT (deck): spec-list === full-width stack of spec-row bars. */
+.c-spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  list-style: none;
+}

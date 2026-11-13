@@ -94,3 +94,8 @@
 
 /* the C22 icon and name stay at full opacity on every step */
 .c-arch.is-step .c-arch__actor { opacity: 1; }
+
+/* Part 1: the Trainer is the highlighted box on the overview slide (orange fill, black text); step builds only light what is active */
+.c-arch:not(.is-step) .c-arch__node.is-key { box-shadow: 0 0 0 4px var(--accent); }   /* original look: dark box with the accent ring, as the Judge on slide 18 */
+/* step box in the top right corner (mirrors the top-left box on the Part 2 builds) */
+.c-arch.is-step .c-arch__stepbox.is-right { left: auto; right: 12px; }

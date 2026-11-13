@@ -1,0 +1,14 @@
+/* === COMPONENT (deck): icon-steps ===
+   Equal tall cards in a row, accent chevron in each gap, vertically centred
+   in the space under the slide title. */
+.c-icon-steps {
+  flex: 1;
+  min-height: 0;
+  align-self: stretch;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 64px;
+  align-content: center;
+  list-style: none;
+}
