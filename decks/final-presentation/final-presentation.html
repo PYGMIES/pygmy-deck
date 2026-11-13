@@ -2280,6 +2280,12 @@ body.overview .deck-viewport {
 }
 .c-stage-tag span { font-size: var(--fs-small); line-height: 1.15; color: var(--ink-muted); }
 
+/* is-compact: number + title only, height follows the title (used beside the architecture diagrams) */
+.c-stage-tag.is-compact { height: auto; min-height: 76px; gap: 14px; padding: 10px 20px 10px 14px; }
+.c-stage-tag.is-compact i { width: 44px; height: 44px; font-size: 26px; }
+.c-stage-tag.is-compact strong { font-size: 30px; }
+.c-stage-tag span:empty { display: none; }
+
 /* ===== COMPONENT rollback-strip ===== */
 /* === COMPONENT (deck): rollback-strip ===
    The model-version timeline from promote-flow's rollback row (v5, v6, v7 live) with a curved arrow
@@ -6634,7 +6640,7 @@ body.overview .deck-viewport {
   <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 734px; width: 250px; font-size: max(26px, var(--fs-min, 0px));">Checks it is time<br>and safe, saves<br>the run</p>
 
 
-  <div class="c-stage-tag c-stage-tag--app" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--app " style="left: 1190px; top: 40px; width: 660px;">
   <i>1</i>
   <div><strong>8 campaigns worth accumulated</strong><span>A run starts</span></div>
 </div>
@@ -6742,11 +6748,11 @@ body.overview .deck-viewport {
 </div>
   <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 300px; font-size: max(26px, var(--fs-min, 0px));">Freezes the data<br>into one file</p>
 
-  <div class="c-stage-tag c-stage-tag--app" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--app " style="left: 1190px; top: 40px; width: 660px;">
   <i>1</i>
   <div><strong>8 campaigns worth accumulated</strong><span>A run starts</span></div>
 </div>
-  <div class="c-stage-tag c-stage-tag--app" style="left: 1190px; top: 152px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--app " style="left: 1190px; top: 152px; width: 660px;">
   <i>2</i>
   <div><strong>Prepare retraining data</strong><span>Older 4 validate, newer 4 test</span></div>
 </div>
@@ -6866,11 +6872,11 @@ body.overview .deck-viewport {
   <span></span>
 </div>
   <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1370px; top: 516px; width: 180px; font-size: max(26px, var(--fs-min, 0px));">Hand-off<br>+ 4 links</p>
-  <div class="c-stage-tag c-stage-tag--app" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--app " style="left: 1190px; top: 40px; width: 660px;">
   <i>1</i>
   <div><strong>8 campaigns worth accumulated</strong><span>A run starts</span></div>
 </div>
-  <div class="c-stage-tag c-stage-tag--app" style="left: 1190px; top: 152px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--app " style="left: 1190px; top: 152px; width: 660px;">
   <i>2</i>
   <div><strong>Prepare retraining data</strong><span>Older 4 validate, newer 4 test</span></div>
 </div>
@@ -7022,7 +7028,7 @@ body.overview .deck-viewport {
 
 
 
-  <div class="c-stage-tag c-stage-tag--trainer" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--trainer " style="left: 1190px; top: 40px; width: 660px;">
   <i>3</i>
   <div><strong>Train a challenger</strong><span>In a separate container</span></div>
 </div>
@@ -7088,7 +7094,7 @@ body.overview .deck-viewport {
 
 
 
-  <div class="c-stage-tag c-stage-tag--trainer" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--trainer " style="left: 1190px; top: 40px; width: 660px;">
   <i>3</i>
   <div><strong>Train a challenger</strong><span>In a separate container</span></div>
 </div>
@@ -7169,7 +7175,7 @@ body.overview .deck-viewport {
 
 
 
-  <div class="c-stage-tag c-stage-tag--trainer" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--trainer " style="left: 1190px; top: 40px; width: 660px;">
   <i>3</i>
   <div><strong>Train a challenger</strong><span>In a separate container</span></div>
 </div>
@@ -7265,7 +7271,7 @@ body.overview .deck-viewport {
   <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 836px; top: 776px; width: 200px; font-size: max(26px, var(--fs-min, 0px));">Polls for<br>new runs</p>
 
 
-  <div class="c-stage-tag c-stage-tag--trainer" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--trainer " style="left: 1190px; top: 40px; width: 660px;">
   <i>3</i>
   <div><strong>Train a challenger</strong><span>In a separate container</span></div>
 </div>
@@ -7376,11 +7382,11 @@ body.overview .deck-viewport {
 </div>
   <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1322px; top: 726px; width: 260px; font-size: max(26px, var(--fs-min, 0px));">Predictions on<br>unseen trades</p>
 
-  <div class="c-stage-tag c-stage-tag--trainer" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--trainer " style="left: 1190px; top: 40px; width: 660px;">
   <i>3</i>
   <div><strong>Train a challenger</strong><span>In a separate container</span></div>
 </div>
-  <div class="c-stage-tag c-stage-tag--eval" style="left: 1190px; top: 152px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--eval " style="left: 1190px; top: 152px; width: 660px;">
   <i>4</i>
   <div><strong>Grade it</strong><span>Against the current champion</span></div>
 </div>
@@ -7503,11 +7509,11 @@ body.overview .deck-viewport {
   <span></span>
 </div>
   <p class="reveal c-flow-note c-flow-note--ink is-plain is-left" style="left: 1398px; top: 528px; width: 100px; font-size: max(26px, var(--fs-min, 0px));">Grades</p>
-  <div class="c-stage-tag c-stage-tag--trainer" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--trainer " style="left: 1190px; top: 40px; width: 660px;">
   <i>3</i>
   <div><strong>Train a challenger</strong><span>In a separate container</span></div>
 </div>
-  <div class="c-stage-tag c-stage-tag--eval" style="left: 1190px; top: 152px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--eval " style="left: 1190px; top: 152px; width: 660px;">
   <i>4</i>
   <div><strong>Grade it</strong><span>Against the current champion</span></div>
 </div>
@@ -7630,7 +7636,7 @@ body.overview .deck-viewport {
 
 
 
-  <div class="c-stage-tag c-stage-tag--dash" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--dash " style="left: 1190px; top: 40px; width: 660px;">
   <i>5</i>
   <div><strong>C22 promotes challenger</strong><span>On the dashboard</span></div>
 </div>
@@ -7702,7 +7708,7 @@ body.overview .deck-viewport {
 
 
 
-  <div class="c-stage-tag c-stage-tag--dash" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--dash " style="left: 1190px; top: 40px; width: 660px;">
   <i>5</i>
   <div><strong>C22 promotes challenger</strong><span>On the dashboard</span></div>
 </div>
@@ -7786,7 +7792,7 @@ body.overview .deck-viewport {
 </div>
 
 
-  <div class="c-stage-tag c-stage-tag--dash" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--dash " style="left: 1190px; top: 40px; width: 660px;">
   <i>5</i>
   <div><strong>C22 promotes challenger</strong><span>On the dashboard</span></div>
 </div>
@@ -7885,7 +7891,7 @@ body.overview .deck-viewport {
   <p class="reveal c-flow-note c-flow-note--ink " style="left: 1565px; top: 287px; width: 150px; font-size: max(28px, var(--fs-min, 0px));">Supabase<br>Storage</p>
 
 
-  <div class="c-stage-tag c-stage-tag--dash" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--dash " style="left: 1190px; top: 40px; width: 660px;">
   <i>5</i>
   <div><strong>C22 promotes challenger</strong><span>On the dashboard</span></div>
 </div>
@@ -7999,7 +8005,7 @@ body.overview .deck-viewport {
   <span></span>
 </div>
 
-  <div class="c-stage-tag c-stage-tag--dash" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--dash " style="left: 1190px; top: 40px; width: 660px;">
   <i>5</i>
   <div><strong>C22 promotes challenger</strong><span>On the dashboard</span></div>
 </div>
@@ -8120,7 +8126,7 @@ body.overview .deck-viewport {
   <span></span>
 </div>
 
-  <div class="c-stage-tag c-stage-tag--dash" style="left: 1190px; top: 40px; width: 660px;">
+  <div class="c-stage-tag c-stage-tag--dash " style="left: 1190px; top: 40px; width: 660px;">
   <i>5</i>
   <div><strong>C22 promotes challenger</strong><span>On the dashboard</span></div>
 </div>
@@ -8171,6 +8177,32 @@ body.overview .deck-viewport {
   <div class="p4 c-arch__node--dark is-key c-arch__node c-arch__d c-arch__ly k-trainer" data-lit="5" data-ly="" style="left: 1435.5px; top: 280px; width: 258px; height: 100px;">Trainer</div>
   <p class="p3 c-arch__foot c-arch__ly" data-ly="3" style="left: 1082px; top: 420px; width: 250px;">Background task, no workers</p>
   <p class="p4 c-arch__foot c-arch__ly" data-ly="" style="left: 1401px; top: 420px; width: 327px;">Receives POST /train with four temporary links</p>
+</div>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage " data-morph-scope>
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-accent" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-stage-tag c-stage-tag--app is-compact" style="left: 96px; top: 790px; width: 310px;">
+  <i>1</i>
+  <div><strong>8 campaigns worth accumulated</strong><span></span></div>
+</div>
+  <div class="c-stage-tag c-stage-tag--app is-compact" style="left: 96px; top: 915px; width: 310px;">
+  <i>2</i>
+  <div><strong>Prepare retraining data</strong><span></span></div>
+</div>
+
 </div>
 </section>
 
@@ -8227,6 +8259,36 @@ body.overview .deck-viewport {
   <div class="p2 c-arch__node c-arch__d c-arch__ly" data-lit="3 4 7" data-ly="3" style="left: 727.5px; top: 338px; width: 300px; height: 150px;">Postgres<small>training status,<br>model details,<br>verdict</small></div>
   <div class="p1 c-arch__node c-arch__d c-arch__ly" data-lit="6 7 8 9" data-ly="" style="left: 1114.5px; top: 220px; width: 240px; height: 100px;">Dashboard<small>visualisation</small></div>
   <div class="p1 k-app c-arch__node c-arch__d c-arch__ly" data-lit="9 10 11" data-ly="" style="left: 1066px; top: 550px; width: 330px; height: 100px;">FastAPI<small>/models/{id}/promote</small></div>
+</div>
+<!-- markers live in the first slide that defines them (ids repeat per slide), which is hidden via visibility; markers inherit it, so force visible -->
+<div class="c-flow-stage " data-morph-scope>
+  <svg class="c-flow-stage__defs" width="0" height="0" aria-hidden="true">
+    <defs>
+      <marker id="flow-head-ink" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-accent" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="flow-head-danger" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+        <path d="M1.5 1.5 L10 6 L1.5 10.5" fill="none" style="visibility: visible; stroke: var(--danger)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+  </svg>
+  
+  <div class="c-stage-tag c-stage-tag--trainer is-compact" style="left: 1500px; top: 80px; width: 350px;">
+  <i>3</i>
+  <div><strong>Train a challenger</strong><span></span></div>
+</div>
+  <div class="c-stage-tag c-stage-tag--eval is-compact" style="left: 1500px; top: 172px; width: 350px;">
+  <i>4</i>
+  <div><strong>Grade it</strong><span></span></div>
+</div>
+  <div class="c-stage-tag c-stage-tag--dash is-compact" style="left: 1500px; top: 264px; width: 350px;">
+  <i>5</i>
+  <div><strong>C22 promotes challenger</strong><span></span></div>
+</div>
+
 </div>
 </section>
 
