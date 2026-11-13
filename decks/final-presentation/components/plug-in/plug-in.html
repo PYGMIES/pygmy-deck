@@ -1,0 +1,19 @@
+<!-- Our system on the left, C22's platform on the right. A plug slides across and connects when the
+     slide opens; C22's box fills in once the plug is in. Pure CSS, plays on .slide.active. -->
+<div class="c-plug-in {{class|}}">
+  <div class="c-plug-in__box is-ours reveal">
+    <i style="--icon: url(assets/icons/layers.svg);" aria-hidden="true"></i>
+    <b>{{ours|Our system}}</b>
+  </div>
+
+  <div class="c-plug-in__link" aria-hidden="true">
+    <div class="c-plug-in__cable"></div>
+    <i class="c-plug-in__plug" style="--icon: url(assets/icons/plug.svg);"></i>
+  </div>
+
+  <div class="c-plug-in__box is-theirs reveal">
+    <i style="--icon: url(assets/icons/dashboard.svg);" aria-hidden="true"></i>
+    <b>{{theirs|C22’s platform}}</b>
+    <div class="c-plug-in__ok" aria-hidden="true"></div>
+  </div>
+</div>

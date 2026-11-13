@@ -770,3 +770,12 @@
   gap: 28px;
   margin-top: -40px;
 }
+
+/* slide 73: statement without its icon, stacked above the plug-in diagram */
+.c-statement.is-no-icon .c-statement__icon {
+  display: none;
+}
+
+.c-column.is-left-stack {
+  gap: 44px;
+}

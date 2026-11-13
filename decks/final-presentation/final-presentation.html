@@ -4010,6 +4010,201 @@ body.overview .deck-viewport {
   display: none;
 }
 
+/* ===== COMPONENT plug-in ===== */
+/* === COMPONENT (deck): plug-in ===
+   [Our system] ---plug--> [C22's platform]. On .slide.active the plug slides along the link and
+   connects (PI_D px), then C22's box turns from a dashed outline into a solid card with a tick.
+   Reduced motion: shows the connected end state. */
+.c-plug-in {
+  --pi-link: 290px;
+  --pi-plug: 66px;
+  --pi-d: 214px;           /* how far the plug travels: link - plug - 10px */
+  display: flex;
+  align-items: center;
+}
+
+.c-plug-in__box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 230px;
+  height: 190px;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--on-card);
+}
+
+.c-plug-in__box i {
+  width: 64px;
+  height: 64px;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.c-plug-in__box b {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+/* C22's box: dashed outline until the plug is in */
+.c-plug-in__box.is-theirs {
+  background: transparent;
+  border: 3px dashed var(--chrome);
+  color: var(--ink-muted);
+}
+
+.c-plug-in__box.is-theirs i {
+  background: var(--chrome);
+}
+
+/* the tick badge on C22's box */
+.c-plug-in__ok {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--success);
+  opacity: 0;
+  transform: scale(0.3);
+}
+
+.c-plug-in__ok::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  background: var(--on-card);
+  -webkit-mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==) center / contain no-repeat;
+  mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==) center / contain no-repeat;
+}
+
+/* the link between the two boxes */
+.c-plug-in__link {
+  position: relative;
+  flex: none;
+  width: var(--pi-link);
+  height: 66px;
+}
+
+.c-plug-in__cable {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 24px;
+  height: 7px;
+  margin-top: -3.5px;
+  border-radius: 4px;
+  background: var(--accent);
+}
+
+/* plug.svg points up (prongs on top); turn it so the prongs point at C22 */
+.c-plug-in__plug {
+  position: absolute;
+  left: 14px;
+  top: 0;
+  width: var(--pi-plug);
+  height: var(--pi-plug);
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  transform: rotate(90deg);
+}
+
+/* --- animation (plays each time the slide opens) --- */
+.slide.active .c-plug-in__plug {
+  animation: pi-plug 1.5s cubic-bezier(0.5, 0, 0.2, 1) 0.6s both;
+}
+
+.slide.active .c-plug-in__cable {
+  animation: pi-cable 1.5s cubic-bezier(0.5, 0, 0.2, 1) 0.6s both;
+}
+
+.slide.active .c-plug-in__box.is-theirs {
+  animation: pi-theirs 0.6s ease-out 2s both;
+}
+
+.slide.active .c-plug-in__box.is-theirs i {
+  animation: pi-icon 0.6s ease-out 2s both;
+}
+
+.slide.active .c-plug-in__box.is-theirs b {
+  animation: pi-label 0.6s ease-out 2s both;
+}
+
+.slide.active .c-plug-in__ok {
+  animation: pi-ok 0.55s var(--ease-out) 2.3s both;
+}
+
+@keyframes pi-plug {
+  from { transform: translateX(0) rotate(90deg); }
+  to { transform: translateX(var(--pi-d)) rotate(90deg); }
+}
+
+@keyframes pi-cable {
+  from { width: 24px; }
+  to { width: calc(var(--pi-d) + 24px); }
+}
+
+@keyframes pi-theirs {
+  from { background: transparent; border-color: var(--chrome); }
+  to { background: var(--card); border-color: var(--card); }
+}
+
+@keyframes pi-icon {
+  from { background: var(--chrome); }
+  to { background: var(--accent); }
+}
+
+@keyframes pi-label {
+  from { color: var(--ink-muted); }
+  to { color: var(--on-card); }
+}
+
+@keyframes pi-ok {
+  0% { opacity: 0; transform: scale(0.3); }
+  70% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-plug-in *,
+  .slide.active .c-plug-in * {
+    animation: none !important;
+  }
+
+  .c-plug-in__plug {
+    transform: translateX(var(--pi-d)) rotate(90deg);
+  }
+
+  .c-plug-in__cable {
+    width: calc(var(--pi-d) + 24px);
+  }
+
+  .c-plug-in__box.is-theirs {
+    background: var(--card);
+    border-color: var(--card);
+    color: var(--on-card);
+  }
+
+  .c-plug-in__box.is-theirs i {
+    background: var(--accent);
+  }
+
+  .c-plug-in__ok {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* ===== COMPONENT pill-note ===== */
 /* === COMPONENT (deck): pill-note === short accent-outlined note (a date, a blocker). */
 .c-pill-note {
@@ -5397,6 +5592,15 @@ body.overview .deck-viewport {
 .c-column.is-api-col {
   gap: 28px;
   margin-top: -40px;
+}
+
+/* slide 73: statement without its icon, stacked above the plug-in diagram */
+.c-statement.is-no-icon .c-statement__icon {
+  display: none;
+}
+
+.c-column.is-left-stack {
+  gap: 44px;
 }
 </style>
 </head>
@@ -8522,7 +8726,7 @@ body.overview .deck-viewport {
 
 
 <section class="slide" data-slide="74" data-name="handover-next">
-<!-- notes: SCRIPT (~20s): We documented the API interfaces cleanly so C22 can connect to them. This is the interactive documentation C22 gets: health, campaigns, the evaluator policy and paper trades. The only thing left is to connect C22's platform to our system. Their platform isn't ready yet, so we can't do that step. [Say who picks this up once it's ready.] → To conclude. -->
+<!-- notes: SCRIPT (~20s): We documented the API interfaces cleanly so C22 can connect to them. This is the interactive documentation C22 gets: health, campaigns, the evaluator policy and paper trades. The only thing left is to connect C22's platform to our system: on the slide, our system plugs into theirs. Their platform isn't ready yet, so we can't do that step. [Say who picks this up once it's ready.] → To conclude. -->
 <!-- notes: Screenshot: the FastAPI docs page of the app (localhost:8000/docs): default, campaign, evaluator-policy and paper-trades endpoints. -->
 <header class="c-slide-title ">
   <span class="c-slide-title__kicker reveal">Handover</span>
@@ -8530,12 +8734,35 @@ body.overview .deck-viewport {
 </header>
 <div class="c-split inset" style="--split-cols: 1fr 780px; --split-align: center;">
   
-  <!-- Accent icon over one big display sentence; wrap the key phrase in <mark>.
+  <div class="c-column is-left-stack" style="--col-width: auto; --col-gap: var(--gap-m);">
+  
+    <!-- Accent icon over one big display sentence; wrap the key phrase in <mark>.
      Children (e.g. pill-note) go underneath. -->
-<div class="c-statement ">
+<div class="c-statement is-no-icon">
   <i class="c-statement__icon reveal" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTIyIDR2MTRNNDIgNHYxNE0xMiAxOGg0MHYxMmEyMCAyMCAwIDAgMS00MCAwek0zMiA1MHYxMSIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
   <h2 class="reveal">One thing is left: <mark>connecting C22’s platform to our system.</mark></h2>
 
+    
+</div>
+    <!-- Our system on the left, C22's platform on the right. A plug slides across and connects when the
+     slide opens; C22's box fills in once the plug is in. Pure CSS, plays on .slide.active. -->
+<div class="c-plug-in ">
+  <div class="c-plug-in__box is-ours reveal">
+    <i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zMiA2IDQgMjBsMjggMTQgMjgtMTR6Ii8+PHBhdGggZD0iTTQgMzJsMjggMTQgMjgtMTRNNCA0NGwyOCAxNCAyOC0xNCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
+    <b>Our system</b>
+  </div>
+
+  <div class="c-plug-in__link" aria-hidden="true">
+    <div class="c-plug-in__cable"></div>
+    <i class="c-plug-in__plug" style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTIyIDR2MTRNNDIgNHYxNE0xMiAxOGg0MHYxMmEyMCAyMCAwIDAgMS00MCAwek0zMiA1MHYxMSIvPjwvc3ZnPgo=);"></i>
+  </div>
+
+  <div class="c-plug-in__box is-theirs reveal">
+    <i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iNSIgeT0iOSIgd2lkdGg9IjU0IiBoZWlnaHQ9IjM4IiByeD0iNCIvPjxwYXRoIGQ9Ik0xOCA0MFYyOE0zMCA0MFYyME00MiA0MFYzMCIvPjxwYXRoIGQ9Ik0yMiA1N2gyMCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
+    <b>C22’s platform</b>
+    <div class="c-plug-in__ok" aria-hidden="true"></div>
+  </div>
+</div>
     <p class="c-pill-note reveal ">C22’s platform is not ready yet</p>
   
 </div>
