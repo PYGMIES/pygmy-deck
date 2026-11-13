@@ -50,6 +50,13 @@
       .replace(/\s+/g, " ")
       .replace(/\s"/g, '"');
 
+  /* a build step that is still hidden (is-step-N root, data-s above N) never pairs: it appears as a new piece */
+  const stepHidden = (el) => {
+    const root = el.closest('[class*="is-step-"]');
+    const m = root && /is-step-(\d+)/.exec(root.className);
+    return !!(m && el.dataset.s && Number(el.dataset.s) > Number(m[1]));
+  };
+
   function morphPairs(from, to) {
     const pairs = [];
     const used = new Set();
@@ -71,13 +78,13 @@
       if (!fromScopes[i]) return;
       const bySig = new Map();
       Array.from(fromScopes[i].children).forEach((el) => {
-        if (used.has(el) || el.dataset.morph) return;
+        if (used.has(el) || el.dataset.morph || stepHidden(el)) return;
         const sig = signature(el);
         if (!bySig.has(sig)) bySig.set(sig, []);
         bySig.get(sig).push(el);
       });
       Array.from(scope.children).forEach((el) => {
-        if (used.has(el) || el.dataset.morph) return;
+        if (used.has(el) || el.dataset.morph || stepHidden(el)) return;
         const match = (bySig.get(signature(el)) || []).shift();
         if (match) pair(match, el);
       });
@@ -133,6 +140,14 @@
     const fadeOut = fadeUnits(from, used);
     const fadeIn = fadeUnits(to, used).filter((el) => !el.classList.contains("reveal"));
 
+    /* only the new pieces animate: number them from 0 so they do not wait behind the held ones */
+    const reindexed = [];
+    let k = 0;
+    to.querySelectorAll(".reveal").forEach((el) => {
+      if (used.has(el)) return;
+      reindexed.push([el, el.style.getPropertyValue("--i")]);
+      el.style.setProperty("--i", k++);
+    });
     from.classList.add("morph-from");
     to.classList.add("morph-to");
     const anims = [];
@@ -175,6 +190,7 @@
       from.classList.remove("morph-from");
       to.classList.remove("morph-to");
       anims.forEach((anim) => anim.cancel());
+      reindexed.forEach(([el, i]) => el.style.setProperty("--i", i));
       plan.forEach(({ a, b }) => {
         a.style.visibility = "";
         b.style.transition = "";

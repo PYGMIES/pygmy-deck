@@ -744,3 +744,14 @@
 
 /* bold kicker (Project Cassandra architecture slides) */
 .c-slide-title.is-bold .c-slide-title__kicker { font-weight: 800; }
+
+/* Slides 27-29 (retrainer flows): brand colours. Black = the app, orange = Trainer / Judge, light grey = Dashboard.
+   Arrows are orange so they read on both the black app box and the light slide. Databases are filled grey (same shade as the Postgres box). */
+.c-flow-node--app { background: var(--card); color: var(--on-card); }
+.c-flow-node--orange { background: var(--accent); color: var(--on-accent); }
+.c-flow-node--orange span { color: var(--on-accent); }
+.c-flow-node--dash { background: var(--owner-dash); color: var(--ink); }
+.c-flow-node--dash span { color: var(--ink); }
+.c-flow-db.is-gray { fill: color-mix(in srgb, var(--card) 76%, var(--bg)); }
+.c-flow-node.is-step.on-dark { background: var(--card); color: var(--on-card); box-shadow: inset 0 0 0 2px var(--on-card-muted); }
+.c-flow-note.on-dark { color: var(--on-card); }

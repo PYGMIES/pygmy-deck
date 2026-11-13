@@ -1,36 +1,36 @@
-<div class="c-arch {{class|}}">
-  <div class="c-arch__lane p1" style="left: 330px; width: 327px;"><span data-n="1">Input/Output</span></div>
-  <div class="c-arch__lane p2" style="left: 687px; width: 327px;"><span data-n="2">Data &amp; Messaging</span></div>
-  <div class="c-arch__lane p3" style="left: 1044px; width: 327px;"><span data-n="3">Pipeline</span></div>
-  <div class="c-arch__lane p4" style="left: 1401px; width: 327px;"><span data-n="4"><small class="c-arch__lane-sub">(containerized)</small>Services</span></div>
+<div class="c-arch {{class|}}" data-morph-scope>
+  <div data-ly="1 2 3" class="c-arch__ly c-arch__lane p1" style="left: 330px; width: 327px;"><span data-n="1">Input/Output</span></div>
+  <div data-ly="2 3" class="c-arch__ly c-arch__lane p2" style="left: 687px; width: 327px;"><span data-n="2">Data &amp; Messaging</span></div>
+  <div data-ly="3" class="c-arch__ly c-arch__lane p3" style="left: 1044px; width: 327px;"><span data-n="3">Pipeline</span></div>
+  <div data-ly="" class="c-arch__ly c-arch__lane p4" style="left: 1401px; width: 327px;"><span data-n="4"><small class="c-arch__lane-sub">(containerized)</small>Services</span></div>
   <svg class="c-arch__wires" viewBox="0 0 1728 800" aria-hidden="true">
     <defs>
       <marker id="arch-arrow-{{uid|rtA}}" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
-        <path d="M2 2 L10.5 6 L2 10" fill="none" stroke="context-stroke" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 2 L10.5 6 L2 10" fill="none" stroke="context-stroke" style="visibility: visible" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
       </marker>
     </defs>
     <g class="c-arch__io">
-      <g class="c-arch__d" data-lit="1"><path  d="M215 330 L373.5 330" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
+      <g class="c-arch__d c-arch__ly" data-ly="1 2 3" data-lit="1"><path  d="M215 330 L373.5 330" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
     </g>
     <g class="c-arch__flow">
-      <g class="c-arch__d" data-lit="2"><path class="is-orange" d="M613.5 306.6 L700.5 210.6" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
-      <g class="c-arch__d" data-lit="2"><path class="is-orange" d="M613.5 330 L1097.5 330" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
-      <g class="c-arch__d" data-lit="3"><path class="is-black" d="M1097.5 292.5 L1000.5 201.2" marker-start="url(#arch-arrow-{{uid|rtA}})" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
-      <g class="c-arch__d" data-lit="4"><path class="is-black" d="M1097.5 372.9 L1000.5 469" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
-      <g class="c-arch__d" data-lit="5"><path class="is-black" d="M1317.5 330 L1435.5 330" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
+      <g class="c-arch__d c-arch__ly" data-ly="1 2 3" data-lit="2"><path class="is-orange" d="M613.5 306.6 L700.5 210.6" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
+      <g class="c-arch__d c-arch__ly" data-ly="1 2 3" data-lit="2"><path class="is-orange" d="M613.5 330 L1062.5 330" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
+      <g class="c-arch__d c-arch__ly" data-ly="2 3" data-lit="3"><path class="is-black" d="M1063 260 L1000.5 201.2" marker-start="url(#arch-arrow-{{uid|rtA}})" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
+      <g class="c-arch__d c-arch__ly" data-ly="3" data-lit="4"><path class="is-black" d="M1070.1 400 L1000.5 469" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
+      <g class="c-arch__d c-arch__ly" data-ly="3" data-lit="5"><path class="is-black" d="M1352.5 330 L1435.5 330" marker-end="url(#arch-arrow-{{uid|rtA}})"/></g>
     </g>
   </svg>
   <div class="c-arch__stepbox is-right"><p class="c-arch__stepbox-title"><i>{{stepn|}}</i>{{steptitle|}}</p><ul><li>{{b1|}}</li><li>{{b2|}}</li></ul></div>
-  <div class="c-arch__actor c-arch__d" data-lit="1 2 3 4 5" style="top: 230px; left: -24px;">
+  <div class="c-arch__actor c-arch__d" data-ly="1 2 3" data-lit="1 2 3 4 5" style="top: 230px; left: -24px;">
     <b class="c-arch__logo">C22</b>
     <strong>C22’s trading platform</strong>
   </div>
-  <span class="c-arch__wire-label c-arch__d" data-lit="1" style="left: 186px; top: 252px; width: 164px;">Campaign<br>ended</span>
-  <div class="p1 c-arch__node c-arch__d" data-lit="1 2" style="left: 373.5px; top: 280px; width: 240px; height: 100px;">FastAPI<small>/campaign/end</small></div>
-  <div class="p2 c-arch__node c-arch__d" data-lit="2 3" style="left: 700.5px; top: 100px; width: 300px; height: 120px;">Postgres<small>runs, trades,<br>features</small></div>
-  <div class="p2 c-arch__node c-arch__d" data-lit="4" style="left: 700.5px; top: 440px; width: 300px; height: 120px;">Storage<small>dataset file</small></div>
-  <div class="p3 c-arch__node--dark c-arch__node c-arch__d" data-lit="2 3 4 5" style="left: 1097.5px; top: 280px; width: 220px; height: 100px;">Retraining<small>inside the API</small></div>
-  <div class="p4 c-arch__node--dark is-key c-arch__node c-arch__d" data-lit="5" style="left: 1435.5px; top: 280px; width: 258px; height: 100px;">Trainer</div>
-  <p class="p3 c-arch__foot" style="left: 1082px; top: 420px; width: 250px;">Background task, no workers</p>
-  <p class="p4 c-arch__foot" style="left: 1401px; top: 420px; width: 327px;">Receives POST /train with four temporary links</p>
+  <span class="c-arch__wire-label c-arch__d" data-ly="1 2 3" data-lit="1" style="left: 186px; top: 252px; width: 164px;">Campaign<br>ended</span>
+  <div class="p1 c-arch__node c-arch__d c-arch__ly k-app" data-lit="1 2" data-ly="1 2 3" style="left: 373.5px; top: 280px; width: 240px; height: 100px;">FastAPI<small>/campaign/end</small></div>
+  <div class="p2 c-arch__node c-arch__d c-arch__ly" data-lit="2 3" data-ly="2 3" style="left: 700.5px; top: 100px; width: 300px; height: 120px;">Postgres<small>runs, trades,<br>features</small></div>
+  <div class="p2 c-arch__node c-arch__d c-arch__ly" data-lit="4" data-ly="2 3" style="left: 700.5px; top: 440px; width: 300px; height: 120px;">Storage<small>dataset file</small></div>
+  <div class="p3 c-arch__node--dark c-arch__node c-arch__d c-arch__ly k-app" data-lit="2 3 4 5" data-ly="3" style="left: 1062.5px; top: 260px; width: 290px; height: 140px;">Retraining preparation pipeline</div>
+  <div class="p4 c-arch__node--dark is-key c-arch__node c-arch__d c-arch__ly k-trainer" data-lit="5" data-ly="" style="left: 1435.5px; top: 280px; width: 258px; height: 100px;">Trainer</div>
+  <p class="p3 c-arch__foot c-arch__ly" data-ly="3" style="left: 1082px; top: 420px; width: 250px;">Background task, no workers</p>
+  <p class="p4 c-arch__foot c-arch__ly" data-ly="" style="left: 1401px; top: 420px; width: 327px;">Receives POST /train with four temporary links</p>
 </div>

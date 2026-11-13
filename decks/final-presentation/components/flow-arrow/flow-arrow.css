@@ -20,3 +20,8 @@
   stroke: var(--danger);
   marker-end: url(#flow-head-danger);
 }
+
+.c-flow-arrow--accent path {
+  stroke: var(--accent);
+  marker-end: url(#flow-head-accent);
+}
