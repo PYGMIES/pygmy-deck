@@ -1,0 +1,35 @@
+<!-- no-anim -->
+<!-- notes: Steps 12 and 13. The evaluator only recommends; a person promotes. The operator reads the recommendation and its reasons, then presses Promote on the dashboard, which calls the FastAPI app (POST /models/{id}/promote). Promotion is refused while a campaign is live (one campaign would be scored by two models) or while a run is unfinished. The order is what makes it safe: first the Judge loads the new bundle from Supabase, and only then does the app switch the active model version in the database. If the Judge can't load it, nothing changes and the old model keeps scoring. The switch takes effect from the next trade. Every model is kept, so rolling back is just promoting an older one, and on every app start the Judge reloads whichever model is active. Source: project-cassandra promote_model.py, load_active_model.py, doc/client/EVALUATOR.md. -->
+<!-- @dd-heading kicker="Auto-retrainer" title="From Trained to Live"-->
+<!-- @/dd-heading -->
+<!-- @rollback-strip class="is-promote-slide reveal" morph="rollback" -->
+<!-- @flow-stage -->
+  <!-- @flow-node x="100" y="260" w="400" h="130" tone="dash" label="Dashboard" sub="Promote · Keep · Hold" size="32" -->
+  <!-- @flow-node x="180" y="490" w="240" h="240" class="is-round" label="<svg class='flow-person' viewBox='0 0 48 48' aria-hidden='true'><circle cx='24' cy='15' r='8'/><path d='M8 42c0-9 7-15 16-15s16 6 16 15'/></svg>C22" size="38" -->
+  <!-- @flow-arrow tone="accent" x1="300" y1="488" x2="300" y2="392" -->
+  <!-- @flow-node x="516" y="250" w="36" h="36" class="is-round is-step" label="1" size="26" -->
+  <!-- @flow-note x="560" y="238" w="270" size="26" class="is-plain is-left" text="Makes final call<br>to promote" -->
+
+  <!-- @flow-node x="640" y="400" w="540" h="390" tone="app" class="is-container" label="FastAPI app" size="34" -->
+  <!-- @flow-node x="700" y="540" w="420" h="140" tone="work" label="Promote" sub="/models/{id}/promote" size="32" -->
+  <!-- @flow-arrow tone="accent" x1="500" y1="325" x2="760" y2="325" class="is-line" -->
+  <!-- @flow-arrow tone="accent" x1="760" y1="325" x2="760" y2="538" -->
+
+  <!-- @flow-node x="1360" y="540" w="300" h="140" tone="orange" label="Judge" size="32" -->
+  <!-- @flow-arrow tone="accent" x1="1120" y1="610" x2="1360" y2="610" -->
+  <!-- @flow-note x="1185" y="500" w="175" size="26" class="is-plain" text="Request<br>model load" -->
+  <!-- @flow-node x="1134" y="497" w="36" h="36" class="is-round is-step on-dark" label="2" size="26" -->
+  <!-- @flow-db class="is-gray" x="1464" y="260" -->
+  <!-- @flow-arrow tone="accent" x1="1510" y1="380" x2="1510" y2="538" -->
+  <!-- @flow-note x="1560" y="430" w="200" size="26" class="is-plain" text="Downloads<br>frozen model" -->
+  <!-- @flow-node x="1524" y="427" w="36" h="36" class="is-round is-step" label="3" size="26" -->
+  <!-- @flow-note x="1565" y="287" w="150" size="28" text="Supabase<br>Storage" -->
+
+  <!-- @flow-db class="is-gray" x="864" y="830" -->
+  <!-- @flow-arrow tone="accent" x1="910" y1="680" x2="910" y2="828" -->
+  <!-- @flow-note x="965" y="857" w="150" size="28" text="Supabase<br>Postgres" -->
+  <!-- @flow-note x="958" y="700" w="190" size="26" class="is-plain on-dark" text="Set as<br>live model" -->
+  <!-- @flow-node x="926" y="717" w="36" h="36" class="is-round is-step on-dark" label="4" size="26" -->
+
+  <!-- @stage-tag w="660" x="1190" y="40" n="5" tone="dash" title="C22 promotes challenger" sub="On the dashboard" -->
+<!-- @/flow-stage -->

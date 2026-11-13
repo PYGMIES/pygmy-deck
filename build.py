@@ -169,10 +169,12 @@ def collect_slides(deck_dir: Path) -> list[tuple[str, str, Path]]:
 
 def render_slide(num: str, name: str, path: Path, registry: Registry) -> str:
     body = expand(path.read_text(encoding="utf-8"), registry, str(path.relative_to(ROOT)))
+    # `<!-- no-anim -->` anywhere in a slide: no reveal, morph or build animation on it (data-no-anim on the section)
+    noanim = " data-no-anim" if "<!-- no-anim -->" in path.read_text(encoding="utf-8") else ""
     if re.search(r"<section\b[^>]*\bclass=\"[^\"]*\bslide\b", body):
         # Slide supplies its own <section class="slide" ...>; just tag it.
-        return re.sub(r"<section\b", f'<section data-slide="{num}" data-name="{name}"', body, count=1).strip()
-    return f'<section class="slide" data-slide="{num}" data-name="{name}">\n{body.strip()}\n</section>'
+        return re.sub(r"<section\b", f'<section data-slide="{num}" data-name="{name}"{noanim}', body, count=1).strip()
+    return f'<section class="slide" data-slide="{num}" data-name="{name}"{noanim}>\n{body.strip()}\n</section>'
 
 
 # === ASSETS ===============================================================
