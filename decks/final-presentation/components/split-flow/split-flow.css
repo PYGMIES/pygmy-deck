@@ -251,7 +251,9 @@
 .c-split-flow__cond-box span:first-child { font-size: var(--fs-body); font-weight: 700; }
 
 /* "Things to note:" sits at the right end of the counter row */
-.c-split-flow__notes { margin-left: auto; align-self: center; }
+.c-split-flow__notes { margin-left: auto; align-self: center; padding: var(--gap-xs) var(--gap-s); border: var(--rule-w) solid var(--ink-muted); border-radius: var(--radius); }
 .c-split-flow__notes-title { font-size: var(--fs-small); font-weight: 700; letter-spacing: 0.04em; color: var(--ink-muted); }
 .c-split-flow__notes ul { list-style: disc; padding-left: var(--gap-s); margin-top: 4px; }
 .c-split-flow__notes li { font-size: var(--fs-small); font-weight: 600; line-height: 1.4; }
+
+.c-split-flow__cap em { font-style: italic; background: none; box-shadow: none; padding: 0; text-decoration: none; }
