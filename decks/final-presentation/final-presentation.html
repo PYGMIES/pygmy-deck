@@ -4062,7 +4062,7 @@ body.overview .deck-viewport {
 /* ===== COMPONENT plug-in ===== */
 /* === COMPONENT (deck): plug-in ===
    [Our system] ---plug--> [C22's platform]. On .slide.active the plug slides along the link and
-   connects (PI_D px), then C22's box turns from a dashed outline into a solid card with a tick.
+   connects (PI_D px), then C22's box turns from a dashed outline into a solid card.
    Reduced motion: shows the connected end state. */
 .c-plug-in {
   --pi-link: 290px;
@@ -4112,28 +4112,6 @@ body.overview .deck-viewport {
 
 .c-plug-in__box.is-theirs i {
   background: var(--chrome);
-}
-
-/* the tick badge on C22's box */
-.c-plug-in__ok {
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--success);
-  opacity: 0;
-  transform: scale(0.3);
-}
-
-.c-plug-in__ok::before {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  background: var(--on-card);
-  -webkit-mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==) center / contain no-repeat;
-  mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDM0bDE0IDE0IDI2LTMwIi8+PC9zdmc+Cg==) center / contain no-repeat;
 }
 
 /* the link between the two boxes */
@@ -4189,10 +4167,6 @@ body.overview .deck-viewport {
   animation: pi-label 0.6s ease-out 2s both;
 }
 
-.slide.active .c-plug-in__ok {
-  animation: pi-ok 0.55s var(--ease-out) 2.3s both;
-}
-
 @keyframes pi-plug {
   from { transform: translateX(0) rotate(90deg); }
   to { transform: translateX(var(--pi-d)) rotate(90deg); }
@@ -4216,12 +4190,6 @@ body.overview .deck-viewport {
 @keyframes pi-label {
   from { color: var(--ink-muted); }
   to { color: var(--on-card); }
-}
-
-@keyframes pi-ok {
-  0% { opacity: 0; transform: scale(0.3); }
-  70% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 1; transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4248,10 +4216,6 @@ body.overview .deck-viewport {
     background: var(--accent);
   }
 
-  .c-plug-in__ok {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 /* ===== COMPONENT pill-note ===== */
@@ -6166,7 +6130,7 @@ body.overview .deck-viewport {
   <p>TreeSHAP on the Judge’s dollar score, grouped into six families</p>
 </article>
   <article class="c-grid-card reveal ">
-  <span class="c-grid-card__kicker">Rules-based</span>
+  <span class="c-grid-card__kicker">Not</span>
   <h3>Not an LLM</h3>
   <p>Fixed templates, so the same trade always gets the same explanation</p>
 </article>
@@ -9739,7 +9703,6 @@ body.overview .deck-viewport {
   <div class="c-plug-in__box is-theirs reveal">
     <i style="--icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iNSIgeT0iOSIgd2lkdGg9IjU0IiBoZWlnaHQ9IjM4IiByeD0iNCIvPjxwYXRoIGQ9Ik0xOCA0MFYyOE0zMCA0MFYyME00MiA0MFYzMCIvPjxwYXRoIGQ9Ik0yMiA1N2gyMCIvPjwvc3ZnPgo=);" aria-hidden="true"></i>
     <b>C22’s platform</b>
-    <div class="c-plug-in__ok" aria-hidden="true"></div>
   </div>
 </div>
     <p class="c-pill-note reveal ">C22’s platform is not ready yet</p>
