@@ -18,6 +18,8 @@
   --chrome: #9a9a9a;           /* progress + counter */
   --letterbox: #dcdcdc;
   --accent: #d9922e;           /* "now" markers, highlighted flows */
+  --money: #3f8f5a;            /* banknote green (cash-rain) */
+  --money-edge: #1f5b37;       /* banknote border and "$" */
   --accent-soft: #f1dfc4;      /* accent-tinted panels */
   --highlight: #ffd93d;        /* marker-pen underline behind emphasised words */
   --chart-bg: #ffffff;         /* backing for exported chart PNGs (white in both themes) */

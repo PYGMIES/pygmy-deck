@@ -1,0 +1,61 @@
+/* === COMPONENT: cash-rain === banknotes fall from the top of the slide once it opens */
+.c-cash-rain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.c-cash-rain__bill {
+  position: absolute;
+  top: 0;
+  left: var(--x);
+  width: 150px;
+  height: 76px;
+  border-radius: 10px;
+  background: var(--money);
+  border: 5px solid var(--money-edge);
+  transform: translate(0, -160px) scale(var(--s));
+  opacity: 0;
+}
+
+/* the oval and "$" on each note (div-based, so the theme's empty-span rule can't hide them) */
+.c-cash-rain__bill::before {
+  content: "$";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 40px;
+  line-height: 1;
+  color: var(--money-edge);
+}
+
+.c-cash-rain__bill::after {
+  content: "";
+  position: absolute;
+  inset: 8px 14px;
+  border-radius: 50%;
+  border: 3px solid var(--money-edge);
+  opacity: 0.55;
+}
+
+.slide.active .c-cash-rain__bill {
+  animation: cr-fall var(--d) linear var(--dl) both;
+}
+
+@keyframes cr-fall {
+  0% { opacity: 0; transform: translate(0, -160px) rotate(0deg) scale(var(--s)); }
+  6% { opacity: 1; }
+  50% { transform: translate(var(--sw), 620px) rotate(calc(var(--r) * 0.5)) scale(var(--s)); }
+  92% { opacity: 1; }
+  100% { opacity: 0; transform: translate(0, 1260px) rotate(var(--r)) scale(var(--s)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-cash-rain__bill { display: none; }
+}
