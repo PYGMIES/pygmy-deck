@@ -17,6 +17,8 @@
   --chrome: #6a6a6a;
   --letterbox: #0e0e0f;
   --accent: #e8a948;
+  --money: #4fae72;            /* banknote green (cash-rain) */
+  --money-edge: #14452a;       /* banknote border and "$" */
   --accent-soft: #4a3a22;
   --highlight: #b8921a;        /* marker-pen underline behind emphasised words */
   --chart-bg: #ffffff;         /* backing for exported chart PNGs (white in both themes) */

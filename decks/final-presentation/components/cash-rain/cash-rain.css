@@ -1,0 +1,90 @@
+/* === COMPONENT: cash-rain === banknotes fall from the top of the slide once it opens */
+.c-cash-rain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.c-cash-rain__bill {
+  position: absolute;
+  top: 0;
+  left: var(--x);
+  width: 150px;
+  height: 76px;
+  border-radius: 10px;
+  background: var(--money);
+  border: 5px solid var(--money-edge);
+  box-shadow: 0 6px 14px color-mix(in srgb, var(--ink) 22%, transparent);
+  transform: translate(0, -160px) scale(var(--s));
+  opacity: 0;
+}
+
+/* the oval and "$" on each note (div-based, so the theme's empty-span rule can't hide them) */
+.c-cash-rain__bill::before {
+  content: "$";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 40px;
+  line-height: 1;
+  color: var(--money-edge);
+}
+
+.c-cash-rain__bill::after {
+  content: "";
+  position: absolute;
+  inset: 8px 14px;
+  border-radius: 50%;
+  border: 3px solid var(--money-edge);
+  opacity: 0.55;
+}
+
+.slide.active .c-cash-rain__bill {
+  animation: cr-fall var(--d) cubic-bezier(0.35, 0.1, 0.6, 0.9) var(--dl) both;
+}
+
+@keyframes cr-fall {
+  0% { opacity: 0; transform: translate(0, -160px) rotate(0deg) scale(var(--s)); }
+  6% { opacity: 1; }
+  50% { transform: translate(var(--sw), 600px) rotate(calc(var(--r) * 0.5)) scale(var(--s)); }
+  92% { opacity: 1; }
+  100% { opacity: 0; transform: translate(0, 1260px) rotate(var(--r)) scale(var(--s)); }
+}
+
+.c-cash-rain__pop {
+  position: absolute;
+  top: 70px;
+  right: 110px;
+  padding: 18px 40px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 72px;
+  line-height: 1;
+  transform: rotate(-6deg);
+  opacity: 0;
+}
+
+.slide.active .c-cash-rain__pop {
+  animation: cr-pop 0.6s var(--ease-out) 0.4s both;
+}
+
+@keyframes cr-pop {
+  0% { opacity: 0; transform: rotate(-6deg) scale(0.3); }
+  70% { opacity: 1; transform: rotate(-6deg) scale(1.15); }
+  100% { opacity: 1; transform: rotate(-6deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-cash-rain__bill { display: none; }
+  .slide.active .c-cash-rain__pop { animation: none; opacity: 1; }
+}
