@@ -49,4 +49,4 @@
 - Slide 12 still uses the mid-term chart data and title; slide 13 benchmark statuses depend on it.
 - Appendix needs a backup slide for "How do you know it's the data and not the model?" Slide 61 (learning curve) shows a flat curve, which argues *against* "more data helps": prepare the answer before using it.
 - Mid-term slides 77-79 (constraints, edge-setting, what's next) were left out; handover replaces "what's next".
-- Final "Thank you" slide (`85-qna`) plays the deck-local `cash-rain` component once on open: banknotes fall from the top plus a "KA-CHING!" badge (tokens `--money`, `--money-edge` in both themes; reduced motion shows the badge only).
+- Final "Thank you" slide (`85-qna`) plays the deck-local `cash-rain` component once on open: banknotes fall from the top (tokens `--money`, `--money-edge` in both themes; reduced motion hides it).
