@@ -214,6 +214,15 @@
   100% { transform: scale(1); opacity: 1; }
 }
 
+/* still: the step-1 scene with nothing moving (the slide before the file flies in) */
+.c-import-flow.is-still .c-import-flow__file {
+  display: none;
+}
+
+.slide.active .c-import-flow.is-still .is-app {
+  animation: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .c-import-flow *,
   .slide.active .c-import-flow * {
